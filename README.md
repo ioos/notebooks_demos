@@ -1,3 +1,3 @@
-# notebooks_demos
+# IOOS demonstrations and examples notebooks
 
-Notebook demonstrations and examples
+[![Binder](http://mybinder.org/badge.svg)](http://mybinder.org/repo/ioos/notebooks_demos)
