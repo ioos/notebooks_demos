@@ -1,9 +1,14 @@
 name: notebooks_demos
 channels:
     - conda-forge
+    - ioos
 dependencies:
     - python=2.7
     - jupyter
     - iris
     - pysgrid
     - pyugrid
+    - pyoos
+    - mpld3
+    - utilities
+    - scikit-learn
