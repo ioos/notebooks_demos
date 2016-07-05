@@ -1,0 +1,37 @@
+permalink: /:year/:month/:day/:title/
+url: http://ioos.github.io
+name: IOOS notebooks
+baseurl: /notebooks_demos
+topnav_title: IOOS notebooks
+site_title: IOOS notebooks
+description: IOOS notebooks
+github_editme_path: IOOS/notebooks_demos/
+repository: https://github.com/IOOS/notebooks_demos/
+relative_permalinks: false
+google_analytics_id: UA-9133259-16
+permalink: pretty
+
+exclude:
+  - _site
+
+feedback_email: ocefpaf@gmail.com
+
+highlighter: rouge
+markdown: kramdown
+kramdown:
+ input: GFM
+ auto_ids: true
+ hard_wrap: false
+ syntax_highlighter: rouge
+
+collections:
+  tooltips:
+    output: false
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
