@@ -1,4 +1,4 @@
-<style>.info {
+.info {
     background-color:#fcf8e3;
     border-color:#faebcc;
     border-left:5px solid #8a6d3b;
@@ -146,37 +146,3 @@
 div.dhtmlx_window_active,div.dhx_modal_cover_dv {
     position:fixed!important
 }
-</style><div class="datagrid"><table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>COAWST_USGS</th>
-      <th>HYCOM</th>
-      <th>NECOFS_FVCOM</th>
-      <th>NECOFS_GOM3_FVCOM</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Boston 16 Nm East Of Boston</th>
-      <td>0.89</td>
-      <td>0.67</td>
-      <td>1.08</td>
-      <td>0.80</td>
-    </tr>
-    <tr>
-      <th>Buoy A01</th>
-      <td>0.62</td>
-      <td>0.69</td>
-      <td>1.18</td>
-      <td>0.55</td>
-    </tr>
-    <tr>
-      <th>Boston, MA</th>
-      <td>0.94</td>
-      <td>--</td>
-      <td>0.81</td>
-      <td>0.77</td>
-    </tr>
-  </tbody>
-</table></div>

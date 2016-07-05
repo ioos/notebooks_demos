@@ -6,9 +6,10 @@ dependencies:
     - python=2.7
     - jupyter
     - iris
+    - mpld3
+    - pyoos
     - pysgrid
     - pyugrid
-    - pyoos
-    - mpld3
-    - utilities
+    - pyyaml
     - scikit-learn
+    - utilities
