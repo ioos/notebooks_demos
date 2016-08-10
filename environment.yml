@@ -7,7 +7,7 @@ dependencies:
     - anaconda-navigator
     - beautifulsoup4
     - cartopy
-    - cc-plugin-glider
+    - cc-plugin-glider  # Python 2.7
     - cmocean
     - compliance-checker
     - ctd
@@ -27,6 +27,7 @@ dependencies:
     - matplotlib
     - mpld3
     - mplleaflet
+    - netcdf4
     - numpy
     - oceans
     - oct2py
@@ -35,18 +36,24 @@ dependencies:
     - pandas
     - proj.4
     - pygc
-    - pyoos
+    - pyhum  # Python 2.7
+    - pykdtree
+    - pyoos  # Python 2.7
     - pyproj
+    - pyresample
     - pysgrid
     - pyugrid
     - pyyaml
     - qrcode
     - rasterio
+    - rasterstats
     - requests
+    - rios
     - rtree
     - scikit-learn
     - scipy
     - seaborn
+    - seawater
     - shapely
     - siphon
     - spyder
@@ -54,5 +61,5 @@ dependencies:
     - sympy
     - thredds_crawler
     - utilities
-    - xlrd
     - xarray
+    - xlrd
