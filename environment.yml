@@ -1,4 +1,4 @@
-name: notebooks_demos
+name: IOOS
 channels:
     - conda-forge
     - ioos
