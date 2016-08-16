@@ -265,7 +265,7 @@ def pyoos2df(collector, station_id, df_name=None):
     try:
         response = collector.raw(responseFormat="text/csv")
         kw = dict(parse_dates=True, index_col='date_time')
-        df = pd.read_csv(BytesIO(response.encode('utf-8')), **kw)
+        df = pd.read_csv(BytesIO(response), **kw)
     except requests.exceptions.ReadTimeout:
         df = ndbc2df(collector, station_id)
     # FIXME: Workaround to get only 1 sensor.

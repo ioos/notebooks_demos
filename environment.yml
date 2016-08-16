@@ -3,11 +3,11 @@ channels:
     - conda-forge
     - ioos
 dependencies:
-    - python=2.7
+    - python=3.5
     - anaconda-navigator
     - beautifulsoup4
     - cartopy
-    - cc-plugin-glider  # Python 2.7
+    #- cc-plugin-glider  # Python 2.7
     - cmocean
     - compliance-checker
     - ctd
@@ -36,9 +36,9 @@ dependencies:
     - pandas
     - proj.4
     - pygc
-    - pyhum  # Python 2.7
+    #- pyhum  # Python 2.7
     - pykdtree
-    - pyoos  # Python 2.7
+    - pyoos
     - pyproj
     - pyresample
     - pysgrid
