@@ -6,6 +6,7 @@ dependencies:
     - python=2.7
     - anaconda-navigator
     - beautifulsoup4
+    - bokeh
     - cartopy
     - cc-plugin-glider  # Python 2.7
     - cmocean
