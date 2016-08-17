@@ -1,7 +1,6 @@
 name: IOOS
 channels:
     - conda-forge
-    - ioos
 dependencies:
     - python=2.7
     - anaconda-navigator
@@ -37,7 +36,6 @@ dependencies:
     - pandas
     - proj.4
     - pygc
-    - pyhum  # Python 2.7
     - pykdtree
     - pyoos  # Python 2.7
     - pyproj
@@ -61,6 +59,5 @@ dependencies:
     - statsmodels
     - sympy
     - thredds_crawler
-    - utilities
     - xarray
     - xlrd
