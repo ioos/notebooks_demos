@@ -494,16 +494,6 @@ def load_ncs(config):
     return pd.Panel.fromDict(dfs).swapaxes(0, 2)
 
 
-def rename_cols(df):
-    fname = '{}-{}.nc'.format
-    fname = os.path.join(save_dir, fname(config['run_name'], 'OBS_DATA'))
-    cube = iris.load_cube(fname)
-    cols = dict(
-        zip(cube.coord('station_code').points, cube.coord('station_name').points)
-    )
-    return df.rename(columns=cols)
-
-
 # Web/Misc.
 def url_lister(url):
     """
