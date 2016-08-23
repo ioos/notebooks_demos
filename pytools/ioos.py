@@ -6,6 +6,7 @@ import warnings
 import requests
 import numpy as np
 import pandas as pd
+from glob import glob
 from io import BytesIO
 try:
     from urllib import urlopen
@@ -14,6 +15,8 @@ except ImportError:
     from urllib.request import urlopen
     from urllib.parse import urlparse
 
+import iris
+from iris.pandas import as_data_frame
 from contextlib import contextmanager
 from lxml import etree
 from owslib import fes
@@ -386,7 +389,7 @@ def _sanitize(name):
     return name
 
 
-def get_model_name(cube, url, titles):
+def get_model_name(cube, url):
     """
     Return a model short and long name from a cube.
 
@@ -410,6 +413,23 @@ def get_model_name(cube, url, titles):
     except AttributeError:
         model_full_name = url
     # [mod_name]: first searches the titles dictionary, if not try to guess.
+    titles = dict(
+        BTMPB='http://oos.soest.hawaii.edu/thredds/dodsC/hioos/tide_pac',  # noqa
+        CBOFS='http://opendap.co-ops.nos.noaa.gov/thredds/dodsC/CBOFS/fmrc/Aggregated_7_day_CBOFS_Fields_Forecast_best.ncd',  # noqa
+        COAWST_4='http://geoport.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd',  # noqa
+        ESPRESSO='http://tds.marine.rutgers.edu/thredds/dodsC/roms/espresso/2013_da/his_Best/ESPRESSO_Real-Time_v2_History_Best_Available_best.ncd',  # noqa
+        ESTOFS='http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic',  # noqa
+        HYCOM='http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global',  # noqa
+        NECOFS_GOM3_FVCOM='http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_GOM3_FORECAST.nc',  # noqa
+        NECOFS_GOM3_WAVE='http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_WAVE_FORECAST.nc',  # noqa
+        SABGOM='http://omgsrv1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/sabgom/SABGOM_Forecast_Model_Run_Collection_best.ncd',  # noqa
+        SABGOM_ARCHIVE='http://omgarch1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/sabgom/SABGOM_Forecast_Model_Run_Collection_best.ncd',  # noqa
+        TBOFS='http://opendap.co-ops.nos.noaa.gov/thredds/dodsC/TBOFS/fmrc/Aggregated_7_day_TBOFS_Fields_Forecast_best.ncd',  # noqa
+        USEAST='http://omgsrv1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/us_east/US_East_Forecast_Model_Run_Collection_best.ncd',  # noqa
+        USF_FVCOM='http://crow.marine.usf.edu:8080/thredds/dodsC/FVCOM-Nowcast-Agg.nc',  # noqa
+        USF_ROMS='http://crow.marine.usf.edu:8080/thredds/dodsC/WFS_ROMS_NF_model/USF_Ocean_Circulation_Group_West_Florida_Shelf_Daily_ROMS_Nowcast_Forecast_Model_Data_best.ncd',  # noqa
+        USF_SWAN='http://crow.marine.usf.edu:8080/thredds/dodsC/WFS_SWAN_NF_model/USF_Ocean_Circulation_Group_West_Florida_Shelf_Daily_SWAN_Nowcast_Forecast_Wave_Model_Data_best.ncd'  # noqa
+            )
     for mod_name, uri in titles.items():
         if url == uri:
             return mod_name, model_full_name
@@ -427,6 +447,51 @@ def is_station(url):
             if nc.cdm_data_type.lower() == 'station':
                 station = True
     return station
+
+
+def nc2df(fname, columns_name='station_code'):
+    """
+    Load a netCDF timeSeries file as a dataframe.
+
+    """
+    cube = iris.load_cube(fname)
+    for coord in cube.coords(dimensions=[0]):
+        name = coord.name()
+        if name != 'time':
+            cube.remove_coord(name)
+    for coord in cube.coords(dimensions=[1]):
+        name = coord.name()
+        if name != columns_name:
+            cube.remove_coord(name)
+    df = as_data_frame(cube)
+    if cube.ndim == 1:  # Horrible work around iris.
+        station = cube.coord(columns_name).points[0]
+        df.columns = [station]
+    return df
+
+
+def load_ncs(config):
+    fname = '{}-{}.nc'.format
+    save_dir = os.path.join(os.path.abspath(config['run_name']))
+    fname = os.path.join(save_dir, fname(config['run_name'], 'OBS_DATA'))
+    ALL_OBS_DATA = nc2df(fname, columns_name='station_code')
+    index = ALL_OBS_DATA.index
+    dfs = dict(OBS_DATA=ALL_OBS_DATA)
+    for fname in glob(os.path.join(config['run_name'], "*.nc")):
+        if 'OBS_DATA' in fname:
+            continue
+        else:
+            model = fname.split('.')[0].split('-')[-1]
+            df = nc2df(fname, columns_name='station_code')
+            # FIXME: Horrible work around duplicate times.
+            if len(df.index.values) != len(np.unique(df.index.values)):
+                kw = dict(subset='index', take_last=True)
+                df = df.reset_index().drop_duplicates(**kw).set_index('index')
+            kw = dict(method='time', limit=2)
+            df = df.reindex(index).interpolate(**kw).ix[index]
+            dfs.update({model: df})
+
+    return pd.Panel.fromDict(dfs).swapaxes(0, 2)
 
 
 # Web/Misc.
