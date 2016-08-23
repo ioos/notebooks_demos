@@ -2,15 +2,16 @@ from __future__ import absolute_import, division, print_function
 
 from datetime import datetime
 
+import netcdftime
 import numpy as np
-import numpy.ma as ma
+import pandas as pd
 from scipy.spatial import cKDTree as KDTree
 
-import cf_units
 import iris
+import cf_units
 from iris import Constraint
 from iris.cube import CubeList
-from iris.pandas import as_cube
+from iris.coords import AuxCoord, DimCoord
 from iris.exceptions import CoordinateNotFoundError, CoordinateMultiDimError
 
 
@@ -490,13 +491,13 @@ def ensure_timeseries(cube):
     _make_aux_coord(cube, axis='X')
 
     cube.attributes.update({'featureType': 'timeSeries'})
-    cube.coord("station name").attributes = dict(cf_role='timeseries_id')
+    cube.coord("station_code").attributes = dict(cf_role='timeseries_id')
     return cube
 
 
 def add_station(cube, station):
     """Add a station Auxiliary Coordinate and its name."""
-    kw = dict(var_name="station", long_name="station name")
+    kw = dict(var_name="station", long_name="station_code")
     coord = iris.coords.AuxCoord(station, **kw)
     cube.add_aux_coord(coord)
     return cube
@@ -531,48 +532,120 @@ def remove_ssh(cube):
     return cube
 
 
-def save_timeseries(df, outfile, standard_name, **kw):
-    """http://cfconventions.org/Data/cf-convetions/cf-conventions-1.6/build
-    /cf-conventions.html#idp5577536"""
-    cube = as_cube(df, calendars={1: cf_units.CALENDAR_GREGORIAN})
-    cube.coord("index").rename("time")
+def cube2series(cube):
+    """
+    Take a cube data and metadata and return a rich `pandas.Series`.
 
-    # Cast all station names to strings and renamed it.
-    columns = cube.coord('columns').points.astype(str).tolist()
-    cube.coord('columns').points = columns
-    cube.coord("columns").rename("station name")
-    cube.rename(standard_name)
-    cube.coord("station name").var_name = 'station'
+    """
+    time = cube.coord('time')
+    index = time.units.num2date(time.points)
+    data = cube.data.squeeze()
+    series = pd.Series(data=data, index=index)
+    series._metadata = dict(
+        station=cube.coord('station').points[0],
+        station_name=cube.coord('station_name').points[0],
+        station_code=cube.coord('station_code').points[0],
+        sensor=cube.coord('sensor').points[0],
+        lon=cube.coord('lon').points[0],
+        lat=cube.coord('lat').points[0],
+        depth=cube.coord('depth').points[0],
+        standard_name=cube.standard_name,
+        units=cube.units
+        )
+    return series
 
-    longitude = kw.get("longitude")
-    latitude = kw.get("latitude")
-    if longitude is not None:
-        longitude = iris.coords.AuxCoord(np.float_(longitude),
-                                         var_name="lon",
-                                         standard_name="longitude",
-                                         long_name="station longitude",
-                                         units=cf_units.Unit("degrees"))
-        cube.add_aux_coord(longitude, data_dims=1)
 
-    if latitude is not None:
-        latitude = iris.coords.AuxCoord(np.float_(latitude),
-                                        var_name="lat",
-                                        standard_name="latitude",
-                                        long_name="station latitude",
-                                        units=cf_units.Unit("degrees"))
-        cube.add_aux_coord(latitude, data_dims=1)
+def series2cube(series, attr=None):
+    """
+    Convert a metadata rich `pandas.Series` to a CF compliant timeSeries.
+    http://cfconventions.org/Data/cf-convetions/cf-conventions-1.6/build/cf-conventions.html#idp5577536
 
-    cube.units = kw.get('units')
+    The metadata expected are: standard_name, units, station_code,
+    station_name, station, sensor, lon, lat, depth and time.
+    The last two are added as cube coords while the rest are added as either
+    auxiliary coords or cube metadata.
 
-    station_attr = kw.get("station_attr")
-    if station_attr is not None:
-        cube.coord("station name").attributes.update(station_attr)
+    """
 
-    cube_attr = kw.get("cube_attr")
-    if cube_attr is not None:
-        cube.attributes.update(cube_attr)
+    data = np.ma.masked_invalid(series.values)
+    cube = iris.cube.Cube(
+        data=np.atleast_2d(data),
+        standard_name=series._metadata['standard_name'],
+        units=series._metadata['units'])
+    if attr:
+        cube.attributes.update(attr)
 
-    iris.save(cube, outfile)
+    _add_iris_coord(cube,
+                    name='time',
+                    points=series.index,
+                    dim=1,
+                    units=cf_units.Unit('hours since epoch',
+                                        calendar=cf_units.CALENDAR_GREGORIAN))
+
+    _add_iris_coord(cube,
+                    name='depth',
+                    points=np.float_(series._metadata['depth']),
+                    dim=0,
+                    units=cf_units.Unit('m'))
+
+    _add_iris_coord(cube,
+                    name='station_code',
+                    points=int(series._metadata['station_code']),
+                    dim=0, aux=True)
+
+    _add_iris_coord(cube,
+                    name='station',
+                    points=str(series._metadata['station']),
+                    dim=0, aux=True)
+
+    _add_iris_coord(cube,
+                    name='sensor',
+                    points=str(series._metadata['sensor']),
+                    dim=0, aux=True)
+
+    _add_iris_coord(cube,
+                    name='station_name',
+                    points=str(series._metadata['station_name']),
+                    dim=0, aux=True)
+
+    _add_iris_coord(cube,
+                    name='lon',
+                    points=np.float_(series._metadata['lon']),
+                    units=cf_units.Unit('degrees'),
+                    dim=0, aux=True)
+
+    _add_iris_coord(cube,
+                    name='lat',
+                    points=np.float_(series._metadata['lat']),
+                    units=cf_units.Unit('degrees'),
+                    dim=0, aux=True)
+    return cube
+
+
+def _add_iris_coord(cube, name, points, dim, units=None, aux=False):
+    """
+    Helper function to add a coordinate to an existing cube.
+
+    """
+    # Convert pandas datetime objects to python datetime obejcts.
+    if isinstance(points, pd.tseries.index.DatetimeIndex):
+        points = points.to_pydatetime()
+
+    # Convert datetime objects to Iris' current datetime representation.
+    if isinstance(points, np.ndarray) and points.dtype == object:
+        dt_types = (datetime, netcdftime.datetime)
+        if all([isinstance(i, dt_types) for i in points]):
+            points = units.date2num(points)
+
+    points = np.array(points)
+    if np.issubdtype(points.dtype, np.number) and not aux:
+        coord = DimCoord(points, units=units)
+        coord.rename(name)
+        cube.add_dim_coord(coord, dim)
+    else:
+        coord = AuxCoord(points, units=units)
+        coord.rename(name)
+        cube.add_aux_coord(coord, dim)
 
 
 def make_tree(cube):
@@ -612,7 +685,7 @@ def is_water(cube, min_var=0.01):
     (Accounts for wet-and-dry models.)
 
     """
-    arr = ma.masked_invalid(cube.data).filled(fill_value=0)
+    arr = np.ma.masked_invalid(cube.data).filled(fill_value=0)
     if arr.std() <= min_var:
         return False
     return True
