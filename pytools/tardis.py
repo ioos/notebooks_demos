@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 from datetime import datetime
 
 import numpy as np
-import pandas as pd
 import numpy.ma as ma
 from scipy.spatial import cKDTree as KDTree
 
@@ -491,13 +490,13 @@ def ensure_timeseries(cube):
     _make_aux_coord(cube, axis='X')
 
     cube.attributes.update({'featureType': 'timeSeries'})
-    cube.coord("station_code").attributes = dict(cf_role='timeseries_id')
+    cube.coord("station name").attributes = dict(cf_role='timeseries_id')
     return cube
 
 
 def add_station(cube, station):
     """Add a station Auxiliary Coordinate and its name."""
-    kw = dict(var_name="station", long_name="station_code")
+    kw = dict(var_name="station", long_name="station name")
     coord = iris.coords.AuxCoord(station, **kw)
     cube.add_aux_coord(coord)
     return cube
@@ -532,56 +531,47 @@ def remove_ssh(cube):
     return cube
 
 
-def save_timeseries(observations, outfile, standard_name, **kw):
-    """
-    http://cfconventions.org/Data/cf-convetions/cf-conventions-1.6/build/cf-conventions.html#idp5577536
-
-    """
-    stations = [obs._metadata['station'].split(':')[-1] for
-                obs in observations]
-    long_name = [obs._metadata['name'] for obs in observations]
-
-    df = pd.DataFrame(observations, index=stations).T
-
+def save_timeseries(df, outfile, standard_name, **kw):
+    """http://cfconventions.org/Data/cf-convetions/cf-conventions-1.6/build
+    /cf-conventions.html#idp5577536"""
     cube = as_cube(df, calendars={1: cf_units.CALENDAR_GREGORIAN})
-    cube.coord('index').rename('time')
+    cube.coord("index").rename("time")
 
-    cube.coord('columns').points = stations
-    cube.coord('columns').rename('station_code')
+    # Cast all station names to strings and renamed it.
+    columns = cube.coord('columns').points.astype(str).tolist()
+    cube.coord('columns').points = columns
+    cube.coord("columns").rename("station name")
     cube.rename(standard_name)
-    cube.coord('station_code').var_name = 'station'
+    cube.coord("station name").var_name = 'station'
 
-    long_names = iris.coords.AuxCoord(long_name,
-                                      var_name='station_name')
-    cube.add_aux_coord(long_names, data_dims=1)
-
-    longitude = kw.get('longitude')
-    latitude = kw.get('latitude')
+    longitude = kw.get("longitude")
+    latitude = kw.get("latitude")
     if longitude is not None:
         longitude = iris.coords.AuxCoord(np.float_(longitude),
-                                         var_name='lon',
-                                         standard_name='longitude',
-                                         long_name='station longitude',
-                                         units=cf_units.Unit('degrees'))
+                                         var_name="lon",
+                                         standard_name="longitude",
+                                         long_name="station longitude",
+                                         units=cf_units.Unit("degrees"))
         cube.add_aux_coord(longitude, data_dims=1)
 
     if latitude is not None:
         latitude = iris.coords.AuxCoord(np.float_(latitude),
-                                        var_name='lat',
-                                        standard_name='latitude',
-                                        long_name='station latitude',
-                                        units=cf_units.Unit('degrees'))
+                                        var_name="lat",
+                                        standard_name="latitude",
+                                        long_name="station latitude",
+                                        units=cf_units.Unit("degrees"))
         cube.add_aux_coord(latitude, data_dims=1)
 
     cube.units = kw.get('units')
 
-    station_attr = kw.get('station_attr')
+    station_attr = kw.get("station_attr")
     if station_attr is not None:
-        cube.coord('station_code').attributes.update(station_attr)
+        cube.coord("station name").attributes.update(station_attr)
 
-    cube_attr = kw.get('cube_attr')
+    cube_attr = kw.get("cube_attr")
     if cube_attr is not None:
         cube.attributes.update(cube_attr)
+
     iris.save(cube, outfile)
 
 
