@@ -1,7 +1,7 @@
 
 date:
-    start: 2016-6-29 00:00:00
-    stop: 2016-7-7 00:00:00
+    start: 2016-8-16 00:00:00
+    stop: 2016-8-29 00:00:00
 
 run_name: 'latest'
 
@@ -21,20 +21,3 @@ cf_names:
     - pseudo_equivalent_potential_temperature
 
 units: 'celsius'
-
-titles:
-    BTMPB: 'http://oos.soest.hawaii.edu/thredds/dodsC/hioos/tide_pac'
-    CBOFS: 'http://opendap.co-ops.nos.noaa.gov/thredds/dodsC/CBOFS/fmrc/Aggregated_7_day_CBOFS_Fields_Forecast_best.ncd'
-    COAWST_4: 'http://geoport.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd'
-    ESPRESSO: 'http://tds.marine.rutgers.edu/thredds/dodsC/roms/espresso/2013_da/his_Best/ESPRESSO_Real-Time_v2_History_Best_Available_best.ncd'
-    ESTOFS: 'http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic'
-    HYCOM: 'http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global'
-    NECOFS_GOM3_FVCOM: 'http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_GOM3_FORECAST.nc'
-    NECOFS_GOM3_WAVE: 'http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_WAVE_FORECAST.nc'
-    SABGOM: 'http://omgsrv1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/sabgom/SABGOM_Forecast_Model_Run_Collection_best.ncd'
-    SABGOM_ARCHIVE: 'http://omgarch1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/sabgom/SABGOM_Forecast_Model_Run_Collection_best.ncd'
-    TBOFS: 'http://opendap.co-ops.nos.noaa.gov/thredds/dodsC/TBOFS/fmrc/Aggregated_7_day_TBOFS_Fields_Forecast_best.ncd'
-    USEAST: 'http://omgsrv1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/us_east/US_East_Forecast_Model_Run_Collection_best.ncd'
-    USF_FVCOM: 'http://crow.marine.usf.edu:8080/thredds/dodsC/FVCOM-Nowcast-Agg.nc'
-    USF_ROMS: 'http://crow.marine.usf.edu:8080/thredds/dodsC/WFS_ROMS_NF_model/USF_Ocean_Circulation_Group_West_Florida_Shelf_Daily_ROMS_Nowcast_Forecast_Model_Data_best.ncd'
-    USF_SWAN: 'http://crow.marine.usf.edu:8080/thredds/dodsC/WFS_SWAN_NF_model/USF_Ocean_Circulation_Group_West_Florida_Shelf_Daily_SWAN_Nowcast_Forecast_Wave_Model_Data_best.ncd'
