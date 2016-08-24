@@ -422,7 +422,8 @@ def get_model_name(cube, url):
         ESPRESSO='http://tds.marine.rutgers.edu/thredds/dodsC/roms/espresso/2013_da/his_Best/ESPRESSO_Real-Time_v2_History_Best_Available_best.ncd',  # noqa
         ESTOFS='http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic',  # noqa
         HYCOM='http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global',  # noqa
-        NECOFS_GOM3_FVCOM='http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_GOM3_FORECAST.nc',  # noqa
+        NECOFS_GOM3='http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_GOM3_FORECAST.nc',  # noqa
+        NECOFS_MassBay='http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc',  # noqa
         NECOFS_GOM3_WAVE='http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_WAVE_FORECAST.nc',  # noqa
         SABGOM='http://omgsrv1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/sabgom/SABGOM_Forecast_Model_Run_Collection_best.ncd',  # noqa
         SABGOM_ARCHIVE='http://omgarch1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/sabgom/SABGOM_Forecast_Model_Run_Collection_best.ncd',  # noqa
