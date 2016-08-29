@@ -1,66 +1,66 @@
-09:37:39 INFO: Saving data inside directory /home/filipe/IOOS/notebooks_demos/notebooks/boston_light_swim/latest
-09:37:39 INFO: *********************** Run information ************************
-09:37:39 INFO: Run date: 2016-08-25 12:37:39
-09:37:39 INFO: Start: 2016-08-16 00:00:00
-09:37:39 INFO: Stop: 2016-08-29 00:00:00
-09:37:39 INFO: Bounding box: -71.30, 42.03,-70.57, 42.63
-09:37:39 INFO: ********************* Catalog information **********************
-09:37:39 INFO: ***************************** CSW ******************************
-09:37:39 INFO: URL: http://www.ngdc.noaa.gov/geoportal/csw
-09:37:40 INFO: CSW version: 2.0.2
-09:37:40 INFO: Number of datasets available: 1
-09:37:40 INFO: HYbrid Coordinate Ocean Model (HYCOM): Global
-09:37:40 INFO: ***************************** DAP ******************************
-09:37:40 INFO: http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global.html
-09:37:40 INFO: ***************************** CSW ******************************
-09:37:40 INFO: URL: http://geoport.whoi.edu/csw
-09:37:41 INFO: CSW version: 2.0.2
-09:37:41 INFO: Number of datasets available: 3
-09:37:41 INFO: COAWST Forecast System : USGS : US East Coast and Gulf of Mexico (Experimental)
-09:37:41 INFO: NECOFS GOM3 (FVCOM) - Northeast US - Latest Forecast
-09:37:41 INFO: NECOFS Massachusetts (FVCOM) - Massachusetts Coastal - Latest Forecast
-09:37:41 INFO: ***************************** DAP ******************************
-09:37:41 INFO: http://geoport-dev.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd.html
-09:37:41 INFO: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc.html
-09:37:41 INFO: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_GOM3_FORECAST.nc.html
-09:37:50 INFO: ************************* Filtered DAP *************************
-09:37:50 INFO: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc.html
-09:37:50 INFO: http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global.html
-09:37:50 INFO: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_GOM3_FORECAST.nc.html
-09:37:50 INFO: http://geoport-dev.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd.html
-09:37:52 INFO: ******************* NDBC Collector offerings *******************
-09:37:52 INFO: National Data Buoy Center SOS: 983 offerings
-09:38:32 INFO: ********************* Collector offerings **********************
-09:38:32 INFO: NOAA.NOS.CO-OPS SOS: 1108 offerings
-09:38:34 INFO: ************************* Observations *************************
-09:38:35 INFO: **************************** Models ****************************
-09:38:35 INFO: 
-[Reading url 1/4]: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc
-09:38:49 INFO: 
-[Reading url 2/4]: http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global
-09:38:53 INFO: 
+12:27:29 INFO: Saving data inside directory /home/filipe/IOOS/notebooks_demos/notebooks/boston_light_swim/latest
+12:27:29 INFO: *********************** Run information ************************
+12:27:29 INFO: Run date: 2016-08-29 15:27:29
+12:27:29 INFO: Start: 2016-08-16 00:00:00
+12:27:29 INFO: Stop: 2016-08-29 00:00:00
+12:27:29 INFO: Bounding box: -71.30, 42.03,-70.57, 42.63
+12:27:29 INFO: ********************* Catalog information **********************
+12:27:29 INFO: ***************************** CSW ******************************
+12:27:29 INFO: URL: http://www.ngdc.noaa.gov/geoportal/csw
+12:27:30 INFO: CSW version: 2.0.2
+12:27:30 INFO: Number of datasets available: 1
+12:27:30 INFO: HYbrid Coordinate Ocean Model (HYCOM): Global
+12:27:30 INFO: ***************************** DAP ******************************
+12:27:30 INFO: http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global.html
+12:27:30 INFO: ***************************** CSW ******************************
+12:27:30 INFO: URL: http://geoport.whoi.edu/csw
+12:27:31 INFO: CSW version: 2.0.2
+12:27:31 INFO: Number of datasets available: 3
+12:27:31 INFO: COAWST Forecast System : USGS : US East Coast and Gulf of Mexico (Experimental)
+12:27:31 INFO: NECOFS Massachusetts (FVCOM) - Massachusetts Coastal - Latest Forecast
+12:27:31 INFO: NECOFS GOM3 (FVCOM) - Northeast US - Latest Forecast
+12:27:31 INFO: ***************************** DAP ******************************
+12:27:31 INFO: http://geoport-dev.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd.html
+12:27:31 INFO: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc.html
+12:27:31 INFO: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_GOM3_FORECAST.nc.html
+12:27:38 INFO: ************************* Filtered DAP *************************
+12:27:38 INFO: http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global.html
+12:27:38 INFO: http://geoport-dev.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd.html
+12:27:38 INFO: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_GOM3_FORECAST.nc.html
+12:27:38 INFO: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc.html
+12:27:40 INFO: ******************* NDBC Collector offerings *******************
+12:27:40 INFO: National Data Buoy Center SOS: 983 offerings
+12:27:47 INFO: ********************* Collector offerings **********************
+12:27:47 INFO: NOAA.NOS.CO-OPS SOS: 1109 offerings
+12:27:48 INFO: ************************* Observations *************************
+12:27:48 INFO: **************************** Models ****************************
+12:27:48 INFO: 
+[Reading url 1/4]: http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global
+12:27:51 INFO: 
+[Reading url 2/4]: http://geoport-dev.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd
+12:28:21 INFO: 
 [Reading url 3/4]: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_GOM3_FORECAST.nc
-09:39:04 INFO: 
-[Reading url 4/4]: http://geoport-dev.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd
-09:40:07 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/boston_light_swim/latest/latest-HYCOM.nc 
-09:40:11 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
-09:40:18 INFO: [Water  ] Buoy A0102 - Mass. Bay/Stellwagen
-09:40:39 INFO: [Land   ] Boston, MA
-09:40:39 INFO: Finished processing [HYCOM]
-09:40:39 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/boston_light_swim/latest/latest-NECOFS_GOM3.nc 
-09:40:44 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
-09:40:51 INFO: [Water  ] Buoy A0102 - Mass. Bay/Stellwagen
-09:40:57 INFO: [Water  ] Boston, MA
-09:40:57 INFO: Finished processing [NECOFS_GOM3]
-09:40:57 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/boston_light_swim/latest/latest-COAWST_USGS.nc 
-09:41:10 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
-09:41:22 INFO: [Water  ] Buoy A0102 - Mass. Bay/Stellwagen
-09:43:09 INFO: [Water  ] Boston, MA
-09:43:26 INFO: Finished processing [COAWST_USGS]
-09:43:26 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/boston_light_swim/latest/latest-NECOFS_MassBay.nc 
-09:43:34 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
-09:43:39 INFO: [Water  ] Buoy A0102 - Mass. Bay/Stellwagen
-09:43:45 INFO: [Water  ] Boston, MA
-09:43:45 INFO: Finished processing [NECOFS_MassBay]
-09:43:45 INFO: 6.12 minutes
-09:43:45 INFO: EOF
+12:28:31 INFO: 
+[Reading url 4/4]: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc
+12:28:46 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/boston_light_swim/latest/fmrc-coawst_4_use_best.nc 
+12:28:58 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
+12:29:10 INFO: [Water  ] Buoy A0102 - Mass. Bay/Stellwagen
+12:30:47 INFO: [Water  ] Boston, MA
+12:31:03 INFO: Finished processing [fmrc-coawst_4_use_best]
+12:31:03 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/boston_light_swim/latest/pacioos_hycom-global.nc 
+12:31:12 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
+12:31:15 INFO: [Water  ] Buoy A0102 - Mass. Bay/Stellwagen
+12:31:29 INFO: [Land   ] Boston, MA
+12:31:29 INFO: Finished processing [pacioos_hycom-global]
+12:31:29 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/boston_light_swim/latest/Forecasts-NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc 
+12:31:32 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
+12:31:36 INFO: [Water  ] Buoy A0102 - Mass. Bay/Stellwagen
+12:31:40 INFO: [Water  ] Boston, MA
+12:31:40 INFO: Finished processing [Forecasts-NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST]
+12:31:40 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/boston_light_swim/latest/FVCOM_Forecasts-NECOFS_GOM3_FORECAST.nc 
+12:31:44 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
+12:31:47 INFO: [Water  ] Buoy A0102 - Mass. Bay/Stellwagen
+12:31:51 INFO: [Water  ] Boston, MA
+12:31:51 INFO: Finished processing [FVCOM_Forecasts-NECOFS_GOM3_FORECAST]
+12:31:51 INFO: 4.39 minutes
+12:31:51 INFO: EOF
