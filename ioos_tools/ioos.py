@@ -467,7 +467,11 @@ def get_model_name(url):
     if fname.endswith('.ncd') or fname.endswith('.nc') :
         fname = fname.rstrip('.ncd').rstrip('.nc')
 
-    return '{}-{}'.format('_'.join(names), fname)
+    if names:
+        mod_name = '{}-{}'.format('_'.join(names), fname)
+    else:
+        mod_name = '{}'.format(fname)
+    return mod_name
 
 
 def is_station(url):
@@ -537,7 +541,7 @@ def load_ncs(config):
         if 'OBS_DATA' in fname:
             continue
         else:
-            model = fname.split('.')[0].split('-')[-1]
+            model = fname.split('.')[0].split('/')[-1].split('-')[-1]
             df = nc2df(fname, columns_name='station_code')
             # FIXME: Horrible work around duplicate times.
             if len(df.index.values) != len(np.unique(df.index.values)):
