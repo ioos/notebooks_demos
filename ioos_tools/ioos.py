@@ -550,7 +550,7 @@ def load_ncs(config):
             kw = dict(method='time', limit=2)
             df = df.reindex(index).interpolate(**kw).ix[index]
             dfs.update({model: df})
-    dfs = pd.Panel.from_dict(dfs, orient='items', intersect=True).swapaxes(0, 2)
+    dfs = pd.Panel.from_dict(dfs, orient='items', intersect=False).swapaxes(0, 2)
     return dfs
 
 
