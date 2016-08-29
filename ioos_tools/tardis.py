@@ -162,6 +162,10 @@ def get_surface(cube):
     """
     conventions = cube.attributes.get('Conventions', 'None')
 
+    # Short-circuit if cube does not have a z-axis.
+    if 'UGRID' not in conventions.upper() and cube.ndim == 3:
+        return cube
+
     idx = _get_surface_idx(cube)
     if cube.ndim == 4 or 'UGRID' in conventions.upper():
         return cube[:, int(idx), ...]
