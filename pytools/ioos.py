@@ -20,6 +20,7 @@ from iris.pandas import as_data_frame
 from contextlib import contextmanager
 from lxml import etree
 from owslib import fes
+from owslib.ows import ExceptionReport
 
 from .tardis import cube2series
 
@@ -282,6 +283,62 @@ def pyoos2df(collector, station_id, df_name=None):
     return df
 
 
+def collector2table(collector, config, col='sea_water_temperature (C)'):
+    """
+    collector2table returns the station stable as a DataFrame.
+    columns are station, sensor, lon, lat, and the index is the station
+    number.
+
+    Alternative to `ndbc2df` and `pyoos2df`.
+
+    """
+    import copy
+    from io import BytesIO
+
+    c = copy.copy(collector)
+    c.features = None
+    try:
+        response = c.raw(responseFormat="text/csv")
+    except ExceptionReport:
+        response = c.filter(end=c.start_time).raw(responseFormat="text/csv")
+    df = pd.read_csv(BytesIO(response), parse_dates=True)
+    g = df.groupby('station_id')
+    df = dict()
+    for station in g.groups.keys():
+        df.update({station: g.get_group(station).iloc[0]})
+    df = pd.DataFrame.from_dict(df).T
+
+    names = []
+    for sta in df.index:
+        names.extend([offering.description for offering in
+                      c.server.offerings if sta == offering.name])
+    df['name'] = names
+
+    observations = []
+    for k, row in df.iterrows():
+        station_id = row['station_id'].split(':')[-1]
+        c.features = [station_id]
+        response = c.raw(responseFormat="text/csv")
+        kw = dict(parse_dates=True, index_col='date_time')
+        data = pd.read_csv(BytesIO(response), **kw).reset_index()
+        data = data.drop_duplicates(subset='date_time').set_index('date_time')
+        series = data[col]
+        series._metadata = dict(
+            station=row.get('station_id'),
+            station_name=row.get('name'),
+            station_code=int(row.get('station_id').split(':')[-1]),
+            sensor=row.get('sensor_id'),
+            lon=row.get('longitude (degree)'),
+            lat=row.get('latitude (degree)'),
+            depth=row.get('depth (m)'),
+            standard_name=config['sos_name'],
+            units=config['units']
+        )
+
+        observations.append(series)
+    return observations
+
+
 def _extract_columns(name, cube):
     """
     Workaround to extract data from a cube and create a dataframe
@@ -391,55 +448,26 @@ def _sanitize(name):
     return name
 
 
-def get_model_name(cube, url):
+def get_model_name(url):
     """
-    Return a model short and long name from a cube.
+    Return a model short name based on its endpoint.
 
     Examples
     --------
-    >>> import iris
-    >>> import warnings
     >>> url = ('http://omgsrv1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/sabgom/'
     ...        'SABGOM_Forecast_Model_Run_Collection_best.ncd')
-    >>> with warnings.catch_warnings():
-    ...     warnings.simplefilter("ignore")  # Suppress iris warnings.
-    ...     cube = iris.load_cube(url, "sea_water_potential_temperature")
-    >>> get_model_name(cube, url)
-    ('SABGOM', 'ROMS/TOMS 3.0 - South-Atlantic Bight and Gulf of Mexico')
+    >>> get_model_name(url)
+    'fmrc-SABGOM_Forecast_Model_Run_Collection_best.nc'
 
     """
-    url = parse_url(url)
-    # [model_full_name]: if there is no title assign the URL.
-    try:
-        model_full_name = cube.attributes.get('title', url)
-    except AttributeError:
-        model_full_name = url
-    # [mod_name]: first searches the titles dictionary, if not try to guess.
-    titles = dict(
-        BTMPB='http://oos.soest.hawaii.edu/thredds/dodsC/hioos/tide_pac',  # noqa
-        CBOFS='http://opendap.co-ops.nos.noaa.gov/thredds/dodsC/CBOFS/fmrc/Aggregated_7_day_CBOFS_Fields_Forecast_best.ncd',  # noqa
-        COAWST_4='http://geoport.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd',  # noqa
-        ESPRESSO='http://tds.marine.rutgers.edu/thredds/dodsC/roms/espresso/2013_da/his_Best/ESPRESSO_Real-Time_v2_History_Best_Available_best.ncd',  # noqa
-        ESTOFS='http://geoport-dev.whoi.edu/thredds/dodsC/estofs/atlantic',  # noqa
-        HYCOM='http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global',  # noqa
-        NECOFS_GOM3='http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_GOM3_FORECAST.nc',  # noqa
-        NECOFS_MassBay='http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc',  # noqa
-        NECOFS_GOM3_WAVE='http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_WAVE_FORECAST.nc',  # noqa
-        SABGOM='http://omgsrv1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/sabgom/SABGOM_Forecast_Model_Run_Collection_best.ncd',  # noqa
-        SABGOM_ARCHIVE='http://omgarch1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/sabgom/SABGOM_Forecast_Model_Run_Collection_best.ncd',  # noqa
-        TBOFS='http://opendap.co-ops.nos.noaa.gov/thredds/dodsC/TBOFS/fmrc/Aggregated_7_day_TBOFS_Fields_Forecast_best.ncd',  # noqa
-        USEAST='http://omgsrv1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/us_east/US_East_Forecast_Model_Run_Collection_best.ncd',  # noqa
-        USF_FVCOM='http://crow.marine.usf.edu:8080/thredds/dodsC/FVCOM-Nowcast-Agg.nc',  # noqa
-        USF_ROMS='http://crow.marine.usf.edu:8080/thredds/dodsC/WFS_ROMS_NF_model/USF_Ocean_Circulation_Group_West_Florida_Shelf_Daily_ROMS_Nowcast_Forecast_Model_Data_best.ncd',  # noqa
-        USF_SWAN='http://crow.marine.usf.edu:8080/thredds/dodsC/WFS_SWAN_NF_model/USF_Ocean_Circulation_Group_West_Florida_Shelf_Daily_SWAN_Nowcast_Forecast_Wave_Model_Data_best.ncd'  # noqa
-            )
-    for mod_name, uri in titles.items():
-        if url == uri:
-            return mod_name, model_full_name
-    warnings.warn('Model %s not in the list.  Guessing' % url)
-    mod_name = _guess_name(model_full_name)
-    mod_name = _sanitize(mod_name)
-    return mod_name, model_full_name
+    names = url.split('dodsC/')[-1].split('/')
+    names, fname = names[:-1], names[-1]
+    names = [name for name in names if name.lower() not in fname.lower()]
+
+    if fname.endswith('.ncd') or fname.endswith('.nc') :
+        fname = fname.rstrip('.ncd').rstrip('.nc')
+
+    return '{}-{}'.format('_'.join(names), fname)
 
 
 def is_station(url):
@@ -474,9 +502,8 @@ def nc2df(fname, columns_name='station_code'):
 
 
 def stations_keys(config, key='station_name'):
-    fname = '{}-{}.nc'.format
     save_dir = os.path.join(os.path.abspath(config['run_name']))
-    fname = os.path.join(save_dir, fname(config['run_name'], 'OBS_DATA'))
+    fname = os.path.join(save_dir, '{}.nc'.format('OBS_DATA'))
     cubes = iris.load_raw(fname)
     observations = [cube2series(cube) for cube in cubes]
     return {obs._metadata['station_code']: obs._metadata[key] for
@@ -484,15 +511,15 @@ def stations_keys(config, key='station_name'):
 
 
 def load_ncs(config):
-    fname = '{}-{}.nc'.format
     save_dir = os.path.join(os.path.abspath(config['run_name']))
-    fname = os.path.join(save_dir, fname(config['run_name'], 'OBS_DATA'))
+    fname = '{}.nc'.format
+    fname = os.path.join(save_dir, fname('OBS_DATA'))
 
     cubes = iris.load_raw(fname)
     data = [cube2series(cube) for cube in cubes]
     index = pd.date_range(start=config['date']['start'].replace(tzinfo=None),
-                      end=config['date']['stop'].replace(tzinfo=None),
-                      freq='1H')
+                          end=config['date']['stop'].replace(tzinfo=None),
+                          freq='1H')
     # Preserve metadata with `reindex`.
     observations = []
     for series in data:
@@ -519,8 +546,8 @@ def load_ncs(config):
             kw = dict(method='time', limit=2)
             df = df.reindex(index).interpolate(**kw).ix[index]
             dfs.update({model: df})
-
-    return pd.Panel.fromDict(dfs).swapaxes(0, 2)
+    dfs = pd.Panel.from_dict(dfs, orient='items', intersect=True).swapaxes(0, 2)
+    return dfs
 
 
 # Web/Misc.
