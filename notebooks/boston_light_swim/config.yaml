@@ -24,6 +24,7 @@ units: 'celsius'
 
 catalogs:
     - http://www.ngdc.noaa.gov/geoportal/csw
+    - https://dev-catalog.ioos.us/csw
     - http://geoport.whoi.edu/csw
 
 # See https://raw.githubusercontent.com/OSGeo/Cat-Interop/master/LinkPropertyLookupTable.csv
