@@ -1,7 +1,6 @@
 name: IOOS
 channels:
     - conda-forge
-    - ioos
 dependencies:
     - python=3.5
     - anaconda-navigator
@@ -60,6 +59,5 @@ dependencies:
     - statsmodels
     - sympy
     - thredds_crawler
-    - utilities
     - xarray
     - xlrd
