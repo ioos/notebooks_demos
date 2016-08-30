@@ -23,6 +23,7 @@ dependencies:
     - gridgeo
     - gsw
     - iris
+    - jsanimation
     - jupyter
     - matplotlib
     - mpld3
