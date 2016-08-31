@@ -2,7 +2,6 @@ from __future__ import absolute_import, division, print_function
 
 import os
 import fnmatch
-import warnings
 import requests
 import numpy as np
 import pandas as pd
@@ -464,7 +463,7 @@ def get_model_name(url):
     names, fname = names[:-1], names[-1]
     names = [name for name in names if name.lower() not in fname.lower()]
 
-    if fname.endswith('.ncd') or fname.endswith('.nc') :
+    if fname.endswith('.ncd') or fname.endswith('.nc'):
         fname = fname.rstrip('.ncd').rstrip('.nc')
 
     if names:
@@ -550,7 +549,8 @@ def load_ncs(config):
             kw = dict(method='time', limit=2)
             df = df.reindex(index).interpolate(**kw).ix[index]
             dfs.update({model: df})
-    dfs = pd.Panel.from_dict(dfs, orient='items', intersect=False).swapaxes(0, 2)
+    kw = dict(orient='items', intersect=False)
+    dfs = pd.Panel.from_dict(dfs, **kw).swapaxes(0, 2)
     return dfs
 
 

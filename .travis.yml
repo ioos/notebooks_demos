@@ -1,0 +1,19 @@
+language: python
+
+sudo: false
+
+before_install:
+    - wget http://bit.ly/miniconda -O miniconda.sh
+    - bash miniconda.sh -b -p $HOME/miniconda
+    - export PATH="$HOME/miniconda/bin:$PATH"
+    - conda update --yes --all
+    - conda config --add channels conda-forge --force
+
+install:
+    - conda env create environment.yml
+    - source activate IOOS
+    - conda install flake8 pytest --yes
+
+script:
+    - cd tests && python test_notebooks.py
+    - find . -type f -name "*.py" ! -name 'conf.py' | xargs flake8 --max-line-length=100
