@@ -541,7 +541,7 @@ def load_ncs(config):
         if 'OBS_DATA' in fname:
             continue
         else:
-            model = fname.split('.')[0].split('/')[-1].split('-')[-1]
+            model= os.path.splitext(os.path.split(fname)[-1])[0].split('-')[-1]
             df = nc2df(fname, columns_name='station_code')
             # FIXME: Horrible work around duplicate times.
             if len(df.index.values) != len(np.unique(df.index.values)):
