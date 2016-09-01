@@ -292,14 +292,15 @@ def collector2table(collector, config, col='sea_water_temperature (C)'):
 
     """
     import copy
-    from io import BytesIO
 
     c = copy.copy(collector)
     c.features = None
     try:
         response = c.raw(responseFormat="text/csv")
     except ExceptionReport:
+        end = c.end_time
         response = c.filter(end=c.start_time).raw(responseFormat="text/csv")
+        c.filter(end=end)
     df = pd.read_csv(BytesIO(response), parse_dates=True)
     g = df.groupby('station_id')
     df = dict()
