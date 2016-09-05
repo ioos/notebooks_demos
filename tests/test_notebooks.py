@@ -28,12 +28,20 @@ def notebook_tester(fname):
 
 if __name__ == '__main__':
     import os
+    import sys
     import glob
 
     rootpath = os.path.join(os.path.abspath(os.path.pardir), 'notebooks')
     nblist = glob.glob(os.path.join(rootpath, '**', '*.ipynb'))
 
+    fail = False
     for ipynb in sorted(nblist):
         print('[Running notebook]: {}'.format(ipynb))
         ret = notebook_tester(ipynb)
+        if 'Failed' in ret:
+            fail = True
         print('{}\n'.format(ret))
+    if fail:
+        sys.exit(1)
+    else:
+        sys.exit(0)
