@@ -6,7 +6,8 @@ from pandas import DataFrame
 
 __all__ = ['both_valid',
            'mean_bias',
-           'median_bias',
+           'mean_absolute_bias',
+           'median_absolute_bias',
            'rmse',
            'r2',
            'apply_skill',
@@ -31,12 +32,31 @@ def both_valid(x, y):
     return np.logical_and(~mask_x, ~mask_y)
 
 
-def mean_bias(obs, model):
+def mean_bias(y_true, y_pred,
+              sample_weight=None,
+              multioutput='uniform_average'):
+    """Modified from `mean_absolute_error` to preserve the bias sign."""
+    from sklearn.metrics.regression import _check_reg_targets
+
+    y_type, y_true, y_pred, multioutput = _check_reg_targets(
+        y_true, y_pred, multioutput)
+    output_errors = np.average(np.abs(y_pred - y_true),
+                               weights=sample_weight, axis=0)
+    output_errors *= np.sign(np.average(y_pred - y_true))
+    if multioutput == 'raw_values':
+        return output_errors
+    elif multioutput == 'uniform_average':
+        # Pass None as weights to np.average: uniform mean.
+        multioutput = None
+    return np.average(output_errors, weights=multioutput)
+
+
+def mean_absolute_bias(obs, model):
     from sklearn.metrics import mean_absolute_error
     return mean_absolute_error(obs, model)
 
 
-def median_bias(obs, model):
+def median_absolute_bias(obs, model):
     from sklearn.metrics import median_absolute_error
     return median_absolute_error(obs, model)
 
