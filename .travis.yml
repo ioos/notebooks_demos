@@ -25,8 +25,8 @@ install:
 
 script:
     - if [[ $TEST_TARGET == 'default' ]]; then
-        find . -type f -name "*.py" ! -name 'conf.py' | xargs flake8 --max-line-length=100
+        find . -type f -name "*.py" ! -name 'conf.py' | xargs flake8 --max-line-length=100 ;
       fi
     - if [[ $TEST_TARGET == 'notebooks' ]]; then
-        cd tests && python test_notebooks.py
+        cd tests && python test_notebooks.py ;
       fi
