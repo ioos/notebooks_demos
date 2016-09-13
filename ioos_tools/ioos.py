@@ -34,6 +34,8 @@ style = os.path.join(rootpath, 'data', 'style.css')
 
 def parse_config(config_file):
     """Parse the yaml file with the configuration for each run."""
+    from datetime import date, datetime, timedelta
+
     import yaml
     import pytz
     import cf_units
@@ -41,9 +43,19 @@ def parse_config(config_file):
     with open(config_file, 'r') as f:
         config = yaml.safe_load(f)
 
-    # 1-week start of data normalized to UTC.
-    config['date']['start'] = config['date']['start'].replace(tzinfo=pytz.utc)
-    config['date']['stop'] = config['date']['stop'].replace(tzinfo=pytz.utc)
+    # Dates are normalized to UTC.
+    dt = timedelta(days=3)
+    start = config['date']['start']
+    stop = config['date']['stop']
+    if not config['date']['start'] and not config['date']['stop']:
+        start = datetime.combine(date.today() - dt, datetime.min.time())
+        stop = datetime.combine(date.today() + dt, datetime.min.time())
+    elif not config['date']['start'] and config['date']['stop']:
+        start = stop - dt
+    elif config['date']['start'] and not config['date']['stop']:
+        stop = start + dt
+    config['date']['start'] = start.replace(tzinfo=pytz.utc)
+    config['date']['stop'] = stop.replace(tzinfo=pytz.utc)
 
     # Units.
     config['units'] = cf_units.Unit(config['units'])
@@ -541,7 +553,7 @@ def load_ncs(config):
         if 'OBS_DATA' in fname:
             continue
         else:
-            model= os.path.splitext(os.path.split(fname)[-1])[0].split('-')[-1]
+            model = os.path.splitext(os.path.split(fname)[-1])[0].split('-')[-1]
             df = nc2df(fname, columns_name='station_code')
             # FIXME: Horrible work around duplicate times.
             if len(df.index.values) != len(np.unique(df.index.values)):

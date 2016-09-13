@@ -2,6 +2,15 @@ language: python
 
 sudo: false
 
+matrix:
+    fast_finish: true
+    include:
+        - python: 3.5
+          env: TEST_TARGET=default
+    allow_failures:
+        - python: 3.5
+          env: TEST_TARGET=notebooks
+
 before_install:
     - wget http://bit.ly/miniconda -O miniconda.sh
     - bash miniconda.sh -b -p $HOME/miniconda
@@ -15,5 +24,9 @@ install:
     - conda install flake8 pytest --yes
 
 script:
-    - cd tests && python test_notebooks.py
-    - find . -type f -name "*.py" ! -name 'conf.py' | xargs flake8 --max-line-length=100
+    - if [[ $TEST_TARGET == 'default' ]]; then
+        find . -type f -name "*.py" ! -name 'conf.py' | xargs flake8 --max-line-length=100 ;
+      fi
+    - if [[ $TEST_TARGET == 'notebooks' ]]; then
+        cd tests && python test_notebooks.py ;
+      fi
