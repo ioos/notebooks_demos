@@ -6,10 +6,10 @@ matrix:
     fast_finish: true
     include:
         - python: 3.5
-        env: TEST_TARGET=default
+          env: TEST_TARGET=default
     allow_failures:
         - python: 3.5
-        env: TEST_TARGET=notebooks
+          env: TEST_TARGET=notebooks
 
 before_install:
     - wget http://bit.ly/miniconda -O miniconda.sh
