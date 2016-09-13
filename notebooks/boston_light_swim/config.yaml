@@ -1,7 +1,9 @@
 
+# If not specified defaults to today +- 3 days.
+# Use the date below to reproduce the last Boston Light Swim event forecast.
 date:
-    start: 2016-8-16 00:00:00
-    stop: 2016-8-29 00:00:00
+    start: null  # 2016-8-16 00:00:00
+    stop: null  # 2016-8-29 00:00:00
 
 run_name: 'latest'
 
