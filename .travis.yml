@@ -22,6 +22,14 @@ install:
     - conda env create environment.yml
     - source activate IOOS
     - conda install flake8 pytest --yes
+    # workaround https://github.com/takluyver/entrypoints/issues/9
+    - if [[ $TEST_TARGET == 'default' ]]; then
+        conda uninstall compliance-checker --yes ;
+      fi
+    - if [[ $TEST_TARGET == 'notebooks' ]]; then
+        conda install compliance-checker --yes ;
+        cd tests && python test_notebooks.py ;
+      fi
 
 script:
     - if [[ $TEST_TARGET == 'default' ]]; then
