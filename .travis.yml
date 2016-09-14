@@ -3,39 +3,30 @@ language: python
 sudo: false
 
 matrix:
-    fast_finish: true
-    include:
-        - python: 3.5
-          env: TEST_TARGET=default
-    allow_failures:
-        - python: 3.5
-          env: TEST_TARGET=notebooks
+  include:
+    - python: 3.5
+      env: TEST_TARGET=default
+  allow_failures:
+    - python: 3.5
+      env: TEST_TARGET=notebooks
 
 before_install:
-    - wget http://bit.ly/miniconda -O miniconda.sh
-    - bash miniconda.sh -b -p $HOME/miniconda
-    - export PATH="$HOME/miniconda/bin:$PATH"
-    - conda update --yes --all
-    - conda config --add channels conda-forge --force
+  - wget http://bit.ly/miniconda -O miniconda.sh
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - conda update --yes --all
+  - conda config --add channels conda-forge --force
 
 install:
-    - conda env create environment.yml
-    - source activate IOOS
-    - conda install flake8 pytest --yes
-    # workaround https://github.com/takluyver/entrypoints/issues/9
-    - if [[ $TEST_TARGET == 'default' ]]; then
-        conda uninstall compliance-checker --yes ;
-      fi
-    - if [[ $TEST_TARGET == 'notebooks' ]]; then
-        conda install compliance-checker --yes ;
-        cd tests && python test_notebooks.py ;
-      fi
+  - conda env create environment.yml
+  - source activate IOOS
+  - conda install flake8 pytest --yes
 
 script:
-    - if [[ $TEST_TARGET == 'default' ]]; then
-        find . -type f -name "*.py" ! -name 'conf.py' | xargs flake8 --max-line-length=100 ;
-        find . -type f -name "*.ipynb" | xargs jupyter nbconvert --template=tests/strip_markdown.tpl --stdout --to python | flake8 - --ignore=W391,E226,E402 --max-line-length=100 --show-source ;
-      fi
-    - if [[ $TEST_TARGET == 'notebooks' ]]; then
-        cd tests && python test_notebooks.py ;
-      fi
+  - if [[ $TEST_TARGET == 'default' ]]; then
+      find . -type f -name "*.py" ! -name 'conf.py' | xargs flake8 --max-line-length=100 ;
+      find . -type f -name "*.ipynb" | xargs jupyter nbconvert --template=tests/strip_markdown.tpl --stdout --to python | flake8 - --ignore=W391,E226,E402 --max-line-length=100 --show-source ;
+    fi
+  - if [[ $TEST_TARGET == 'notebooks' ]]; then
+      cd tests && python test_notebooks.py ;
+    fi
