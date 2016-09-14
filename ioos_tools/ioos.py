@@ -44,16 +44,24 @@ def parse_config(config_file):
         config = yaml.safe_load(f)
 
     # Dates are normalized to UTC.
-    dt = timedelta(days=3)
     start = config['date']['start']
     stop = config['date']['stop']
-    if not config['date']['start'] and not config['date']['stop']:
-        start = datetime.combine(date.today() - dt, datetime.min.time())
-        stop = datetime.combine(date.today() + dt, datetime.min.time())
-    elif not config['date']['start'] and config['date']['stop']:
-        start = stop - dt
-    elif config['date']['start'] and not config['date']['stop']:
-        stop = start + dt
+    if isinstance(start, int) and isinstance(stop, int):
+        start = datetime.combine(
+            date.today() - timedelta(days=abs(start)), datetime.min.time()
+            )
+        stop = datetime.combine(
+            date.today() + timedelta(days=abs(stop)), datetime.min.time()
+            )
+    elif isinstance(start, int) and isinstance(stop, datetime):
+        start = stop - timedelta(days=abs(start))
+    elif isinstance(start, datetime) and isinstance(stop, int):
+        stop = start + timedelta(days=abs(stop))
+    elif isinstance(start, datetime) and isinstance(stop, datetime):
+        pass
+    else:
+        msg = "Expect dates (YYYY-MM-DD hh:mm:ss) or days offest (int).\nGot start={} and stop={}."  # noqa
+        raise ValueError(msg.format(start, stop))
     config['date']['start'] = start.replace(tzinfo=pytz.utc)
     config['date']['stop'] = stop.replace(tzinfo=pytz.utc)
 
@@ -553,7 +561,7 @@ def load_ncs(config):
         if 'OBS_DATA' in fname:
             continue
         else:
-            model = os.path.splitext(os.path.split(fname)[-1])[0].split('-')[-1]
+            model = os.path.splitext(os.path.split(fname)[-1])[0].split('-')[-1]  # noqa
             df = nc2df(fname, columns_name='station_code')
             # FIXME: Horrible work around duplicate times.
             if len(df.index.values) != len(np.unique(df.index.values)):
