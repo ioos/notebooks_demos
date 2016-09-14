@@ -1,9 +1,10 @@
 
-# If not specified defaults to today +- 3 days.
-# Use the date below to reproduce the last Boston Light Swim event forecast.
+# Specify a YYYY-MM-DD hh:mm:ss date or integer day offset.
+# If both start and stop are offsets they will be computed relative to datetime.today() at midnight.
+# Use the dates commented below to reproduce the last Boston Light Swim event forecast.
 date:
-    start: null  # 2016-8-16 00:00:00
-    stop: null  # 2016-8-29 00:00:00
+    start: -5 # 2016-8-16 00:00:00
+    stop: +4 # 2016-8-29 00:00:00
 
 run_name: 'latest'
 
