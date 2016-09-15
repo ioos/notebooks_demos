@@ -18,6 +18,12 @@ install:
   - source activate IOOS
   - conda install flake8 pytest --yes
 
+# The notebook PEP 8 test ignore:
+# W391: blank line at end of file (always present when using nbconvert)
+# E226: missing whitespace around arithmetic operator (not enforced by PEP 8)
+# E402: module level import not at top of file (in notebooks it is clearer to import in the first cell the module is used.)
+# In addition the magic cells are skipped with `grep -v '^get_ipython'` b/c they are not compliant when converted to script.
+
 script:
   - if [[ $TEST_TARGET == 'default' ]]; then
       find . -type f -name "*.py" ! -name 'conf.py' | xargs flake8 --max-line-length=100 ;
