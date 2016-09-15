@@ -44,4 +44,4 @@ build: off
 
 test_script:
     - cmd: conda env create environment.yml
-    - cmd: activate IOOS
+    - cmd: activate IOOS && cd tests && python test_notebooks.py
