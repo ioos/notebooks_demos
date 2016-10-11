@@ -6,7 +6,7 @@ dependencies:
     - anaconda-navigator
     - beautifulsoup4
     - cartopy
-    #- cc-plugin-glider  # Python 2.7
+    - cc-plugin-glider
     - cmocean
     - compliance-checker
     - ctd
@@ -24,6 +24,7 @@ dependencies:
     - iris
     - jsanimation
     - jupyter
+    - jupyter_client
     - matplotlib
     - mpld3
     - mplleaflet
