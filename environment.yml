@@ -1,5 +1,6 @@
 name: IOOS
 channels:
+    - ioos
     - conda-forge
 dependencies:
     - python=3.4
