@@ -32,3 +32,15 @@ script:
   - if [[ $TEST_TARGET == 'notebooks' ]]; then
       cd tests && python test_notebooks.py ;
     fi
+
+
+#site: index.md
+    #jekyll build
+
+#index.md: notebook.ipynb
+    #jupyter nbconvert --to=markdown --template="jupyter-jekyll.tpl" $^
+    #mv notebook.md index.md
+
+#clean:
+    #rm -f index.md
+    #rm -rf _site
