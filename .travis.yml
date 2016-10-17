@@ -1,20 +1,27 @@
-language: python
+language: generic
 
 sudo: false
 
 env:
-  - TEST_TARGET=default
-  - TEST_TARGET=notebooks
+  global:
+    - MINICONDA_DIR="$HOME/miniconda"
+    - GH_PAGES_DIR="$TRAVIS_BUILD_DIR/webpage/"
+  matrix:
+    - TEST_TARGET=default
+    - TEST_TARGET=notebooks
+    - TEST_TARGET=publish
 
 before_install:
   - wget http://bit.ly/miniconda -O miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
-  - conda update --yes --all
-  - conda config --add channels conda-forge --force
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
 
 install:
-  - conda env create environment.yml
+  - conda env create -q -f environment.yml
   - source activate IOOS
   - conda install flake8 pytest --yes
 
@@ -32,15 +39,15 @@ script:
   - if [[ $TEST_TARGET == 'notebooks' ]]; then
       cd tests && python test_notebooks.py ;
     fi
+  - if [[ $TEST_TARGET == 'publish' ]]; then
+      cd webpage && python make_index.py && cd ..;
+      find notebooks/ -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --to=markdown --template="jupyter-jekyll.tpl" --output-dir=webpage/_notebooks ;
+    fi
 
-
-#site: index.md
-    #jekyll build
-
-#index.md: notebook.ipynb
-    #jupyter nbconvert --to=markdown --template="jupyter-jekyll.tpl" $^
-    #mv notebook.md index.md
-
-#clean:
-    #rm -f index.md
-    #rm -rf _site
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: scripts/deploy.sh
+  on:
+    branch: master
+    condition: $TEST_TARGET == 'publish'
