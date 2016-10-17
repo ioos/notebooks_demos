@@ -1,0 +1,19 @@
+# Main links links.
+main:
+  - title: "Gallery"
+    url: /
+  - title: "About"
+    url: /about
+
+# Site navigation links.
+site_nav:
+  - title: Video Tutorials
+    children:
+      - title: "IOOS conda environment"
+        url: https://github.com/ioos/notebooks_demos/wiki/Installing-Conda-Python-with-the-IOOS-environment
+      - title: "OWSLib"
+        url: https://geopython.github.io/OWSLib/
+      - title: "PyoosS"
+        url: https://github.com/ioos/pyoos
+      - title: "PyCSW"
+        url: http://pycsw.org/
