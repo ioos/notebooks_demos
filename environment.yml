@@ -1,11 +1,13 @@
 name: IOOS
 channels:
     - ioos
+    - defaults
     - conda-forge
 dependencies:
     - python=3.4
     - anaconda-navigator
     - beautifulsoup4
+    - bokeh
     - cartopy
     - cc-plugin-glider
     - cmocean
