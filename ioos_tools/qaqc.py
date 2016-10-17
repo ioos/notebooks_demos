@@ -22,8 +22,8 @@ def has_time_gaps(times, freq):
     Example
     -------
     >>> import numpy as np
-    >>> from pandas import date_range
-    >>> times = date_range('1980-01-19', periods=48, freq='1H')
+    >>> import pandas as pd
+    >>> times = pd.date_range('1980-01-19', periods=48, freq='1H')
     >>> has_time_gaps(times, freq='6min')
     True
     >>> has_time_gaps(times, freq='1H')
@@ -44,8 +44,8 @@ def is_monotonically_increasing(series):
 
     Examples
     --------
-    >>> from pandas import date_range
-    >>> times = date_range('1980-01-19', periods=10)
+    >>> import pandas as pd
+    >>> times = pd.date_range('1980-01-19', periods=10)
     >>> all(is_monotonically_increasing(times))
     True
     >>> import numpy as np
@@ -62,6 +62,7 @@ def is_flatline(series, reps=10, eps=None):
 
     Examples
     --------
+    >>> import numpy as np
     >>> series = np.r_[np.random.rand(10), [10]*15, np.random.rand(10)]
     >>> is_flatline(series, reps=10)
     array([False, False, False, False, False, False, False, False, False,
@@ -100,9 +101,9 @@ def is_spike(series, window_size=3, threshold=3, scale=True):
 
     Examples
     --------
-    >>> from pandas import pd.Series, date_range
+    >>> import pandas as pd
     >>> series = [33.43, 33.45, 34.45, 90.0, 35.67, 34.9, 43.5, 34.6, 33.7]
-    >>> series = pd.Series(series, index=date_range('1980-01-19',
+    >>> series = pd.Series(series, index=pd.date_range('1980-01-19',
     ...                    periods=len(series)))
     >>> series[is_spike(series, window_size=3, threshold=3, scale=False)]
     1980-01-22    90.0
@@ -123,6 +124,30 @@ def is_spike(series, window_size=3, threshold=3, scale=True):
     return difference > threshold
 
 
+def first_difference(series, quantile=0.75):
+    """
+    Flags spikes by using a first difference approach
+    The differences are compared against the `quantile` (default is 0.75).
+    Note that first difference might remove a "good" data point right after
+    a high diff is found.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> series = [33.43, 33.45, 34.45, 90.0, 35.67, 34.9, 43.5, 34.6, 33.7]
+    >>> series = pd.Series(series, index=pd.date_range('1980-01-19',
+    ...                    periods=len(series)))
+    >>> series[first_difference(series, quantile=0.75)]
+    1980-01-22    90.00
+    1980-01-23    35.67
+    Freq: D, dtype: float64
+
+    """
+    series = pd.Series(series)
+    abs_diffs = series.diff().abs().fillna(method='bfill').fillna(method='ffill')
+    return abs_diffs > abs_diffs.quantile(quantile)
+
+
 def threshold_series(series, vmin=None, vmax=None):
     """
     Threshold an series by flagging with NaN values below `vmin` and above
@@ -136,8 +161,8 @@ def threshold_series(series, vmin=None, vmax=None):
                  mask = [ True  True False False False  True False False],
            fill_value = 1e+20)
     <BLANKLINE>
-    >>> from pandas import pd.Series, date_range
-    >>> series = pd.Series(series, index=date_range('1980-01-19',
+    >>> import pandas as pd
+    >>> series = pd.Series(series, index=pd.date_range('1980-01-19',
     ...                    periods=len(series)))
     >>> threshold_series(series, vmin=30, vmax=40)
     1980-01-19     NaN
@@ -171,9 +196,9 @@ def filter_spikes(series, window_size=3, threshold=3, scale=True):
 
     Examples
     --------
-    >>> from pandas import pd.Series, date_range
+    >>> import pandas as pd
     >>> series = [33.43, 33.45, 34.45, 90.0, 35.67, 34.9, 43.5, 34.6, 33.7]
-    >>> series = pd.Series(series, index=date_range('1980-01-19',
+    >>> series = pd.Series(series, index=pd.date_range('1980-01-19',
     ...                    periods=len(series)))
     >>> filter_spikes(series)
     1980-01-19    33.43
@@ -237,9 +262,9 @@ def tukey53H(series, k=1.5):
 
     Examples
     --------
-    >>> from pandas import pd.Series, date_range
+    >>> import pandas as pd
     >>> series = [33.43, 33.45, 34.45, 90.0, 35.67, 34.9, 43.5, 34.6, 33.7]
-    >>> series = pd.Series(series, index=date_range('1980-01-19',
+    >>> series = pd.Series(series, index=pd.date_range('1980-01-19',
     ...                    periods=len(series)))
     >>> series[tukey53H(series, k=1.5)]
     1980-01-22    90.0
