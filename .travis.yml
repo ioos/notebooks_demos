@@ -6,6 +6,8 @@ env:
   global:
     - MINICONDA_DIR="$HOME/miniconda"
     - GH_PAGES_DIR="$TRAVIS_BUILD_DIR/webpage/"
+    - ENCRYPTION_LABEL: "2ed57bb9ae7e"
+    - COMMIT_AUTHOR_EMAIL: "ocefpaf@gmail.com.com"
   matrix:
     - TEST_TARGET=default
     - TEST_TARGET=notebooks
