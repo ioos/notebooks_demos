@@ -1,23 +1,34 @@
 #!/bin/bash
-set -e # exit with nonzero exit code if anything fails
+# Based on: https://gist.github.com/domenic/ec8b0fc8ab45f39403dd
 
-# Go to the out directory and create a *new* Git repo.
-cd $GH_PAGES_DIR
+# Exit with nonzero exit code if anything fails.
+set -e
+
+# Pull requests and commits to other branches shouldn't try to deploy, just build to verify
+if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "master" ]; then
+    echo "Skipping ..."
+    exit 0
+fi
+
+# Set ssh (safer than encrypting passwd?).
+chmod 600 deploy_key
+eval `ssh-agent -s`
+ssh-add deploy_key
+
+
+# Some useful vars.
+REPO=$(git config remote.origin.url)
+REMOTE_REPO=${REPO/https:\/\/github.com\//git@github.com:}
+SHA=$(git rev-parse --verify HEAD)
+
+# Start a git repo based on the `webpage` directory and push to gh-pages.
+pushd webpage
+
 git init
-
-# Inside this git repo we'll pretend to be a new user.
-git config user.name "Travis CI"
-git config user.email "travis@nobody.org"
-
-# The first and only commit to this new Git repo contains all the
-# files present with the commit message "Deploy to GitHub Pages".
+git config user.name "Travis-CI"
+git config user.email "ocefpaf@gmail.com"
 git add .
-git commit -m "Deploy to GitHub Pages"
+git commit -m "Deploy to GitHub Pages: ${SHA}"
+git push --force --quiet $REMOTE_REPO master:gh-pages > /dev/null 2>&1
 
-# Force push from the current repo's master branch to the remote
-# repo's gh-pages branch. (All previous history on the gh-pages branch
-# will be lost, since we are overwriting it.) We redirect any output to
-# /dev/null to hide any sensitive credential data that might otherwise be exposed.
-echo Pushing...
-git push --quiet --force https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git master:gh-pages 2>&1 >/dev/null
-
+popd

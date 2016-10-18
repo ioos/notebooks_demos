@@ -35,7 +35,7 @@ def extract_thumbnail_and_title(nb_path):
 
 if __name__ == '__main__':
     base_url = '{{ site.url }}{{ site.baseurl }}/'
-    box = '<div><figcaption>{caption}</figcaption><a href="{base_url}{fname}"><img src="{img}"></a></div>\n'.format  # noqa
+    box = '<div><figcaption>{caption}</figcaption><a href="{base_url}/notebooks/{fname}"><img src="{img}"></a></div>\n'.format  # noqa
     front_matter = """\
 ---
 title: IOOS's Notebook Gallery
@@ -48,9 +48,10 @@ layout: single
         index.write(front_matter)
         index.write('<div id="gallery">\n')
 
-        for fname in sorted(glob.glob(os.path.join('notebooks', '*.ipynb'))):
+        for fname in sorted(glob.glob(os.path.join(os.path.pardir, 'notebooks', '*.ipynb'))):
             caption, img = extract_thumbnail_and_title(fname)
-            fname, ext = os.path.splitext(fname)
+            fname, ext = os.path.splitext(os.path.basename(fname))
+            print(fname)
             index.write(
                 box(caption=caption, base_url=base_url, fname=fname, img=img)
             )

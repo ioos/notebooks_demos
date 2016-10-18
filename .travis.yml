@@ -3,15 +3,13 @@ language: generic
 sudo: false
 
 env:
-  global:
-    - MINICONDA_DIR="$HOME/miniconda"
-    - GH_PAGES_DIR="$TRAVIS_BUILD_DIR/webpage/"
   matrix:
     - TEST_TARGET=default
     - TEST_TARGET=notebooks
     - TEST_TARGET=publish
 
 before_install:
+  - openssl aes-256-cbc -K $encrypted_2ed57bb9ae7e_key -iv $encrypted_2ed57bb9ae7e_iv -in deploy_key.enc -out deploy_key -d
   - wget http://bit.ly/miniconda -O miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
@@ -42,12 +40,5 @@ script:
   - if [[ $TEST_TARGET == 'publish' ]]; then
       cd webpage && python make_index.py && cd ..;
       find notebooks/ -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --to=markdown --template="jupyter-jekyll.tpl" --output-dir=webpage/_notebooks ;
+      bash scripts/deploy.sh ;
     fi
-
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: scripts/deploy.sh
-  on:
-    branch: master
-    condition: $TEST_TARGET == 'publish'
