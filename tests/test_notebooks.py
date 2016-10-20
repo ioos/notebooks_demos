@@ -32,7 +32,7 @@ if __name__ == '__main__':
     import glob
 
     rootpath = os.path.join(os.path.abspath(os.path.pardir), 'notebooks')
-    nblist = glob.glob(os.path.join(rootpath, '**', '*.ipynb'))
+    nblist = glob.glob(os.path.join(rootpath, '*.ipynb'))
 
     fail = False
     for ipynb in sorted(nblist):
