@@ -3,13 +3,14 @@ language: generic
 sudo: false
 
 env:
+  global:
+    - secure: "d/RDH+Gna12xMds/mTDMBYdbr25uvE9iIxTUcMkREDViE2oXrKTthvKFNcLri3CyvzQ2USIOeKfHyEwIm8gNhFYseBd46PDGwAV2c1he6ZaGdEZnMwLQf4mLmJVUo3Bmt7L6rcmjG9l5kQP8EeAka8V6r87gbI0zSnTM5NqiNt+pqhJhEP/3Ci/IgiVx0DC6so+kSAs7rQ8zzmJQ7G6crdm+uJbDrajUhy3GvdBXtjOdYhzkB0fQUYKRYJt28V0nFrkT7ypSlp91gS5M6wh0mZgwbeD4MMi0xQbKtgTuH3Put1mFAsVzyGA1qF+hhPpcz0cKwetEfNdZZuixgCXNzkqRS+A9bQ2yYPIuWrNtrF1R8B6V+bvGzpcyX03TY21fSfD90HYFJkzIk9DfNViOid2wsUnm7K89c8uy/2SBa8CGvbl6aP7bO54ZL2zsP+FVWSBVeAIz1vfexld3ZScKYlf/G+5uQLHKeMWI3QFsaXJG5XDhuOAzGl6daY/nJXE4ddlQ8Wc2fQnqJuqfqbZiI8of46wT5f1VHPv+zn68Wuwy/lgQSw6aLR5OsQgxC58nsrdx4L35Ux4XoFXHJJ65WAsFP1eVkTjubtVy/1vVFudjljXnfvEhCUjQUBX5LQxPf4d3YAjePWYbuY8AwQ2a9e1Jiqy486oAyU/kScnkygs="
   matrix:
     - TEST_TARGET=default
     - TEST_TARGET=notebooks
     - TEST_TARGET=publish
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_2ed57bb9ae7e_key -iv $encrypted_2ed57bb9ae7e_iv -in deploy_key.enc -out deploy_key -d
   - wget http://bit.ly/miniconda -O miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
@@ -19,9 +20,13 @@ before_install:
   - conda info -a
 
 install:
-  - conda env create -q -f environment.yml
+  - if [[ $TEST_TARGET != 'publish' ]]; then
+      conda env create -q -f environment.yml ;
+      conda install flake8 pytest --yes ;
+    else
+      conda env create -q -f webpage/environment.yml ;
+    fi
   - source activate IOOS
-  - conda install flake8 pytest --yes
 
 # The notebook PEP 8 test ignore:
 # W391: blank line at end of file (always present when using nbconvert)
@@ -40,5 +45,5 @@ script:
   - if [[ $TEST_TARGET == 'publish' ]]; then
       cd webpage && python make_index.py && cd ..;
       find notebooks/ -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --to=markdown --template="jupyter-jekyll.tpl" --output-dir=webpage/_notebooks ;
-      bash scripts/deploy.sh ;
+      doctr deploy --built-docs=webpage --gh-pages-docs . ;
     fi
