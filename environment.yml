@@ -16,6 +16,7 @@ dependencies:
     - cython
     - descartes
     - fiona
+    - flake8
     - folium
     - gdal
     - geojson
@@ -46,6 +47,7 @@ dependencies:
     - pyproj
     - pyresample
     - pysgrid
+    - pytest
     - pyugrid
     - pyyaml
     - qrcode
