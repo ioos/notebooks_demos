@@ -9,7 +9,9 @@ env:
     - TEST_TARGET=publish
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_2ed57bb9ae7e_key -iv $encrypted_2ed57bb9ae7e_iv -in deploy_key.enc -out deploy_key -d
+  - if [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then
+      openssl aes-256-cbc -K $encrypted_2ed57bb9ae7e_key -iv $encrypted_2ed57bb9ae7e_iv -in deploy_key.enc -out deploy_key -d ;
+    fi
   - wget http://bit.ly/miniconda -O miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
