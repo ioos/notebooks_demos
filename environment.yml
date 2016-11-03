@@ -4,7 +4,7 @@ channels:
     - defaults
     - conda-forge
 dependencies:
-    - python=3.4
+    - python=3.5
     - anaconda-navigator
     - beautifulsoup4
     - bokeh
