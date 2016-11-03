@@ -21,6 +21,7 @@ site_nav:
         url: https://nccospublicstor.blob.core.windows.net/ioos/ioos_demo_1280.mp4
 
   - title: NANOOS Visualization System (NVS)
+    children:
       - title: "NANOOS Visualization System"
         url: https://www.youtube.com/watch?v=MEVz0jOsqmI
       - title: "NANOOS Data Explorer"
