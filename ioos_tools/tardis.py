@@ -88,34 +88,40 @@ def z_coord(cube):
     >>> url = ("http://omgsrv1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/sabgom/"
     ...        "SABGOM_Forecast_Model_Run_Collection_best.ncd")
     >>> cube = iris.load_cube(url, 'sea_water_potential_temperature')
-    >>> str(z_coord(cube).name())
+    >>> zvar = z_coord(cube)
+    >>> zvar.name()
     'ocean_s_coordinate_g1'
+    >>> cube.coord_dims(zvar)
+    (1,)
 
     """
-    non_dimensional = ['atmosphere_hybrid_height_coordinate',
-                       'atmosphere_hybrid_sigma_pressure_coordinate',
-                       'atmosphere_sigma_coordinate',
-                       'atmosphere_sleve_coordinate',
-                       'ocean_s_coordinate',
-                       'ocean_s_coordinate_g1',
-                       'ocean_s_coordinate_g2',
-                       'ocean_sigma_coordinate',
-                       'ocean_sigma_z_coordinate']
-    z = None
-    # If only one exists get that.
-    try:
-        z = cube.coord(axis='Z')
-    except CoordinateNotFoundError:
-        # If a named `z_coord` exist.
-        try:
-            z = cube.coord(axis='altitude')
-        except CoordinateNotFoundError:
-            # OK, let's use the non-dimensional names.
-            for coord in cube.coords(axis='Z'):
-                if coord.name() in non_dimensional:
-                    z = coord
-                    break
-    return z
+    # http://cfconventions.org/cf-conventions/v1.6.0/cf-conventions.html#dimensionless-v-coord
+    dimensionless = [
+        'atmosphere_hybrid_height_coordinate',
+        'atmosphere_hybrid_sigma_pressure_coordinate',
+        'atmosphere_sigma_coordinate',
+        'atmosphere_sleve_coordinate',
+        'ocean_s_coordinate',
+        'ocean_s_coordinate_g1',
+        'ocean_s_coordinate_g2',
+        'ocean_sigma_coordinate',
+        'ocean_sigma_z_coordinate'
+        ]
+    zvar = None
+    # Setting `dim_coords=True` to avoid triggering the download
+    # of the derived `z`. That usually throws a Memory error as it
+    # varies with `t`, `x`, `y`, and `z`.
+    zvars = cube.coords(axis='Z', dim_coords=True)
+    if not zvars:
+        zvars = cube.coords(axis='altitude', dim_coords=True)
+
+    if len(zvars) == 1:
+        zvar = zvars[0]
+    else:
+        # If there are more than one coord we want
+        # the dimensionless one.
+        zvar = [coord for coord in zvars if coord.name() in dimensionless][0]
+    return zvar
 
 
 def _get_surface_idx(cube):
@@ -178,7 +184,7 @@ def get_surface(cube):
 
 def time_coord(cube):
     """
-    Return the variable attached to time axis and rename it to time.
+    Return the variable attached to time axis.
 
     Examples
     --------
@@ -186,15 +192,24 @@ def time_coord(cube):
     >>> url = ("http://omgsrv1.meas.ncsu.edu:8080/thredds/dodsC/fmrc/sabgom/"
     ...        "SABGOM_Forecast_Model_Run_Collection_best.ncd")
     >>> cube = iris.load_cube(url, 'sea_water_potential_temperature')
-    >>> str(time_coord(cube).name())
+    >>> timevar = time_coord(cube)
+    >>> timevar.name()  # What is the time coordinate named?
     'time'
+    >>> cube.coord_dims(timevar)  # Is it the zeroth coordinate?
+    (0,)
 
     """
-    try:
-        cube.coord(axis='T').rename('time')
-    except CoordinateNotFoundError:
-        pass
-    timevar = cube.coord('time')
+
+    timevars = cube.coords(axis='T', dim_coords=True)
+    if not timevars:
+        timevars = [coord for coord in cube.dim_coords if 'time' in coord.name()]  # noqa
+        if not timevars:
+            msg = 'Could not find "time" in {!r}'.format
+            raise ValueError(msg(coord.dim_coords))
+    if len(timevars) != 1:
+        msg = 'Found more than one time coordinates!'
+        raise ValueError(msg)
+    timevar = timevars[0]
     return timevar
 
 
@@ -401,8 +416,8 @@ def quick_load_cubes(url, name_list, callback=None, strict=False):
     True
     >>> isinstance(cube, iris.cube.Cube)
     True
-    """
 
+    """
     cubes = iris.load_raw(url, callback=callback)
     cubes = CubeList([cube for cube in cubes if _in_list(cube, name_list)])
     cubes = _filter_none(cubes)
@@ -440,7 +455,6 @@ def proc_cube(cube, bbox=None, time=None, constraint=None, units=None):
     True
 
     """
-
     if constraint:
         cube = cube.extract(constraint)
         if not cube:
