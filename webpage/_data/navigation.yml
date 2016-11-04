@@ -2,6 +2,8 @@
 main:
   - title: "Gallery"
     url: /
+  - title: "Installing the IOOS conda environment"
+    url: /conda
   - title: "About"
     url: /about
 
@@ -9,8 +11,6 @@ main:
 site_nav:
   - title: Python tools
     children:
-      - title: "Installing the IOOS conda environment"
-        url: https://github.com/ioos/notebooks_demos/wiki/Installing-Conda-Python-with-the-IOOS-environment
       - title: "Catalog driven reproducible workflows for ocean-science"
         url: https://www.youtube.com/watch?v=05ax0lkQFrg
       - title: "Extracting data from NOAA ERDDAP"
