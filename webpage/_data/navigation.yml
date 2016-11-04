@@ -15,6 +15,9 @@ site_nav:
         url: https://www.youtube.com/watch?v=05ax0lkQFrg
       - title: "Extracting data from NOAA ERDDAP"
         url: https://www.youtube.com/watch?v=18xZoXu1USM
+
+  - title: IOOS Data Access Tools
+    children:
       - title: "COMT tutorial"
         url: https://www.youtube.com/watch?v=Dqc1C1HeemQ
       - title: "IOOS EDS Demo"
