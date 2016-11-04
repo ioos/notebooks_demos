@@ -7,13 +7,26 @@ main:
 
 # Site navigation links.
 site_nav:
-  - title: Video Tutorials
+  - title: Python tools
     children:
-      - title: "IOOS conda environment"
+      - title: "Installing the IOOS conda environment"
         url: https://github.com/ioos/notebooks_demos/wiki/Installing-Conda-Python-with-the-IOOS-environment
-      - title: "OWSLib"
-        url: https://geopython.github.io/OWSLib/
-      - title: "PyoosS"
-        url: https://github.com/ioos/pyoos
-      - title: "PyCSW"
-        url: http://pycsw.org/
+      - title: "Catalog driven reproducible workflows for ocean-science"
+        url: https://www.youtube.com/watch?v=05ax0lkQFrg
+      - title: "Extracting data from NOAA ERDDAP"
+        url: https://www.youtube.com/watch?v=18xZoXu1USM
+
+  - title: IOOS Data Access Tools
+    children:
+      - title: "COMT tutorial"
+        url: https://www.youtube.com/watch?v=Dqc1C1HeemQ
+      - title: "IOOS EDS Demo"
+        url: https://nccospublicstor.blob.core.windows.net/ioos/ioos_demo_1280.mp4
+
+  - title: NANOOS Visualization System (NVS)
+    children:
+      - title: "NANOOS Visualization System"
+        url: https://www.youtube.com/watch?v=MEVz0jOsqmI
+      - title: "NANOOS Data Explorer"
+        url: https://www.youtube.com/playlist?list=PLBvrtRArn5ffsBARjKsczvfxyYX1wGtFP
+
