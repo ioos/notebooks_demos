@@ -2,18 +2,30 @@ language: generic
 
 sudo: false
 
-env:
-  matrix:
-    - TEST_TARGET=default
-    - TEST_TARGET=notebooks
-    - TEST_TARGET=staged_notebooks
-    - TEST_TARGET=publish
+matrix:
+  include:
+    - os: linux
+      env: TEST_TARGET=default
+    - os: linux
+      env: TEST_TARGET=notebooks
+    - os: linux
+      env: TEST_TARGET=staged_notebooks
+    - os: linux
+      env: TEST_TARGET=publish
+    - os: osx
+      env: TEST_TARGET=notebooks
+    - os: osx
+      env: TEST_TARGET=staged_notebooks
 
 before_install:
   - if [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then
       openssl aes-256-cbc -K $encrypted_2ed57bb9ae7e_key -iv $encrypted_2ed57bb9ae7e_iv -in deploy_key.enc -out deploy_key -d ;
     fi
-  - wget http://bit.ly/miniconda -O miniconda.sh
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then URL="https://repo.continuum.io/miniconda/Miniconda2-latest-MacOSX-x86_64.sh" ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then URL="https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh" ; fi
+  # GUI (R png figures).
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; fi
+  - wget $URL -O miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
@@ -25,23 +37,26 @@ install:
   - conda env create -q -f environment.yml
   - source activate IOOS
 
-# The notebook PEP 8 test ignore:
-# W391: blank line at end of file (always present when using nbconvert)
-# E226: missing whitespace around arithmetic operator (not enforced by PEP 8)
-# E402: module level import not at top of file (in notebooks it is clearer to import in the first cell the module is used.)
-# In addition the magic cells are skipped with `grep -v '^get_ipython'` b/c they are not compliant when converted to script.
-
 script:
+  # Default test is mostly codding standards.
+  # The notebook PEP 8 test ignore:
+  # W391: blank line at end of file (always present when using nbconvert)
+  # E226: missing whitespace around arithmetic operator (not enforced by PEP 8)
+  # E402: module level import not at top of file (in notebooks it is clearer to import in the first cell the module is used.)
+  # In addition the magic cells are skipped with `grep -v '^get_ipython'` b/c they are not compliant when converted to script.
   - if [[ $TEST_TARGET == 'default' ]]; then
       find . -type f -name "*.py" ! -name 'conf.py' | xargs flake8 --max-line-length=100 ;
       for file in $(find . -type f -name "*.ipynb"); do jupyter nbconvert --template=tests/strip_markdown.tpl --stdout --to python $file | grep -v '^get_ipython' | flake8 - --ignore=W391,E226,E402 --max-line-length=100 --show-source ; done ;
     fi
+  # The notebook test runs the blog notebooks.
   - if [[ $TEST_TARGET == 'notebooks' ]]; then
       cd tests && python test_notebooks.py ;
     fi
+  # Staged notebooks are the notebooks that are not in the blog yet.
   - if [[ $TEST_TARGET == 'staged_notebooks' ]]; then
       cd tests && python test_staged_notebooks.py ;
     fi
+  # Publish the converted notebooks.
   - if [[ $TEST_TARGET == 'publish' ]]; then
       cd webpage && python make_index.py && cd ..;
       find notebooks/ -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --to=markdown --template="jupyter-jekyll.tpl" --output-dir=webpage/_notebooks ;
