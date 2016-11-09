@@ -6,6 +6,7 @@ env:
   matrix:
     - TEST_TARGET=default
     - TEST_TARGET=notebooks
+    - TEST_TARGET=staged_notebooks
     - TEST_TARGET=publish
 
 before_install:
@@ -37,6 +38,9 @@ script:
     fi
   - if [[ $TEST_TARGET == 'notebooks' ]]; then
       cd tests && python test_notebooks.py ;
+    fi
+  - if [[ $TEST_TARGET == 'staged_notebooks' ]]; then
+      cd tests && python test_staged_notebooks.py ;
     fi
   - if [[ $TEST_TARGET == 'publish' ]]; then
       cd webpage && python make_index.py && cd ..;

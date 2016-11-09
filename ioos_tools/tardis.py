@@ -107,7 +107,7 @@ def z_coord(cube):
         'ocean_sigma_coordinate',
         'ocean_sigma_z_coordinate'
         ]
-    zvar = None
+
     # Setting `dim_coords=True` to avoid triggering the download
     # of the derived `z`. That usually throws a Memory error as it
     # varies with `t`, `x`, `y`, and `z`.
@@ -115,12 +115,16 @@ def z_coord(cube):
     if not zvars:
         zvars = cube.coords(axis='altitude', dim_coords=True)
 
+    # Could not find a dimension coordinate.
+    if not zvars:
+        zvars = [coord for coord in cube.coords(axis='Z')
+                 if coord.name() in dimensionless]
+
     if len(zvars) == 1:
         zvar = zvars[0]
     else:
-        # If there are more than one coord we want
-        # the dimensionless one.
-        zvar = [coord for coord in zvars if coord.name() in dimensionless][0]
+        msg = 'Found more than one vertical coordinate: {!r}'.format
+        raise ValueError(msg(zvars))
     return zvar
 
 
@@ -608,7 +612,7 @@ def series2cube(series, attr=None):
 
     _add_iris_coord(cube,
                     name='station_code',
-                    points=int(series._metadata['station_code']),
+                    points=str(series._metadata['station_code']),
                     dim=0, aux=True)
 
     _add_iris_coord(cube,
