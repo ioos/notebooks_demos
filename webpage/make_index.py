@@ -38,7 +38,7 @@ if __name__ == '__main__':
     box = '<div><figcaption>{caption}</figcaption><a href="{base_url}/notebooks/{fname}"><img src="{img}"></a></div>\n'.format  # noqa
     front_matter = """\
 ---
-title: IOOS's Notebook Gallery
+title: The IOOS Notebook Gallery
 layout: single
 ---
 
