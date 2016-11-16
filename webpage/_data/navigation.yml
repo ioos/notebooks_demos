@@ -1,11 +1,11 @@
 # Main links links.
 main:
+  - title: "About"
+    url: /about
   - title: "Gallery"
     url: /
   - title: "Installing the IOOS conda environment"
     url: /conda
-  - title: "About"
-    url: /about
 
 # Site navigation links.
 site_nav:
