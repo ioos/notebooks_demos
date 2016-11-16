@@ -3,6 +3,7 @@ language: generic
 sudo: false
 
 matrix:
+  fast_finish: true
   include:
     - os: linux
       env: TEST_TARGET=default
@@ -14,7 +15,8 @@ matrix:
       env: TEST_TARGET=publish
     - os: osx
       env: TEST_TARGET=notebooks
-    - os: osx
+  allow_failures:
+    - os: linux
       env: TEST_TARGET=staged_notebooks
 
 before_install:

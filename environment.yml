@@ -40,7 +40,7 @@ dependencies:
   - owslib
   - paegan
   - pandas
-  - proj.4
+  - proj4
   - pygc
   - pykdtree
   - pyoos
