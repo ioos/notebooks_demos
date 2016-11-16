@@ -9,7 +9,7 @@ main:
 
 # Site navigation links.
 site_nav:
-  - title: Python tools
+  - title: Video Tutorials
     children:
       - title: "Catalog driven reproducible workflows for ocean-science"
         url: https://www.youtube.com/watch?v=05ax0lkQFrg
