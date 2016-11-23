@@ -11,17 +11,19 @@ main:
 site_nav:
   - title: Python tools
     children:
-      - title: "Catalog driven reproducible workflows for ocean-science"
+      - title: "Catalog Driven Reproducible Workflows for Ocean-science"
         url: https://www.youtube.com/watch?v=05ax0lkQFrg
       - title: "Extracting data from NOAA ERDDAP"
         url: https://www.youtube.com/watch?v=18xZoXu1USM
 
   - title: IOOS Data Access Tools
     children:
-      - title: "COMT tutorial"
+      - title: "COMT Tutorial"
         url: https://www.youtube.com/watch?v=Dqc1C1HeemQ
       - title: "IOOS EDS Demo"
         url: https://nccospublicstor.blob.core.windows.net/ioos/ioos_demo_1280.mp4
+      - title: "MBON Portal Tutorial"
+        url: https://www.youtube.com/watch?v=StpS6RPECzM
 
   - title: NANOOS Visualization System (NVS)
     children:
