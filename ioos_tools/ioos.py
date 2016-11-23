@@ -115,24 +115,76 @@ def fes_date_filter(start, stop, constraint='overlaps'):
     return begin, end
 
 
-def service_urls(records, services):
+def get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000):
     """
-    Extract service_urls of a specific type (DAP, SOS) from csw records.
-    Example: services=['urn:x-esri:specification:ServiceType:odp:url']
+    Iterate `maxrecords`/`pagesize` times until the requested value in
+    `maxrecords` is reached.
 
-    For more strings check:
-    https://raw.githubusercontent.com/OSGeo/Cat-Interop/master/LinkPropertyLookupTable.csv
+    """
+    from owslib.fes import SortBy, SortProperty
+
+    # Iterate over sorted results.
+    sortby = SortBy([SortProperty('dc:title', 'ASC')])
+    csw_records = {}
+    startposition = 0
+
+    nextrecord = getattr(csw, 'results', 1)
+    while nextrecord != 0:
+        csw.getrecords2(constraints=filter_list, startposition=startposition,
+                        maxrecords=pagesize, sortby=sortby)
+        csw_records.update(csw.records)
+        if csw.results['nextrecord'] == 0:
+            break
+        startposition += pagesize + 1  # Last one is included.
+        if startposition >= maxrecords:
+            break
+    csw.records.update(csw_records)
+
+
+def _parse_reference(ref, identifier):
+    """
+    First try to sniff the scheme from the URL in the `ref` dict with geolinks,
+    if that fails get the `scheme` field directly.
+
+    For all possible identifiers see:
+    https://github.com/OSGeo/Cat-Interop/blob/master/LinkPropertyLookupTable.csv
+
+    """
+    from geolinks import sniff_link
+
+    url = None
+    scheme = sniff_link(ref['url'])
+    if not scheme:
+        scheme = ref['scheme']
+    if identifier.endswith(':'):
+        cond = identifier in scheme
+    else:
+        cond = identifier == scheme
+    if cond:
+        url = ref['url']
+    return url
+
+
+def service_urls(records, identifier='OGC:SOS'):
+    """
+    Extract service ULRs from csw records using geolink identifiers
+    (OPeNDAP:OPeNDAP, ERDDAP:griddap, ERDDAP:tabledap, OGC:SOS, etc).
+
+
+    For all possible identifiers see:
+    https://github.com/OSGeo/Cat-Interop/blob/master/LinkPropertyLookupTable.csv
+
+    If is possible to truncate ambiguous identifiers at the `:`,
+    and return everything that startswith that identifier.
 
     """
     urls = []
-    for service in services:
-        for key, rec in records.items():
-            url = next((d['url'] for d in rec.references if
-                        d['scheme'] == service), None)
-            if url is not None:
+    for key, rec in records.items():
+        for ref in rec.references:
+            url = _parse_reference(ref, identifier)
+            if url:
                 urls.append(url)
-        urls = sorted(set(urls))
-    return urls
+    return sorted(set(urls))
 
 
 def sos_request(url='opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS', **kw):
