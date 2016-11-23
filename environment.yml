@@ -41,6 +41,7 @@ dependencies:
   - paegan
   - pandas
   - proj4
+  - psutil
   - pygc
   - pykdtree
   - pyoos
