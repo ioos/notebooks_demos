@@ -1,0 +1,3 @@
+[submodule "ioos_jekyll_theme"]
+	path = ioos_jekyll_theme
+	url = https://github.com/ioos/ioos_jekyll_theme.git
