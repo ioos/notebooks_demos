@@ -26,8 +26,9 @@ def extract_thumbnail_and_title(nb_path):
             os.path.splitext(img_file)[-1]
             )
 
-        with open(thumb_name, 'wb') as thumb:
+        with open(os.path.join('code_gallery', thumb_name), 'wb') as thumb:
             thumb.write(resources['outputs'][img_file])
+            print(thumb_name)
 
         image = os.path.relpath(thumb_name, SITE_DIR)
     return title, image
@@ -44,14 +45,13 @@ layout: single
 
 """
 
-    with open(os.path.join(SITE_DIR, 'index.md'), 'w') as index:
+    with open(os.path.join(SITE_DIR, 'code_gallery.md'), 'w') as index:
         index.write(front_matter)
         index.write('<div id="gallery">\n')
 
         for fname in sorted(glob.glob(os.path.join(os.path.pardir, 'notebooks', '*.ipynb'))):
             caption, img = extract_thumbnail_and_title(fname)
             fname, ext = os.path.splitext(os.path.basename(fname))
-            print(fname)
             index.write(
                 box(caption=caption, base_url=base_url, fname=fname, img=img)
             )

@@ -1,14 +1,13 @@
 # Main links links.
 main:
-  - title: "About"
-    url: /about
   - title: "Code Gallery"
-    url: /
-  - title: "IOOS Tutorials"
-    url: /ioos_tutorials
-  - title: "Python Tools"
-    url: /python_tools
-  - title: "Other Resources"
-    url: /other_resources
-  - title: "Contact us"
-    url: /contact_us
+    url: /code_gallery
+  - title: "Video Tutorials"
+    url: /video_tutorials
+
+# Site navigation links.
+site_nav:
+  - title: Other resources
+    children:
+      - title: "Installing the IOOS conda environment"
+        url: /other_resources
