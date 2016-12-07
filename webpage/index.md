@@ -1,5 +1,5 @@
 ---
-title: IOOS data demo center
+title: The IOOS Data Demo Center
 layout: single
 ---
 
