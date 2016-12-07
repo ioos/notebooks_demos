@@ -1,5 +1,7 @@
 # Main links links.
 main:
+  - title: The IOOS Data Demo Center
+    url: /
   - title: "Code Gallery"
     url: /code_gallery
   - title: "Video Tutorials"
