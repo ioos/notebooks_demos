@@ -1,8 +1,7 @@
 name: IOOS
 channels:
-  - ioos
-  - defaults
   - conda-forge
+  - defaults
 dependencies:
   - python=3.5
   - anaconda-navigator
