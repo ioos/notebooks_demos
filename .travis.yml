@@ -6,25 +6,27 @@ matrix:
   fast_finish: true
   include:
     - os: linux
-      env: TEST_TARGET=default
+      env: TEST_TARGET=default ENV_NAME="IOOS3" ENV="environment.yml"
     - os: linux
-      env: TEST_TARGET=notebooks
+      env: TEST_TARGET=notebooks ENV_NAME="IOOS3" ENV="environment.yml"
     - os: linux
-      env: TEST_TARGET=staged_notebooks
+      env: TEST_TARGET=notebooks_python2 ENV_NAME="IOOS2" ENV="environment-python-2.yml"
     - os: linux
-      env: TEST_TARGET=publish
+      env: TEST_TARGET=staged_notebooks ENV_NAME="IOOS3" ENV="environment.yml"
+    - os: linux
+      env: TEST_TARGET=publish ENV_NAME="IOOS3" ENV="environment.yml"
     - os: osx
-      env: TEST_TARGET=notebooks
+      env: TEST_TARGET=notebooks ENV_NAME="IOOS3" ENV="environment.yml"
   allow_failures:
     - os: linux
-      env: TEST_TARGET=staged_notebooks
+      env: TEST_TARGET=staged_notebooks ENV_NAME="IOOS3" ENV="environment.yml"
 
 before_install:
   - if [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then
       openssl aes-256-cbc -K $encrypted_2ed57bb9ae7e_key -iv $encrypted_2ed57bb9ae7e_iv -in deploy_key.enc -out deploy_key -d ;
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then URL="https://repo.continuum.io/miniconda/Miniconda2-latest-MacOSX-x86_64.sh" ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then URL="https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh" ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then URL="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh" ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh" ; fi
   # GUI (R png figures).
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; fi
   - wget $URL -O miniconda.sh
@@ -32,12 +34,15 @@ before_install:
   - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda
-  - conda info -a
+  - conda update --quiet conda
 
 install:
-  - conda env create --file environment.yml
-  - source activate IOOS
+  - conda env create --quiet --file "$ENV"
+  - source activate "$ENV_NAME"
+
+  # Debug.
+  - conda info -a
+  - conda list
 
 script:
   # Default test is mostly codding standards.
@@ -52,6 +57,9 @@ script:
     fi
   # The notebook test runs the blog notebooks.
   - if [[ $TEST_TARGET == 'notebooks' ]]; then
+      cd tests && python test_notebooks.py ;
+    fi
+  - if [[ $TEST_TARGET == 'notebooks_python2' ]]; then
       cd tests && python test_notebooks.py ;
     fi
   # Staged notebooks are the notebooks that are not in the blog yet.
