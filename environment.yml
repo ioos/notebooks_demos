@@ -4,6 +4,7 @@ channels:
   - defaults
 dependencies:
   - python=3.5
+  - icu=56
   - anaconda-navigator
   - bagit
   - beautifulsoup4
