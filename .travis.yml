@@ -36,7 +36,7 @@ before_install:
   - conda info -a
 
 install:
-  - conda env create -q -f environment.yml
+  - conda env create --file environment.yml
   - source activate IOOS
 
 script:
