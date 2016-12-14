@@ -35,6 +35,7 @@ dependencies:
   - mplleaflet
   - nb_conda_kernels
   - netcdf4
+  - libnetcdf=4.4.0
   - numpy
   - oceans
   - oct2py
