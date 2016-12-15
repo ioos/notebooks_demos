@@ -3,11 +3,11 @@ build: false
 environment:
   matrix:
     - PYTHON: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.5"
-      PYTHON_ARCH: "64"
-    - PYTHON: "C:\\Miniconda"
-      PYTHON_VERSION: "3.5"
-      PYTHON_ARCH: "32"
+      ENV_NAME: "IOOS3"
+      ENV: "environment.yml"
+    - PYTHON: "C:\\Miniconda-x64"
+      ENV_NAME: "IOOS2"
+      ENV: "environment-python-2.yml"
 
 init:
   - "ECHO %PYTHON_VERSION% %MINICONDA%"
@@ -25,15 +25,19 @@ install:
 
   # Use the pre-installed Miniconda for the desired arch.
   - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-  - conda update --all --yes
-  - "conda-env create -f environment.yml"
-  - activate IOOS
-  - conda install console_shortcut --yes
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update --quiet conda
+  - conda env create --quiet --file "%ENV%"
+  - activate "%ENV_NAME%"
+  - conda install console_shortcut
   # Fortran cells.
-  - conda install -c conda-forge mingwpy --yes
+  - conda install --channel conda-forge mingwpy
   - set CFG=%CONDA_PREFIX%\Lib\distutils\distutils.cfg
   - echo [build] >> "%CFG%"
   - echo compiler=mingw32 >> "%CFG%"
+  # DEBUG.
+  - conda info
+  - conda list
 
 test_script:
     - cmd: cd tests && python test_notebooks.py

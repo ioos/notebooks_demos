@@ -33,7 +33,7 @@ then some of the paths below may need editing to reflect the user space folder!
 
 **ASIDE 1:** If you are using ArcGIS,
 or any other Python distribution,
-you should you should **uncheck** the boxes in the install script so that Anaconda is **not** made your default Python,
+you should **uncheck** the boxes in the install script so that Anaconda is **not** made your default Python,
 nor added to your path.
 You then need to activate `conda` by opening a command prompt terminal and typing:
 
@@ -82,7 +82,7 @@ type the following commands in the terminal or Windows command prompt:
 ```bash
 conda config --add channels conda-forge --force
 conda update --yes --all
-conda env create environment.yml
+conda env create --quiet --file environment.yml
 ```
 
 The first two, adding an extra channel and updating, are optional but recommended.
@@ -92,13 +92,19 @@ Once it's done building the environment,
 you can activate the environment by typing:
 
 ```bash
-activate IOOS  # Windows
-source activate IOOS  # OSX and Linux
+activate IOOS3  # Windows
+source activate IOOS3  # OSX and Linux
 ```
 
-**ASIDE 2:** This file is just a list of Python packages that will be installed in a new `conda` virtual environment named `IOOS`.
+**ASIDE 2:** This file is just a list of Python packages that will be installed in a new `conda` virtual environment named `IOOS3`.
 You can edit the file to add/remove software,
 and/or rename the environment name if you need more environments for different tasks.
+
+**ASIDE 3:** The default `Python` chosen for the environment is `3.5`.
+If you need Python 2.7 download [environment-python-2.yml](https://raw.githubusercontent.com/ioos/notebooks_demos/master/environment-python-2.yml) instead,
+and replace `environment.yml` for `environment-python-2.yml` in the instructions above to create an `IOOS2` environment.
+Note that you will need to substitute `IOOS3` for `IOOS2`.
+BTW, one can create both envs and use the Jupyter notebook kernel menu to switch between them.
 
 ## Exiting the IOOS environment
 
@@ -117,8 +123,8 @@ you must remember to activate the IOOS environment every time,
 by typing in a command prompt
 
 ```
-C:\Miniconda3\Scripts\activate IOOS  # Windows
-export PATH=$HOME/miniconda3/bin:$PATH && source activate IOOS  # OSX and Linux
+C:\Miniconda3\Scripts\activate IOOS3  # Windows
+export PATH=$HOME/miniconda3/bin:$PATH && source activate IOOS3  # OSX and Linux
 ```
 
 On all systems, to start the Jupyter notebook, just type:

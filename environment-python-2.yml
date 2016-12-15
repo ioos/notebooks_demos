@@ -1,11 +1,12 @@
-name: IOOS3
+name: IOOS2
 channels:
-  - conda-forge
+  - ioos
   - defaults
+  - conda-forge
 dependencies:
   - icu=56
   - libnetcdf=4.4.0
-  - python=3.5
+  - python=2.7
   - anaconda-navigator
   - bagit
   - beautifulsoup4
