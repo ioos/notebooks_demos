@@ -23,6 +23,7 @@ dependencies:
   - gdal
   - geojson
   - geojsonio
+  - geolinks
   - geopandas
   - geos
   - gridgeo
