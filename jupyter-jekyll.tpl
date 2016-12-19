@@ -54,16 +54,8 @@ In&nbsp;[{{ cell.execution_count }}]:
 {% endblock data_svg %}
 
 {% block data_png %}
-[![](data:image/png;base64,{{ output.data['image/png'] }})]({{ output.metadata.filenames['image/png'] | path2url }})
+![png](data:image/png;base64,{{ output.data['image/png'] }})
 {% endblock data_png %}
-
-{% block data_jpg %}
-![jpeg]({{ output.metadata.filenames['image/jpeg'] | path2url }})
-{% endblock data_jpg %}
-
-{% block data_pdf %}
-![]({{ output.metadata.filenames['application/pdf'] | path2url }})
-{% endblock data_pdf %}
 
 {% block data_latex %}
 {{ output.data['text/latex'] }}
