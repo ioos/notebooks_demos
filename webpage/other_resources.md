@@ -24,7 +24,7 @@ Windows users also need to choose between 32-bit (old Windows XP) or 64-bit (mod
 ### Windows
 
 Run the installer.
-Choose *Just myself* instead *All users* so `miniconda` is installed in your user `namespace`.
+Choose *Just Me* instead *All users* so `miniconda` is installed in your user `namespace`.
 Also, make sure both boxes that sets Miniconda as your default Python,
 and add it to the path are checked!
 
