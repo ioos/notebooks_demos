@@ -24,25 +24,12 @@ Windows users also need to choose between 32-bit (old Windows XP) or 64-bit (mod
 ### Windows
 
 Run the installer.
-Choose *Just Me* instead *All users* so `miniconda` is installed in your user `namespace`.
-Also, make sure both boxes that sets Miniconda as your default Python,
-and add it to the path are checked!
+Make sure to install for *Just Me*,
+instead *All users*,
+so `miniconda` is installed in your user `namespace`.
 
-**ASIDE 0:** If have a personal laptop it is fine to use *All users* instead.
-
-**ASIDE 1:** If you are using ArcGIS,
-or any other Python distribution,
-you should **uncheck** the boxes in the install script so that Anaconda is **not** made your default Python,
-nor added to your path.
-You then need to activate `conda` by opening a command prompt terminal and typing:
-
-```
-C:\Miniconda3\Scripts\activate
-conda install console_shortcut
-```
-
-which will give you a "Anaconda Prompt" you can use in the future to type `conda` commands.
-(Look in "Start Menu=>All Programs=>Anaconda3)
+Then launch the Anaconda Command Prompt,
+which has miniconda in the path, or via the  "Anaconda Navigator" GUI.
 
 ### Linux/OS X
 
@@ -122,9 +109,10 @@ you must remember to activate the IOOS environment every time,
 by typing in a command prompt
 
 ```
-C:\Miniconda3\Scripts\activate IOOS3  # Windows
 export PATH=$HOME/miniconda3/bin:$PATH && source activate IOOS3  # OSX and Linux
 ```
+
+Windows user can just open it using the shortcut from the menu.
 
 On all systems, to start the Jupyter notebook, just type:
 
