@@ -15,21 +15,17 @@ you can install it by typing `conda install anaconda` using miniconda.
 ## Install
 
 Download and install the appropriate Miniconda installer from [http://conda.pydata.org/miniconda.html](http://conda.pydata.org/miniconda.html).
-With Anaconda you can create environments that use any Python version (e.g. Python 2.7 or Python 3.x).
-You should install the latest Python 3.x,
-and if find out later you need a Python 2.7 environment,
+With Anaconda you can create environments that use any Python version (e.g. Python 2.7 or Python 3.x), so install 
+the latest Python 3.x and if find out later you need a Python 2.7 environment,
 you can create one.
 Windows users also need to choose between 32-bit (old Windows XP) or 64-bit (modern Windows) versions.
 
 ### Windows
 
-Run the installer.
-Make sure to install for *Just Me*,
-instead *All users*,
-so `miniconda` is installed in your user `namespace`.
+Run the installer.  
+Choose *Just Me* (not *All Users*), and choose a Install Location owned by you.  The default `%USERPROFILE%\AppData\Local\Continuum\Miniconda3` is fine, but kind of long, so if you have created something directory like `c:\programs` that you own, you might choose `c:\programs\Miniconda3`. 
 
-Then launch the Anaconda Command Prompt,
-which has miniconda in the path, or via the  "Anaconda Navigator" GUI.
+On the "Advanced Installation Options" screen, leave the boxes checked if you want Miniconda 3 to be your default python.  If you are going to be switching from Python 2 to Python 3 or perhaps some other Python distribution, it's best uncheck the boxes and use the `Anaconda Command Prompt` or `Anaconda Navigator` to start Anaconda.  
 
 ### Linux/OS X
 
