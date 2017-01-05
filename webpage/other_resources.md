@@ -23,9 +23,9 @@ Windows users also need to choose between 32-bit (old Windows XP) or 64-bit (mod
 ### Windows
 
 Run the installer.  
-Choose *Just Me* (not *All Users*), and choose a Install Location owned by you.  The default `%USERPROFILE%\AppData\Local\Continuum\Miniconda3` is fine, but kind of long, so if you have created something directory like `c:\programs` that you own, you might choose `c:\programs\Miniconda3`. 
+Choose *Just Me* (not *All Users*), and choose a Install Location owned by you.  The default `%USERPROFILE%\AppData\Local\Continuum\Miniconda3` is fine, but kind of long, so if you have created some shorter directory like `c:\programs` that you own, you might choose `c:\programs\Miniconda3`. 
 
-On the "Advanced Installation Options" screen, leave the boxes checked if you want Miniconda 3 to be your default python.  If you are going to be switching from Python 2 to Python 3 or perhaps some other Python distribution, it's best uncheck the boxes and use the `Anaconda Command Prompt` or `Anaconda Navigator` to start Anaconda.  
+On the "Advanced Installation Options" screen, leave the boxes checked if you want Miniconda 3 to be your default python.  If you are going to be switching from Python 2 to Python 3 or perhaps some other Python distribution, it's best uncheck the boxes and use the `Anaconda Command Prompt` or `Anaconda Navigator` (see below for instructions) to start Anaconda.
 
 ### Linux/OS X
 
@@ -58,35 +58,35 @@ url=https://raw.githubusercontent.com/ioos/notebooks_demos/master/environment.ym
 curl $url -o environment.yml
 ```
 
-From the directory where you saved the file above,
+Then from the directory where you saved the file above,
 type the following commands in the terminal or Windows command prompt:
 
 ```bash
 conda config --add channels conda-forge --force
 conda update --yes --all
+conda install anaconda-navigator
 conda env create --quiet --file environment.yml
 ```
 
-The first two, adding an extra channel and updating, are optional but recommended.
-(Lots of packages get downloaded here! This step will take a while...)
+The first three lines are optional, but makes sure that packages can be discovered in the conda-forge channel, updates miniconda and installs the anaconda-navigator, which is a handy GUI for launching applications and switching environments. 
+The fourth line actually creates the IOOS environment, and since lots of packages are downloaded, you should go get a coffee.
 
-Once it's done building the environment,
-you can activate the environment by typing:
+Once the environment is done building, you can activate it by typing:
 
 ```bash
 activate IOOS3  # Windows
 source activate IOOS3  # OSX and Linux
 ```
 
-**ASIDE 2:** This file is just a list of Python packages that will be installed in a new `conda` virtual environment named `IOOS3`.
-You can edit the file to add/remove software,
-and/or rename the environment name if you need more environments for different tasks.
+Note that the `IOOS3` environment is a Python3 environment.
 
-**ASIDE 3:** The default `Python` chosen for the environment is `3.5`.
-If you need Python 2.7 download [environment-python-2.yml](https://raw.githubusercontent.com/ioos/notebooks_demos/master/environment-python-2.yml) instead,
-and replace `environment.yml` for `environment-python-2.yml` in the instructions above to create an `IOOS2` environment.
-Note that you will need to substitute `IOOS3` for `IOOS2`.
-BTW, one can create both envs and use the Jupyter notebook kernel menu to switch between them.
+If you also need a Python2 environment for older python programs, download [environment-python-2.yml](https://raw.githubusercontent.com/ioos/notebooks_demos/master/environment-python-2.yml) instead,
+and create an additional `IOOS2` Python2 environment: 
+```bash
+conda env create --quiet --file environment-python2.yml`
+```
+It's fine to have both an `IOOS3` Python3 environment and an `IOOS2` Python2 environment.  You can switch between them 
+from the command line (Anaconda Command Prompt on Windows), from the Anaconda Navigator, or from the Jupyter notebook kernel menu.
 
 ## Exiting the IOOS environment
 
@@ -108,13 +108,14 @@ by typing in a command prompt
 export PATH=$HOME/miniconda3/bin:$PATH && source activate IOOS3  # OSX and Linux
 ```
 
-Windows user can just open it using the shortcut from the menu.
+Windows users can navigate to the Anaconda Command Prompt (e.g. Start Menu=>Anaconda3 on Windows 7) and type `activate IOOS2`. 
 
 On all systems, to start the Jupyter notebook, just type:
 
 ```
 jupyter notebook
 ```
+
 
 # Why we use and recommend Anaconda
 
