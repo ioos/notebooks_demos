@@ -15,8 +15,8 @@ you can install it by typing `conda install anaconda` using miniconda.
 ## Install
 
 Download and install the appropriate Miniconda installer from [http://conda.pydata.org/miniconda.html](http://conda.pydata.org/miniconda.html).
-With Anaconda you can create environments that use any Python version (e.g. Python 2.7 or Python 3.5).
-You should install the latest Python 3.5,
+With Anaconda you can create environments that use any Python version (e.g. Python 2.7 or Python 3.x).
+You should install the latest Python 3.x,
 and if find out later you need a Python 2.7 environment,
 you can create one.
 Windows users also need to choose between 32-bit (old Windows XP) or 64-bit (modern Windows) versions.
@@ -24,26 +24,12 @@ Windows users also need to choose between 32-bit (old Windows XP) or 64-bit (mod
 ### Windows
 
 Run the installer.
-Choose *For all users* instead *For just myself* to `miniconda` is installed outside
-your user `namespace`. Also, make sure both boxes that sets Miniconda as your default Python,
-and add it to the path are checked!
+Make sure to install for *Just Me*,
+instead *All users*,
+so `miniconda` is installed in your user `namespace`.
 
-**ASIDE 0:** If you do not have permission to install *For all users*,
-then some of the paths below may need editing to reflect the user space folder!
-
-**ASIDE 1:** If you are using ArcGIS,
-or any other Python distribution,
-you should **uncheck** the boxes in the install script so that Anaconda is **not** made your default Python,
-nor added to your path.
-You then need to activate `conda` by opening a command prompt terminal and typing:
-
-```
-C:\Miniconda3\Scripts\activate
-conda install console_shortcut
-```
-
-which will give you a "Anaconda Prompt" you can use in the future to type `conda` commands.
-(Look in "Start Menu=>All Programs=>Anaconda3)
+Then launch the Anaconda Command Prompt,
+which has miniconda in the path, or via the  "Anaconda Navigator" GUI.
 
 ### Linux/OS X
 
@@ -123,9 +109,10 @@ you must remember to activate the IOOS environment every time,
 by typing in a command prompt
 
 ```
-C:\Miniconda3\Scripts\activate IOOS3  # Windows
 export PATH=$HOME/miniconda3/bin:$PATH && source activate IOOS3  # OSX and Linux
 ```
+
+Windows user can just open it using the shortcut from the menu.
 
 On all systems, to start the Jupyter notebook, just type:
 
