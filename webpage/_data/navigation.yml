@@ -13,3 +13,9 @@ site_nav:
     children:
       - title: "Installing the IOOS conda environment"
         url: /other_resources
+      - title: "Australian ocean data network portal user guide"
+        url: https://help.aodn.org.au/aodn-data-tools/user-code-library/
+      - title: "Unidata jupyter notebook gallery"
+        url: http://unidata.github.io/notebook-gallery/
+      - title: "Extracting and enriching OBIS data with R"
+        url: http://iobis.org/tutorial/
