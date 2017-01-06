@@ -13,9 +13,13 @@ site_nav:
     children:
       - title: "Installing the IOOS conda environment"
         url: /other_resources
+      - title: " "
       - title: "Opening netCDF files - hints from AODN"
         url: https://help.aodn.org.au/aodn-data-tools/user-code-library/
+      - title: " "
       - title: "Unidata Jupyter notebook gallery"
         url: http://unidata.github.io/notebook-gallery/
+      - title: " "
       - title: "Extracting and enriching OBIS data with R"
         url: http://iobis.org/tutorial/
+      - title: " "
