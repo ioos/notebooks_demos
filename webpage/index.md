@@ -3,6 +3,8 @@ title: The IOOS Data Demo Center
 layout: single
 ---
 
+![Front image]({{ site.url }}/{{ site.baseurl }}/assets/Data_Demo_Center_middlepic_size770.png)
+
 The IOOS Notebook Gallery is a collection of tutorials and examples of how to access and utilize the many IOOS technologies and data sources available.
 This site is geared towards scientists and environmental managers interested in "diving deep" into the numbers and creating orginal plots and data analysis.
 Most notebooks will be examples using Python code.
