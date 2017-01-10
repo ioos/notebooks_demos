@@ -115,10 +115,12 @@ def fes_date_filter(start, stop, constraint='overlaps'):
     return begin, end
 
 
-def get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000):
+def get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000, **kwargs):
     """
     Iterate `maxrecords`/`pagesize` times until the requested value in
     `maxrecords` is reached.
+
+    `kwargs` can by any `getrecords2` key word argument, like esn='full'.
 
     """
     from owslib.fes import SortBy, SortProperty
@@ -130,8 +132,13 @@ def get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000):
 
     nextrecord = getattr(csw, 'results', 1)
     while nextrecord != 0:
-        csw.getrecords2(constraints=filter_list, startposition=startposition,
-                        maxrecords=pagesize, sortby=sortby)
+        csw.getrecords2(
+            constraints=filter_list,
+            startposition=startposition,
+            maxrecords=pagesize,
+            sortby=sortby,
+            **kwargs,
+            )
         csw_records.update(csw.records)
         if csw.results['nextrecord'] == 0:
             break
@@ -139,6 +146,7 @@ def get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000):
         if startposition >= maxrecords:
             break
     csw.records.update(csw_records)
+    return csw
 
 
 def _parse_reference(ref, identifier):
