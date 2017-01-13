@@ -209,7 +209,7 @@ def time_coord(cube):
         timevars = [coord for coord in cube.dim_coords if 'time' in coord.name()]  # noqa
         if not timevars:
             msg = 'Could not find "time" in {!r}'.format
-            raise ValueError(msg(coord.dim_coords))
+            raise ValueError(msg(cube.dim_coords))
     if len(timevars) != 1:
         msg = 'Found more than one time coordinates!'
         raise ValueError(msg)

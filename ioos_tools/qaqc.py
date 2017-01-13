@@ -144,7 +144,7 @@ def first_difference(series, quantile=0.75):
 
     """
     series = pd.Series(series)
-    abs_diffs = series.diff().abs().fillna(method='bfill').fillna(method='ffill')
+    abs_diffs = series.diff().abs().fillna(method='bfill').fillna(method='ffill')  # noqa
     return abs_diffs > abs_diffs.quantile(quantile)
 
 
@@ -295,6 +295,7 @@ def tukey53H(series, k=1.5):
     delta = np.abs(series-u3)
 
     return delta > k*stddev
+
 
 if __name__ == '__main__':
     import doctest
