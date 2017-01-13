@@ -20,6 +20,8 @@ matrix:
   allow_failures:
     - os: linux
       env: TEST_TARGET=staged_notebooks ENV_NAME="IOOS3" ENV="environment.yml"
+    - os: osx
+      env: TEST_TARGET=notebooks_python3 ENV_NAME="IOOS3" ENV="environment.yml"
 
 before_install:
   - if [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then
