@@ -137,7 +137,7 @@ def get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000, **kwargs):
             startposition=startposition,
             maxrecords=pagesize,
             sortby=sortby,
-            **kwargs,
+            **kwargs
             )
         csw_records.update(csw.records)
         if csw.results['nextrecord'] == 0:
