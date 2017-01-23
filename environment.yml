@@ -36,6 +36,7 @@ dependencies:
   - mpld3
   - mplleaflet
   - nb_conda_kernels
+  - nbdime
   - netcdf4
   - numpy
   - oceans
