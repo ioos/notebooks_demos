@@ -1,8 +1,7 @@
 name: IOOS2
 channels:
-  - ioos
-  - defaults
   - conda-forge
+  - defaults
 dependencies:
   - icu=56
   - libnetcdf=4.4.0
@@ -37,6 +36,7 @@ dependencies:
   - mpld3
   - mplleaflet
   - nb_conda_kernels
+  - nbdime
   - netcdf4
   - numpy
   - oceans
