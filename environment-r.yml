@@ -8,3 +8,4 @@ dependencies:
   - jupyter
   - r-essentials
   - r-oce
+  - r-gsw
