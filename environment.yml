@@ -73,3 +73,5 @@ dependencies:
   - thredds_crawler
   - xarray
   - xlrd
+  # R kernel
+  - r-base
