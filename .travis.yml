@@ -54,8 +54,8 @@ script:
   # E402: module level import not at top of file (in notebooks it is clearer to import in the first cell the module is used.)
   # In addition the magic cells are skipped with `grep -v '^get_ipython'` b/c they are not compliant when converted to script.
   - if [[ $TEST_TARGET == 'coding_standards' ]]; then
-      find . -type f -name "*.py" ! -name 'conf.py' | xargs flake8 --max-line-length=100 ;
-      for file in $(find . -type f -name "*.ipynb"); do jupyter nbconvert --template=tests/strip_markdown.tpl --stdout --to python $file | grep -v '^get_ipython' | flake8 - --ignore=W391,E226,E402 --max-line-length=100 --show-source ; done ;
+      find . -type f -name "*.py" ! -name "conf.py" | xargs flake8 --max-line-length=100 ;
+      for file in $(find . -type f -name "*.ipynb" ! -name "2017-01-23-R-notebook.ipynb" ); do jupyter nbconvert --template=tests/strip_markdown.tpl --stdout --to python $file | grep -v '^get_ipython' | flake8 - --ignore=W391,E226,E402 --max-line-length=100 --show-source ; done ;
     fi
   # The notebook test runs the blog notebooks.
   - if [[ $TEST_TARGET == 'notebooks_python3' ]]; then
