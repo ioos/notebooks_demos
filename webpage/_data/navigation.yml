@@ -6,6 +6,8 @@ main:
     url: /code_gallery
   - title: "Video Tutorials"
     url: /video_tutorials
+  - title: "Contact Us"
+    url: /contact
 
 # Site navigation links.
 site_nav:
