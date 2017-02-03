@@ -13,4 +13,5 @@ The notebooks will come from a variety of authors including IOOS Program Office 
 Regional Association data managers, and other IOOS partners.
 If you think you have a nice example you would like to share please let us know!
 
-Feedback and questions are welcome.  Please contact us at data.ioos@noaa.gov
+Feedback and questions are welcome.
+Please contact us at <a href="mailto:data.ioos@noaa.gov" target="_top">data.ioos@noaa.gov</a>
