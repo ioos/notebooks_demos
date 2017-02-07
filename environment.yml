@@ -6,7 +6,6 @@ dependencies:
   - icu=56
   - libnetcdf=4.4.0
   - python=3.5
-  - anaconda-navigator
   - bagit
   - beautifulsoup4
   - bokeh
