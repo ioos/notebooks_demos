@@ -6,6 +6,7 @@ Execute all notebooks.
 
 """
 
+import io
 from nbconvert.preprocessors import ExecutePreprocessor
 from nbconvert.exporters import Exporter, HTMLExporter
 
@@ -21,7 +22,7 @@ def notebook_tester(fname):
 
     out_nb = HTMLExporter().from_notebook_node(*exec_nb)
     fout = fname.replace('.ipynb', '.html')
-    with open(fout, 'w') as f:
+    with io.open(fout, 'w') as f:
         f.write(out_nb[0])
     return '[Passed]'
 
