@@ -29,12 +29,12 @@ dependencies:
   - jsanimation
   - jupyter
   - jupyter_client
-  - matplotlib
+  - matplotlib <2
   - mpld3
   - mplleaflet
   - nb_conda_kernels
   - nbdime
-  - netcdf4
+  - netcdf4=1.2.4
   - numpy
   - oceans
   - oct2py
