@@ -4,6 +4,7 @@ channels:
   - defaults
 dependencies:
   - python=3.5
+  - libnetcdf=4.4.0
   - bagit
   - beautifulsoup4
   - bokeh
@@ -29,12 +30,12 @@ dependencies:
   - jsanimation
   - jupyter
   - jupyter_client
-  - matplotlib
+  - matplotlib <2
   - mpld3
   - mplleaflet
   - nb_conda_kernels
   - nbdime
-  - netcdf4
+  - netcdf4=1.2.4
   - numpy
   - oceans
   - oct2py
