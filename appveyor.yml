@@ -30,11 +30,6 @@ install:
   - conda env create --quiet --file "%ENV%"
   - activate "%ENV_NAME%"
   - conda install console_shortcut
-  # Fortran cells.
-  - conda install --channel conda-forge mingwpy
-  - set CFG=%CONDA_PREFIX%\Lib\distutils\distutils.cfg
-  - echo [build] >> "%CFG%"
-  - echo compiler=mingw32 >> "%CFG%"
   # DEBUG.
   - conda info
   - conda list
