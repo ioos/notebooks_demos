@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.5
+  - python=3.6
   - libnetcdf=4.4.0
   - bagit
   - beautifulsoup4
@@ -29,7 +29,6 @@ dependencies:
   - iris
   - jsanimation
   - jupyter
-  - jupyter_client
   - matplotlib <2
   - mpld3
   - mplleaflet
