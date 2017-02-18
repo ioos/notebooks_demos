@@ -70,3 +70,7 @@ dependencies:
   - thredds_crawler
   - xarray
   - xlrd
+  # R packages.
+  - r-irkernel
+  - r-oce
+  - r-gsw
