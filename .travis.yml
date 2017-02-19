@@ -24,13 +24,13 @@ matrix:
       env: TEST_TARGET=notebooks_python3 ENV_NAME="IOOS3" ENV="environment.yml"
 
 before_install:
-  - if [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then
+  - if [ $TRAVIS_PULL_REQUEST == 'false' ]; then
       openssl aes-256-cbc -K $encrypted_2ed57bb9ae7e_key -iv $encrypted_2ed57bb9ae7e_iv -in deploy_key.enc -out deploy_key -d ;
     fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then URL="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh" ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh" ; fi
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then URL="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh" ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh" ; fi
   # GUI (R png figures).
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; fi
   - wget $URL -O miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
@@ -53,23 +53,23 @@ script:
   # E226: missing whitespace around arithmetic operator (not enforced by PEP 8)
   # E402: module level import not at top of file (in notebooks it is clearer to import in the first cell the module is used.)
   # In addition the magic cells are skipped with `grep -v '^get_ipython'` b/c they are not compliant when converted to script.
-  - if [[ $TEST_TARGET == 'coding_standards' ]]; then
+  - if [ $TEST_TARGET == 'coding_standards' ]; then
       find . -type f -name "*.py" ! -name "conf.py" | xargs flake8 --max-line-length=100 ;
       for file in $(find . -type f -name "*.ipynb" ! -name "2017-01-23-R-notebook.ipynb" ); do jupyter nbconvert --template=tests/strip_markdown.tpl --stdout --to python $file | grep -v '^get_ipython' | flake8 - --ignore=W391,E226,E402 --max-line-length=100 --show-source ; done ;
     fi
-  # The notebook test runs the blog notebooks.
-  - if [[ $TEST_TARGET == 'notebooks_python3' ]]; then
+  # Test the blog notebook.
+  - if [ $TEST_TARGET == 'notebooks_python3' ]; then
       cd tests && python test_notebooks.py ;
     fi
-  - if [[ $TEST_TARGET == 'notebooks_python2' ]]; then
+  - if [ $TEST_TARGET == 'notebooks_python2' ]; then
       cd tests && python test_notebooks.py ;
     fi
-  # Staged notebooks are the notebooks that are not in the blog yet.
-  - if [[ $TEST_TARGET == 'staged_notebooks' ]]; then
+  # Test the staged notebooks.
+  - if [ $TEST_TARGET == 'staged_notebooks' ]; then
       cd tests && python test_staged_notebooks.py ;
     fi
-  # Publish the converted notebooks.
-  - if [[ $TEST_TARGET == 'publish' ]]; then
+  # Publish the notebooks.
+  - if [ $TEST_TARGET == 'publish' ]; then
       cd webpage && python make_index.py && cd ..;
       find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --to=markdown --template="jupyter-jekyll.tpl" --output-dir=webpage/_notebooks ;
       bash webpage/deploy.sh ;

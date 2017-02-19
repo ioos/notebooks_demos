@@ -11,9 +11,9 @@ from nbconvert.preprocessors import ExecutePreprocessor
 from nbconvert.exporters import Exporter, HTMLExporter
 
 
-def notebook_tester(fname):
+def notebook_tester(fname, kernelspec='python'):
     raw_nb = Exporter().from_filename(fname)
-    raw_nb[0].metadata.setdefault('kernelspec', {})['name'] = 'python'
+    raw_nb[0].metadata.setdefault('kernelspec', {})['name'] = kernelspec
     preproc = ExecutePreprocessor(timeout=-1)
     try:
         exec_nb = preproc.preprocess(*raw_nb)
@@ -39,8 +39,12 @@ if __name__ == '__main__':
     for ipynb in sorted(nblist):
         print('[Running notebook]: {}'.format(ipynb))
         if '2017-01-23-R-notebook.ipynb' in ipynb:
-            continue
-        ret = notebook_tester(ipynb)
+            kernelspec = 'ir'
+            print('Kernel: R')
+        else:
+            kernelspec = 'python'
+            print('Kernel: python')
+        ret = notebook_tester(ipynb, kernelspec=kernelspec )
         if 'Failed' in ret:
             fail = True
         print('{}\n'.format(ret))
