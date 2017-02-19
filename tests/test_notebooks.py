@@ -40,9 +40,11 @@ if __name__ == '__main__':
         print('[Running notebook]: {}'.format(ipynb))
         if '2017-01-23-R-notebook.ipynb' in ipynb:
             kernelspec = 'ir'
+            print('Kernel: R')
         else:
             kernelspec = 'python'
-        ret = notebook_tester(ipynb)
+            print('Kernel: python')
+        ret = notebook_tester(ipynb, kernelspec=kernelspec )
         if 'Failed' in ret:
             fail = True
         print('{}\n'.format(ret))
