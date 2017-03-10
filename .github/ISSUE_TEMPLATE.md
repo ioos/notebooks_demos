@@ -1,4 +1,5 @@
-To suggest a notebook for the code gallery please open an issue answering the questions below:
+If you are opening an issue regarding an existing notebook/code or the webpage just ignore the instructions below.
+If you want to suggest a notebook for the code gallery please open answer these questions:
 
 - [ ] What is language(s) for used in the example?
 - [ ] Is it focused on a particular module/service?
