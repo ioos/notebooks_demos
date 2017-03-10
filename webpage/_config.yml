@@ -121,6 +121,12 @@ author:
   xing             :
   youtube          :
 
+forkme:
+  active: true
+  title: Suggest a Demo!
+  url: https://github.com/ioos/notebooks_demos/issues/new
+  position: top-right
+
 # Reading Files
 include:
   - .htaccess
