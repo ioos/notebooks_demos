@@ -36,7 +36,7 @@ def extract_thumbnail_and_title(nb_path):
 
 if __name__ == '__main__':
     base_url = '{{ site.url }}{{ site.baseurl }}/'
-    box = '<div><figcaption>{caption}</figcaption><a href="{base_url}/notebooks/{fname}"><img src="{img}"></a></div>\n'.format  # noqa
+    box = '<div><a href="{base_url}/notebooks/{fname}"><figcaption>{caption}</figcaption><img src="{img}"></a></div>\n'.format  # noqa
     front_matter = """\
 ---
 title: Code Gallery
