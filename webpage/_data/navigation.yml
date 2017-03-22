@@ -21,3 +21,5 @@ site_nav:
         url: http://unidata.github.io/notebook-gallery/
       - title: "4. Extracting and enriching OBIS data with R"
         url: http://iobis.org/tutorial/
+      - title: "5. USGS-R examples"
+        url: https://github.com/USGS-R
