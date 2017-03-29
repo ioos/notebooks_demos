@@ -29,7 +29,7 @@ dependencies:
   - iris
   - jsanimation
   - jupyter
-  - matplotlib <2
+  - matplotlib
   - mpld3
   - mplleaflet
   - nb_conda_kernels
