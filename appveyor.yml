@@ -2,9 +2,10 @@ build: false
 
 environment:
   matrix:
-    - PYTHON: "C:\\Miniconda-x64"
+    - PYTHON: "C:\\Miniconda36-x64"
       ENV_NAME: "IOOS3"
       ENV: "environment.yml"
+
     - PYTHON: "C:\\Miniconda-x64"
       ENV_NAME: "IOOS2"
       ENV: "environment-python-2.yml"
