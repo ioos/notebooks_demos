@@ -26,14 +26,5 @@ cf_names:
 units: 'celsius'
 
 catalogs:
-    - http://www.ngdc.noaa.gov/geoportal/csw
     - https://data.ioos.us/csw
     - http://gamone.whoi.edu/csw
-
-# See https://raw.githubusercontent.com/OSGeo/Cat-Interop/master/LinkPropertyLookupTable.csv
-service_strings:
-    opendap:
-        - OPeNDAP:OPeNDAP
-        - urn:x-esri:specification:ServiceType:odp:url
-    sos:
-        - urn:x-esri:specification:ServiceType:sos:url
