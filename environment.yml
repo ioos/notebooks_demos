@@ -25,7 +25,7 @@ dependencies:
   - geos
   - gridgeo
   - gsw
-  - iris
+  - iris>=1.12
   - jsanimation
   - jupyter
   - matplotlib
