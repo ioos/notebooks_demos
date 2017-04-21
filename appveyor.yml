@@ -3,12 +3,6 @@ build: false
 environment:
   matrix:
     - PYTHON: "C:\\Miniconda36-x64"
-      ENV_NAME: "IOOS3"
-      ENV: "environment.yml"
-
-    - PYTHON: "C:\\Miniconda-x64"
-      ENV_NAME: "IOOS2"
-      ENV: "environment-python-2.yml"
 
 init:
   - "ECHO %PYTHON_VERSION% %MINICONDA%"
@@ -26,13 +20,13 @@ install:
 
   # Use the pre-installed Miniconda for the desired arch.
   - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-  - conda config --set always_yes yes --set changeps1 no
-  - conda update --quiet conda
-  - conda env create --quiet --file "%ENV%"
-  - activate "%ENV_NAME%"
-  - conda install console_shortcut
-  # DEBUG.
-  - conda info
+  - conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
+  - conda update conda
+  - conda env create --file environment.yml --name IOOS
+  - activate IOOS
+
+  # Debug.
+  - conda info --all
   - conda list
 
 test_script:
