@@ -2,46 +2,32 @@
 Notebooks tests
 ----------------
 
-Execute blog notebooks.
+Execute staged-notebooks.
 
 """
 
-from nbconvert.preprocessors import ExecutePreprocessor
-from nbconvert.exporters import Exporter, HTMLExporter
+import os
+import sys
+
+from glob import glob
+
+from utilities import test_run
+
+_root_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+
+nblist = glob(
+    os.path.join(_root_path, 'notebooks', 'staged_noteooks', '*.ipynb')
+    )
 
 
-def notebook_tester(fname):
-    raw_nb = Exporter().from_filename(fname)
-    raw_nb[0].metadata.setdefault('kernelspec', {})['name'] = 'python'
-    preproc = ExecutePreprocessor(timeout=-1)
+passed = True
+for ipynb in sorted(nblist):
     try:
-        exec_nb = preproc.preprocess(*raw_nb)
+        test_run(ipynb)
+        print('[PASSED]: {}'.format(os.path.split(ipynb)[-1]))
     except Exception as e:
-        return '[Failed]\n{}'.format(e)
+        print('[FAILED]: {}'.format(os.path.split(ipynb)[-1]))
+        print(e)
+        passed = False
 
-    out_nb = HTMLExporter().from_notebook_node(*exec_nb)
-    fout = fname.replace('.ipynb', '.html')
-    with open(fout, 'w') as f:
-        f.write(out_nb[0])
-    return '[Passed]'
-
-
-if __name__ == '__main__':
-    import os
-    import sys
-    import glob
-
-    rootpath = os.path.join(os.path.abspath(os.path.pardir), 'notebooks', 'boston_light_swim')
-    nblist = glob.glob(os.path.join(rootpath, '*.ipynb'))
-
-    fail = False
-    for ipynb in sorted(nblist):
-        print('[Running notebook]: {}'.format(ipynb))
-        ret = notebook_tester(ipynb)
-        if 'Failed' in ret:
-            fail = True
-        print('{}\n'.format(ret))
-    if fail:
-        sys.exit(1)
-    else:
-        sys.exit(0)
+sys.exit(1) if not passed else sys.exit(0)
