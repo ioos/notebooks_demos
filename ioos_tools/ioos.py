@@ -795,9 +795,9 @@ def make_map(bbox, **kw):
                             weight=2,
                             opacity=0.9,
                             latlon=True)
-        m.add_children(p)
+        p.add_to(m)
 
-    m.add_children(folium.LayerControl())
+    folium.LayerControl().add_to(m)
     return m
 
 
