@@ -31,4 +31,3 @@ install:
 
 test_script:
     - cmd: cd tests && python test_notebooks.py
-    - cmd: python test_staged_notebooks.py
