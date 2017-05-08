@@ -72,6 +72,18 @@ dependencies:
   - xarray
   - xlrd
   # R packages.
+  - r-ggfortify
+  - r-ggplot2
+  - r-ggplot2
   - r-gsw
+  - r-httr
   - r-irkernel
+  - r-lubridate
+  - r-mapdata
+  - r-ncdf4
   - r-oce
+  - r-rcolorbrewer
+  - r-reshape2
+  - r-sp
+  - r-xtractomatic
+  - r-xts
