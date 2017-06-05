@@ -14,6 +14,10 @@ from iris.cube import CubeList
 from iris.coords import AuxCoord, DimCoord
 from iris.exceptions import CoordinateNotFoundError, CoordinateMultiDimError
 
+try:
+    from pandas.core.indexes.datetimes import DatetimeIndex  # pandas >=0.20
+except ImportError:
+    from pandas.tseries.index import DatetimeIndex  # pandas <0.20
 
 iris.FUTURE.netcdf_promote = True
 iris.FUTURE.netcdf_no_unlimited = True
@@ -650,7 +654,7 @@ def _add_iris_coord(cube, name, points, dim, units=None, aux=False):
 
     """
     # Convert pandas datetime objects to python datetime obejcts.
-    if isinstance(points, pd.tseries.index.DatetimeIndex):
+    if isinstance(points, DatetimeIndex):
         points = points.to_pydatetime()
 
     # Convert datetime objects to Iris' current datetime representation.
