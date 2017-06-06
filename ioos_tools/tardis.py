@@ -498,23 +498,15 @@ def add_mesh(cube, url):
     return cube
 
 
-def _make_aux_coord(cube, axis='Y'):
-    """Make any given coordinate an Auxiliary Coordinate."""
-    coord = cube.coord(axis=axis)
-    cube.remove_coord(coord)
-    if cube.ndim == 2:
-        cube.add_aux_coord(coord, 1)
-    else:
-        cube.add_aux_coord(coord)
-    return cube
-
-
 def ensure_timeseries(cube):
     """Ensure that the cube is CF-timeSeries compliant."""
     if not cube.coord('time').shape == cube.shape[0]:
         cube.transpose()
-    _make_aux_coord(cube, axis='Y')
-    _make_aux_coord(cube, axis='X')
+        [
+            iris.util.demote_dim_coord_to_aux_coord(cube, dim)
+            for dim in cube.dim_coords
+            if 'time' not in dim.name()
+        ]
 
     cube.attributes.update({'featureType': 'timeSeries'})
     cube.coord("station_code").attributes = dict(cf_role='timeseries_id')
