@@ -28,6 +28,7 @@ dependencies:
   - iris>=1.12
   - jsanimation
   - jupyter
+  - jupyter_contrib_nbextensions
   - matplotlib
   - mpld3
   - mplleaflet
