@@ -1,9 +1,11 @@
+{% extends 'display_priority.tpl' %}
+
+{%- block header -%}
 ---
 layout: notebook
 title: ""
 ---
-
-{% extends 'display_priority.tpl' %}
+{%- endblock header -%}
 
 {% block in_prompt %}
 <div class="prompt input_prompt">
@@ -80,3 +82,11 @@ In&nbsp;[{{ cell.execution_count }}]:
 {% block unknowncell scoped %}
 unknown type  {{ cell.type }}
 {% endblock unknowncell %}
+
+
+{%- block footer -%}
+<br>
+Right click and choose Save link as... to
+[download](https://raw.githubusercontent.com/ioos/notebooks_demos/master/notebooks/{{resources['metadata']['name']}}.ipynb)
+this notebook, or see a static view [here](http://nbviewer.ipython.org/urls/raw.githubusercontent.com/ioos/notebooks_demos/master/notebooks/{{resources['metadata']['name']}}.ipynb).
+{%- endblock footer -%}
