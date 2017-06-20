@@ -88,5 +88,5 @@ unknown type  {{ cell.type }}
 <br>
 Right click and choose Save link as... to
 [download](https://raw.githubusercontent.com/ioos/notebooks_demos/master/notebooks/{{resources['metadata']['name']}}.ipynb)
-this notebook, or see a static view [here](http://nbviewer.ipython.org/urls/raw.githubusercontent.com/ioos/notebooks_demos/master/notebooks/{{resources['metadata']['name']}}.ipynb).
+this notebook, or click [here](https://beta.mybinder.org/v2/gh/ioos/notebooks_demos/master?filepath=notebooks/{{resources['metadata']['name']}}.ipynb) to run a live instance of this notebook.
 {%- endblock footer -%}
