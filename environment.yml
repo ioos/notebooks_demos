@@ -68,9 +68,10 @@ dependencies:
   - statsmodels
   - sympy
   - thredds_crawler
+  - utide
   - xarray
   - xlrd
   # R packages.
+  - r-gsw
   - r-irkernel
   - r-oce
-  - r-gsw
