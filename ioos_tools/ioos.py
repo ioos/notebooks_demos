@@ -376,11 +376,15 @@ def collector2table(collector, config, col='sea_water_temperature (C)'):
     c = copy.copy(collector)
     c.features = None
     try:
-        response = c.raw(responseFormat="text/csv")
+        response = c.raw(responseFormat='text/csv')
     except ExceptionReport:
-        end = c.end_time
-        response = c.filter(end=c.start_time).raw(responseFormat="text/csv")
-        c.filter(end=end)
+        try:
+            end = c.end_time
+            response = c.filter(end=c.start_time).raw(responseFormat='text/csv')
+            c.filter(end=end)
+        except ExceptionReport:
+            # No data available in collection, so return an empty list.
+            return []
     df = pd.read_csv(BytesIO(response), parse_dates=True)
     g = df.groupby('station_id')
     df = dict()
@@ -398,7 +402,7 @@ def collector2table(collector, config, col='sea_water_temperature (C)'):
     for k, row in df.iterrows():
         station_id = row['station_id'].split(':')[-1]
         c.features = [station_id]
-        response = c.raw(responseFormat="text/csv")
+        response = c.raw(responseFormat='text/csv')
         kw = dict(parse_dates=True, index_col='date_time')
         data = pd.read_csv(BytesIO(response), **kw).reset_index()
         data = data.drop_duplicates(subset='date_time').set_index('date_time')
