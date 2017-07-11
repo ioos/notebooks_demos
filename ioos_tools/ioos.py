@@ -765,7 +765,7 @@ def make_map(bbox, **kw):
         url = 'http://hfrnet.ucsd.edu/thredds/wms/HFRNet/USEGC/6km/hourly/RTV'
         w = folium.WmsTileLayer(url,
                                 name='HF Radar',
-                                format='image/png',
+                                fmt='image/png',
                                 layers='surface_sea_water_velocity',
                                 attr='HFRNet',
                                 overlay=True,
