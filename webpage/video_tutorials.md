@@ -16,6 +16,11 @@ layout: single
 - [NANOOS Visualization System](https://www.youtube.com/watch?v=MEVz0jOsqmI)
 - [NANOOS Data Explorer](https://www.youtube.com/playlist?list=PLBvrtRArn5ffsBARjKsczvfxyYX1wGtFP)
 
+![GLOS tutorials]({{ site.url }}/{{ site.baseurl }}/assets/GLOS.png) GLOS
+
+- [How to use the GLOS data portal](https://www.youtube.com/playlist?list=PLEK-mxRrHSZ5LkSSUyYHEy4lEXnEdNJJc)
+- [How to use the GLOS boater's tool](https://www.youtube.com/playlist?list=PLEK-mxRrHSZ6rH1qCpfpD6-rSljE8fbUC)
+
 ![Python logo]({{ site.url }}/{{ site.baseurl }}/assets/python.png) Python Demonstration Videos
 
 - [Catalog Driven Reproducible Workflows for Ocean-science](https://www.youtube.com/watch?v=05ax0lkQFrg)
