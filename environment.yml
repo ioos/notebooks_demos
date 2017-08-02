@@ -72,8 +72,8 @@ dependencies:
   - xarray
   - xlrd
   # R packages.
+  - r-dt
   - r-ggfortify
-  - r-ggplot2
   - r-ggplot2
   - r-gsw
   - r-httr
