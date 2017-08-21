@@ -1,0 +1,272 @@
+01:38:35 INFO: Saving data inside directory /home/filipe/IOOS/notebooks_demos/notebooks/staged_noteooks/boston_light_swim/latest
+01:38:35 INFO: *********************** Run information ************************
+01:38:35 INFO: Run date: 2017-08-21 16:38:35
+01:38:35 INFO: Start: 2017-08-16 00:00:00
+01:38:35 INFO: Stop: 2017-08-25 00:00:00
+01:38:35 INFO: Bounding box: -71.30, 42.03,-70.57, 42.63
+01:38:35 INFO: ********************* Catalog information **********************
+01:38:35 INFO: ***************************** CSW ******************************
+01:38:35 INFO: URL: https://data.ioos.us/csw
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:38 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: No link type detected
+01:38:39 INFO: CSW version: 2.0.2
+01:38:39 INFO: Number of datasets available: 21
+01:38:39 INFO: urn:ioos:station:NOAA.NOS.CO-OPS:8443970 station, Boston, MA
+01:38:39 INFO: A01 Accelerometer - Waves
+01:38:39 INFO: A01 Directional Waves (waves.mstrain Experimental)
+01:38:39 INFO: A01 Met - Meteorology
+01:38:39 INFO: A01 Optode - Oxygen
+01:38:39 INFO: A01 Sbe37 - CTD
+01:38:39 INFO: Coupled Northwest Atlantic Prediction System (CNAPS)
+01:38:39 INFO: FNMOC COAMPS Western Atlantic/Best FNMOC COAMPS Western Atlantic Time Series
+01:38:39 INFO: GFS CONUS 80km/Best GFS CONUS 80km Time Series
+01:38:39 INFO: HYbrid Coordinate Ocean Model (HYCOM): Global
+01:38:39 INFO: NAM Alaska 11km/Best NAM Alaska 11km Time Series
+01:38:39 INFO: NAM Alaska 45km from NOAAPORT/Best NAM Alaska 45km from NOAAPORT Time Series
+01:38:39 INFO: NAM CONUS 12km from NOAAPORT/Best NAM CONUS 12km from NOAAPORT Time Series
+01:38:39 INFO: NAM CONUS 80km/Best NAM CONUS 80km Time Series
+01:38:39 INFO: NERACOOS Gulf of Maine Ocean Array: Realtime Buoy Observations: A01 Massachusetts Bay: A01 ACCELEROMETER Massachusetts Bay
+01:38:39 INFO: NOAA Coral Reef Watch Operational Daily Near-Real-Time Global 5-km Satellite Coral Bleaching Monitoring Products
+01:38:39 INFO: Rapid Refresh CONUS 13km/Best Rapid Refresh CONUS 13km Time Series
+01:38:39 INFO: Rapid Refresh CONUS 20km/Best Rapid Refresh CONUS 20km Time Series
+01:38:39 INFO: Rapid Refresh CONUS 40km/Best Rapid Refresh CONUS 40km Time Series
+01:38:39 INFO: SREF Alaska 45km Ensemble Derived Products/Best SREF Alaska 45km Ensemble Derived Products Time Series
+01:38:39 INFO: SREF CONUS 40km Ensemble Derived Products/Best SREF CONUS 40km Ensemble Derived Products Time Series
+01:38:39 INFO: ***************************** DAP ******************************
+01:38:39 INFO: http://oos.soest.hawaii.edu/thredds/dodsC/hioos/satellite/dhw_5km.html
+01:38:39 INFO: http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global.html
+01:38:39 INFO: http://thredds.secoora.org/thredds/dodsC/SECOORA_NCSU_CNAPS.nc.html
+01:38:39 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/FNMOC/COAMPS/Western_Atlantic/Best.html
+01:38:39 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/GFS/CONUS_80km/Best.html
+01:38:39 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/Alaska_11km/Best.html
+01:38:39 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/Alaska_45km/noaaport/Best.html
+01:38:39 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/CONUS_12km/Best.html
+01:38:39 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/CONUS_80km/Best.html
+01:38:39 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_13km/Best.html
+01:38:39 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_20km/Best.html
+01:38:39 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_40km/Best.html
+01:38:39 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/SREF/Alaska_45km/ensprod/Best.html
+01:38:39 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/SREF/CONUS_40km/ensprod/Best.html
+01:38:39 INFO: http://www.neracoos.org/thredds/dodsC/UMO/DSG/SOS/A01/Accelerometer/HistoricRealtime/Agg.ncml.html
+01:38:39 INFO: ***************************** CSW ******************************
+01:38:39 INFO: URL: https://gamone.whoi.edu/csw
+01:38:40 INFO: No link type detected
+01:38:40 INFO: No link type detected
+01:38:40 INFO: No link type detected
+01:38:40 INFO: No link type detected
+01:38:40 INFO: No link type detected
+01:38:40 INFO: No link type detected
+01:38:40 INFO: No link type detected
+01:38:40 INFO: No link type detected
+01:38:40 INFO: CSW version: 2.0.2
+01:38:40 INFO: Number of datasets available: 2
+01:38:40 INFO: COAWST Forecast System : USGS : US East Coast and Gulf of Mexico (Experimental)
+01:38:40 INFO: COAWST Modeling System: USEast: ROMS-WRF-SWAN coupled model (aka CNAPS)
+01:38:40 INFO: ***************************** DAP ******************************
+01:38:40 INFO: http://geoport-dev.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd.html
+01:39:18 INFO: ************************* Filtered DAP *************************
+01:39:18 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/SREF/Alaska_45km/ensprod/Best.html
+01:39:18 INFO: http://oos.soest.hawaii.edu/thredds/dodsC/hioos/satellite/dhw_5km.html
+01:39:18 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_20km/Best.html
+01:39:18 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/Alaska_11km/Best.html
+01:39:18 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/SREF/CONUS_40km/ensprod/Best.html
+01:39:18 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_40km/Best.html
+01:39:18 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/CONUS_12km/Best.html
+01:39:18 INFO: http://geoport-dev.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd.html
+01:39:18 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/GFS/CONUS_80km/Best.html
+01:39:18 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/Alaska_45km/noaaport/Best.html
+01:39:18 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_13km/Best.html
+01:39:18 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/CONUS_80km/Best.html
+01:39:18 INFO: http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global.html
+01:39:18 INFO: http://thredds.secoora.org/thredds/dodsC/SECOORA_NCSU_CNAPS.nc.html
+01:39:18 INFO: http://thredds.ucar.edu/thredds/dodsC/grib/FNMOC/COAMPS/Western_Atlantic/Best.html
+01:39:20 INFO: ******************* NDBC Collector offerings *******************
+01:39:20 INFO: National Data Buoy Center SOS: 992 offerings
+01:39:34 INFO: ********************* Collector offerings **********************
+01:39:34 INFO: NOAA.NOS.CO-OPS SOS: 1188 offerings
+01:39:36 INFO: ************************* Observations *************************
+01:39:36 INFO: **************************** Models ****************************
+01:39:36 INFO: 
+[Reading url 1/15]: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/SREF/Alaska_45km/ensprod/Best
+01:39:39 WARNING: Cannot get cube for: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/SREF/Alaska_45km/ensprod/Best
+Cannot find ['sea_water_temperature', 'sea_surface_temperature', 'sea_water_potential_temperature', 'equivalent_potential_temperature', 'sea_water_conservative_temperature', 'pseudo_equivalent_potential_temperature'] in http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/SREF/Alaska_45km/ensprod/Best.
+01:39:39 INFO: 
+[Reading url 2/15]: http://oos.soest.hawaii.edu/thredds/dodsC/hioos/satellite/dhw_5km
+01:39:42 INFO: 
+[Reading url 3/15]: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_20km/Best
+01:39:46 WARNING: Cannot get cube for: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_20km/Best
+Cannot find ['sea_water_temperature', 'sea_surface_temperature', 'sea_water_potential_temperature', 'equivalent_potential_temperature', 'sea_water_conservative_temperature', 'pseudo_equivalent_potential_temperature'] in http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_20km/Best.
+01:39:46 INFO: 
+[Reading url 4/15]: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/Alaska_11km/Best
+01:39:48 WARNING: Cannot get cube for: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/Alaska_11km/Best
+Cannot find ['sea_water_temperature', 'sea_surface_temperature', 'sea_water_potential_temperature', 'equivalent_potential_temperature', 'sea_water_conservative_temperature', 'pseudo_equivalent_potential_temperature'] in http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/Alaska_11km/Best.
+01:39:48 INFO: 
+[Reading url 5/15]: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/SREF/CONUS_40km/ensprod/Best
+01:39:51 WARNING: Cannot get cube for: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/SREF/CONUS_40km/ensprod/Best
+Cannot find ['sea_water_temperature', 'sea_surface_temperature', 'sea_water_potential_temperature', 'equivalent_potential_temperature', 'sea_water_conservative_temperature', 'pseudo_equivalent_potential_temperature'] in http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/SREF/CONUS_40km/ensprod/Best.
+01:39:51 INFO: 
+[Reading url 6/15]: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_40km/Best
+01:39:56 WARNING: Cannot get cube for: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_40km/Best
+Cannot find ['sea_water_temperature', 'sea_surface_temperature', 'sea_water_potential_temperature', 'equivalent_potential_temperature', 'sea_water_conservative_temperature', 'pseudo_equivalent_potential_temperature'] in http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_40km/Best.
+01:39:56 INFO: 
+[Reading url 7/15]: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/CONUS_12km/Best
+01:39:59 WARNING: Cannot get cube for: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/CONUS_12km/Best
+Cannot find ['sea_water_temperature', 'sea_surface_temperature', 'sea_water_potential_temperature', 'equivalent_potential_temperature', 'sea_water_conservative_temperature', 'pseudo_equivalent_potential_temperature'] in http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/CONUS_12km/Best.
+01:39:59 INFO: 
+[Reading url 8/15]: http://geoport-dev.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd
+01:40:54 INFO: 
+[Reading url 9/15]: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/GFS/CONUS_80km/Best
+01:40:57 WARNING: Cannot get cube for: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/GFS/CONUS_80km/Best
+Cannot find ['sea_water_temperature', 'sea_surface_temperature', 'sea_water_potential_temperature', 'equivalent_potential_temperature', 'sea_water_conservative_temperature', 'pseudo_equivalent_potential_temperature'] in http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/GFS/CONUS_80km/Best.
+01:40:57 INFO: 
+[Reading url 10/15]: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/Alaska_45km/noaaport/Best
+01:40:59 WARNING: Cannot get cube for: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/Alaska_45km/noaaport/Best
+Cannot find ['sea_water_temperature', 'sea_surface_temperature', 'sea_water_potential_temperature', 'equivalent_potential_temperature', 'sea_water_conservative_temperature', 'pseudo_equivalent_potential_temperature'] in http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/Alaska_45km/noaaport/Best.
+01:40:59 INFO: 
+[Reading url 11/15]: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_13km/Best
+01:41:02 WARNING: Cannot get cube for: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_13km/Best
+Cannot find ['sea_water_temperature', 'sea_surface_temperature', 'sea_water_potential_temperature', 'equivalent_potential_temperature', 'sea_water_conservative_temperature', 'pseudo_equivalent_potential_temperature'] in http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/RAP/CONUS_13km/Best.
+01:41:02 INFO: 
+[Reading url 12/15]: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/CONUS_80km/Best
+01:41:04 WARNING: Cannot get cube for: http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/CONUS_80km/Best
+Cannot find ['sea_water_temperature', 'sea_surface_temperature', 'sea_water_potential_temperature', 'equivalent_potential_temperature', 'sea_water_conservative_temperature', 'pseudo_equivalent_potential_temperature'] in http://thredds.ucar.edu/thredds/dodsC/grib/NCEP/NAM/CONUS_80km/Best.
+01:41:04 INFO: 
+[Reading url 13/15]: http://oos.soest.hawaii.edu/thredds/dodsC/pacioos/hycom/global
+01:41:09 INFO: 
+[Reading url 14/15]: http://thredds.secoora.org/thredds/dodsC/SECOORA_NCSU_CNAPS.nc
+01:41:37 INFO: 
+[Reading url 15/15]: http://thredds.ucar.edu/thredds/dodsC/grib/FNMOC/COAMPS/Western_Atlantic/Best
+01:41:39 WARNING: Cannot get cube for: http://thredds.ucar.edu/thredds/dodsC/grib/FNMOC/COAMPS/Western_Atlantic/Best
+Cannot find ['sea_water_temperature', 'sea_surface_temperature', 'sea_water_potential_temperature', 'equivalent_potential_temperature', 'sea_water_conservative_temperature', 'pseudo_equivalent_potential_temperature'] in http://thredds.ucar.edu/thredds/dodsC/grib/FNMOC/COAMPS/Western_Atlantic/Best.
+01:41:39 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/staged_noteooks/boston_light_swim/latest/hioos_satellite-dhw_5km.nc 
+01:41:43 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
+01:41:43 INFO: Finished processing [hioos_satellite-dhw_5km]
+01:41:43 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/staged_noteooks/boston_light_swim/latest/fmrc-coawst_4_use_best.nc 
+01:41:54 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
+01:41:59 INFO: Finished processing [fmrc-coawst_4_use_best]
+01:41:59 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/staged_noteooks/boston_light_swim/latest/pacioos_hycom-global.nc 
+01:42:03 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
+01:42:03 INFO: Finished processing [pacioos_hycom-global]
+01:42:03 INFO:  Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/staged_noteooks/boston_light_swim/latest/SECOORA_NCSU_CNAPS.nc 
+01:42:24 INFO: [Water  ] BOSTON 16 NM East of Boston, MA
+01:42:24 INFO: Finished processing [SECOORA_NCSU_CNAPS]
+01:42:24 INFO: 3.85 minutes
+01:42:24 INFO: EOF
