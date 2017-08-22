@@ -25,7 +25,6 @@ dependencies:
   - geos
   - gridgeo
   - gsw
-  - ioos_tools
   - iris>=1.12
   - jsanimation
   - jupyter
@@ -88,3 +87,5 @@ dependencies:
   - r-sp
   - r-xtractomatic
   - r-xts
+  - pip:
+    - ioos_tools
