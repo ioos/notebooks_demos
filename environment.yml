@@ -56,12 +56,14 @@ dependencies:
   - rasterio
   - rasterstats
   - requests
+  - retrying
   - rios
   - rtree
   - scikit-learn
   - scipy
   - seaborn
   - seawater
+  - selenium
   - shapely
   - siphon
   - spyder
