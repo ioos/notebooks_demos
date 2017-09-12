@@ -63,6 +63,7 @@ dependencies:
   - scipy
   - seaborn
   - seawater
+  - selenium
   - shapely
   - siphon
   - spyder
