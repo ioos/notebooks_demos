@@ -41,6 +41,7 @@ dependencies:
   - owslib
   - paegan
   - pandas
+  - phantomjs
   - proj4
   - psutil
   - pygc
