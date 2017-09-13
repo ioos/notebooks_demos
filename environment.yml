@@ -1,9 +1,9 @@
-name: IOOS3
+name: IOOS
 channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.6
+  - python=3
   - bagit
   - beautifulsoup4
   - bokeh
