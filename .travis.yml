@@ -21,9 +21,7 @@ matrix:
   fast_finish: true
   include:
     - os: linux
-      env: TEST_TARGET=notebooks_python2 ENV="environment-python-2.yml"
-    - os: linux
-      env: TEST_TARGET=notebooks_python3
+      env: TEST_TARGET=notebooks
     - os: linux
       env: TEST_TARGET=coding_standards
     - os: linux
@@ -31,12 +29,12 @@ matrix:
     - os: linux
       env: TEST_TARGET=publish
     - os: osx
-      env: TEST_TARGET=notebooks_python3
+      env: TEST_TARGET=notebooks
   allow_failures:
     - os: linux
       env: TEST_TARGET=staged_notebooks
     - os: osx
-      env: TEST_TARGET=notebooks_python3
+      env: TEST_TARGET=notebooks
 
 before_install:
   - |
@@ -78,13 +76,8 @@ script:
       python tests/test_coding_standards.py ;
     fi
 
-  # Test notebooks on Python 3.
-  - if [ $TEST_TARGET == "notebooks_python3" ]; then
-      python tests/test_notebooks.py ;
-    fi
-
-  # Test notebooks on Python 2.
-  - if [ $TEST_TARGET == "notebooks_python2" ]; then
+  # Test published notebooks.
+  - if [ $TEST_TARGET == "notebooks" ]; then
       python tests/test_notebooks.py ;
     fi
 
