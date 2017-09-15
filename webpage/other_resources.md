@@ -15,7 +15,7 @@ you can install it by typing `conda install anaconda` using miniconda.
 ## Install
 
 Download and install the appropriate Miniconda installer from [http://conda.pydata.org/miniconda.html](http://conda.pydata.org/miniconda.html).
-With Anaconda you can create environments that use any Python version (e.g. Python 2.7 or Python 3.x),
+With Anaconda you can create environments that use any Python version (e.g. Python 2.7 or Python 3.6),
 so install the latest Python 3.x and if find out later you need a Python 2.7 environment,
 you can create one.
 Windows users also need to choose between 32-bit (old Windows XP) or 64-bit (modern Windows) versions.
