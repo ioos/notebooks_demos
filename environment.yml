@@ -3,17 +3,16 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3
+  - python=3.6
   - bagit
   - beautifulsoup4
   - bokeh
   - cartopy
   - cc-plugin-glider
-  - cmocean
+  - cc-plugin-ncei
   - compliance-checker
   - ctd
   - cython
-  - descartes
   - fiona
   - flake8
   - folium
@@ -25,13 +24,12 @@ dependencies:
   - geos
   - gridgeo
   - gsw
+  - ioos_tools
   - iris>=1.12
   - jsanimation
   - jupyter
   - jupyter_contrib_nbextensions
   - matplotlib
-  - mpld3
-  - mplleaflet
   - nb_conda_kernels
   - nbdime
   - netcdf4
@@ -39,7 +37,7 @@ dependencies:
   - oceans
   - oct2py
   - owslib
-  - paegan
+  - palettable
   - pandas
   - phantomjs
   - proj4
@@ -53,12 +51,9 @@ dependencies:
   - pytest
   - pyugrid
   - pyyaml
-  - qrcode
   - rasterio
-  - rasterstats
   - requests
   - retrying
-  - rios
   - rtree
   - scikit-learn
   - scipy
@@ -72,6 +67,7 @@ dependencies:
   - sympy
   - thredds_crawler
   - utide
+  - windrose
   - xarray
   - xlrd
   # R packages.
@@ -86,9 +82,8 @@ dependencies:
   - r-ncdf4
   - r-oce
   - r-rcolorbrewer
+  - r-rerddap
   - r-reshape2
   - r-sp
   - r-xtractomatic
   - r-xts
-  - pip:
-    - ioos_tools
