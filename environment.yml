@@ -60,6 +60,7 @@ dependencies:
   - seaborn
   - seawater
   - selenium
+  - sensorml2iso
   - shapely
   - siphon
   - spyder
