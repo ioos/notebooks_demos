@@ -4,6 +4,7 @@ channels:
   - defaults
 dependencies:
   - python=3.6
+  - arrow
   - bagit
   - beautifulsoup4
   - bokeh
@@ -73,6 +74,7 @@ dependencies:
   - xarray
   - xlrd
   # R packages.
+  - r-base=3.4.1
   - r-dt
   - r-ggfortify
   - r-ggplot2
