@@ -35,6 +35,8 @@ matrix:
       env: TEST_TARGET=staged_notebooks
     - os: osx
       env: TEST_TARGET=notebooks
+    - os: linux
+      env: TEST_TARGET=coding_standards
 
 before_install:
   - |

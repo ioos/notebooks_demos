@@ -56,6 +56,7 @@ dependencies:
   - rasterio
   - requests
   - retrying
+  - rpy2
   - rtree
   - scikit-learn
   - scipy
