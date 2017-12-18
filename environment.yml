@@ -33,6 +33,7 @@ dependencies:
   - matplotlib
   - nb_conda_kernels
   - nbdime
+  - nco
   - netcdf4
   - numpy
   - oceans
