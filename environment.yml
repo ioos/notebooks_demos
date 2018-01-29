@@ -84,7 +84,7 @@ dependencies:
   - r-httr
   - r-irkernel
   - r-lubridate
-  - r-mapdata
+  # - r-mapdata
   - r-ncdf4
   - r-oce
   - r-rcolorbrewer
@@ -93,3 +93,4 @@ dependencies:
   - r-sp
   - r-xtractomatic
   - r-xts
+  
