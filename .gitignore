@@ -3,4 +3,5 @@
 notebooks/.ipynb_checkpoints/
 webpage/.sass-cache/
 webpage/Gemfile
+webpage/Gemfile.lock
 webpage/_site/
