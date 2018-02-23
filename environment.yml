@@ -77,6 +77,7 @@ dependencies:
   # R packages.
   - r-base=3.4.1
   - r-dt
+  - r-finch
   - r-ggfortify
   - r-ggplot2
   - r-gsw
