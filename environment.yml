@@ -85,6 +85,7 @@ dependencies:
   - r-lubridate
   - r-mapdata
   - r-ncdf4
+  - r-obistools
   - r-oce
   - r-rcolorbrewer
   - r-rerddap
