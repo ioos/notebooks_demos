@@ -27,7 +27,6 @@ dependencies:
   - gsw
   - ioos_tools
   - iris>=1.12
-  - jsanimation
   - jupyter
   - jupyter_contrib_nbextensions
   - matplotlib
