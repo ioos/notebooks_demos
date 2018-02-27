@@ -12,11 +12,6 @@ cache:
 before_cache:
   - rm -rf $HOME/miniconda/envs/IOOS
 
-# All but one of the tests are executed with the Python 3 env.
-env:
-  global:
-    - ENV: environment.yml
-
 matrix:
   fast_finish: true
   include:
@@ -65,7 +60,7 @@ before_install:
     fi
 
 install:
-  - conda env create --file "$ENV" --name IOOS
+  - travis_wait conda env create --file environment.yml --name IOOS
   - source activate IOOS
 
   # Debug.
@@ -80,7 +75,7 @@ script:
 
   # Test published notebooks.
   - if [ $TEST_TARGET == "notebooks" ]; then
-      python tests/test_notebooks.py ;
+      travis_wait python tests/test_notebooks.py ;
     fi
 
   # Test staged notebooks.
