@@ -86,6 +86,6 @@ script:
   # Publish the notebooks.
   - if [ $TEST_TARGET == "publish" ]; then
       pushd webpage && python make_index.py && popd ;
-      find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --to=markdown --template="jupyter-jekyll.tpl" --output-dir=webpage/_notebooks ;
+      find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert ;
       bash webpage/deploy.sh ;
     fi
