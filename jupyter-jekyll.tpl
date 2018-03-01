@@ -2,8 +2,9 @@
 
 {%- block header -%}
 ---
+title: "{{resources['metadata']['title']}}"
 layout: notebook
-title: ""
+{# permalink: {{resources['metadata']['permalink']}} #}
 ---
 {%- endblock header -%}
 
