@@ -5,3 +5,6 @@ webpage/.sass-cache/
 webpage/Gemfile
 webpage/Gemfile.lock
 webpage/_site/
+webpage/code_gallery/images/20*
+webpage/_notebooks/20*
+webpage/code_gallery.md
