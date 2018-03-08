@@ -5,6 +5,7 @@ channels:
 dependencies:
   - python=3.6
   - arrow
+  - autopep8
   - bagit
   - beautifulsoup4
   - bokeh
@@ -78,6 +79,7 @@ dependencies:
   # R packages.
   - r-base=3.4.1
   - r-dt
+  - r-finch
   - r-ggfortify
   - r-ggplot2
   - r-gsw
@@ -86,10 +88,12 @@ dependencies:
   - r-lubridate
   - r-mapdata
   - r-ncdf4
+  - r-obistools
   - r-oce
   - r-rcolorbrewer
   - r-rerddap
   - r-reshape2
+  - r-robis
   - r-sp
   - r-xtractomatic
   - r-xts
