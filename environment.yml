@@ -5,6 +5,7 @@ channels:
 dependencies:
   - python=3.6
   - arrow
+  - autopep8
   - bagit
   - beautifulsoup4
   - bokeh
