@@ -28,12 +28,13 @@ dependencies:
   - gridgeo
   - gsw
   - ioos_tools
-  - iris>=1.12
+  - iris
   - jupyter
   - jupyter_contrib_nbextensions
   - matplotlib
   - nb_conda_kernels
   - nbdime
+  - nbrsessionproxy
   - nco
   - netcdf4
   - numpy
