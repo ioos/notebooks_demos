@@ -58,7 +58,9 @@ export PATH=$HOME/miniconda3/bin:$PATH
 
 ## Create the IOOS Anaconda environment
 
-Download the [environment.yml](https://raw.githubusercontent.com/ioos/notebooks_demos/master/environment.yml) file by right clicking with the mouse and choosing `save as...`,
+Download the [environment.yml](https://raw.githubusercontent.com/ioos/notebooks_demos/master/environment.yml),
+or the [environment-lite.yml](https://raw.githubusercontent.com/ioos/notebooks_demos/master/environment-lite.yml) for a smaller environment without the R packages,
+by right clicking with the mouse and choosing `save as...`,
 or, on `OS X` and `Linux`, use these commands to download:
 
 ```bash
