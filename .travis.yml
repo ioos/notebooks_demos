@@ -63,7 +63,7 @@ install:
   - travis_wait conda env create --file environment.yml --name IOOS
   - source activate IOOS
   # Only until we package it for Windows, then we can drop this line.
-  - conda install r-obistools --yes
+  - conda install --channel conda-forge r-obistools --yes
 
   # Debug.
   - conda info --all
