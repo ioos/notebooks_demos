@@ -31,6 +31,7 @@ dependencies:
   - iris>=1.12
   - jupyter
   - jupyter_contrib_nbextensions
+  - jupyterthemes
   - matplotlib
   - nb_conda_kernels
   - nbdime
