@@ -30,5 +30,4 @@ install:
   - conda list
 
 test_script:
-  - cmd: cd tests
-  - cmd: python test_notebooks.py
+  - cd tests && python test_notebooks.py
