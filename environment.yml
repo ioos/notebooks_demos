@@ -31,6 +31,7 @@ dependencies:
   - iris>=1.12
   - jupyter
   - jupyter_contrib_nbextensions
+  - jupyterthemes
   - matplotlib
   - nb_conda_kernels
   - nbdime
@@ -58,6 +59,7 @@ dependencies:
   - rasterio
   - requests
   - retrying
+  - rise
   - rpy2
   - rtree
   - scikit-learn
@@ -88,7 +90,6 @@ dependencies:
   - r-lubridate
   - r-mapdata
   - r-ncdf4
-  - r-obistools
   - r-oce
   - r-rcolorbrewer
   - r-rerddap
