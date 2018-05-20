@@ -1,0 +1,25 @@
+# Main links links.
+main:
+  - title: The IOOS Data Demo Center
+    url: /
+  - title: "Code Gallery"
+    url: /code_gallery
+  - title: "Video Tutorials"
+    url: /video_tutorials
+  - title: "Contact Us"
+    url: /contact
+
+# Site navigation links.
+site_nav:
+  - title: Other resources
+    children:
+      - title: "1. Installing the IOOS conda environment"
+        url: /other_resources
+      - title: "2. Opening netCDF files - hints from AODN"
+        url: https://help.aodn.org.au/aodn-data-tools/user-code-library/
+      - title: "3. Unidata Jupyter notebook gallery"
+        url: http://unidata.github.io/notebook-gallery/
+      - title: "4. Extracting and enriching OBIS data with R"
+        url: http://iobis.org/tutorial/
+      - title: "5. USGS-R examples"
+        url: https://github.com/USGS-R
