@@ -1,4 +1,3 @@
-<script src="./assets/lib/js/jquery.js"></script>
 ---
 title: The IOOS Data Demo Center
 layout: single
@@ -6,6 +5,7 @@ layout: single
 
 ![Front image]({{ site.url }}/{{ site.baseurl }}/assets/Data_Demo_Center_middlepic_size770.png)
 
+<script src="./assets/lib/js/jquery.js"></script>
 <link rel="stylesheet" type="text/css" href="assets/css/custom-styles.css">
 
 <!-- Left side feedback button -->

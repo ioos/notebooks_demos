@@ -3,6 +3,14 @@ title: Code Gallery
 layout: single
 ---
 
+<script src="../assets/lib/js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="../assets/css/custom-styles.css">
+
+<!-- Left side feedback button -->
+<a id="feedback" class="hidden-xs"></a>
+
+<div id="feedbackForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade in" style="display: none; padding-right: 15px;"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button><h4 class="modal-title">Submit site feedback</h4></div><div class="modal-body"><div class="well"><div class="form-group has-feedback"><textarea id="feedback-comment" rows="6" placeholder="Comment or suggestion (required)" maxlength="500" aria-describedby="inputError2Status" class="form-control"></textarea><span aria-hidden="true" class="glyphicon glyphicon-remove form-control-feedback"></span></div></div><div class="well"><div class="form-group has-feedback"><input id="feedback-name" type="text" placeholder="Your name" maxlength="50" aria-describedby="inputError2Status" class="form-control"><span aria-hidden="true" class="glyphicon glyphicon-remove form-control-feedback"></span></div></div><div class="well"><div class="form-group has-feedback"><input id="feedback-email" type="email" placeholder="Your e-mail address" aria-describedby="inputError2Status" class="form-control"><span aria-hidden="true" class="glyphicon glyphicon-remove form-control-feedback"></span></div></div></div><div class="modal-footer"><input type="submit" value="Submit" class="btn btn-primary"></div></div></div></div>
+
 <div id="gallery">
 <div><a href="{{ site.url }}{{ site.baseurl }}/notebooks/2018-03-30-wave_height_assessment"><figcaption>Coastal Ocean Wave Height Assessment</figcaption><img src="images/2018-03-30-wave_height_assessment.png"></a></div>
 <div><a href="{{ site.url }}{{ site.baseurl }}/notebooks/2018-03-15-ssh-skillscore"><figcaption>Investigating ocean models skill for sea surface height with IOOS catalog and Python</figcaption><img src="images/placeholder.png"></a></div>
@@ -28,3 +36,6 @@ layout: single
 <div><a href="{{ site.url }}{{ site.baseurl }}/notebooks/2016-11-15-glider_data_example"><figcaption>Plotting Glider data with Python tools</figcaption><img src="images/2016-11-15-glider_data_example.png"></a></div>
 <div><a href="{{ site.url }}{{ site.baseurl }}/notebooks/2016-10-12-fetching_data"><figcaption>Fetching data from CO-OPS SOS with Python tools</figcaption><img src="images/2016-10-12-fetching_data.png"></a></div>
 </div>
+
+<script src="../assets/lib/js/bootstrap.js"></script>
+<script src="../assets/js/feedback.js"></script>
