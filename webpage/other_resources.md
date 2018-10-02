@@ -74,15 +74,10 @@ type the following commands in the terminal or Windows command prompt:
 ```bash
 conda config --add channels conda-forge --force
 conda update --yes --all
-conda install anaconda-navigator
 conda env create --quiet --file environment.yml
 ```
 
-The first three lines are optional,
-but makes sure that packages can be discovered in the conda-forge channel,
-updates miniconda and installs the anaconda-navigator,
-which is a handy GUI for launching applications and switching environments.
-The fourth line actually creates the IOOS environment,
+The last line actually creates the IOOS environment,
 and since lots of packages are downloaded,
 you should go get a coffee.
 
