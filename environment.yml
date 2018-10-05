@@ -21,6 +21,7 @@ dependencies:
   - jupyter
   - jupyter_contrib_nbextensions
   - jupyterthemes
+  - matplotlib=2
   - nb_conda_kernels
   - nbdime
   - nco
