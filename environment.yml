@@ -47,6 +47,7 @@ dependencies:
   - windrose
   - xarray
   - xlrd
+  - xmltodict
   # R packages.
   - rpy2
   - r-base=3.4.1
