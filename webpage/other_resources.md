@@ -58,7 +58,9 @@ export PATH=$HOME/miniconda3/bin:$PATH
 
 ## Create the IOOS Anaconda environment
 
-Download the [environment.yml](https://raw.githubusercontent.com/ioos/notebooks_demos/master/environment.yml) file by right clicking with the mouse and choosing `save as...`,
+Download the [environment.yml](https://raw.githubusercontent.com/ioos/notebooks_demos/master/environment.yml),
+or the [environment-lite.yml](https://raw.githubusercontent.com/ioos/notebooks_demos/master/environment-lite.yml) for a smaller environment without the R packages,
+by right clicking with the mouse and choosing `save as...`,
 or, on `OS X` and `Linux`, use these commands to download:
 
 ```bash
@@ -72,15 +74,10 @@ type the following commands in the terminal or Windows command prompt:
 ```bash
 conda config --add channels conda-forge --force
 conda update --yes --all
-conda install anaconda-navigator
 conda env create --quiet --file environment.yml
 ```
 
-The first three lines are optional,
-but makes sure that packages can be discovered in the conda-forge channel,
-updates miniconda and installs the anaconda-navigator,
-which is a handy GUI for launching applications and switching environments.
-The fourth line actually creates the IOOS environment,
+The last line actually creates the IOOS environment,
 and since lots of packages are downloaded,
 you should go get a coffee.
 

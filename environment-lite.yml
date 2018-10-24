@@ -1,74 +1,79 @@
 name: IOOS
 channels:
   - conda-forge
+  - defaults
 dependencies:
   - python=3.6
+  - arrow
+  - autopep8
   - bagit
+  - beautifulsoup4
   - bokeh
   - cartopy
   - cc-plugin-glider
   - cc-plugin-ncei
   - compliance-checker
+  - ctd
   - cython
   - erddapy
+  - fiona
   - flake8
+  - folium
+  - gdal
   - geojson
   - geojsonio
   - geolinks
   - geopandas
+  - geos
   - gridgeo
   - gsw
-  - iris
-  - ioos-tools
+  - ioos_tools
+  - iris>=1.12
   - jupyter
   - jupyter_contrib_nbextensions
-  - jupyterthemes
-  - matplotlib=2
+  - matplotlib
   - nb_conda_kernels
   - nbdime
-  - nbrsessionproxy
   - nco
+  - netcdf4
+  - numpy
+  - oceans
   - oct2py
+  - owslib
   - palettable
+  - pandas
   - phantomjs
   - pocean-core
+  - proj4
+  - psutil
+  - pygc
+  - pykdtree
   - pyoos
+  - pyproj
   - pyresample
   - pysgrid
   - pytest
   - pyugrid
+  - pyyaml
   - rasterio
-  - rise
+  - requests
+  - retrying
+  - rpy2
+  - rtree
+  - scikit-learn
+  - scipy
   - seaborn
+  - seawater
   - selenium
   - sensorml2iso
+  - shapely
   - siphon
   - spyder
+  - statsmodels
   - sympy
   - thredds_crawler
   - utide
   - windrose
   - xarray
   - xlrd
-  - xmltodict
-  # R packages.
-  - rpy2
-  - r-base=3.4.1
-  - r-dt
-  - r-finch
-  - r-ggfortify
-  - r-ggplot2
-  - r-gsw
-  - r-httr
-  - r-irkernel
-  - r-lubridate
-  - r-mapdata
-  - r-ncdf4
-  - r-oce
-  - r-rcolorbrewer
-  - r-rerddap
-  - r-reshape2
-  - r-robis
-  - r-sp
-  - r-xtractomatic
-  - r-xts
+  
