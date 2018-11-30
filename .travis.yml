@@ -20,14 +20,10 @@ matrix:
     - os: linux
       env: TEST_TARGET=coding_standards
     - os: linux
-      env: TEST_TARGET=staged_notebooks
-    - os: linux
       env: TEST_TARGET=publish
     - os: osx
       env: TEST_TARGET=notebooks
   allow_failures:
-    - os: linux
-      env: TEST_TARGET=staged_notebooks
     - os: osx
       env: TEST_TARGET=notebooks
     - os: linux
@@ -64,10 +60,8 @@ before_install:
 install:
   - travis_wait conda env create --file environment.yml --name IOOS
   - conda activate IOOS
-  # Only until we package it for Windows, then we can drop this line.
-  - conda install r-obistools
-  # Needed for the notebook tests
-  - conda install nbval
+  # FIXME: obistools is missing on Windows.
+  - conda install r-obistools pytest-xdist
 
   # Debug.
   - conda info --all
@@ -81,12 +75,7 @@ script:
 
   # Test published notebooks.
   - if [ $TEST_TARGET == "notebooks" ]; then
-      travis_wait pytest --nbval-lax -p no:python notebooks/ ;
-    fi
-
-  # Test staged notebooks.
-  - if [ $TEST_TARGET == "staged_notebooks" ]; then
-      travis_wait pytest --nbval-lax -p no:python notebooks/staged_noteooks ;
+      travis_wait pytest -n 8 --nbval --nbval-lax notebooks/ ;
     fi
 
   # Publish the notebooks.
