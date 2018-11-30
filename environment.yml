@@ -69,3 +69,5 @@ dependencies:
   - r-sp
   - r-xtractomatic
   - r-xts
+  # FIXME: we can probably remove this once a new version of rpyy is available
+  - simplegeneric
