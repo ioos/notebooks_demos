@@ -60,8 +60,7 @@ before_install:
 install:
   - travis_wait conda env create --file environment.yml --name IOOS
   - source activate IOOS
-  # FIXME: obistools is missing on Windows.
-  - conda install r-obistools pytest-xdist
+  - conda install pytest-xdist
 
   # Debug.
   - conda info --all
@@ -84,3 +83,14 @@ script:
       find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --config nbconvert_config.py ;
       bash webpage/deploy.sh ;
     fi
+
+
+# -k "not (test_fio_ls_single_layer)"
+
+# notebooks/2016-12-22-boston_light_swim.ipynb
+# notebooks/2017-01-23-R-notebook.ipynb
+# notebooks/2017-03-30-octave_notebook_example.ipynb
+# notebooks/2017-06-12-NCEI_RA_archive_history.ipynb
+# notebooks/2017-08-01-xtractoR.ipynb
+# notebooks/2017-11-30-rerddap.ipynb
+# notebooks/2018-02-27-pocean-timeSeries-demo.ipynb
