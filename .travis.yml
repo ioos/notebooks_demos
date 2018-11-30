@@ -59,7 +59,7 @@ before_install:
 
 install:
   - travis_wait conda env create --file environment.yml --name IOOS
-  - conda activate IOOS
+  - source activate IOOS
   # FIXME: obistools is missing on Windows.
   - conda install r-obistools pytest-xdist
 
