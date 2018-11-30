@@ -63,9 +63,11 @@ before_install:
 
 install:
   - travis_wait conda env create --file environment.yml --name IOOS
-  - source activate IOOS
+  - conda activate IOOS
   # Only until we package it for Windows, then we can drop this line.
-  - conda install --channel conda-forge r-obistools --yes
+  - conda install r-obistools
+  # Needed for the notebook tests
+  - conda install nbval
 
   # Debug.
   - conda info --all
@@ -79,12 +81,12 @@ script:
 
   # Test published notebooks.
   - if [ $TEST_TARGET == "notebooks" ]; then
-      travis_wait python tests/test_notebooks.py ;
+      travis_wait pytest --nbval-lax -p no:python notebooks/ ;
     fi
 
   # Test staged notebooks.
   - if [ $TEST_TARGET == "staged_notebooks" ]; then
-      python tests/test_staged_notebooks.py ;
+      travis_wait pytest --nbval-lax -p no:python notebooks/staged_noteooks ;
     fi
 
   # Publish the notebooks.
