@@ -24,6 +24,7 @@ dependencies:
   - matplotlib=2
   - nb_conda_kernels
   - nbdime
+  - nbval
   - nco
   - oct2py
   - palettable
