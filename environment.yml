@@ -1,8 +1,9 @@
 name: IOOS
 channels:
   - conda-forge
+  - defaults
 dependencies:
-  - python=3.6
+  - python=3.7
   - bagit
   - bokeh
   - cartopy
@@ -18,6 +19,7 @@ dependencies:
   - geopandas
   - gridgeo
   - ioos-tools
+  - ioos_qartod
   - jupyter
   - jupyter_contrib_nbextensions
   - jupyterthemes
@@ -50,7 +52,7 @@ dependencies:
   - xmltodict
   # R packages.
   - rpy2
-  - r-base=3.4.1
+  - r-base=3.5.1
   - r-dt
   - r-finch
   - r-ggfortify
