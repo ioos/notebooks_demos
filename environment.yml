@@ -2,7 +2,7 @@ name: IOOS
 channels:
   - conda-forge
 dependencies:
-  - python=3.6
+  - python=3.7
   - bagit
   - bokeh
   - cartopy
@@ -24,8 +24,8 @@ dependencies:
   - matplotlib=2
   - nb_conda_kernels
   - nbdime
-  - nbval
   - nco
+  - oceans
   - oct2py
   - palettable
   - phantomjs
@@ -49,26 +49,3 @@ dependencies:
   - xarray
   - xlrd
   - xmltodict
-  # R packages.
-  - rpy2
-  - r-base=3.4.1
-  - r-dt
-  - r-finch
-  - r-ggfortify
-  - r-ggplot2
-  - r-gsw
-  - r-httr
-  - r-irkernel
-  - r-lubridate
-  - r-mapdata
-  - r-ncdf4
-  - r-oce
-  - r-rcolorbrewer
-  - r-rerddap
-  - r-reshape2
-  - r-robis
-  - r-sp
-  - r-xtractomatic
-  - r-xts
-  # FIXME: we can probably remove this once a new version of rpyy is available
-  - simplegeneric

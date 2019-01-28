@@ -22,7 +22,7 @@ install:
   - conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
   - conda update conda
   - conda env create --file environment.yml --name IOOS
-  - activate IOOS
+  - conda activate IOOS
 
 test_script:
   - conda info --all
