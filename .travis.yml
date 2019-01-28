@@ -1,4 +1,4 @@
-language: generic
+language: minimal
 
 sudo: false
 
@@ -58,8 +58,9 @@ before_install:
     fi
 
 install:
-  - travis_wait conda env create --file environment.yml --name IOOS
+  - travis_wait conda env create --file environment.yml --name IOOS --quiet
   - source activate IOOS
+  # These last two are for testing only and there is no need to add them to the env.
   - conda install nbval pytest-xdist
 
   # Debug.
