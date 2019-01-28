@@ -20,8 +20,8 @@ install:
 
   - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
-  - conda update conda
-  - conda env create --file environment.yml --name IOOS
+  - conda update conda --quiet
+  - conda env create --file environment.yml --name IOOS --quiet
   - conda activate IOOS
 
 test_script:
