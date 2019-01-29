@@ -1,4 +1,4 @@
-language: generic
+language: minimal
 
 sudo: false
 
@@ -20,14 +20,10 @@ matrix:
     - os: linux
       env: TEST_TARGET=coding_standards
     - os: linux
-      env: TEST_TARGET=staged_notebooks
-    - os: linux
       env: TEST_TARGET=publish
     - os: osx
       env: TEST_TARGET=notebooks
   allow_failures:
-    - os: linux
-      env: TEST_TARGET=staged_notebooks
     - os: osx
       env: TEST_TARGET=notebooks
     - os: linux
@@ -62,8 +58,10 @@ before_install:
     fi
 
 install:
-  - travis_wait conda env create --file environment.yml --name IOOS
+  - travis_wait conda env create --file environment.yml --name IOOS --quiet
   - source activate IOOS
+  # These last two are for testing only and there is no need to add them to the env.
+  - conda install nbval pytest-xdist
 
   # Debug.
   - conda info --all
@@ -77,12 +75,7 @@ script:
 
   # Test published notebooks.
   - if [ $TEST_TARGET == "notebooks" ]; then
-      travis_wait python tests/test_notebooks.py ;
-    fi
-
-  # Test staged notebooks.
-  - if [ $TEST_TARGET == "staged_notebooks" ]; then
-      python tests/test_staged_notebooks.py ;
+      travis_wait pytest -n 2 --nbval --nbval-lax notebooks/ ;
     fi
 
   # Publish the notebooks.

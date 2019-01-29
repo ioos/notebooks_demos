@@ -1,5 +1,4 @@
-
-from urllib.parse import quote  # Py 3
+from urllib.parse import quote
 import os
 
 
@@ -8,9 +7,8 @@ def path2url(path):
     parts = path.split(os.path.sep)
     return '{{ site.baseurl }}/notebooks/' + '/'.join(quote(part) for part in parts)
 
-################################################################################
 
-c = get_config()
+c = get_config()  # noqa
 c.NbConvertApp.export_format = 'markdown'
 c.MarkdownExporter.template_file = 'jupyter-jekyll'
 c.FilesWriter.build_directory = 'webpage/_notebooks'
