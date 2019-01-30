@@ -20,7 +20,7 @@ install:
 
   - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   - conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
-  - conda update conda --quiet
+  - conda install conda --channel conda-canary --quiet
   - conda env create --file environment.yml --name IOOS --quiet
   - conda activate IOOS
 
