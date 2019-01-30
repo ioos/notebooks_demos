@@ -12,6 +12,11 @@ cache:
 before_cache:
   - rm -rf $HOME/miniconda/envs/IOOS
 
+addons:
+  apt:
+    packages:
+      - xvfb
+
 matrix:
   fast_finish: true
   include:
@@ -28,6 +33,14 @@ matrix:
       env: TEST_TARGET=notebooks
     - os: linux
       env: TEST_TARGET=coding_standards
+
+before_script:
+  # GUI (R png figures).
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      "export DISPLAY=:99.0" ;
+      "sh -e /etc/init.d/xvfb start" ;
+      sleep 3 ;
+    fi
 
 before_install:
   - |
@@ -48,9 +61,6 @@ before_install:
     conda install conda --channel conda-canary --quiet
     conda config --remove channels defaults
     conda config --add channels conda-forge --force
-
-  # GUI (R png figures).
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; fi
 
   # Pages deploy_key.
   - if [ $TRAVIS_PULL_REQUEST == "false" ]; then
