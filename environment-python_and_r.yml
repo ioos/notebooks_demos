@@ -25,6 +25,7 @@ dependencies:
   - matplotlib=2
   - nb_conda_kernels
   - nbdime
+  - nc-time-axis
   - nco
   - oceans
   - oct2py
