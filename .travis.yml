@@ -12,6 +12,11 @@ cache:
 before_cache:
   - rm -rf $HOME/miniconda/envs/IOOS
 
+addons:
+  apt:
+    packages:
+      - xvfb
+
 matrix:
   fast_finish: true
   include:
@@ -29,6 +34,14 @@ matrix:
     - os: linux
       env: TEST_TARGET=coding_standards
 
+before_script:
+  # GUI (R png figures).
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      "export DISPLAY=:99.0" ;
+      "sh -e /etc/init.d/xvfb start" ;
+      sleep 3 ;
+    fi
+
 before_install:
   - |
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
@@ -45,12 +58,10 @@ before_install:
     fi
     export PATH="$HOME/miniconda/bin:$PATH"
     conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
-    conda update conda --quiet
+    # conda install conda --channel conda-canary --quiet
+    conda install conda=4.5 --quiet
     conda config --remove channels defaults
     conda config --add channels conda-forge --force
-
-  # GUI (R png figures).
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then export DISPLAY=:99.0 ; sh -e /etc/init.d/xvfb start ; fi
 
   # Pages deploy_key.
   - if [ $TRAVIS_PULL_REQUEST == "false" ]; then
