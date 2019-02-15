@@ -12,41 +12,21 @@ cache:
 before_cache:
   - rm -rf $HOME/miniconda/envs/IOOS
 
-addons:
-  apt:
-    packages:
-      - xvfb
-
 matrix:
   fast_finish: true
   include:
-    - os: linux
-      env: TEST_TARGET=notebooks
-    - os: linux
-      env: TEST_TARGET=coding_standards
-    - os: linux
-      env: TEST_TARGET=publish
-    - os: osx
-      env: TEST_TARGET=notebooks
-  allow_failures:
-    - os: osx
-      env: TEST_TARGET=notebooks
-    - os: linux
-      env: TEST_TARGET=coding_standards
-
-before_script:
-  # GUI (R png figures).
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      "export DISPLAY=:99.0" ;
-      "sh -e /etc/init.d/xvfb start" ;
-      sleep 3 ;
-    fi
+    - name: "linux"
+      os: linux
+    - name: "publish"
+      os: linux
+    - name: "osx"
+      os: osx
 
 before_install:
   - |
-    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    if [ "$TRAVIS_JOB_NAME" == "osx" ]; then
       URL="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh"
-    elif [ "$TRAVIS_OS_NAME" == "linux" ] ; then
+    elif [ "$TRAVIS_JOB_NAME" == "linux" ] ; then
       URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
     fi
     echo ""
@@ -58,10 +38,11 @@ before_install:
     fi
     export PATH="$HOME/miniconda/bin:$PATH"
     conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
-    # conda install conda --channel conda-canary --quiet
-    conda install conda=4.5 --quiet
-    conda config --remove channels defaults
+    conda install conda --channel conda-canary --quiet
     conda config --add channels conda-forge --force
+    conda install pycryptosat
+    conda config --set sat_solver pycryptosat
+    conda config --set channel_priority strict
 
   # Pages deploy_key.
   - if [ $TRAVIS_PULL_REQUEST == "false" ]; then
@@ -71,26 +52,24 @@ before_install:
 install:
   - travis_wait conda env create --file environment.yml --name IOOS --quiet
   - source activate IOOS
-  # These last two are for testing only and there is no need to add them to the env.
-  - conda install nbval pytest-xdist
+  - conda install nbval
 
   # Debug.
   - conda info --all
   - conda list
 
 script:
-  - if [ $TEST_TARGET == "coding_standards" ]; then
-      flake8 --max-line-length=100 ;
-      python tests/test_coding_standards.py ;
+  # Test published notebooks.
+  - if [ $TRAVIS_JOB_NAME == "linux" ]; then
+      travis_wait pytest --nbval --nbval-lax notebooks/ ;
     fi
 
-  # Test published notebooks.
-  - if [ $TEST_TARGET == "notebooks" ]; then
-      travis_wait pytest -n 2 --nbval --nbval-lax notebooks/ ;
+  - if [ $TRAVIS_JOB_NAME == "osx" ]; then
+      python -c 'import gdal; print(dir(gdal))' ;
     fi
 
   # Publish the notebooks.
-  - if [ $TEST_TARGET == "publish" ]; then
+  - if [ $TRAVIS_JOB_NAME == "publish" ]; then
       pushd webpage && python make_index.py && popd ;
       find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --config nbconvert_config.py ;
       bash webpage/deploy.sh ;

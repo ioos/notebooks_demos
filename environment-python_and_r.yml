@@ -18,12 +18,10 @@ dependencies:
   - geolinks
   - geopandas
   - gridgeo
+  - hvplot
   - ioos-tools
   - jupyter
-  - jupyter_contrib_nbextensions
-  - jupyterthemes
-  - matplotlib=2
-  - nb_conda_kernels
+  - matplotlib
   - nbdime
   - nc-time-axis
   - nco
@@ -46,6 +44,7 @@ dependencies:
   - spyder
   - sympy
   - thredds_crawler
+  - tqdm
   - utide
   - windrose
   - xarray
