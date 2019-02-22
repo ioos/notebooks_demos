@@ -16,12 +16,12 @@ from tempfile import mkstemp
 
 
 kernels = {
-    'R': 'ir',
-    'octave': 'octave',
-    'matlab': 'octave',
-    'python': 'python',
-    'python2': 'python',
-    'python3': 'python',
+    "R": "ir",
+    "octave": "octave",
+    "matlab": "octave",
+    "python": "python",
+    "python2": "python",
+    "python3": "python",
 }
 
 _root_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
@@ -33,7 +33,7 @@ def load_notebook(fname):
 
 
 def get_language(notebook):
-    return notebook['metadata']['kernelspec']['language']
+    return notebook["metadata"]["kernelspec"]["language"]
 
 
 def convert_to_python(notebook, template_file=None):
@@ -53,17 +53,16 @@ def check_style(notebook_code):
     E703: we can use ; to suppress outputs in the notebook
 
     """
-    lines = notebook_code.split('\n')
-    notebook_code = '\n'.join(
-        [line for line in lines if not line.startswith('get_ipython')]
-        )
-    fid, fname = mkstemp(suffix='.py', prefix='temp_script_')
-    with open(fname, 'w') as f:
+    lines = notebook_code.split("\n")
+    notebook_code = "\n".join(
+        [line for line in lines if not line.startswith("get_ipython")]
+    )
+    fid, fname = mkstemp(suffix=".py", prefix="temp_script_")
+    with open(fname, "w") as f:
         f.write(notebook_code.strip())
     style_guide = flake8.get_style_guide(
-        ignore=['W292', 'E226', 'E402', 'E703'],
-        max_line_length=100
-        )
+        ignore=["W292", "E226", "E402", "E703"], max_line_length=100
+    )
     report = style_guide.input_file(fname)
     os.close(fid)
     return report
@@ -74,17 +73,17 @@ def check_coding_standard(fname):
     language = get_language(notebook)
 
     # We lint only the python notebooks.
-    if language.startswith('python'):
-        template_file = os.path.join(_root_path, 'tests', 'strip_markdown.tpl')
+    if language.startswith("python"):
+        template_file = os.path.join(_root_path, "tests", "strip_markdown.tpl")
         notebook_code, _ = convert_to_python(notebook, template_file)
         report = check_style(notebook_code)
-        error = '\n'.join(report.get_statistics('E'))
-        assert report.get_statistics('E') == [], '{}\n{}'.format(fname, error)
+        error = "\n".join(report.get_statistics("E"))
+        assert report.get_statistics("E") == [], "{}\n{}".format(fname, error)
 
 
-def notebook_tester(fname, kernelspec='python'):
+def notebook_tester(fname, kernelspec="python"):
     raw_nb = Exporter().from_filename(fname)
-    raw_nb[0].metadata.setdefault('kernelspec', {})['name'] = kernelspec
+    raw_nb[0].metadata.setdefault("kernelspec", {})["name"] = kernelspec
     preproc = ExecutePreprocessor(timeout=-1)
     preproc.preprocess(*raw_nb)
 
@@ -94,7 +93,7 @@ def test_run(fname):
     language = get_language(notebook)
     kernelspec = kernels[language]
     # FIXME: we cannot run MatlabTM/Octave on Travis yet.
-    if kernelspec == 'octave':
-        print('Cannot run {} with kernel {}'.format(fname, language))
+    if kernelspec == "octave":
+        print("Cannot run {} with kernel {}".format(fname, language))
     else:
         notebook_tester(fname, kernelspec=kernelspec)
