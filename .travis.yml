@@ -25,12 +25,14 @@ matrix:
       os: osx
     - name: "publish"
       os: linux
+    - name: "coding-standards"
+      os: linux
 
 before_install:
   - |
-    if [ "$TRAVIS_JOB_NAME" == "osx" ]; then
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
       URL="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh"
-    elif [ "$TRAVIS_JOB_NAME" == "linux" ] ; then
+    elif [ "$TRAVIS_OS_NAME" == "linux" ] ; then
       URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
     fi
     echo ""
@@ -66,6 +68,10 @@ script:
 
   - if [ $TRAVIS_JOB_NAME == "osx" ]; then
       python -c 'import gdal; print(dir(gdal))' ;
+    fi
+
+  - if [ $TRAVIS_JOB_NAME == "coding-standards" ]; then
+      find notebooks/ -maxdepth 1 -name \*.ipynb ! -name 2017-01-23-R-notebook.ipynb ! -name 2017-08-01-xtractoR.ipynb ! -name 2018-02-20-obis.ipynb ! -name 2017-03-30-octave_notebook_example.ipynb ! -name 2017-11-30-rerddap.ipynb -print0 | xargs -0 -n1 python nbflake8.py ;
     fi
 
   # Publish the notebooks.

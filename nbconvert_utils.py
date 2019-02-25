@@ -1,8 +1,9 @@
+import datetime
 import os
 import re
-import datetime
-from nbconvert.preprocessors import Preprocessor
+
 from nbconvert.postprocessors import PostProcessorBase
+from nbconvert.preprocessors import Preprocessor
 
 
 class JekyllPreprocessor(Preprocessor):
