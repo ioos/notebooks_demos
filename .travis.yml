@@ -25,6 +25,8 @@ matrix:
       os: osx
     - name: "publish"
       os: linux
+    - name: "coding-standards"
+      os: linux
 
 before_install:
   - |
@@ -66,6 +68,10 @@ script:
 
   - if [ $TRAVIS_JOB_NAME == "osx" ]; then
       python -c 'import gdal; print(dir(gdal))' ;
+    fi
+
+  - if [ $TRAVIS_JOB_NAME == "coding-standards" ]; then
+      find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 python nbflake8.py ;
     fi
 
   # Publish the notebooks.
