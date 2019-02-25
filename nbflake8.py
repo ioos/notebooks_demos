@@ -1,12 +1,11 @@
 import os
-import sys
 import subprocess
+import sys
 import tempfile
 from contextlib import contextmanager
 from pathlib import Path
 
 import easyargs
-
 import nbconvert
 
 
@@ -51,12 +50,18 @@ def lint(notebook):
         "I202",  # Additional newline in a group of imports.
         "W391",  # Blank line at end of file.
         "W504",  # Line break after binary operator.
-        ]
+    ]
     code = _notebook_to_py(notebook)
     p = Path(notebook)
     with _tmpnotebook(code, fname=p.stem) as tmp:
         proc = subprocess.Popen(
-            ["flake8", tmp, f'--ignore={",".join(ignore)}', "--show-source", "--max-line-length=999"],
+            [
+                "flake8",
+                tmp,
+                f'--ignore={",".join(ignore)}',
+                "--show-source",
+                "--max-line-length=999",
+            ],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
         )

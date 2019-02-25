@@ -1,5 +1,5 @@
-from urllib.parse import quote
 import os
+from urllib.parse import quote
 
 
 def path2url(path):
