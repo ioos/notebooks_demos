@@ -1,5 +1,6 @@
-import os
 import glob
+import os
+
 from nbconvert.exporters import markdown
 
 SITE_DIR = "."
