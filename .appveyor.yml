@@ -2,7 +2,7 @@ build: false
 
 environment:
   matrix:
-    - PYTHON: "C:\\Miniconda36-x64"
+    - PYTHON: "C:\\miniconda3"
 
 init:
   - "ECHO %PYTHON_VERSION% %MINICONDA%"
@@ -18,17 +18,21 @@ install:
      Where-Object pullRequestId -eq $env:APPVEYOR_PULL_REQUEST_NUMBER)[0].buildNumber) { `
        throw "There are newer queued builds for this pull request, failing early." }
 
+  - curl -fsS -o miniconda3.exe https://repo.anaconda.com/pkgs/misc/previews/miniconda/4.6.9/Miniconda3-4.6.9.rc1-Windows-x86_64.exe
+  - miniconda3.exe /InstallationType=JustMe /AddToPath=0 /RegisterPython=0 /S /D=%PYTHON%
+
   - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
   - conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
   - conda install conda --channel conda-canary --quiet
   - conda config --add channels conda-forge --force
   - conda install pycryptosat
   - conda config --set sat_solver pycryptosat
-  # We cannot use strict on Windows b/c conda refuses to mix defaults::scipy with conda-forge packages.
-  # - conda config --set channel_priority strict
+  - conda config --set safety_checks disabled
+  - conda config --set channel_priority strict
 
   - conda env create --file environment.yml --name IOOS --quiet
-  - activate IOOS
+  - conda activate IOOS
 
 test_script:
   - conda info --all
