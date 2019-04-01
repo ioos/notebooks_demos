@@ -31,10 +31,8 @@ matrix:
 before_install:
   - |
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      # URL="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh"
       URL="https://repo.anaconda.com/pkgs/misc/previews/miniconda/4.6.9/Miniconda3-4.6.9-MacOSX-x86_64.sh"
     elif [ "$TRAVIS_OS_NAME" == "linux" ] ; then
-      # URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
       URL="https://repo.anaconda.com/pkgs/misc/previews/miniconda/4.6.9/Miniconda3-4.6.9-Linux-x86_64.sh"
     fi
     echo ""
@@ -46,10 +44,7 @@ before_install:
     fi
     export PATH="$HOME/miniconda/bin:$PATH"
     conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
-    # conda install conda --channel conda-canary --quiet
     conda config --add channels conda-forge --force
-    conda install pycryptosat
-    conda config --set sat_solver pycryptosat
     conda config --set safety_checks disabled
     conda config --set channel_priority strict
 
