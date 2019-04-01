@@ -24,7 +24,7 @@ install:
   - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
 
   - conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
-  - conda install conda --channel conda-canary --quiet
+  # - conda install conda --channel conda-canary --quiet
   - conda config --add channels conda-forge --force
   - conda install pycryptosat
   - conda config --set sat_solver pycryptosat
