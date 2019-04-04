@@ -26,6 +26,7 @@ install:
   - call %PYTHON%\Scripts\activate
 
   - conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
+  - conda update conda
   - conda config --add channels conda-forge --force
   - conda config --set safety_checks disabled
   - conda config --set channel_priority strict
