@@ -32,7 +32,7 @@ install:
   - conda config --set channel_priority strict
 
   - conda env create --file environment.yml --name IOOS --quiet
-  - conda activate IOOS
+  - activate IOOS
 
 test_script:
   - conda info --all
