@@ -9,6 +9,7 @@ dependencies:
   - cartopy
   - cc-plugin-glider
   - cc-plugin-ncei
+  - cftime
   - compliance-checker
   - cython
   - easyargs
