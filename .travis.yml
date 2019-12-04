@@ -19,13 +19,15 @@ before_cache:
 matrix:
   fast_finish: true
   include:
-    - name: "linux"
+    - name: "notebooks"
       os: linux
-    - name: "osx"
+    - name: "env-linux"
+      os: linux
+    - name: "env-osx"
       os: osx
-    - name: "publish"
-      os: linux
     - name: "coding-standards"
+      os: linux
+    - name: "publish"
       os: linux
 
 before_install:
@@ -60,11 +62,15 @@ install:
 
 script:
   # Test published notebooks.
-  - if [ $TRAVIS_JOB_NAME == "linux" ]; then
+  - if [ $TRAVIS_JOB_NAME == "notebooks" ]; then
       travis_wait pytest --nbval --nbval-lax notebooks/ ;
     fi
 
-  - if [ $TRAVIS_JOB_NAME == "osx" ]; then
+  - if [ $TRAVIS_JOB_NAME == "env-linux" ]; then
+      python -c 'import gdal; print(dir(gdal))' ;
+    fi
+
+  - if [ $TRAVIS_JOB_NAME == "env-osx" ]; then
       python -c 'import gdal; print(dir(gdal))' ;
     fi
 
