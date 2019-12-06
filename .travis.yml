@@ -25,8 +25,6 @@ matrix:
       os: linux
     - name: "env-osx"
       os: osx
-    - name: "coding-standards"
-      os: linux
     - name: "publish"
       os: linux
 
@@ -72,10 +70,6 @@ script:
 
   - if [ $TRAVIS_JOB_NAME == "env-osx" ]; then
       python -c 'import gdal; print(dir(gdal))' ;
-    fi
-
-  - if [ $TRAVIS_JOB_NAME == "coding-standards" ]; then
-      find notebooks/ -maxdepth 1 -name \*.ipynb ! -name 2017-01-23-R-notebook.ipynb ! -name 2017-08-01-xtractoR.ipynb ! -name 2018-02-20-obis.ipynb ! -name 2017-03-30-octave_notebook_example.ipynb ! -name 2017-11-30-rerddap.ipynb -print0 | xargs -0 -n1 python nbflake8.py ;
     fi
 
   # Publish the notebooks.
