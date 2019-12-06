@@ -1,3 +1,6 @@
+matrix:
+  fast_finish: true
+
 build: false
 
 environment:
@@ -29,7 +32,7 @@ install:
   - conda update conda
   - conda config --add channels conda-forge --force
   - conda config --set safety_checks disabled
-  - conda config --set channel_priority strict
+  - conda config --set channel_priority flexible
 
   - conda env create --file environment.yml --name IOOS --quiet
   - activate IOOS

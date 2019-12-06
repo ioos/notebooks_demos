@@ -19,13 +19,13 @@ before_cache:
 matrix:
   fast_finish: true
   include:
-    - name: "linux"
+    - name: "notebooks"
       os: linux
-    - name: "osx"
+    - name: "env-linux"
+      os: linux
+    - name: "env-osx"
       os: osx
     - name: "publish"
-      os: linux
-    - name: "coding-standards"
       os: linux
 
 before_install:
@@ -60,16 +60,16 @@ install:
 
 script:
   # Test published notebooks.
-  - if [ $TRAVIS_JOB_NAME == "linux" ]; then
+  - if [ $TRAVIS_JOB_NAME == "notebooks" ]; then
       travis_wait pytest --nbval --nbval-lax notebooks/ ;
     fi
 
-  - if [ $TRAVIS_JOB_NAME == "osx" ]; then
+  - if [ $TRAVIS_JOB_NAME == "env-linux" ]; then
       python -c 'import gdal; print(dir(gdal))' ;
     fi
 
-  - if [ $TRAVIS_JOB_NAME == "coding-standards" ]; then
-      find notebooks/ -maxdepth 1 -name \*.ipynb ! -name 2017-01-23-R-notebook.ipynb ! -name 2017-08-01-xtractoR.ipynb ! -name 2018-02-20-obis.ipynb ! -name 2017-03-30-octave_notebook_example.ipynb ! -name 2017-11-30-rerddap.ipynb -print0 | xargs -0 -n1 python nbflake8.py ;
+  - if [ $TRAVIS_JOB_NAME == "env-osx" ]; then
+      python -c 'import gdal; print(dir(gdal))' ;
     fi
 
   # Publish the notebooks.

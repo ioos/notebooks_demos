@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.7
+  - python=3.8
   - bagit
   - bokeh
   - cartopy
@@ -12,8 +12,10 @@ dependencies:
   - cftime
   - compliance-checker
   - cython
+  - descartes
   - easyargs
   - erddapy
+  - folium
   - flake8
   - geojson
   - geojsonio
@@ -23,7 +25,7 @@ dependencies:
   - hvplot
   - ioos-tools
   - jupyter
-  - matplotlib
+  - matplotlib-base
   - nbdime
   - nc-time-axis
   - nco
@@ -43,7 +45,6 @@ dependencies:
   - selenium
   - sensorml2iso
   - siphon
-  - spyder
   - sympy
   - thredds_crawler
   - tqdm
