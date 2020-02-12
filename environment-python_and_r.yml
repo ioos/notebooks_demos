@@ -24,6 +24,7 @@ dependencies:
   - gridgeo
   - hvplot
   - ioos-tools
+  - ioos_qc
   - jupyter
   - matplotlib-base
   - nbdime
