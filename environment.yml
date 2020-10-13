@@ -15,8 +15,8 @@ dependencies:
   - descartes
   - easyargs
   - erddapy
-  - folium
   - flake8
+  - folium
   - geojson
   - geojsonio
   - geolinks
@@ -25,6 +25,7 @@ dependencies:
   - hvplot
   - ioos-tools
   - ioos_qc
+  - ipyleaflet
   - jupyter
   - matplotlib-base
   - nbdime
