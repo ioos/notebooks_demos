@@ -48,11 +48,6 @@ before_install:
 install:
   - travis_wait conda create --name IOOS --file conda-linux-64.lock
   - source activate IOOS
-  - conda install nbval
-
-  # Debug.
-  - conda info --all
-  - conda list
 
 script:
   # Test published notebooks.
@@ -73,6 +68,6 @@ script:
       set -e ;
       conda install doctr ;
       pushd webpage && python make_index.py && popd ;
-      find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --config nbconvert_config.py ;
+      find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --template-file jupyter-jekyll.tpl --config nbconvert_config.py ;
       python -m doctr deploy --key-path github_deploy_key_ioos_notebooks_demos.enc --built-docs webpage/ . ;
     fi
