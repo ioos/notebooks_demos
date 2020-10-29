@@ -12,7 +12,7 @@ def path2url(path):
 
 c = get_config()  # noqa
 c.NbConvertApp.export_format = "markdown"
-c.MarkdownExporter.template_file = "jupyter-jekyll"
+#c.MarkdownExporter.template_file = "jupyter-jekyll"
 c.FilesWriter.build_directory = "webpage/_notebooks"
 c.MarkdownExporter.filters = {"path2url": path2url}
 c.Exporter.preprocessors = ["nbconvert_utils.JekyllPreprocessor"]
