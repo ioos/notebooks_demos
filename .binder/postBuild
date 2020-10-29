@@ -3,15 +3,6 @@
 # Should avoid false positives if this fails.
 set -e
 
-# labextensions
-jupyter labextension install --clean @jupyter-widgets/jupyterlab-manager \
-                                      @jupyterlab/server-proxy \
-                                      @jupyterlab/geojson-extension \
-                                      @pyviz/jupyterlab_pyviz \
-                                      jupyter-matplotlib \
-                                      jupyter-leaflet \
-                                      dask-labextension \
-
 #  This is a test if the right proj library is loaded.
 python -c "import cartopy; import cartopy.crs; print(cartopy.__version__)"
 
