@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Should avoid false positives if this fails.
+set -e
+
+#  This is a test if the right proj library is loaded.
+python -c "import cartopy; import cartopy.crs; print(cartopy.__version__)"
+
+# EOF
