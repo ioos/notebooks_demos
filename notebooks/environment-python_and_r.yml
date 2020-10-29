@@ -15,8 +15,8 @@ dependencies:
   - descartes
   - easyargs
   - erddapy
-  - folium
   - flake8
+  - folium
   - geojson
   - geojsonio
   - geolinks
@@ -28,6 +28,7 @@ dependencies:
   - jupyter
   - matplotlib-base
   - nbdime
+  - nbval
   - nc-time-axis
   - nco
   - oceans
@@ -56,7 +57,7 @@ dependencies:
   - xmltodict
   # R packages.
   - rpy2
-  - r-base=3.5.1
+  - r-base=4
   - r-dt
   - r-finch
   - r-ggfortify

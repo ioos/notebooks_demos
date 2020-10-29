@@ -29,6 +29,7 @@ dependencies:
   - jupyter
   - matplotlib-base
   - nbdime
+  - nbval
   - nc-time-axis
   - nco
   - oceans

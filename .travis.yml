@@ -43,14 +43,10 @@ before_install:
       bash miniconda.sh -b -p $HOME/miniconda
     fi
     export PATH="$HOME/miniconda/bin:$PATH"
-    conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
     conda update conda
-    conda config --add channels conda-forge --force
-    conda config --set safety_checks disabled
-    conda config --set channel_priority strict
 
 install:
-  - travis_wait conda env create --file environment.yml --name IOOS --quiet
+  - travis_wait conda create --name IOOS --file conda-linux-64.lock
   - source activate IOOS
   - conda install nbval
 
