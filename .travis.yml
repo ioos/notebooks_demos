@@ -46,7 +46,7 @@ before_install:
     conda update conda
 
 install:
-  - travis_wait conda create --name IOOS --file conda-linux-64.lock
+  - travis_wait conda create --name IOOS --file .binder/conda-linux-64.lock
   - source activate IOOS
 
 script:

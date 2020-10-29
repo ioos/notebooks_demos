@@ -31,7 +31,7 @@ install:
   - conda config --set always_yes yes --set changeps1 no --set show_channel_urls true
   - conda update conda
 
-  - conda create --name IOOS --file conda-win-64.lock
+  - conda create --name IOOS --file .binder/conda-win-64.lock
   - activate IOOS
 
 test_script:
