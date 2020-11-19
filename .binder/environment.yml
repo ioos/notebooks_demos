@@ -1,9 +1,8 @@
 name: IOOS
 channels:
   - conda-forge
-  - defaults
 dependencies:
-  - python=3.8
+  - python=3.9
   - bagit
   - bokeh
   - cartopy
@@ -26,6 +25,7 @@ dependencies:
   - ioos-tools
   - ioos_qc
   - ipyleaflet
+  - joblib
   - jupyter
   - matplotlib-base
   - nbdime
