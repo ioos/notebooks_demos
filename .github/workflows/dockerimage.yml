@@ -13,4 +13,4 @@ jobs:
       uses: jupyterhub/repo2docker-action@master
       with:
         NO_PUSH: 'true'
-        IMAGE_NAME: "ocefapf/repo2docker-test"
+        IMAGE_NAME: "ocefpaf/repo2docker-test"
