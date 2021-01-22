@@ -43,7 +43,6 @@ dependencies:
   - pytest
   - pyugrid
   - rasterio
-  - rise
   - seaborn
   - selenium
   - sensorml2iso
