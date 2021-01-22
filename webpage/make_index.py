@@ -50,14 +50,10 @@ layout: single
         index.write(front_matter)
         index.write('<div id="gallery">\n')
 
-        notebooks = glob.glob(
-            os.path.join(os.path.pardir, "notebooks", "*.ipynb")
-        )
+        notebooks = glob.glob(os.path.join(os.path.pardir, "notebooks", "*.ipynb"))
         for fname in sorted(notebooks, reverse=True):
             caption, img = extract_thumbnail_and_title(fname)
             fname, ext = os.path.splitext(os.path.basename(fname))
-            index.write(
-                box(caption=caption, base_url=base_url, fname=fname, img=img)
-            )
+            index.write(box(caption=caption, base_url=base_url, fname=fname, img=img))
 
         index.write("</div>\n")
