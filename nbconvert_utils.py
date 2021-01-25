@@ -34,7 +34,8 @@ class JekyllPreprocessor(Preprocessor):
         name = resources["unique_key"]
         resources["metadata"]["date"] = now.strftime("%Y-%m-%d %H:%M:%S")
         resources["metadata"]["permalink"] = "{}/{}".format(
-            now.strftime("/%Y/%m/%d"), name,
+            now.strftime("/%Y/%m/%d"),
+            name,
         )
         resources["metadata"]["categories"] = nb.metadata.get("categories", None)
         resources["metadata"]["tags"] = nb.metadata.get("tags", None)
@@ -51,7 +52,10 @@ class Rename(PostProcessorBase):
         dirname, filename = os.path.split(path)
         name = os.path.splitext(filename)[0]
         new_name = "{year}-{month:02d}-{day:02d}-{name}.md".format(
-            year=now.year, month=now.month, day=now.day, name=name,
+            year=now.year,
+            month=now.month,
+            day=now.day,
+            name=name,
         )
         new_path = os.path.join("source", "_posts", new_name)
         self.log.info("Renaming '{}' --> '{}'".format(path, new_path))
