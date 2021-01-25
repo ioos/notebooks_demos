@@ -30,6 +30,7 @@ repos:
       exclude: >
           (?x)^(
               .*\.yaml
+              .*\.yml
           )$
       args:
         - --quiet-level=2
