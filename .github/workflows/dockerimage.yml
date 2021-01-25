@@ -3,7 +3,7 @@ on: [pull_request]
 jobs:
   build-image-without-pushing:
     runs-on: ubuntu-latest
-    steps:  
+    steps:
     - name: Checkout PR
       uses: actions/checkout@v2
       with:
