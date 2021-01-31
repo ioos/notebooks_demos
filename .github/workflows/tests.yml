@@ -1,0 +1,44 @@
+name: Build Env Test
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  run-tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Conda
+      uses: s-weigand/setup-conda@v1
+      with:
+        activate-conda: false
+        conda-channels: conda-forge
+
+    - name: Build environment
+      shell: bash -l {0}
+      run: |
+         if [ "$RUNNER_OS" == "Linux" ]; then
+              conda create --name IOOS --file .binder/conda-linux-64.lock
+         elif [ "$RUNNER_OS" == "Windows" ]; then
+              conda create --name IOOS --file .binder/conda-win-64.lock
+         elif [ "$RUNNER_OS" == "macOS" ]; then
+              conda create --name IOOS --file .binder/conda-osx-64.lock
+         else
+              echo "$RUNNER_OS not supported"
+              exit 1
+         fi
+         source activate IOOS
+         python -c 'import gdal; print(dir(gdal))'
+
+    - name: Notebook tests
+      shell: bash -l {0}
+      run: |
+        source activate IOOS
+        pytest --nbval --nbval-lax notebooks/

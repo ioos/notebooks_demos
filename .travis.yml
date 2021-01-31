@@ -19,22 +19,12 @@ before_cache:
 matrix:
   fast_finish: true
   include:
-    - name: "notebooks"
-      os: linux
-    - name: "env-linux"
-      os: linux
-    - name: "env-osx"
-      os: osx
     - name: "publish"
       os: linux
 
 before_install:
   - |
-    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      URL="https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh"
-    elif [ "$TRAVIS_OS_NAME" == "linux" ] ; then
-      URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
-    fi
+    URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
     echo ""
     if [ ! -f $HOME/miniconda/bin/conda ] ; then
       echo "Fresh miniconda installation."
@@ -50,19 +40,6 @@ install:
   - source activate IOOS
 
 script:
-  # Test published notebooks.
-  - if [ $TRAVIS_JOB_NAME == "notebooks" ]; then
-      travis_wait pytest --nbval --nbval-lax notebooks/ ;
-    fi
-
-  - if [ $TRAVIS_JOB_NAME == "env-linux" ]; then
-      python -c 'import gdal; print(dir(gdal))' ;
-    fi
-
-  - if [ $TRAVIS_JOB_NAME == "env-osx" ]; then
-      python -c 'import gdal; print(dir(gdal))' ;
-    fi
-
   # Publish the notebooks.
   - if [ $TRAVIS_JOB_NAME == "publish" ]; then
       set -e ;
