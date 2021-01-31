@@ -25,12 +25,18 @@ jobs:
          source activate IOOS
          conda install doctr
 
-    - name: Build and deploy documentation
+    - name: Build documentation
       shell: bash -l {0}
       run: |
         set -e
         source activate IOOS
         pushd webpage && python make_index.py && popd
         find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --template-file jupyter-jekyll.tpl --config nbconvert_config.py
-        # either need to find a GHA to do this or wait until doctr supports GHA
-        # python -m doctr deploy --key-path github_deploy_key_ioos_notebooks_demos.enc --built-docs webpage/ .
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: webpage
+        CLEAN: true
