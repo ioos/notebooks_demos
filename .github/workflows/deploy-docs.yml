@@ -1,7 +1,6 @@
 name: Build and Deploy docs
 
 on:
-  pull_request:
   push:
     branches: [master]
 
@@ -39,4 +38,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: webpage
-        CLEAN: true
+        CLEAN: false
