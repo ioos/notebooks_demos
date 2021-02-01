@@ -1,0 +1,42 @@
+name: Build and Deploy docs
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Conda
+      uses: s-weigand/setup-conda@v1
+      with:
+        activate-conda: false
+        conda-channels: conda-forge
+
+    - name: Build environment
+      shell: bash -l {0}
+      run: |
+         conda create --name IOOS --file .binder/conda-linux-64.lock
+         source activate IOOS
+         conda install doctr
+
+    - name: Build documentation
+      shell: bash -l {0}
+      run: |
+        set -e
+        source activate IOOS
+        pushd webpage && python make_index.py && popd
+        find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --template-file jupyter-jekyll.tpl --config nbconvert_config.py
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: webpage
+        CLEAN: true
