@@ -1,16 +1,12 @@
-name: Build Notebook Container
-on: [pull_request]
+name: Binder
+on: [push]
+
 jobs:
-  build-image-without-pushing:
+  Create-MyBinderOrg-Cache:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout PR
-      uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
-
-    - name: test build
+    - name: cache binder build on mybinder.org
       uses: jupyterhub/repo2docker-action@master
       with:
-        NO_PUSH: 'true'
-        IMAGE_NAME: "ocefapf/repo2docker-test"
+        NO_PUSH: true
+        MYBINDERORG_TAG: ${{ github.event.ref }}
