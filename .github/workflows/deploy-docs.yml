@@ -1,7 +1,6 @@
 name: Build and Deploy docs
 
 on:
-  pull_request:
   push:
     branches: [master]
 
