@@ -23,9 +23,7 @@ class JekyllPreprocessor(Preprocessor):
             m = re.match(r"^#(?P<title>[^#]+)", lines[0])
             if m:
                 resources["metadata"]["title"] = m.groupdict()["title"].strip()
-                self.log.info(
-                    'Title is "{}"'.format(resources["metadata"]["title"])
-                )
+                self.log.info('Title is "{}"'.format(resources["metadata"]["title"]))
                 if len(lines) == 1:
                     nb.cells = nb.cells[1:]
                 else:
@@ -36,11 +34,10 @@ class JekyllPreprocessor(Preprocessor):
         name = resources["unique_key"]
         resources["metadata"]["date"] = now.strftime("%Y-%m-%d %H:%M:%S")
         resources["metadata"]["permalink"] = "{}/{}".format(
-            now.strftime("/%Y/%m/%d"), name
+            now.strftime("/%Y/%m/%d"),
+            name,
         )
-        resources["metadata"]["categories"] = nb.metadata.get(
-            "categories", None
-        )
+        resources["metadata"]["categories"] = nb.metadata.get("categories", None)
         resources["metadata"]["tags"] = nb.metadata.get("tags", None)
 
         return super(JekyllPreprocessor, self).preprocess(nb, resources)
@@ -55,7 +52,10 @@ class Rename(PostProcessorBase):
         dirname, filename = os.path.split(path)
         name = os.path.splitext(filename)[0]
         new_name = "{year}-{month:02d}-{day:02d}-{name}.md".format(
-            year=now.year, month=now.month, day=now.day, name=name
+            year=now.year,
+            month=now.month,
+            day=now.day,
+            name=name,
         )
         new_path = os.path.join("source", "_posts", new_name)
         self.log.info("Renaming '{}' --> '{}'".format(path, new_path))

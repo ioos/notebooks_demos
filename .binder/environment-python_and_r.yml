@@ -43,7 +43,6 @@ dependencies:
   - pytest
   - pyugrid
   - rasterio
-  - rise
   - seaborn
   - selenium
   - sensorml2iso
@@ -73,7 +72,7 @@ dependencies:
   - r-rcolorbrewer
   - r-rerddap
   - r-reshape2
-  - r-robis
+  - r-robis>=2.3.9
   - r-sp
   - r-xtractomatic
   - r-xts
