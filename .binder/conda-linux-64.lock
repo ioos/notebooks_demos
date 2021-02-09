@@ -124,6 +124,8 @@ https://conda.anaconda.org/conda-forge/linux-64/xorg-libxext-1.3.4-h516909a_0.ta
 https://conda.anaconda.org/conda-forge/linux-64/xorg-libxrender-0.9.10-h516909a_1002.tar.bz2#bf3514891c6743ed808602fa9f4f1508
 https://conda.anaconda.org/conda-forge/linux-64/xorg-libxt-1.2.1-h7f98852_0.tar.bz2#5a47e4be69652031196b38dab6dfd569
 https://conda.anaconda.org/conda-forge/noarch/affine-2.3.0-py_0.tar.bz2#5a9bfe23652d0ad9aa27e56cd75bfe33
+https://conda.anaconda.org/conda-forge/noarch/appdirs-1.4.4-pyh9f0ad1d_0.tar.bz2#5f095bc6454094e96f146491fd03633b
+https://conda.anaconda.org/conda-forge/noarch/async-timeout-3.0.1-py_1000.tar.bz2#8b11024b2762a07aaa07d2743231a41b
 https://conda.anaconda.org/conda-forge/noarch/async_generator-1.10-py_0.tar.bz2#d56c596e61b1c4952acf0a9920856c12
 https://conda.anaconda.org/conda-forge/noarch/attrs-20.3.0-pyhd3deb0d_0.tar.bz2#5b319abb055eefcfa344bc21378ca23f
 https://conda.anaconda.org/conda-forge/noarch/backcall-0.2.0-pyh9f0ad1d_0.tar.bz2#6006a6d08a3fa99268a2681c7fb55213
@@ -252,6 +254,7 @@ https://conda.anaconda.org/conda-forge/linux-64/simplejson-3.17.2-py39h3811e60_2
 https://conda.anaconda.org/conda-forge/linux-64/tiledb-2.2.4-hb9a9e87_0.tar.bz2#4609a3a8c0ccd29df2be78b9c9aa851e
 https://conda.anaconda.org/conda-forge/linux-64/tornado-6.1-py39h3811e60_1.tar.bz2#763597c8b91b69789ab0f6002439c32b
 https://conda.anaconda.org/conda-forge/noarch/traitlets-5.0.5-py_0.tar.bz2#99618ee9ab1323e40f231acdab92fe60
+https://conda.anaconda.org/conda-forge/noarch/typing-extensions-3.7.4.3-0.tar.bz2#36bdcdb4c2bf1efb987f2e9e80f4c9a6
 https://conda.anaconda.org/conda-forge/noarch/tzlocal-2.1-pyh9f0ad1d_0.tar.bz2#9d16668487f3fd44290d9fdbbd25b283
 https://conda.anaconda.org/conda-forge/noarch/validators-0.18.2-pyhd3deb0d_0.tar.bz2#a805c335f2d82b3dfb2f987520aae879
 https://conda.anaconda.org/conda-forge/noarch/zict-2.0.0-py_0.tar.bz2#4750152be22f24d695b3004c5e1712d3
@@ -441,6 +444,7 @@ https://conda.anaconda.org/conda-forge/linux-64/r-zoo-1.8_8-r40hcdcec82_0.tar.bz
 https://conda.anaconda.org/conda-forge/noarch/requests-2.25.1-pyhd3deb0d_0.tar.bz2#ae687aba31a1c400192a86a2e993ffdc
 https://conda.anaconda.org/conda-forge/noarch/seaborn-0.11.1-hd8ed1ab_1.tar.bz2#0fa8696d6ef25ac366f04a27c238da31
 https://conda.anaconda.org/conda-forge/linux-64/selenium-3.141.0-py39h3811e60_1002.tar.bz2#7940c80bbcaba73aa4913dabb5f6d22e
+https://conda.anaconda.org/conda-forge/noarch/ensureconda-1.4.1-pyhd8ed1ab_0.tar.bz2#52a7f7cc9076e2c8a25e15e19ad42821
 https://conda.anaconda.org/conda-forge/noarch/erddapy-0.9.0-pyhd8ed1ab_0.tar.bz2#28799dbfacd6ee3a757afcf3c3f9b5fd
 https://conda.anaconda.org/conda-forge/noarch/folium-0.12.0-pyhd8ed1ab_0.tar.bz2#a78bd9208c32c7005b7436e3dd384a2c
 https://conda.anaconda.org/conda-forge/noarch/github3.py-2.0.0-pyhd8ed1ab_0.tar.bz2#bf72831bc5b9cdf10f2e81e25baa85a3
@@ -474,8 +478,10 @@ https://conda.anaconda.org/conda-forge/linux-64/r-vctrs-0.3.6-r40hcfec24a_0.tar.
 https://conda.anaconda.org/conda-forge/linux-64/r-xts-0.12.1-r40hcdcec82_0.tar.bz2#9430a2ee1071c92f7d210855d7955933
 https://conda.anaconda.org/conda-forge/linux-64/siphon-0.8.0-py39hf3d152e_1004.tar.bz2#c1ca8cbadbe9f4906ada7ae051e7a767
 https://conda.anaconda.org/conda-forge/noarch/thredds_crawler-1.5.4-py_1.tar.bz2#3c9dc1d03f73e8703f47807f60df6493
+https://conda.anaconda.org/conda-forge/noarch/argopy-0.1.7-pyhd8ed1ab_0.tar.bz2#3593a6a59f30540b53562f82bde88477
 https://conda.anaconda.org/conda-forge/noarch/colorcet-2.0.6-pyhd8ed1ab_0.tar.bz2#bdf0d14cb996a18a3df88ddac83e11f9
 https://conda.anaconda.org/conda-forge/noarch/compliance-checker-4.3.3-py_0.tar.bz2#51f2f319bbfb4846084eb6eeddb5e9ee
+https://conda.anaconda.org/conda-forge/noarch/conda-lock-0.8.0-pyhd8ed1ab_0.tar.bz2#1258c98fb0bb0b9171b8150e259535b8
 https://conda.anaconda.org/conda-forge/noarch/geojsonio-0.0.3-py_0.tar.bz2#fbf6775e7824bfb88bdbf0910a061334
 https://conda.anaconda.org/conda-forge/noarch/ioos-tools-1.4.0-py_1.tar.bz2#21c6b5c6959ee8544fe7815ba11fdf45
 https://conda.anaconda.org/conda-forge/linux-64/ipykernel-5.5.0-py39hef51801_1.tar.bz2#7fdf48a376b83e4511b550410482c806
