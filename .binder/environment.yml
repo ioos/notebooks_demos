@@ -42,6 +42,7 @@ dependencies:
   - pysgrid
   - pytest
   - pyugrid
+  - pyworms
   - rasterio
   - seaborn
   - selenium
