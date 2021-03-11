@@ -1,0 +1,44 @@
+- file: content/intro
+  title: The IOOS Data Demo Center
+
+- part: Code Gallery
+  chapters:
+    - file: content/Code Gallery/data_collection/data_collection.md
+      sections:
+          - file: content/Code Gallery/data_collection/2016-10-12-fetching_data.ipynb
+          - file: content/Code Gallery/data_collection/2017-05-14-running_compliance_checker.ipynb
+    - file: content/Code Gallery/data_plotting/data_plotting.md
+    - file: content/Code Gallery/data_analysis/data-analysis.md
+
+- part: Video Tutorials
+  chapters:
+    - file: content/Video Tutorials/ioos.md
+      title: IOOS
+    - file: content/Video Tutorials/noos.md
+      title: NANOOS Visualization System (NVS)
+    - file: content/Video Tutorials/glos.md
+      title: GLOS
+    - file: content/Video Tutorials/ooi.md
+      title: OOI Demonstration Videos
+    - file: content/Video Tutorials/python_dem.md
+      title: Python Demonstration Videos
+
+- part: Other Resources   
+  chapters:
+    - file: content/Other Resources/ioos_installation_conda.md
+      title: Installing the IOOS Conda Environment
+    - url: https://help.aodn.org.au/aodn-data-tools/user-code-library/
+      title: Opening netCDF files - hints from AODN
+    - url: http://unidata.github.io/notebook-gallery/
+      title: Unidata Ju[yter Notebook Gallery
+    - url: http://iobis.org/tutorial/
+      title: Extracting and Enriching OBIS data with R
+    - url: https://github.com/USGS-R
+      title: USGS-R Examples 
+
+
+- part: Contact Us    
+  chapters:
+    - file: content/contact_us.md
+      title: Contact Us 
+
