@@ -45,6 +45,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
@@ -113,19 +115,157 @@
      Shore Station Compliance Checker Script
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_collection/2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_collection/2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_collection/2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_collection/2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_collection/2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_collection/2017-12-15-finding_HFRadar_currents.html">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_collection/2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
   </ul>
   <i class="fas fa-chevron-down">
   </i>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../Code%20Gallery/data_plotting/data_plotting.html">
-   Data Plotting
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../Code%20Gallery/data_analysis/data-analysis.html">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Code%20Gallery/data_analysis/data_analysis.html">
    Data Analysis
   </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_analysis/2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_analysis/2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_analysis/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_analysis/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_analysis/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_analysis/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_analysis/2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_analysis/2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_analysis/2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_analysis/2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_analysis/2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Code%20Gallery/data_preprocessing/data_preprocessing.html">
+   Data Preprocessing
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_preprocessing/2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_preprocessing/2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_preprocessing/2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core - Sampling Event with Measurement or Fact using Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_preprocessing/2020-12-08-DataToDwC.html#event-file">
+     Event file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_preprocessing/2020-12-08-DataToDwC.html#occurrence-file">
+     Occurrence file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_preprocessing/2020-12-08-DataToDwC.html#measurement-or-fact">
+     Measurement Or Fact
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_preprocessing/2018-02-27-pocean-timeSeries-demo.html">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Code%20Gallery/data_preprocessing/2017-11-01-Creating-Archives-Using-Bagit.html">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
 </ul>
 <p class="caption collapsible-parent">

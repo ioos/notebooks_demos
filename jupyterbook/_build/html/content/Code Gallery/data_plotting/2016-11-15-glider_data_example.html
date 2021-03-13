@@ -1,0 +1,864 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plotting Glider data with Python tools &#8212; The U.S. Integrated Ocean Observing System (IOOS)</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Data Analysis" href="../data_analysis/data_analysis.html" />
+    <link rel="prev" title="Data Plotting" href="data_plotting.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS-logo_little.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The U.S. Integrated Ocean Observing System (IOOS)</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   IOOS Data Demo Center
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_collection/data_collection.html">
+   Data Collection Process
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_collection/2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_collection/2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_collection/2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_collection/2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_collection/2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_collection/2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_collection/2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="data_plotting.html">
+   Data Plotting
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_analysis/data_analysis.html">
+   Data Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_preprocessing/data_preprocessing.html">
+   Data Preprocessing
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core - Sampling Event with Measurement or Fact using Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html#event-file">
+     Event file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html#occurrence-file">
+     Occurrence file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html#measurement-or-fact">
+     Measurement Or Fact
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ioos.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/noos.html">
+   NANOOS Visualization System (NVS)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/glos.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ooi.html">
+   OOI Demonstration Videos
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/python_dem.html">
+   Python Demonstration Videos
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Other Resources
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Other%20Resources/ioos_installation_conda.html">
+   Installing the IOOS Conda Environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+   Opening netCDF files - hints from AODN
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+   Unidata Ju[yter Notebook Gallery
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://iobis.org/tutorial/">
+   Extracting and Enriching OBIS data with R
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/USGS-R">
+   USGS-R Examples
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Contact Us
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../contact_us.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/data_plotting/2016-11-15-glider_data_example.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/data_plotting/2016-11-15-glider_data_example.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/data_plotting/2016-11-15-glider_data_example.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="plotting-glider-data-with-python-tools">
+<h1>Plotting Glider data with Python tools<a class="headerlink" href="#plotting-glider-data-with-python-tools" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook we demonstrate how to obtain and plot glider data using iris and cartopy. We will explore data from the Rutgers University RU29 <a class="reference external" href="http://challenger.marine.rutgers.edu">Challenger</a> glider that was launched from Ubatuba, Brazil on June 23, 2015 to travel across the Atlantic Ocean. After 282 days at sea, the Challenger was picked up off the coast of South Africa, on March 31, 2016. For more information on this ground breaking excusion see: <a class="reference external" href="https://marine.rutgers.edu/main/announcements/the-challenger-glider-mission-south-atlantic-mission-complete">https://marine.rutgers.edu/main/announcements/the-challenger-glider-mission-south-atlantic-mission-complete</a></p>
+<p>Data collected from this glider mission are available on the IOOS Glider DAC THREDDS via OPeNDAP.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># See https://github.com/Unidata/netcdf-c/issues/1299 for the explanation of `#fillmismatch`.</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;https://data.ioos.us/thredds/dodsC/deployments/rutgers/&quot;</span>
+    <span class="s2">&quot;ru29-20150623T1046/ru29-20150623T1046.nc3.nc#fillmismatch&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">iris</span>
+
+<span class="n">iris</span><span class="o">.</span><span class="n">FUTURE</span><span class="o">.</span><span class="n">netcdf_promote</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">glider</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">glider</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">RuntimeError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">7</span><span class="n">a10618b751f</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">iris</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">iris</span><span class="o">.</span><span class="n">FUTURE</span><span class="o">.</span><span class="n">netcdf_promote</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">glider</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="o">~/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">ioos</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">iris</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span>   <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">pypi</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">irisapi</span><span class="o">/</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>   <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">iris</span><span class="o">.</span><span class="n">claims</span><span class="o">/</span>
+<span class="ne">---&gt; </span><span class="mi">22</span> <span class="s2">&quot;&quot;&quot;)</span>
+
+<span class="ne">RuntimeError</span>: 
+
+<span class="s2">Ambiguous &#39;iris&#39; package.</span>
+<span class="s2">Please use either:</span>
+
+<span class="s2">**illumon-iris** - Python integration for Illumon Iris, a time-series database</span>
+<span class="s2">  - pip install illumon-iris</span>
+<span class="s2">  - https://pypi.python.org/pypi/illumon-iris</span>
+<span class="s2">  - https://deephaven.io/</span>
+
+<span class="s2">**SciTools Iris** - Python library for analysing and visualising meteorological and oceanographic data sets</span>
+<span class="s2">  - http://scitools.org.uk/iris/</span>
+
+<span class="s2">**info.gianlucacosta.iris** - A general-purpose library for Python</span>
+<span class="s2">  - pip install info.gianlucacosta.iris</span>
+<span class="s2">  - https://pypi.python.org/pypi/info.gianlucacosta.iris</span>
+
+<span class="s2">**irisapi** - Iris is a highly configurable and flexible service for paging and messaging</span>
+<span class="s2">  - pip install irisapi</span>
+<span class="s2">  - https://pypi.org/project/irisapi/</span>
+<span class="s2">  - https://iris.claims/</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Iris</span></code> requires the data to adhere strictly to the <code class="docutils literal notranslate"><span class="pre">CF-1.6</span></code> data model.
+That is why we see all those warnings about <code class="docutils literal notranslate"><span class="pre">Missing</span> <span class="pre">CF-netCDF</span> <span class="pre">ancillary</span> <span class="pre">data</span> <span class="pre">variable</span></code>.
+Note that if the data is not CF at all <code class="docutils literal notranslate"><span class="pre">iris</span></code> will refuse to load it!</p>
+<p>The other hand, the advantage of following the <code class="docutils literal notranslate"><span class="pre">CF-1.6</span></code> conventions,
+is that the <code class="docutils literal notranslate"><span class="pre">iris</span></code> cube has the proper metadata is attached it.
+We do not need to extract the coordinates or any other information separately .
+All we need to do is to request the phenomena we want, in this case <code class="docutils literal notranslate"><span class="pre">sea_water_density</span></code>, <code class="docutils literal notranslate"><span class="pre">sea_water_temperature</span></code> and <code class="docutils literal notranslate"><span class="pre">sea_water_salinity</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="n">glider</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="s2">&quot;sea_water_temperature&quot;</span><span class="p">)</span>
+<span class="n">salt</span> <span class="o">=</span> <span class="n">glider</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="s2">&quot;sea_water_salinity&quot;</span><span class="p">)</span>
+<span class="n">dens</span> <span class="o">=</span> <span class="n">glider</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="s2">&quot;sea_water_density&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sea_water_temperature / (Celsius)   (-- : 1; -- : 542; -- : 483)
+     Auxiliary coordinates:
+          latitude                      x       x         -
+          longitude                     x       x         -
+          time                          x       x         -
+          depth                         x       x         x
+     Attributes:
+          Conventions: Unidata Dataset Discovery v1.0, COARDS, CF-1.6
+          DODS.dimName: wmo_id_strlen
+          DODS.strlen: 7
+          Easternmost_Easting: 13.5917595008
+          Metadata_Conventions: Unidata Dataset Discovery v1.0, COARDS, CF-1.6
+          Northernmost_Northing: -25.4926697853
+          Southernmost_Northing: -37.3408904
+          Westernmost_Easting: -44.9219533843
+          _ChunkSizes: 1
+          acknowledgment: This deployment supported by funding from the G.  Unger Vetelsen Foundation...
+          actual_range: [  3.74399996  24.5387001 ]
+          cdm_data_type: TrajectoryProfile
+          cdm_profile_variables: time_uv,lat_uv,lon_uv,u,v,profile_id,time,latitude,longitude
+          cdm_trajectory_variables: trajectory,wmo_id
+          colorBarMaximum: 32.0
+          colorBarMinimum: 0.0
+          comment: Glider operatored by the Rutgers University Coastal Ocean Observation Lab,...
+          contributor_name: Scott Glenn, Oscar Schofield, Josh Kohut, Antonio Ramos, Sebastian Swart,...
+          contributor_role: Principal Investigator, Principal Investigator, Principal Investigator,...
+          creator_email: kerfoot@marine.rutgers.edu
+          creator_name: John Kerfoot
+          creator_url: http://rucool.marine.rutgers.edu
+          date_created: 2016-03-31T06:16:37Z
+          date_issued: 2016-03-31T06:16:37Z
+          featureType: TrajectoryProfile
+          format_version: IOOS_Glider_NetCDF_v2.0.nc
+          geospatial_lat_max: -25.4926697853
+          geospatial_lat_min: -37.3408904
+          geospatial_lat_units: degrees_north
+          geospatial_lon_max: 13.5917595008
+          geospatial_lon_min: -44.9219533843
+          geospatial_lon_units: degrees_east
+          geospatial_vertical_max: 983.17
+          geospatial_vertical_min: 0.61
+          geospatial_vertical_positive: down
+          geospatial_vertical_units: m
+          history: 2016-03-31T06:16:37Z /home/kerfoot/slocum/matlab/spt/export/nc/IOOS/DAC/writeIoosGliderFlatNc.m
+2017-10-03T14:05:51Z...
+          id: ru29-20150623T1046_f070_8f49_1646
+          infoUrl: http://data.ioos.us/gliders/erddap/
+          institution: Rutgers University
+          instrument: instrument_ctd
+          ioos_category: Temperature
+          ioos_dac_checksum: fe452cc3a1bd121d6ba03cd41c4c004c
+          ioos_dac_completed: True
+          keywords: AUVS &gt; Autonomous Underwater Vehicles, Oceans &gt; Ocean Pressure &gt; Water...
+          keywords_vocabulary: GCMD Science Keywords
+          license: This data may be redistributed and used without restriction.  Data provided...
+          naming_authority: edu.rutgers.marine
+          observation_type: measured
+          platform: platform
+          platform_type: Slocum Glider
+          processing_level: Timestamp and gps positions checked for validity.
+          project: Challenger
+          publisher_email: kerfoot@marine.rutgers.edu
+          publisher_name: John Kerfoot
+          publisher_url: http://rucool.marine.rutgers.edu
+          sea_name: South Atlantic Ocean
+          source: Observational data from a profiling glider
+          sourceUrl: (local files)
+          standard_name_vocabulary: CF-v25
+          subsetVariables: trajectory,wmo_id,time_uv,lat_uv,lon_uv,u,v,profile_id,time,latitude,l...
+          summary: Third leg of the ru29 Challenger mission from Brazil to
+            South...
+          time_coverage_end: 2016-03-31T09:25:31Z
+          time_coverage_start: 2015-06-23T10:57:59Z
+          title: ru29-20150623T1046
+          valid_max: 40.0
+          valid_min: -5.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Glider data is not something trivial to visualize. The very first thing to do is to plot the glider track to check its path.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="k">as</span> <span class="nn">ma</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">salt</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">dens</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;Y&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;Z&quot;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
+
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;actual_range&quot;</span><span class="p">]</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_outside</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">num2date</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+
+<span class="n">location</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># Track center.</span>
+<span class="n">locations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>  <span class="c1"># Track points.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">folium</span>
+
+<span class="n">tiles</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;http://services.arcgisonline.com/arcgis/rest/services/&quot;</span>
+    <span class="s2">&quot;World_Topo_Map/MapServer/MapServer/tile/</span><span class="si">{z}</span><span class="s2">/</span><span class="si">{y}</span><span class="s2">/</span><span class="si">{x}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">tiles</span><span class="o">=</span><span class="n">tiles</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="s2">&quot;ESRI&quot;</span><span class="p">,</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">folium</span><span class="o">.</span><span class="n">CircleMarker</span><span class="p">(</span><span class="n">locations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">folium</span><span class="o">.</span><span class="n">CircleMarker</span><span class="p">(</span><span class="n">locations</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">line</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">PolyLine</span><span class="p">(</span>
+    <span class="n">locations</span><span class="o">=</span><span class="n">locations</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span>
+    <span class="n">weight</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">opacity</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+    <span class="n">popup</span><span class="o">=</span><span class="s2">&quot;Slocum Glider ru29 Deployed on 2015-06-23&quot;</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">m</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><iframe src="data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+CjxoZWFkPiAgICAKICAgIDxtZXRhIGh0dHAtZXF1aXY9ImNvbnRlbnQtdHlwZSIgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PVVURi04IiAvPgogICAgPHNjcmlwdD5MX1BSRUZFUl9DQU5WQVMgPSBmYWxzZTsgTF9OT19UT1VDSCA9IGZhbHNlOyBMX0RJU0FCTEVfM0QgPSBmYWxzZTs8L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2xlYWZsZXRAMS4yLjAvZGlzdC9sZWFmbGV0LmpzIj48L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL2FqYXguZ29vZ2xlYXBpcy5jb20vYWpheC9saWJzL2pxdWVyeS8xLjExLjEvanF1ZXJ5Lm1pbi5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvMy4yLjAvanMvYm9vdHN0cmFwLm1pbi5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvTGVhZmxldC5hd2Vzb21lLW1hcmtlcnMvMi4wLjIvbGVhZmxldC5hd2Vzb21lLW1hcmtlcnMuanMiPjwvc2NyaXB0PgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2xlYWZsZXRAMS4yLjAvZGlzdC9sZWFmbGV0LmNzcyIgLz4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvMy4yLjAvY3NzL2Jvb3RzdHJhcC5taW4uY3NzIiAvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL21heGNkbi5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjIuMC9jc3MvYm9vdHN0cmFwLXRoZW1lLm1pbi5jc3MiIC8+CiAgICA8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vZm9udC1hd2Vzb21lLzQuNi4zL2Nzcy9mb250LWF3ZXNvbWUubWluLmNzcyIgLz4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvTGVhZmxldC5hd2Vzb21lLW1hcmtlcnMvMi4wLjIvbGVhZmxldC5hd2Vzb21lLW1hcmtlcnMuY3NzIiAvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL3Jhd2dpdC5jb20vcHl0aG9uLXZpc3VhbGl6YXRpb24vZm9saXVtL21hc3Rlci9mb2xpdW0vdGVtcGxhdGVzL2xlYWZsZXQuYXdlc29tZS5yb3RhdGUuY3NzIiAvPgogICAgPHN0eWxlPmh0bWwsIGJvZHkge3dpZHRoOiAxMDAlO2hlaWdodDogMTAwJTttYXJnaW46IDA7cGFkZGluZzogMDt9PC9zdHlsZT4KICAgIDxzdHlsZT4jbWFwIHtwb3NpdGlvbjphYnNvbHV0ZTt0b3A6MDtib3R0b206MDtyaWdodDowO2xlZnQ6MDt9PC9zdHlsZT4KICAgIAogICAgICAgICAgICA8c3R5bGU+ICNtYXBfMGY5MDU3NDZiYTVhNDczMWFkZTE1YWMyMTQzNTYxMjEgewogICAgICAgICAgICAgICAgcG9zaXRpb24gOiByZWxhdGl2ZTsKICAgICAgICAgICAgICAgIHdpZHRoIDogMTAwLjAlOwogICAgICAgICAgICAgICAgaGVpZ2h0OiAxMDAuMCU7CiAgICAgICAgICAgICAgICBsZWZ0OiAwLjAlOwogICAgICAgICAgICAgICAgdG9wOiAwLjAlOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICA8L3N0eWxlPgogICAgICAgIAo8L2hlYWQ+Cjxib2R5PiAgICAKICAgIAogICAgICAgICAgICA8ZGl2IGNsYXNzPSJmb2xpdW0tbWFwIiBpZD0ibWFwXzBmOTA1NzQ2YmE1YTQ3MzFhZGUxNWFjMjE0MzU2MTIxIiA+PC9kaXY+CiAgICAgICAgCjwvYm9keT4KPHNjcmlwdD4gICAgCiAgICAKCiAgICAgICAgICAgIAogICAgICAgICAgICAgICAgdmFyIGJvdW5kcyA9IG51bGw7CiAgICAgICAgICAgIAoKICAgICAgICAgICAgdmFyIG1hcF8wZjkwNTc0NmJhNWE0NzMxYWRlMTVhYzIxNDM1NjEyMSA9IEwubWFwKAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJ21hcF8wZjkwNTc0NmJhNWE0NzMxYWRlMTVhYzIxNDM1NjEyMScsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB7Y2VudGVyOiBbLTMyLjY4NjU0Njk5NiwtOS4xNTM0NzkwNjc3N10sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB6b29tOiA0LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbWF4Qm91bmRzOiBib3VuZHMsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBsYXllcnM6IFtdLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgd29ybGRDb3B5SnVtcDogZmFsc2UsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjcnM6IEwuQ1JTLkVQU0czODU3CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0pOwogICAgICAgICAgICAKICAgICAgICAKICAgIAogICAgICAgICAgICB2YXIgdGlsZV9sYXllcl85MjJhNjlhZjczYTI0NGIzYTY1N2Y2NDFlZTkxYzUxNCA9IEwudGlsZUxheWVyKAogICAgICAgICAgICAgICAgJ2h0dHA6Ly9zZXJ2aWNlcy5hcmNnaXNvbmxpbmUuY29tL2FyY2dpcy9yZXN0L3NlcnZpY2VzL1dvcmxkX1RvcG9fTWFwL01hcFNlcnZlci9NYXBTZXJ2ZXIvdGlsZS97en0ve3l9L3t4fScsCiAgICAgICAgICAgICAgICB7CiAgImF0dHJpYnV0aW9uIjogIkVTUkkiLAogICJkZXRlY3RSZXRpbmEiOiBmYWxzZSwKICAibWF4Wm9vbSI6IDE4LAogICJtaW5ab29tIjogMSwKICAibm9XcmFwIjogZmFsc2UsCiAgInN1YmRvbWFpbnMiOiAiYWJjIgp9CiAgICAgICAgICAgICAgICApLmFkZFRvKG1hcF8wZjkwNTc0NmJhNWE0NzMxYWRlMTVhYzIxNDM1NjEyMSk7CiAgICAgICAgCiAgICAKICAgICAgICAgICAgdmFyIGNpcmNsZV9tYXJrZXJfZWIzNGIzYjM3NDViNDljMGIyZmJmMjhhZTNmM2M5NjggPSBMLmNpcmNsZU1hcmtlcigKICAgICAgICAgICAgICAgIFstMjUuNDkyNjY5Nzg1MywtNDQuOTEwOTY4MDY4NV0sCiAgICAgICAgICAgICAgICB7CiAgImJ1YmJsaW5nTW91c2VFdmVudHMiOiB0cnVlLAogICJjb2xvciI6ICIjMzM4OGZmIiwKICAiZGFzaEFycmF5IjogbnVsbCwKICAiZGFzaE9mZnNldCI6IG51bGwsCiAgImZpbGwiOiBmYWxzZSwKICAiZmlsbENvbG9yIjogImdyZWVuIiwKICAiZmlsbE9wYWNpdHkiOiAwLjIsCiAgImZpbGxSdWxlIjogImV2ZW5vZGQiLAogICJsaW5lQ2FwIjogInJvdW5kIiwKICAibGluZUpvaW4iOiAicm91bmQiLAogICJvcGFjaXR5IjogMS4wLAogICJyYWRpdXMiOiAxMCwKICAic3Ryb2tlIjogdHJ1ZSwKICAid2VpZ2h0IjogMwp9CiAgICAgICAgICAgICAgICApLmFkZFRvKG1hcF8wZjkwNTc0NmJhNWE0NzMxYWRlMTVhYzIxNDM1NjEyMSk7CiAgICAgICAgICAgIAogICAgCiAgICAgICAgICAgIHZhciBjaXJjbGVfbWFya2VyX2NhOGM4MGE3NjUwZjQ2YjNiZWU2MzVjZjViODMzMWVjID0gTC5jaXJjbGVNYXJrZXIoCiAgICAgICAgICAgICAgICBbLTM0LjA2NjIyNTY1NzYsMTMuNDc4MDk1OTI5NV0sCiAgICAgICAgICAgICAgICB7CiAgImJ1YmJsaW5nTW91c2VFdmVudHMiOiB0cnVlLAogICJjb2xvciI6ICIjMzM4OGZmIiwKICAiZGFzaEFycmF5IjogbnVsbCwKICAiZGFzaE9mZnNldCI6IG51bGwsCiAgImZpbGwiOiBmYWxzZSwKICAiZmlsbENvbG9yIjogInJlZCIsCiAgImZpbGxPcGFjaXR5IjogMC4yLAogICJmaWxsUnVsZSI6ICJldmVub2RkIiwKICAibGluZUNhcCI6ICJyb3VuZCIsCiAgImxpbmVKb2luIjogInJvdW5kIiwKICAib3BhY2l0eSI6IDEuMCwKICAicmFkaXVzIjogMTAsCiAgInN0cm9rZSI6IHRydWUsCiAgIndlaWdodCI6IDMKfQogICAgICAgICAgICAgICAgKS5hZGRUbyhtYXBfMGY5MDU3NDZiYTVhNDczMWFkZTE1YWMyMTQzNTYxMjEpOwogICAgICAgICAgICAKICAgIAogICAgICAgICAgICAgICAgdmFyIHBvbHlfbGluZV84ZDdjZTI5Nzc0YzE0ZTY2OTZmOWM1ZGJhMjIyYjUyZiA9IEwucG9seWxpbmUoCiAgICAgICAgICAgICAgICAgICAgW1stMjUuNDkyNjY5Nzg1Mjc1MjQ3LCAtNDQuOTEwOTY4MDY4NTIzOTc4XSwgWy0yNS41MDYwMTI2MDkyMTgxMzksIC00NC45MTkzODkzODk2NjUyOThdLCBbLTI1LjUzMzQyMzQ2Njc1Njc2NiwgLTQ0LjkyMTk1MzM4NDM0NzQ4Ml0sIFstMjUuNTY0MDEyMjQ2MTgyNDQzLCAtNDQuOTA5MDQ2ODc0MDYxNTMxXSwgWy0yNS42MDc4MjkwNjIxNTkzNDMsIC00NC44NTQwNzg3MjY4NDMyMDZdLCBbLTI1LjY0OTg2NjgzNjMzODc0NSwgLTQ0Ljc5NTU3OTM1OTIyNzQ4Ml0sIFstMjUuNjgzNTc3NzcwNTgyMjExLCAtNDQuNzM0NjgxMDk5NzcwMTM1XSwgWy0yNS43MDAyMzg3MTMyODIyNSwgLTQ0LjU5NzA0NjQ4MzEwMjI3NV0sIFstMjUuNzA1MjUzMDQ1NjU5Mjc2LCAtNDQuNDQwNzM3NjMwOTk1OTMzXSwgWy0yNS43MTU2NjMyNzM3MTQxNiwgLTQ0LjI2OTQ1NTgzMDIyODcwMV0sIFstMjUuNzI5MjM5NTYyNDU5MTk5LCAtNDQuMDg5ODM0NjY2NDE3MjgyXSwgWy0yNS43NTU3NzIzNTY5MzY3MTcsIC00My45MDk1MzIxNjA5NTM2OTVdLCBbLTI1Ljc3ODY3NzI2NDI4NTQzMSwgLTQzLjcwNTE2NjY1ODU1NjUyOV0sIFstMjUuNzczMDIxNzg1MjY1MywgLTQzLjY4Njk3NTA2NDcyNTkwN10sIFstMjUuODE4NTIyOTc3NTYyMjgyLCAtNDMuNDgyODQ1ODc5MDI0OV0sIFstMjUuODk2ODQxNzE5OTA3NjMxLCAtNDMuMjg3NTQ1NDM3NjQ3ODg2XSwgWy0yNi4wMDUxNTM1NjU4NDA2ODMsIC00My4wOTg5MDM0ODQzNDQ2OTZdLCBbLTI2LjA4NTQ5NjQ4ODIzMDc0NiwgLTQyLjkxMjI1MDk3MTM5NTczNl0sIFstMjYuMTc4NzcxNjM1MzMzNDYyLCAtNDIuNzMzODA0NzE4MzMwNTZdLCBbLTI2LjIzODQ3MjU5Njk0ODY3MiwgLTQyLjU4MDM4ODk4NTgzOTE1N10sIFstMjYuMjgyNDE4MjI4NDczNjkxLCAtNDIuNDIxNTAwNTk5NjI0NDU5XSwgWy0yNi4yODM5NDk0MzUwNDMzOSwgLTQyLjI4MDQ2ODM2NDA3NDk5MV0sIFstMjYuMjU5MDI5MDI5NTE2NTU4LCAtNDIuMTIzMzc5MTA5MjYzMzExXSwgWy0yNi4yMjQ3Njg1ODk2OTQ5MzIsIC00MS45NzE1MTg4MjIxODIzNzVdLCBbLTI2LjE3ODY3MjQ5OTk3NzM1NiwgLTQxLjgxMTkwNDI1OTQyMDU3Ml0sIFstMjYuMTQyMDAyMTI0MTk4MjUsIC00MS42NTgxNjY1Mjk5MDY5MzZdLCBbLTI2LjEzMDM5Nzg3MDE4MzgyNCwgLTQxLjQ5NjE4NDUyNjA1MjQyNF0sIFstMjYuMTI5NzY2MTM1ODU4NTQyLCAtNDEuMzQ5NDQyMDI5NTQ4OTM5XSwgWy0yNi4wODY1MDExODA0MTkxNTksIC00MS4xOTk5NDQ2ODk0MTAxNl0sIFstMjYuMDU4MDAwNjY3MTE4MTc2LCAtNDEuMDQ3MzE2MTgwOTg5MzI3XSwgWy0yNi4wMzE4MjgyMzMxNzcwODQsIC00MC44OTEzNTc0Mzg2MTIwMTJdLCBbLTI2LjAwNTUxMDQyOTU1NDI3NCwgLTQwLjcxNzg5NDQwNDEwNzE4NF0sIFstMjUuOTg3MTAyMDk2NjYwNzI4LCAtNDAuNTM3MDQ4OTkxMTUyOTQzXSwgWy0yNS45NjEwMTE0ODk2MjQ3MzUsIC00MC4zNjEyNjgzODg5ODAxMDhdLCBbLTI1LjkzMDU0MDY0Mzc5NzY1OSwgLTQwLjE4MjUzMDYxMjkxNTg3Nl0sIFstMjUuOTA4ODA1NjUzNzk4NDA3LCAtMzkuOTk2MTk1MDMwNTU5MDI5XSwgWy0yNS44OTUyNDU0MDg2NTgxNTksIC0zOS44MTg4NDU2MjQ5ODAyMDZdLCBbLTI1LjkzMzUzODYyNTQ2NDAyNCwgLTM5LjY1NTExMzgyNzE0ODEyOF0sIFstMjUuOTg3MDkwMTIwODEzOSwgLTM5LjQ5NDU1MDMwNDc5MDk2M10sIFstMjYuMDI5Mzg0MDc2Njg0NjgyLCAtMzkuMzM3OTM1MDc3NzY2NDY3XSwgWy0yNi4wNzMwMTc4ODU5MTIzMTEsIC0zOS4xNzY5MzYyNzUxOTEyMjRdLCBbLTI2LjEyMDgzMTEzNTc1NTIzNSwgLTM5LjAyOTk4OTU5OTY4Mzk3Ml0sIFstMjYuMTY0Njk5OTk3MDMzNTU1LCAtMzguODc4OTc5Mjc5MjUyMDM2XSwgWy0yNi4yMjYyOTkwNDY4OTU0OTUsIC0zOC43MjQ4NTA5ODI4MDY2MzZdLCBbLTI2LjI4MzIzNDk2OTk0OTkwMiwgLTM4LjU3Mjc3MTQxODM2NzMxXSwgWy0yNi4zNTE4MDMwMDMwOTM0OTcsIC0zOC40MDQ3Mzg4NTAwNTNdLCBbLTI2LjM2NTI3MzE5OTcwMDQ5NiwgLTM4LjM2MTkxNjY4MTI4NTIzXSwgWy0yNi40MjQ4ODU3NDg1ODE4MDQsIC0zOC4yMzQ0MTQ0NTI2NjQ4NjVdLCBbLTI2LjQ3MDEyODk4ODY4NzQ1NiwgLTM4LjA3MDA4MjU0NTM4NDc3OF0sIFstMjYuNTIyNjIwNjc0NzMyMjc3LCAtMzcuOTE3OTA4MjQwNDI1NzY3XSwgWy0yNi41NTg3Mjc2MDI5ODU5NjEsIC0zNy43NzQ1NTY3NzkzMzcyNzRdLCBbLTI2LjU5ODU3MzEzMTY3MzYxNCwgLTM3LjYzMjM4NjAzMzcwMTI3M10sIFstMjYuNTk2MzMzMDI3ODcxMzM5LCAtMzcuNDg4MzY1NTM2NTE2NDEyXSwgWy0yNi41OTQxNTU3MjgyNzExNDcsIC0zNy40NTc0NDYzMDkyNzkyMDZdLCBbLTI2LjU5NDg0Mjc4MDY0MDc4OSwgLTM3LjM5NzM1ODgxMDA0MjE3MV0sIFstMjYuNTgzODIzMDQ4NTcwNDgzLCAtMzcuMzM3MzQyMTM3MTIxMjQ3XSwgWy0yNi41OTgzMzAxMTAyMzA4NjUsIC0zNy4yMDczNzQzNDA4NjkwMDJdLCBbLTI2LjYwNDc4ODg2OTAxNzE1MywgLTM3LjA4MjUxNDgyNTgyNzk3OF0sIFstMjYuNjI1ODc5OTExMzE3MzIsIC0zNi45NTc5OTkyMDE3Mjc4ODddLCBbLTI2LjY0NjI1NDYxODUwNzY1OCwgLTM2Ljg0MjA0MDUzNTc3MzU0OV0sIFstMjYuNjczNjM2Nzg1MTQyODAxLCAtMzYuNzE2ODU5MDEzMzI4NjUxXSwgWy0yNi43MTIzNjk5MjE0OTcxMTgsIC0zNi41OTc4MDY2MTE1NDMzOThdLCBbLTI2Ljc0MzU0MDcxNTc4NzM5LCAtMzYuNDY2MjY3OTExMTY0MDI0XSwgWy0yNi43OTI5ODE0MDc2Mjg1MzgsIC0zNi4zMjkyODk3ODUxNTI0MjZdLCBbLTI2LjgzOTQxOTg0MzU3ODg0NSwgLTM2LjE5NjE5MzE4MDQ1MjI0MV0sIFstMjYuODk1MzAyMzg4NzAxODI1LCAtMzYuMDY0NDk4OTg1MTU2NDYyXSwgWy0yNi45NTUxNzg0Mjg5MTQ3MzUsIC0zNS45MzE2MzE1MDgzOTUxXSwgWy0yNy4wMDU1ODk5MDAwMjA2ODEsIC0zNS43OTM3MTkyMTUwNTcxOTVdLCBbLTI3LjA1MzkxNzE3MzcyNzIxMSwgLTM1LjY0OTcwMzE0NzM5ODQwNV0sIFstMjcuMTAxMTQ2OTA5NjM3MDg0LCAtMzUuNTA4NTg4OTU1NDUyOTQzXSwgWy0yNy4xNTM5Nzg4MDkyMzM1NTMsIC0zNS4zNTk1MzIwMzQyNjM5NTddLCBbLTI3LjI2Njg1NjI1MzU5NTM0NiwgLTM1LjIzMTc4MDQxNDU0MzQyMl0sIFstMjcuMzY5NjQ5Njc4MjQ1MTExLCAtMzUuMDk2ODUwMDI5NTM5OTg2XSwgWy0yNy40NzIzOTc3ODg5NzAyMTYsIC0zNC45NTgzMjg0NjExODY1MjVdLCBbLTI3LjU3NDE2OTg5OTY4MTg4LCAtMzQuODExNzk1NzM3MjA3ODg4XSwgWy0yNy42Njc3MjY3NzY0MjQ3MTgsIC0zNC42NjQ4NDcxMjcxMDAwOTZdLCBbLTI3Ljc3MDQ3NDUwMjcxMDIzNiwgLTM0LjUyMDk4MDEzNzI3MzMyN10sIFstMjcuODgxNzU0MTI1MzMwNTk1LCAtMzQuMzc2NzU1Nzk3OTM0MDE3XSwgWy0yNy45ODk1NjcxNjI1NTYwODIsIC0zNC4yMzgxNDI2MDE0MjQ0NzhdLCBbLTI4LjA5NzQzODI0OTM3Nzc5NSwgLTM0LjExMTg2ODcyODQwMjY0OF0sIFstMjguMjA5NDU5MzE4NjkxNDA1LCAtMzQuMDA1MzU3MDk4MTMyMzM2XSwgWy0yOC4yMjUyNDU0MjIxMzE5MzgsIC0zMy44NzE4NjQ5MzU2NDI3NjldLCBbLTI4LjIzNzYzMjcyOTk1Njk4MiwgLTMzLjczOTQwOTI1NjYzMzYyMV0sIFstMjguMjQ3MDA0MjU4NTk1OTkzLCAtMzMuNTk2MTkzOTM2OTMwMTQyXSwgWy0yOC4yNDYxNjk2ODExNDE1MzQsIC0zMy40NTc3NjgyMDAyOTE4NjZdLCBbLTI4LjIzODAwNDk3OTkxOTg0NywgLTMzLjMyMjg3MDA1MTE4MDU1OF0sIFstMjguMjQ3NzE1Mjk0OTI0OTEyLCAtMzMuMTk0MjU5MjM1MTUzODIyXSwgWy0yOC4yNDkyNzgzMjc2MTc0MTQsIC0zMy4wNjg4NDAwOTkxNTUyMDNdLCBbLTI4LjI1NzEzNjAzODgyNzgzOCwgLTMyLjkzMTI2MTQ5NDQ1NjM2NV0sIFstMjguMjkyMDMxNzEwMjUwMzYsIC0zMi43OTg2MTQ2MDY0MTIyNzldLCBbLTI4LjM4OTk4MjEyOTU1MDc4OCwgLTMyLjcxMjE4NzEwMjA0NjY2M10sIFstMjguNTA5ODk1MTE0NzUxNTc2LCAtMzIuNjI0NTQ5NTg0MDEwMDE5XSwgWy0yOC42MTI0MzA3NDgxMDk3NTIsIC0zMi41NDc0NDQzMjQwNzE4MTldLCBbLTI4LjcyNDEwNTc4NzI0MjY1MywgLTMyLjQ3MzIyMzM4NzAyNjIzOF0sIFstMjguODM2NjcxNzQwNjY2MDAyLCAtMzIuMzgyMjc4MjQ1NDMzODk1XSwgWy0yOC45NTY1NjE5OTM1NDAzNDgsIC0zMi4yNDc1MTM3NjM3MDM0NzNdLCBbLTI5LjA2MTExNTE3NTEwNjgyNCwgLTMyLjExMzk0MjA5NTM1MzMzN10sIFstMjkuMTQ1NDkwNDU3Mjk0MTIzLCAtMzEuOTgyMDYyNDEyMjg2NTk5XSwgWy0yOS4yMjU1NjI2Njk1NjY2NjcsIC0zMS44NDQwNzAzNzQwMTA4NTVdLCBbLTI5LjMwNzcxODEyNTY2MTU5NCwgLTMxLjY5ODgzNTg1OTg1NTYyN10sIFstMjkuMzc3NTg4NDM2NDQ3MDEzLCAtMzEuNTU3NTk5MjA3NzAyNzc5XSwgWy0yOS40NDMwNDA4MjUxODYwOTUsIC0zMS40MjU5ODE0NjUyNjE2MDRdLCBbLTI5LjUxMzMwNDUwODA4MjI4MiwgLTMxLjI4OTQzOTMyMzQ1ODYzN10sIFstMjkuNTA3NzgyMDQzNzU4MjE1LCAtMzEuMTM1NjMxNzQ1OTE4NzY1XSwgWy0yOS41MDM5NjE5NjczMzU3MDksIC0zMC45NjY3NTIyNTU0Nzk0NTldLCBbLTI5LjUwMDgyMTU4MDk1OTI3MiwgLTMwLjc5NDk2ODc1ODAzNzM1Nl0sIFstMjkuNTAwNzA0NDY2MDA0OTYyLCAtMzAuNjIzMjM5OTI1ODUwMjUzXSwgWy0yOS41MDI5MTE0NTYxNjU2ODQsIC0zMC40Mzg4MzY5NTMyODM2OV0sIFstMjkuNTI3NzYzNDk3OTgwOTk5LCAtMzAuMjc2NjIyMTc1MTM0MTY4XSwgWy0yOS41NDg2MjExNzg0OTYzMjYsIC0zMC4xMTcyNTE1NDYyODkxOTNdLCBbLTI5LjU3OTc0MjgzOTUzOTQxNywgLTI5Ljk1NjA4MzkxOTEzODg0NV0sIFstMjkuNjA2MzExODQzNTI0NzIyLCAtMjkuNzk4MTUyODczODA3MjE5XSwgWy0yOS42NDM4MDgwMDIxMDgzNjUsIC0yOS42MzM5MTM0ODcwMDU4NDVdLCBbLTI5LjY4MTE4MTEyNjI0NzY5LCAtMjkuNDcwMDIxNzc1MjM1ODk2XSwgWy0yOS43MjU2ODUxOTI4NzQxNDUsIC0yOS4zMDY5Mjg2Nzk4NTkyMjJdLCBbLTI5Ljc2NzI1MTcwMzk2NTQ4MSwgLTI5LjE0MTA1NTA1NjQzNzQwMl0sIFstMjkuNzk3MDA4NTkxMTU5NTUzLCAtMjguOTY3NTg2MTM3MzA3ODU1XSwgWy0yOS44Mjk1NDk3MjU0NTkzMTYsIC0yOC44MDg4Njg1OTcxOTIwMTddLCBbLTI5Ljg1MzA5MzgwMDEzNTkyMywgLTI4LjY1MjQwNTc3MDAxODI5MV0sIFstMjkuODg2MDY5NjE1MDYzNjY4LCAtMjguNDk0NzA1NjI2MzgwMjQ1XSwgWy0yOS45MjM1NzIzNTI1Nzc0OTQsIC0yOC4xNjQ5Nzg5MjM1NzAzMzhdLCBbLTI5Ljk0OTI5MzU5NDc3ODMyNSwgLTI4LjAwNDA1OTgyNDcwOTU1XSwgWy0yOS45ODM5NzEwMTYyMTgxNjcsIC0yNy44Mzg5MzU1MzAwOTE3MzVdLCBbLTMwLjAyNTE5MjgxOTE2OTYzOSwgLTI3LjY3NDQ0ODk5ODg2ODMyOF0sIFstMzAuMDgzMjAyNjUyNzA1NzUxLCAtMjcuNTAyNjc5MTY1NjY1ODZdLCBbLTMwLjEyMzgxNzc5NDE0MDYyNCwgLTI3LjMzMDY2MzY5ODI3MjEzNl0sIFstMzAuMTY3MzM0NjIyMTM1NjUyLCAtMjcuMTU3NzY0MzE1NTAyNjc1XSwgWy0zMC4yMjQwODkxMzE0NTUxNTUsIC0yNy4wMTM2MTk2MTY5ODUwMDddLCBbLTMwLjI3MTkwNjc3MDgzNzI1NSwgLTI2Ljg4MjE0NjY3Mzk5NzUzNl0sIFstMzAuMzI1MDMzNzQ4MzYyNjI1LCAtMjYuNzQ5MTI4MzczODE4NDI5XSwgWy0zMC4zNzUwMDY1NDk0NTQxOTksIC0yNi42MzM5NzA4MTAwMTIzMjldLCBbLTMwLjQyMjQ3NjMwOTY1ODIxMiwgLTI2LjUyMTAzMjQxMDY4MzE2OV0sIFstMzAuNDg1NzMxODY3NzA5NDI5LCAtMjYuNDEyNzA3MTgzNTYyNzddLCBbLTMwLjU1MTE5NTc1ODM2NzI4MiwgLTI2LjMxMDE1NTA1ODU3NDA1NF0sIFstMzAuNjY1MDE4Nzg0NjQ5NTY1LCAtMjYuMjEwOTgyNjcyOTI4NDk4XSwgWy0zMC43ODU4NzA4NTM2MDA2NTYsIC0yNi4wOTcyODQzODI4OTQwODhdLCBbLTMwLjkwMjM0NjA5OTkyMDQ5NiwgLTI1Ljk3MzE4MDQ5OTc1NTQzM10sIFstMzEuMDMzMzg0NzY0ODc4NjI2LCAtMjUuODMwMDA1NTg4MzExMTc3XSwgWy0zMS4xNzMzODkxMzgzOTgwMjksIC0yNS42Nzk3ODMxNTYzNDAyMDddLCBbLTMxLjMwNDkzODYwNzAyODgyLCAtMjUuNTE5ODYxNDk5NDYwODc3XSwgWy0zMS40NDQwNDY2Njg1NTQxOTcsIC0yNS4zMzcxNTY3OTc2MzM0MjZdLCBbLTMxLjUxOTI2NTk0NDg3NDYyOSwgLTI1LjI0MTEyODA2ODM1ODUwM10sIFstMzEuNTkyNTA0NDM5ODEwMzk4LCAtMjUuMTMwNDc3NDIxOTk2MDEyXSwgWy0zMS43MTUyNjU4MTIyNjMwMDIsIC0yNC45MzU1NzY3MTIzOTE4ODJdLCBbLTMxLjczMzU5MDUxNTIyNTEyMSwgLTI0LjI4NDY1NTgyNTQxOTAyM10sIFstMzEuNzMzNjg5MjYzNzUyNzQ4LCAtMjQuMjYzMjcwOTYwNDQ1NDcxXSwgWy0zMS43MzM2MDk3NDMxNDM2MTcsIC0yNC4wNjAzOTg4NjI4MTQxNDddLCBbLTMxLjcxOTkyMDU1NTc1Njc2OSwgLTIzLjg0NzczMDQzNjI5NjMxXSwgWy0zMS43MDcwODQ3Mzg1NDc5NjIsIC0yMy42Mjc1MTMxMTQzNDE0NTRdLCBbLTMxLjY4ODU1NzU0MTc5MzQxMSwgLTIzLjQxNDAyMDE1NjczNzA2N10sIFstMzEuNjY2MDA0NzY2OTMyODM2LCAtMjMuMTk1NzU0NjU5NTkyMDk3XSwgWy0zMS42NTM3MTIwOTkyNTcwNzEsIC0yMy4wMDM0MzIxNTQ3ODI2MDhdLCBbLTMxLjY1NTg2OTA2ODg2OTYzMSwgLTIyLjgyNDcwMDk4MzIzODc4NV0sIFstMzEuNjg4NzQzMjYwODMzOTI0LCAtMjIuNjIxODUwMjI5MTQwODRdLCBbLTMxLjczODAwNDEwODgwNjA3NywgLTIyLjQyNTQyMjM3NjIxNTMxNl0sIFstMzEuNzc5OTk2OTUwODk5NDE3LCAtMjIuMjU0MzYwNjkzNzcwMjYzXSwgWy0zMS44MjYzNTAwOTM0MzMzMzcsIC0yMi4wOTA2MTA2NjUzNzA4MjFdLCBbLTMxLjg2NzE1Nzc0MzY4ODU2OSwgLTIxLjkyMDYzODU3NzQxNDQ4Nl0sIFstMzEuOTY1NDIyMDYyNTcwMzk0LCAtMjEuNDIzMjk0NzQ3MDQ3ODE2XSwgWy0zMi4wMTU2ODE0MzA4NzE2MDIsIC0yMS4yNjg5NjIxNzcxMTMyMjRdLCBbLTMxLjkwNDUyNDYyNDY2MDcyMywgLTIxLjc1NTYyOTk0OTEzMzk3OV0sIFstMzEuOTM0NDQ3OTIzMDkxOTUyLCAtMjEuNTk1OTQwNzgxMDQ2NjE4XSwgWy0zMS45NDY4MDIwMDg1NDU0MjYsIC0yMS41MTMxMTE0NDMwMjczNzddLCBbLTMyLjA5MDk0Njc5MDM0NzIxOCwgLTIxLjExOTk3MjA5Mzk0ODYxOF0sIFstMzIuMTgwNjgzMDQ1MzEyNjk4LCAtMjAuOTc2Nzg2NjI2MDE1NjJdLCBbLTMyLjI3NDYwMzY5NjIyNzYyMiwgLTIwLjgxNDY3NjMwMTY2MTY0Ml0sIFstMzIuMzM4MzQzOTkyMzU1MzQxLCAtMjAuNjc5MzgzOTczNDM5NTMxXSwgWy0zMi4zOTcyNzQyMTg0OTI1OTEsIC0yMC41NDIzMTI1NDQzMzcxMzZdLCBbLTMyLjUyMTExNTQ0OTQ2NTY2MSwgLTIwLjQ0NTY3NDUzMjc2ODM5N10sIFstMzIuNjMyMDE5NzUzMzc0MzU4LCAtMjAuMzYwMDA3OTQxNzU4NzI0XSwgWy0zMi43MTM4ODkxNjQ0NDc1ODYsIC0yMC4yNTIyMzc5OTIzODkxNzNdLCBbLTMyLjgwNDQ0MzM4MDU5NDI5MywgLTIwLjE1OTk1MDk2NDgyNzcwOF0sIFstMzIuODg3NDE0MjQxNjM5ODE3LCAtMjAuMDc5MTAwMTYwMTY5NjQ5XSwgWy0zMi45NjEyNzg5ODg4NTk2NjEsIC0xOS45ODA5NDExNzk4MDMyMDddLCBbLTMzLjA0NjU1NDgxNjA2MTY1OCwgLTE5Ljg4MTE4Njg0MzUyMTc4OV0sIFstMzMuMTI5NjY1MTQyMjg2MTIyLCAtMTkuNzk1NjkxNTE4NTE1NDIyXSwgWy0zMy4xNTc4NDE0MTA2ODYyMzEsIC0xOS42NzM3NDUzOTMwNzcyMDVdLCBbLTMzLjE5ODU0MjA2MjcyNTI3NCwgLTE5LjU0ODIwMjM0ODUzNDgyNl0sIFstMzMuMjQ3MTE4NDc2NDYwMDQ1LCAtMTkuNDU1MTQ3NTk4NjkxMDY3XSwgWy0zMy4yODk1MDYzMjUxMDg1ODMsIC0xOS4zODY5MzIzNzgyMDMyMTNdLCBbLTMzLjMyNjgwMDM2NDg3NjA3MSwgLTE5LjMwOTc1NjQ0MjkwNTg1NF0sIFstMzMuMjU5ODU1OTI4NTg3NTQxLCAtMTkuMjE3NzUyODkxMDA2NzQ3XSwgWy0zMy4xOTY5OTg2NjA1NjUxNSwgLTE5LjEyMjYxODAxOTk5OTM3Nl0sIFstMzMuMTYyNjA3NDE0NDY4NzI0LCAtMTkuMDEwMjkxMDA5MjA1ODYxXSwgWy0zMy4xNDE2Nzg1OTU1MjQ1ODksIC0xOC44OTE3NzcwNTg3ODMyNDFdLCBbLTMzLjEwNDk5NzY2ODgyMTA5MiwgLTE4Ljc3NjUzMzY1NzY0NTgxXSwgWy0zMy4wNjU4NDUwOTAyMjU0MTYsIC0xOC42NDIwNzcyNDU0MzUwMTFdLCBbLTMzLjA0NzUyODM1MTY0NTc1OSwgLTE4LjUwMjA4MDgzMDY4Nzg4MV0sIFstMzMuMDMwNzUyNzA5NTM4NjExLCAtMTguMzQ2NzE3OTU1NTI1NzE5XSwgWy0zMy4wNTEwMTI0NTM3MjU3MTgsIC0xOC4xODUyOTkyNDQzODY0NzhdLCBbLTMzLjA4MzE2ODUyMzQ0MTU5MywgLTE4LjAxNjEwODc2NTQ4OTE5M10sIFstMzMuMTEyMTYzMTE4NjUyMzQ3LCAtMTcuODMxOTA1NTEwMDAwNjg4XSwgWy0zMy4xNDI1MDYzNTI4ODQ0NiwgLTE3LjY2NDkwNDc3MDUwMzMyM10sIFstMzMuMTY1OTA0NjI0MjQ2NDUxLCAtMTcuNDc0MTExMzM2NDQyMDUzXSwgWy0zMy4yMTY3NjEzMTQ1NjkzODksIC0xNy4yODIzNjI1MDkwNjEzMjldLCBbLTMzLjI2NDA5NDE0OTA1NzM1NywgLTE3LjA5NzIxMzEyMDc2NTcyNl0sIFstMzMuMzA0MjYzNjAyNDAzNTUyLCAtMTYuOTE4MDk1OTk5MTA2OTQyXSwgWy0zMy4zNTEzNzIyMTY2MzUzNjIsIC0xNi43NTU1ODI4OTQxODg3MDldLCBbLTMzLjM5Nzc0MzYyNDQxMzg3LCAtMTYuNTkxMzAxNzExNDc3MjM2XSwgWy0zMy40NDc5ODQ1NjEzNzYxMTcsIC0xNi40NTA1OTE0MDEzNjg4OTNdLCBbLTMzLjQ1NjI0NzYzNDgzOTkzMywgLTE2LjI4Mjg3MzE3NTY2NzgyNF0sIFstMzMuNDUwMzIwMjAyOTU0MzMsIC0xNi4xMTIxODgzNDU2MTYyODldLCBbLTMzLjQ3MjUyMzg3NzQxMTA3MSwgLTE1Ljk0MjQ0NTEwNDkxNTc2MV0sIFstMzMuNTA3NjMyMDU4NTI2MDk5LCAtMTUuNzgwNzU4MTI2OTQ2MDUxXSwgWy0zMy41NDI0OTQ2MjA3MTgxMzgsIC0xNS42MDE5MTU2MDY2ODkzNzFdLCBbLTMzLjU5NDgwNTYyMDkyMDQ0LCAtMTUuNDE5Mjg3MTIwNjI3NTI4XSwgWy0zMy42NTQxMjcwNzY1NzU3MDUsIC0xNS4yMjQ4NjY2MjgzODczXSwgWy0zMy42ODg0MTYzOTA2NTM2MjksIC0xNS4wMDYyNTA2NjI0NTQ0OTRdLCBbLTMzLjY4Mjk3ODg4NzUxMTA3NiwgLTE0Ljc4NDExNjEzNDUxMzE4OV0sIFstMzMuNjY1ODEzMDcwMjcyMDM3LCAtMTQuNTgyMzU5OTkxNDI0NzM2XSwgWy0zMy43MDQwMzA1OTY5MjcxNDcsIC0xNC40MTYyNjY5NTg1MTA0MDJdLCBbLTMzLjcwMTk0MTgyNjIzOTcxMSwgLTE0LjMxMzE2OTE0NTA1MjU0M10sIFstMzMuNzE4MTE2Mjc0NTYwMjAyLCAtMTQuMjEyOTU0NDYyNDQ5OTE1XSwgWy0zMy43NTkwOTA0NzcyOTgyNjUsIC0xNC4wNzEzOTA3NDA1NTY4MjJdLCBbLTMzLjgzMjQ1MzAzOTA2MTgyNSwgLTEzLjk1NTM5NTU2MzI5NTQ4Nl0sIFstMzMuODk5Mjc3MTA1MjYxNTg5LCAtMTMuODUyMTU3NTA1MjI1MDhdLCBbLTMzLjk3MTQ0NDc1MTg0NjQyNywgLTEzLjc1ODU5NzQzODAzMTkzMl0sIFstMzQuMDgxOTQ5MzU0MjM4OTA4LCAtMTMuNzA2NTA2MTQzNDg3NjUxXSwgWy0zNC4xOTU5NDk3ODY1OTUxMTUsIC0xMy42NjAyMjgxOTUzMDAwOThdLCBbLTM0LjMwMzI1MTI5NDExOTM3LCAtMTMuNjIyNTEyMjY1MzAzNDI5XSwgWy0zNC40MDI4NDc2MTcxNjQ5MywgLTEzLjU2MDYyNDUyMDY4NDUxXSwgWy0zNC40OTYwNjU2OTkyNDg3MDMsIC0xMy41MDYyMTA4NzExNzk3MTZdLCBbLTM0LjU3Njk1Nzg4NzIzMjMwNCwgLTEzLjQ0Mjc4NTIwMTA0MTkxNl0sIFstMzQuNjcyNzM4NDAxMjgxMjUxLCAtMTMuMzc3NDk3ODIwMjYwMDg3XSwgWy0zNC43NDY4MTYwNzg1NTc2NjQsIC0xMy4yNjQ3NzEwMTU4Mjg1MTVdLCBbLTM1LjA4MjQwNzYzODgwMzgwOCwgLTExLjYxOTI3NTQwNDM3NDUzOV0sIFstMzUuMDgzMDY4NzQ5MDE5MjU1LCAtMTEuNTU1MDg1MDg2ODk4Nzk0XSwgWy0zNS4wNzU5NDEyNzMxMDk4NjksIC0xMS40NDAzOTg1MDMyMDU4NV0sIFstMzUuMDc1MTI4NzMxOTE5NDA2LCAtMTEuMzIyMjA1Nzc4MzY1OTYyXSwgWy0zNS4wOTg0NzgzODEzNzI3NDMsIC0xMS4xODEyNTE5Mzk4ODM2NTVdLCBbLTM1LjEzMjA2MDI0NTI5MDQ3NSwgLTExLjAxNjQ1NTg5OTUzODcyM10sIFstMzUuMTY5MTU5MTUzOTY5NjY2LCAtMTAuNzk3ODAxNjE4NjU2MzM4XSwgWy0zNS4yMjE2OTc4NDExNTU2MzgsIC0xMC41NjM5MjMwMjY3MjQ1MzNdLCBbLTM1LjI4MTQ4OTE3NjE4OTY0NSwgLTEwLjMyNjE4MDA4NDU1NDc3OF0sIFstMzUuMzQzOTUxNTc2MTc2MjgxLCAtMTAuMTE2MDg4NDM1NTEzNzEyXSwgWy0zNS4zNTcwNDUzMzk1MDc4MiwgLTkuOTEyNzgwNDY4MTU4NTEwOF0sIFstMzUuMzYwNzkxMTIzODk1NTAzLCAtOS42OTkyODQxMTczNzgyNDhdLCBbLTM1LjM2NDM0Mzg2MjIwMzM0MSwgLTkuNTE1MjMwMzc4NDgyMjY0OV0sIFstMzUuMzkxOTI2MjY4NDU1NjA2LCAtOS4zNTc5NTYyOTE2Mjk3Njg5XSwgWy0zNS40NDg1NTQ0ODY1ODQ0NjMsIC05LjIyMzEzMDE5MzczNDY0NzNdLCBbLTM1LjUwNzA3NzAxNjAyMTI1NiwgLTkuMDc1MzQ3OTAxMzEzNTE1Ml0sIFstMzUuNTI5NTM3NjQyOTE1NDIyLCAtOC45MTAzMjI1NTE5MDE1MjI2XSwgWy0zNS41NTE3MTQ5MDkxODE3ODMsIC04Ljc2NjE0MDkzODU0MjI2OTddLCBbLTM1LjU2NDYyNjQxNzUwNzU0NywgLTguNTkzMDEyNzIxMDMzNDk1OV0sIFstMzUuNTkzNTUyMDQzOTY2MjcsIC04LjQyMzA5OTgyOTAwMzAwMDFdLCBbLTM1LjYxMjI4NTUxOTk3MjcwOCwgLTguMjQyMzQ1Njk4ODY2NzYwM10sIFstMzUuNjQ0NTIzMTQ2MjA3Mzc2LCAtOC4wNDYzNTU1ODkwNjk5MjAxXSwgWy0zNS42NTcyNjYxMjM3OTYwNDIsIC03Ljg2MTk1MTY5MzQ5NzAyOV0sIFstMzUuNjU2NDU1NTgwNjM2MDM1LCAtNy42NTA5ODk1MDM0NDI2MDY4XSwgWy0zNS42NDUzMTAxNzU2OTQ1NjgsIC03LjQ0OTcxNjkzMjk0NDM1ODddLCBbLTM1LjYwNzM4NjEyMTYxMzQ5NCwgLTcuMjU1MTE0MTMzODQxODA0MV0sIFstMzUuNTc3NDg0NzgxODc1NzExLCAtNy4wODY0ODQ5MjczMjA0MzI0XSwgWy0zNS41NTUyNjY5MzM5NDU1NjgsIC02Ljk0ODM4OTk2MDAwMjUxMV0sIFstMzUuNTY1ODM0Njc1ODE2MTk4LCAtNi44MTk4NTE0OTk5Mzg3Njk0XSwgWy0zNS41OTczNzMyMTQzODY4OTIsIC02LjY3ODY5OTMxNzY2MDQzM10sIFstMzUuNjM2ODE0MDY4MDU4NTc3LCAtNi41NTE2NTM3MjcxMDM0NjAxXSwgWy0zNS41OTg1NDY5NzE5ODc5NjUsIC02LjQwODM4MjY0NDQxMDA1MDJdLCBbLTM1LjU4NTY2MjcyMDY4NTA3MiwgLTYuMjc1NDU5OTc4MTcyMDAyNl0sIFstMzUuNjAyOTI0Mjk5NzI5MDYxLCAtNi4xNDgzMDE3NTMyMDYxMzc1XSwgWy0zNS42MDc1NjU4OTE5NzE0MDQsIC02LjAyNzQ5MTA1NTkwMTc0MTRdLCBbLTM1LjYxMTY3ODc4OTA1NjQ2OSwgLTUuOTE1NDkxNzgwNzAxNTI1OV0sIFstMzUuNjE3MDI3NzgyNDU0MDY2LCAtNS44MTE0NDg0Mjc4Mjg5MTIyXSwgWy0zNS42MTMyNTE2MDYzNjU5MzUsIC01LjY5NDkwNjYwNTAyMjI1NzddLCBbLTM1LjYxODczMDQxMDI4MDg4OSwgLTUuNTc1MDY1MjIxNTA3NzYxOF0sIFstMzUuNjE5ODA2MjY4Mjg1NywgLTUuNTY2NzM2NzU2Njc3NDA4NF0sIFstMzUuNjMyMjE4Njg5NzY0NjYzLCAtNS40NTc5MTQ5MDgyMjQ5Mzg1XSwgWy0zNS42Mjg4Nzg3Mjk3OTQ2MjksIC01LjQ1MDUzNzgxNjg5NjI0MzddLCBbLTM1LjU4MDkzNjM2NDUyNTE5MywgLTUuMzQ0MjgzNTQxMjI2OTg5M10sIFstMzUuNTc3NDEwNzI4MjA4MjA3LCAtNS4zMzY2NjExNzY2Njg4NzgxXSwgWy0zNS41MzQwODIzMzM4MzQ2MTEsIC01LjI0MTI1OTAzMjMzMDA2MjVdLCBbLTM1LjUzMDkwMzUwNDgyMTExMSwgLTUuMjM0ODIzOTk0MjE0NDQxXSwgWy0zNS40ODM2NjE5MDAzMzE4NDYsIC01LjE0MjA2OTAwODYxMDg1OThdLCBbLTM1LjQ4MDMxNzY5MDAzNTY5LCAtNS4xMzUwMjMzODcwNjgwNjc3XSwgWy0zNS40MzM5ODQ2MTQ1MzQxMzMsIC01LjAzOTM4Mzc4MTMxMzQzNzldLCBbLTM1LjQzMDQyMDY1MzUyODE3NCwgLTUuMDMxNzMxMDQ0NzkyNDcxN10sIFstMzUuMzgzNjM4MzgyMjIwMTYzLCAtNC45MzU1MTc2MzU0NTg2NDY1XSwgWy0zNS4zODAyODYwMDAwOTMyMzYsIC00LjkyODEyMDg4MDA0OTk2NzhdLCBbLTM1LjMzNTEzMjU3MTE5NDIzNywgLTQuODI5Nzg2MDgwMDA1MjczOV0sIFstMzUuMzMzMTQwOTQ3MTQxODQzLCAtNC44MjAzMjM4NDAyMDMwNzM1XSwgWy0zNS4zMDgyNzY0MzkzODIyNzYsIC00LjcwMzgyNzg5MjAwMzQ4MTNdLCBbLTM1LjMwNzM4MTc5MTc2MzgxLCAtNC42OTQ3NTIyNzYzNTcxNTUyXSwgWy0zNS4zMDUyNDcyOTY2MTEwNjQsIC00LjQzNzcyODI4OTA3ODQyMDddLCBbLTM1LjI5NDkwOTcyMDg2NjI1MSwgLTQuNTcwMjQ2NjA0MTg5NTQ5MV0sIFstMzUuMjk1NzI4ODQ3NTc2MjUsIC00LjU2MTA4NDk1Mzk5MjI2NzVdLCBbLTM1LjMxNzYwMTA0MTY1NDczMywgLTQuMzAxODMxNjUzMDI0NjY3Ml0sIFstMzUuMzI5NTAwNTQ5NDgxNjAxLCAtNC4xNzcyNjMwNzkxNjg2ODRdLCBbLTM1LjMzMTMxNTQ0OTA0OTM1NiwgLTQuMDUxMTc2NTQzMjI0OTY2Ml0sIFstMzUuMzM0NDY1ODU1ODMyNzQ3LCAtMy45MzE4MjYyODA5MjUyMzc4XSwgWy0zNS4zNDkzNzAxNjUzMzAyNjQsIC0zLjgyNTU4Nzk2MTM1MDY3ODJdLCBbLTM1LjM0MTk3MDg0Mjk1MDIzMiwgLTMuNzE0NDQ2MDIxNjk0NDQ5NV0sIFstMzUuMzM3ODI2ODA3NzUxNzg5LCAtMy42MTI5ODUxOTIwNjg4NjRdLCBbLTM1LjMzNzk1NDczMzI5MzI4LCAtMy41Njk1NDIwNzY4NDk0MDk3XSwgWy0zNS4zMzgzNjU3MTI1Nzg4ODQsIC0zLjUxOTgxNzU4NjUzNTU4NTZdLCBbLTM1LjMzMjA4NDc2Mzc2MDExNSwgLTMuNDMwOTM0MTk3MDQ0NTc3Ml0sIFstMzUuMzM2MjQ4NjQyNDgyOTg1LCAtMy4zMTkyNjk5MjY3MzE4OTU1XSwgWy0zNS4zMDY0NjAzNzY0MzgyODEsIC0zLjIxOTY5OTQzNjg0NzM0NzldLCBbLTM1LjI2NTMyNjc5NzUwNDEzLCAtMy4xMTk0NzExMDg1MzI0MDgzXSwgWy0zNS4yMTk5MjQxMzA2Mzk0MjcsIC0zLjAxMTY1ODUzODA5NjM5NTJdLCBbLTM1LjE3MTM5MjI2NTAyMzg1NCwgLTIuOTEzMjQ1ODk1NzEwODU2OV0sIFstMzUuMDk2MzU1MzE0MTUyMTg0LCAtMi44MDg2NTk0NDU5Mjg3NDY4XSwgWy0zNS4wNDI5MjQyNjIyOTAwNSwgLTIuNjkyODA4MzIzOTQxMDc4M10sIFstMzUuMDA3Nzc4NzIwMDk5MDQ3LCAtMi41OTA2MDcyMDU4MTYzMjAzXSwgWy0zNC45NzY0NzU0MzQzMDE0NywgLTIuNDgwMjMyNTg4Nzk1MTQ5NV0sIFstMzQuOTU4NjEzMDExODI0MzE5LCAtMi4zNTkyNDMxMTUxODkyOTA4XSwgWy0zNC45NDc4MTM1ODQ2ODkwNTEsIC0yLjI0MDU3ODY1NTUwOTM5NDVdLCBbLTM0Ljk0MDk4NDcxMzY4NTg0MywgLTIuMTE3NDcwNjExMDI3NDU1N10sIFstMzQuOTM5NzU2MDE4NjU5MTI1LCAtMS45NzQ2Mjk2Mjg2NzExNTg5XSwgWy0zNC45NDAxOTQzOTAyNjIxLCAtMS44MzA1MTIxOTY3OTEzMzIzXSwgWy0zNC45NTU1MDI2OTExMDg2MiwgLTEuNjY5NDk5MjYzNTk5MDkwOF0sIFstMzQuOTg2MzE4Nzg1NDY2ODE0LCAtMS40ODE3MjEyMDY4MjcxMTY2XSwgWy0zNS4wMDkzNTQyNTAyNDI4ODYsIC0xLjI4NjQ4MzQxNjkzNTE3NTNdLCBbLTM1LjAyNzQxOTE1MTg3NjA4MiwgLTEuMDY2MDA4Nzk3ODg2MjM4XSwgWy0zNS4wMzQxMDU3MjU2ODI5NzcsIC0wLjkyMDEwODg5MzM3OTgzNTgxXSwgWy0zNS4wMzUxMDQwMDAyMzcwMzQsIC0wLjgyNzU1MDU2MTEzNjM5MjM2XSwgWy0zNS4wMzQ3NjIxMzA3MTY1NjUsIC0wLjU5MjA2MzQ4OTU2ODg4ODQzXSwgWy0zNS4wMzA3NzgzNTg2NjI2OCwgLTAuMzc3NjA3MDY5NTczNDEwNjddLCBbLTM1LjAyNjYxMTY4NjQ1MjI3LCAtMC4xODEwODIxMjczOTQyODgxMV0sIFstMzUuMDE0ODczNDI5NTczODM5LCAtMC4wMDQ4Mjg2MTMyMzIyNzE4MTYyXSwgWy0zNC45Nzk3OTIzNDk5Mjg3MjksIDAuMTU0MjgwMjA5MzM2OTI1NzddLCBbLTM0LjgzMTE1NDU0MjUyOTA5MiwgMC4yMjE1MzY5NzYwNjg3NTY5N10sIFstMzQuNjg1NjA5MTQxNzM5MDY0LCAwLjI1Mzc5NTg3MjY3Mjk5NzU4XSwgWy0zNC42MDgyNDkzODA1NzY3ODcsIDAuMzE5MTk3NzE5NzQxMjg1MDhdLCBbLTM0LjU0NTAwMzc5MjMwMjc2NSwgMC4zOTIwMTI0NzY3MTg0NDUxNF0sIFstMzQuNDk0NTMxOTEwNDgyMDYsIDAuNDY1MjM1MjIzNjA0Mjc5MDVdLCBbLTM0LjQ1MTY4MDk0ODEwNjc5MSwgMC41MzQ4MzQzNjI5MTA2NjI4OV0sIFstMzQuNDIxNDM0NjY3MzE0ODk4LCAwLjYyODU2MjIwODgzNTA5NTYxXSwgWy0zNC40MTE4NDcyOTAxNDM1NDgsIDAuNzI3MDgwMTgxMjU0Mzc1NzldLCBbLTM0LjM2NTkyOTE2Mzc0MjM2NSwgMC44NDI1OTY4MTAyMDgxNDc0N10sIFstMzQuMzM1NTQ3NzYzMDQxMjc2LCAwLjk3MzMzMDExOTcyNDcwNjczXSwgWy0zNC4zMjUwMzc1MTMxNjk1NjksIDEuMDk3MjI2Njk2OTEyMDI5N10sIFstMzQuMzE3MzQ4NzkzMTQyMDgxLCAxLjIzMjMyOTQ0MDQ4ODM4MjRdLCBbLTM0LjMxMjc4ODg0NjI3ODk1NiwgMS4zODM4NDQwNDA5ODE1OTYyXSwgWy0zNC4yOTI5ODY4ODkyMzE2MTQsIDEuNTU1ODY4NTkzMTI4OTc2Nl0sIFstMzQuMjY3ODE3OTcwNjcxOTc3LCAxLjc1MjU3MjU5MDU2NTcwNjZdLCBbLTM0LjIyNzQwMDIyMjk0NzY1OCwgMS45NTc1OTcxNDUxMTgyNjgxXSwgWy0zNC4yMDUxMDU1OTM1NjAxMzQsIDIuMDc3NjM4ODQyMjM4NDMzNV0sIFstMzQuMTg1NTM0NjQxMjExNjgyLCAyLjE3MjA3NDg1MDAyMTU4MzZdLCBbLTM0LjE2NDUzMDA3NTIzNjI4NiwgMi4zNTQ4MTYwNzg5NjE1MzAyXSwgWy0zNC4xODI4MjYwOTAwOTk3NzMsIDIuNTMwMjY0NDAyNzIzMTY4NF0sIFstMzQuMjExMDQyMDkwNjk5MzMsIDIuNzA3NDk0NzE2OTY5NTIzOF0sIFstMzQuMjQ1NDIyMjgwNjM1MjUzLCAyLjgxMDUyMTc0MDc2OTYzNTVdLCBbLTM0LjI3NTkzMDgxOTY5NjYyNiwgMi45MDY5NDA4MjE4NDEwMjk1XSwgWy0zNC4yOTA3NDUzMjQ3ODM1NzIsIDMuMDg5MzMzMTA3MzI3NjY5M10sIFstMzQuMjkzODA1ODk4NDg4MTM4LCAzLjI4NTIyMzQzOTM0NTgzNDJdLCBbLTM0LjI5OTI2MjQwNjY0NDI1MywgMy40NDk1NzQyMTE2MjU3MjI5XSwgWy0zNC4yOTQ3NTAwMjk2NzI4MDUsIDMuNjA1MjY3NTE1NTM5MjM1N10sIFstMzQuMjk3MTM0MzY3MzkzNTU0LCAzLjc4ODY4NDMxNjA1MjI0MjFdLCBbLTM0LjI4ODkzNjI4NDk4NjM5MSwgMy45ODMzMDc3MzcxMjgzMzAzXSwgWy0zNC4yMzEzMTIyMjg0NjA5NjUsIDQuMTc2OTc1NTc0MjY1Njg0NF0sIFstMzQuMjI0MzEzMjAwMDU5MzA2LCA0LjIyMjA5ODUzMzE1MTU1NDhdLCBbLTM0LjIwNDIyMjI3MzU1ODMyMiwgNC4yNjgyNTkzMTYwNDk0OTI4XSwgWy0zNC4xODk2NjI4NDMyMjI1MjgsIDQuMzAxMDQyMDUzODUxNzE0XSwgWy0zNC4xODczMzc0NTIzNjgyMjYsIDQuMzA3NDIzMzMxMzA5ODkzM10sIFstMzQuMTg4MjM5NzUzODEyOTAxLCA0LjM1NTYwODE4ODAzMDUyMTFdLCBbLTM0LjE1OTY1MDE1MjQ3MzY5NSwgNC40NjM0NDcwNzgzMTI1NDM1XSwgWy0zNC4xNDgwMTc2MDUwMjQ4MDUsIDQuNTkxNzQ3OTgwOTE0MjA4M10sIFstMzQuMTQ5ODY4MjU1Njg3MzUyLCA0LjY4NDQ4NzQ2MzA2ODk0NjZdLCBbLTM0LjE2ODY3MTQ1Nzk5ODA1OSwgNC43NTUxMTU3ODM3NzI3NTA3XSwgWy0zNC4xOTkyNzMxNDI5OTE2NSwgNC44MjcwMzc3MDAzMTk1MzY0XSwgWy0zNC4yMzAzOTk1NTg5NTMyNTksIDQuOTIxNDE3MTc0MjQ2MzE1MV0sIFstMzQuMjY3NDk4NDc0MTYxNzU1LCA1LjAwOTUwNDU4OTQzMDk4NjRdLCBbLTM0LjMwNDUxMzU3MjgzNzA4MSwgNS4wOTcxNzcxODE1MjQ5MTg5XSwgWy0zNC4zMjY4MDUwOTIyNTAxNjksIDUuMTYyMDAzNTU2MjM1NjkzNF0sIFstMzQuMzUyMDA1MTc3MjkwMjczLCA1LjE5Nzk1OTAwNTI4MzkxNjRdLCBbLTM0LjM1OTQ0MTM5NzMxNDY4MywgNS4yMzQzODcyNjYwOTQ0MzQ0XSwgWy0zNC4zOTQ2MDMyMjczNjkzMjMsIDUuMzM3MTY2Mzc4MzE1MjMwNl0sIFstMzQuNDQzMTk2OTE5NDI5ODczLCA1LjQyNTA3NzM1NTIxMjEwMjNdLCBbLTM0LjQ3MDkzMjAwMjM1NzI4NywgNS41MzIxNjAyNTEzODI4NTk2XSwgWy0zNC40ODM1MzIzMTc0MjE4NDcsIDUuNjQzMzIxOTk1ODUwODQyOV0sIFstMzQuNDc0MDkwOTM4MjQ1MzY4LCA1Ljc3ODQxNzI0NjI4MDM2MDddLCBbLTM0LjQ2NzgwNzg3ODMwMTQ2NCwgNS45MDk1ODEwMDkzMjgxNzQ5XSwgWy0zNC40NjA2Nzk2NjQ2MzIzNTIsIDYuMDMzOTQwNzc3NjYwMzc1NV0sIFstMzQuNDY5MDkyMDU4MDU3MjQyLCA2LjE5NTk2MzAwMzA1MjMzNl0sIFstMzQuNDUxNjA1MjIzOTA2MjYzLCA2LjQyMTU2MTg1MjA1MjU1MjZdLCBbLTM0LjQzOTI2MDkyMDI5MzA1OSwgNi42Mjk2ODE3NTUwNjYwMDIzXSwgWy0zNC40NDA2MTIzMjkxNTQ4NTIsIDYuNjQxMzgxNzkwNjk1OTY5MV0sIFstMzQuNTAxODY3NjgyOTg0NTYsIDYuODQ5NDk4NTc1NTg2OTY5N10sIFstMzQuNTY1NDM0NTIxNTkxODYxLCA3LjA2MDYwNDAyNzM3ODQ2OF0sIFstMzQuNjQwNTc2NDU5MTExNjQ5LCA3LjIzNzExODQ0Mjc2NjQ0MTldLCBbLTM0Ljc0MTc1MTA0NTgyOTQxNywgNy4zNjA1NDg2NzcxMzUzNjE3XSwgWy0zNC44NzY2NTk2NTkwODk2MTEsIDcuNDQwMzI1MTQyNzIxNThdLCBbLTM1LjA3NjMxMTYzNTg2ODMzNiwgNy40ODMxNTE2NTMyNTQ3OTM3XSwgWy0zNS4yNjUyMDA0NTU4NDkzMzksIDcuNTE3NTQwMzE5MjcwNjQwNV0sIFstMzUuMzYyMzE4NjUxNjEyMDIxLCA3LjQ2ODI0NDAyMTI4ODY4MTRdLCBbLTM1LjQ2MDA5OTkzNTgyNTM2MiwgNy40MzMzMjg5NjM5MjMwNDg0XSwgWy0zNS41NjQ4NzMwMDYyNDY4MTMsIDcuNDE2MDc2NjA2MTk3OTk5N10sIFstMzUuODIxNTMyMTg3MjQ1NTQ1LCA3LjU0MDYyMTQ5MjM3MzkzNzldLCBbLTM2LjA0MzcyMDY3MTQ0OTUxMywgNy43NTYyNzczMTk2Mzc4NTIxXSwgWy0zNi4xNzM1MzEyOTQwMDQ0OTEsIDguMDU0OTc0OTA4ODk4MjkzMl0sIFstMzYuMjEzNTgyMTUyOTE2MDk2LCA4LjM4NDM3MDUyNDU0NjAxNjFdLCBbLTM2LjI2NTQ5OTUzMzc4MzgzMiwgOC42MDU0MzQxNjI5Mjk1MTk1XSwgWy0zNi4yNTI5NTYzMDk2NjIyNTIsIDguODE4ODE4MDAyMjcwMzQwNl0sIFstMzYuMjI3MzAwMDgwMTM4ODk2LCA4Ljk3NzA3NDE5MDk4NzQyMzJdLCBbLTM2LjE4MjE4MzQzODE3NzM5NywgOS4xMTU1NDczOTAyNDk5ODQ2XSwgWy0zNi4xNzMyNzgyMTkxMzY4NCwgOS4yMTg4NDM4OTYzNTA1NjY4XSwgWy0zNi4xOTExNzY0MjU2ODk1NzYsIDkuMjk4MzUxNTMzNDM3MTQ4OV0sIFstMzYuMjQ5NzAxOTY5Mzc0MzU3LCA5LjM3Nzk1NzQxNzU3ODk5OTNdLCBbLTM2LjM1Mzc1MTI1Nzk2NDE5MSwgOS40NjI4NTg2NTg4NjI3NTg4XSwgWy0zNi41MjQ4NjI0NTE1ODc1OTUsIDkuNTc0Njg5ODQyNzY3OTgxXSwgWy0zNi43Njk4OTExMTU3Njc1MDcsIDkuNjgxNzM3Njg2NjE5MzMyMV0sIFstMzYuOTc3MTE0ODQwMDM0NzU4LCA5Ljc5MjgyOTQzNDg0NjMxNjVdLCBbLTM3LjA1MTEzOTQwODQyNTU1NiwgOS44NTAzODUzMjQ4NDU0MjFdLCBbLTM3LjI0NzU5NDE4MjA1Mjc2NSwgMTAuMTAwODYyMDUzOTM2NTA0XSwgWy0zNy4zMzYwNzY2NzIzMTg5MSwgMTAuMzU0MDE5ODM5NDYyMzkyXSwgWy0zNy4zNDA4OTAzOTk5OTI0NDYsIDEwLjU2MTc5MjQ3NTUyMzQ3OV0sIFstMzcuMjg0Mjk1MzQ5MDg4MzY3LCAxMC42ODM5NDQwOTk3MjQwODJdLCBbLTM3LjE2ODU4MzE3NDM3OTY5MSwgMTAuNzA2OTQzMDc1NDA2NzM5XSwgWy0zNi45OTg2OTc0NDcyMjc3MTMsIDEwLjY1ODA4OTEyNTU3MDMxMl0sIFstMzYuNzYwMjA5MDA1ODU2NjUyLCAxMC41OTAzMTMwNTYwNDA1NV0sIFstMzYuNTA3MTkwNDk1NzY0MDI5LCAxMC41NjYxMjc0NDgzMjEyODZdLCBbLTM2LjMyNDE1Njg5NjcyNjc0OCwgMTAuNTcxMDcyODEwOTAwMjQ0XSwgWy0zNi4yMjE4NzYzNjA3ODkxMTEsIDEwLjU5NDg5ODg2OTM3ODAyM10sIFstMzYuMTY1MDk3ODc4ODQ3ODUzLCAxMC42MDY4NTI4NzM0MjQ1MjldLCBbLTM2LjEzNjg3OTU1NDI1MjQ1OSwgMTAuNTk4ODg2MzY5ODk3OTQ5XSwgWy0zNi4xMDgzMTU4MzkwODA4MDIsIDEwLjU2MjYxNDIyNDc4MTMxN10sIFstMzYuMDUzMTIzMTEzMjIyMTg1LCAxMC40ODkyOTIwOTI1ODIwMjVdLCBbLTM1Ljk4OTQ2MTY5NzI4NDg0NSwgMTAuMzk2NzUxMjg2NDAwMDU2XSwgWy0zNS45MjMyMDM1NjM4NDg1MTcsIDEwLjMwMjQ0NzU2OTAxNTA3MV0sIFstMzUuODU4MDc5MTg4ODg1OTc0LCAxMC4yMTg1MzU3MTc2MjAwODVdLCBbLTM1Ljc5Njk4MjcyMDk3MzE0OCwgMTAuMTQxMTM2MjQ2MzA0NzI5XSwgWy0zNS43MzY5MTgyNjk5OTExMzYsIDEwLjA2MTMzMDE4OTc4MDc0NF0sIFstMzUuNjYxMTM1NjE5NjEzMjI2LCA5Ljk2NjM0OTg4NTMyOTA2MDldLCBbLTM1LjU3OTE3NjU4NTgyNjYwMiwgOS44OTk5ODA1OTUxMTk4NzA5XSwgWy0zNS40OTI2Mzc1MzY3NDAxMDUsIDkuODc0NDM5NzcyMTUwMjc4Nl0sIFstMzUuMzg2MTQwMDI3NzMxODY5LCA5LjkwODA5MzEzNzU4MDU4NzldLCBbLTM1LjI3MTcwMzQ3ODg4MjcwNiwgOS45Mzk2MjE2Mzg0NDA4ODEzXSwgWy0zNS4xNjQ0MTEwMjUzMzg2NTksIDkuOTU4ODczODIxNzg2MjkyOV0sIFstMzUuMDgyNzU5ODE2NTMyMTUzLCA5Ljk2Mzg5MzIzNDAzMzY1N10sIFstMzUuMDE4NDIwMDI5OTYwMDksIDkuOTQzMjMyNjc4MzI3ODc3NV0sIFstMzQuOTc5OTU1MzIwMDU0NzI4LCA5Ljk2OTg2NTUzNDc5OTkzODFdLCBbLTM0Ljk3ODEyNTAzOTIxNjIwMiwgOS45NzA5NzA2OTQxNzczNDYyXSwgWy0zNC45NDU1MTQ1ODAwNjU3MTIsIDEwLjA0NDcwNDkyNjIzNTgzMV0sIFstMzQuODk2ODExNjI1ODAwMjQsIDEwLjE0OTI3MTExNjgwMTU4OV0sIFstMzQuODQ4MDY1NDY1NjYxMTAxLCAxMC4yODgzNjE3MjU4MDk1NjVdLCBbLTM0LjgyODE2NzIzMTQ1MTI2OCwgMTAuNDM1ODEzOTg2ODQ2NTgxXSwgWy0zNC44MTk0NzgyOTEwMjc1MTUsIDEwLjU3MjQxMzk2NzAzNzQ5MV0sIFstMzQuNzk5OTQxNjA0NzE2MzY2LCAxMC42NzcwNTM5MDY2MzAzOThdLCBbLTM0Ljc1MjEzNDcyMTQ4ODc4NywgMTAuNzQ5MTI2MDgyNjM2MjI1XSwgWy0zNC43MDAxOTgyNzY4ODQ2OTksIDEwLjgwMjc4NDk2MzgzMjk0XSwgWy0zNC42Mzg4MDc4MzMzMDM0OTUsIDEwLjg0MDYxNjA2MjA3NzM0OF0sIFstMzQuNTYzMDQ4NDM1MDI5MjAyLCAxMC44Njc4MzMxMTgyODYzOTddLCBbLTM0LjUyMjY4MjcxMzg5MzgwOCwgMTAuOTEyNDY0NjE2NzIzMjQzXSwgWy0zNC40ODMyOTcyNDU2NDIyOTgsIDEwLjk1MjQwMjA2NTUyOTYxM10sIFstMzQuNDMzMTI3ODQ0NjYxODc1LCAxMC45OTQ3MzYwMzc3NzExODhdLCBbLTM0LjM3NDg1MTQ5MzcwMjk5OCwgMTEuMDU5Mjg4NDI3NDkyNTYzXSwgWy0zNC4yOTY4MzU4MzAwMTk5MDksIDExLjEyODA3NDc4MTU0MDA3M10sIFstMzQuMjE2MDIyNDE0MDMyNTMsIDExLjIwNjc0NzAzNzc5Njk2XSwgWy0zNC4xNDcyMTMyOTg3OTEzOTksIDExLjI4ODkwNjY3MjQzOTUzOF0sIFstMzQuMDgzMTMxMDE3MzMxMDI3LCAxMS4zNzgzNDkyMTU0MDY3Ml0sIFstMzQuMDM0MDczNzQ2MDM0MjUyLCAxMS40ODUzODY5MTgyOTE4NTddLCBbLTM0LjAwNDY4MDQwNzYyMDg2LCAxMS41ODc1NjY5MDg5NDM4ODZdLCBbLTM0LjAwMjE5NTE4OTE3MzU2MywgMTEuNTk0Mzk2ODA2NjM0NzJdLCBbLTMzLjk2NzYyOTI3ODEwNjMzLCAxMS42ODQ0Mjk0NjI3MDE2OTRdLCBbLTMzLjk2NTgwNjU4MzA5Mjg4NSwgMTEuNjkwMzk2MTI1MzQ5MzYxXSwgWy0zMy45Mzk3NDM0NTc5MDI5NTYsIDExLjc3NDQ3MzMxMTM0OTkxNV0sIFstMzMuOTM3NDgwNjUwNDE0MjMsIDExLjc4MDQwMTMwNzk2NjA5OF0sIFstMzMuOTA3MDE2MjI3NDU4NTcsIDExLjg1ODk1ODc4ODE1ODMzNF0sIFstMzMuOTA1Njk2MjI0ODM3NjY5LCAxMS44NjQzMzU3NzY2MTY0OTRdLCBbLTMzLjg4ODcwMTk0OTQ2NTg1NSwgMTEuOTM2MDQyOTk3NzE0ODg0XSwgWy0zMy44ODc4Mjg5NjA4NjUxNjQsIDExLjk0MDQxMTM5MDE5NDk2OV0sIFstMzMuODc2NTg5ODE1OTM4MzQ1LCAxMS45OTk5MTMzMTQwMjQyOV0sIFstMzMuODc2NzIwNDc5NTk3ODUsIDEyLjAwNDU1MTU3NTYxODQ1XSwgWy0zMy44NzkzODMzMDA1ODYzMjYsIDEyLjA2NTE2MjI4MjIxOTU2MV0sIFstMzMuODc5Nzc3ODczMDY4NzA0LCAxMi4wNjg4NTI3NTk0NjUzMjZdLCBbLTMzLjg4NTM1Mzc2ODY5NTAzMywgMTIuMTIwMTE4Mjg4NDU2ODA4XSwgWy0zMy44Nzg2MDI1NTEwMDEzMjksIDEyLjE1NTQ4NDU0NTYzNjM2NF0sIFstMzMuODc3MTcyMjMxNjA4ODc0LCAxMi4xODc4ODYwMDYxNTMyMTddLCBbLTMzLjg0MDU1ODMxOTQ5MDA0MywgMTIuMTg4OTkwMjk2MTAwNzk2XSwgWy0zMy44MDA0NzA0MTQ5MjIwNiwgMTIuMTc5OTA4ODA2MDgwOTJdLCBbLTMzLjc2MDQwNzcxNTM4MDU4LCAxMi4xNTczNzMzODI3ODk3NjJdLCBbLTMzLjczMTkzNDY1MjUzOTgzNCwgMTIuMTY0NDM0MzgxNjQzNDk3XSwgWy0zMy43MDgyOTQ0MjUwMjk1NDMsIDEyLjE5MjM0MTgwNzY5MDc3N10sIFstMzMuNjc4ODAyNjM2MDE5NjgyLCAxMi4yMjAxMzE2NjMyMzM4MDZdLCBbLTMzLjY0OTMyMzk2NDIxNDgyMywgMTIuMjY2MDkwNzM0MzYxNzY2XSwgWy0zMy42MjQyNjY2MDAwNTg4MzIsIDEyLjMxNzcxMzU2Mjg2ODQyNV0sIFstMzMuNTkzNTcyNjQyOTI4NDcxLCAxMi4zNzc3NDc3NzcwMTU4MDhdLCBbLTMzLjU3Nzk2NTI4MzQ0Mjg4NiwgMTIuNDUxNDAyMjkzNTk4NTI1XSwgWy0zMy41ODc3MTk2MzA0NTU3NTksIDEyLjUzNjI1NTA2ODU2ODMzXSwgWy0zMy42Mjc5MzA4MzI1NDIwMiwgMTIuNjE5MzY3ODU5NzcyOTI1XSwgWy0zMy42ODM3NzUwNDc0MzE2OTUsIDEyLjcwMjI4MzI4ODg5NDUzMV0sIFstMzMuNzM5OTQ3NTM1NzYxMDU0LCAxMi43NzIxNjQwNTA5Mjg3ODhdLCBbLTMzLjc5NTY4MjY0Mzc5ODEwOSwgMTIuODM0MDQzNjkwMTQ4MjMzXSwgWy0zMy44NTMxOTY4Njg2OTIwOTUsIDEyLjg4NjExMDk5ODg0NzA2NF0sIFstMzMuODk2MjM1MDA2MzA5MDQ4LCAxMi45MjMyODc3OTQ1ODMyODFdLCBbLTMzLjk0MDUyODI5MDM5NjkxOSwgMTIuOTU3MTQzMDkzMDg2MTMzXSwgWy0zMy45NzgwNDcyODUwOTQwNSwgMTIuOTcxNDYwNDAxOTA3MTY5XSwgWy0zNC4wMDI1MDMxNjI1Mjg3NzUsIDEyLjk5NDk1NjQ0ODI1NjU5NV0sIFstMzQuMDIzOTcwNTYwNDEzNTU5LCAxMy4wMDA1ODYxMTAyMjgzMTddLCBbLTM0LjAyOTUzNDU3MjMxMTM4NCwgMTMuMDAyMzY2NzEwMzg2NzU4XSwgWy0zNC4wNTk3NDQ0MTc0MTA4OSwgMTMuMDAyODU5MzM3NzEyNDAzXSwgWy0zNC4wNzgyMzM0MTk0NTg5MzIsIDEzLjAwNTM5MDM1NzA1MjYyOF0sIFstMzQuMTAxMzc4NTAzMjkxODEyLCAxMi45OTYwOTQ2ODQ0NzM3NDNdLCBbLTM0LjExMTY0NTYxMTI3MzExOSwgMTIuOTkwNjY0MTU1MTkwNDU1XSwgWy0zNC4xMTYzODY0MTUxMjA1ODcsIDEyLjk3ODQ4MzYzMDg5Mjc4NF0sIFstMzQuMTIxMDQ2OTQ1MTMyOTQ2LCAxMi45ODE5NDQxMjEyMDUyMjJdLCBbLTM0LjExNTk2NTA2NTk0ODIzMSwgMTIuOTc2MzgyNjI2MDIyMjEzXSwgWy0zNC4xMDM2ODUzMDcwNDI4NzMsIDEyLjk3ODAzNDQwMDkwNzUxMV0sIFstMzQuMDQ0NDE0MTU0NzEyMDE1LCAxMi45Njk5NjIzNDM5Mjk3MTJdLCBbLTMzLjk4MTkzNDcwMzIzOTY5NSwgMTIuOTk2MTEyNTM1Mzg0OTE3XSwgWy0zMy45MDk2NjU1MDE2MDk1NjcsIDEzLjA0NTUwODQ0NTMwMTMzMl0sIFstMzMuODUxOTY4NTcyNDE5MTMyLCAxMy4xMjM2NTQ3MzIzODM3N10sIFstMzMuODQ4ODQyNDUwODAwODAyLCAxMy4xMjk4NTY2NTYwNjExMDFdLCBbLTMzLjgzMjUwNTk0NjAwNzQ2NiwgMTMuMjM3NDc5NzA2ODUxMzM1XSwgWy0zMy44NDc0MjA3ODEyMTczMDksIDEzLjMzOTE3MTQxMDI2MjkzNV0sIFstMzMuODcyNjM4MzY1NzcxODIsIDEzLjQxNjc3MDIyNTgzNjkyNF0sIFstMzMuOTA0NTM2NDI0OTQzNTE1LCAxMy40ODI0NTQxNjE1NDg2MjJdLCBbLTMzLjkwNzEzNzE1MzQ1MTc1NywgMTMuNDg2NDUzMDA0NjE0OF0sIFstMzMuOTI3OTc0MDIzMzcxMTQyLCAxMy41MTUxOTg5NDU3MDYwNF0sIFstMzMuOTMwMDg2MzQzNjMyMDQxLCAxMy41MTg1NTc5NTQ4NTU1MjldLCBbLTMzLjk0OTY1Njk3MjUyNjI2MywgMTMuNTQ2MjgzMDU4MzE0NzI0XSwgWy0zMy45NTI2MTE3MTk5NjY0NTUsIDEzLjU0OTEwODQyNzE4MzE2N10sIFstMzMuOTczNDc0NTE5MTk1MDU4LCAxMy41NjkwNTc3MTM3NjA5NDZdLCBbLTMzLjk3NjI5NDk3NTAzMjEwNCwgMTMuNTcyMzQ4MDk4OTcyMTk3XSwgWy0zMy45NzgyODUxMjYzOTI0NzgsIDEzLjU3NDU3MTcxNDEwOTQ5XSwgWy0zMy45OTIxMjc3MTcwMDYyNDgsIDEzLjU5MDI5NDQzNDgxNjMwNl0sIFstMzMuOTk0MjcxNzg5MTkxNTM2LCAxMy41OTA3Mjk3NjExNDkxMDRdLCBbLTM0LjAwOTk3MTA4NjgxMTAyOCwgMTMuNTkxNzU5NTAwODQ3NzExXSwgWy0zNC4wMTE3MjM2ODc5MjM0NjQsIDEzLjU5MDgzNzM3NDMzNjcxM10sIFstMzQuMDE5OTc1MjIwMzcxNzk4LCAxMy41ODYyODk0MTc3MTY3MTVdLCBbLTM0LjAyMjk5MjQ4NjY5MDY1NCwgMTMuNTg1MjQyODM1MDE1NjgxXSwgWy0zNC4wMzE4NjEwOTcyOTUyNTYsIDEzLjU4MzI4MjY0NTk5Nzk4OF0sIFstMzQuMDMyOTg4MjAwMjA4Njk5LCAxMy41ODMzMzQ5OTY3MDUyNTRdLCBbLTM0LjAzNjIzOTIxODg5MTg5MywgMTMuNTgzNjcxNDYyMzc1NDEzXSwgWy0zNC4wMzY2MTQ0ODU4NjA2NiwgMTMuNTgyNzEwMDMxMDEwNTEyXSwgWy0zNC4wMzY5NzgzODg1MzA3ODQsIDEzLjU3NzY0MDI4MDk2NDY4NV0sIFstMzQuMDM3NTk2OTg5MzM0ODM3LCAxMy41NzQwNTk1MTg2MTI5NzNdLCBbLTM0LjAzOTIzODY2Mzc1MjkwNCwgMTMuNTU4NDI4MDkxMDA3OTk5XSwgWy0zNC4wNDA3MDY5MTc4MTQwMiwgMTMuNTUzNDc1MTM0MTAzNTddLCBbLTM0LjA0MzQ2MTIzNTA1OTUzOSwgMTMuNTQ1MDYxOTA4NjcwNTNdLCBbLTM0LjA0NTE3NDIzMjc0ODUyMiwgMTMuNTQwOTU1MzQyNTI3MzE1XSwgWy0zNC4wNDgwMjE1MTMzNjY4MTIsIDEzLjUzNDUzNTA2MzgzNjUwOV0sIFstMzQuMDQ5MDA2OTA0MDA3NzE5LCAxMy41Mjk2MzgzMjk5NTY2NjhdLCBbLTM0LjA1MTU5NDk0MTU3NjQ3NSwgMTMuNTIyNjcyMTc2NDIxOF0sIFstMzQuMDUzNDg3NDA3ODExNTczLCAxMy41MTgxNzY2MTE3MzM1MzVdLCBbLTM0LjA1NzEyMTQ1MzgzNTkxOSwgMTMuNTExNTM1MzMzMDY4MjY3XSwgWy0zNC4wNTkxNDcwMzI5NjM0NTIsIDEzLjUwNjQzOTQ1MTY1Njg3XSwgWy0zNC4wNjE5Mzg5NDYwOTAyNTEsIDEzLjUwMDU1NTg0NzU1NDMwOF0sIFstMzQuMDYzODk0NjQzMzc0MzI2LCAxMy40OTU2MDMyNDExMjIxMTldLCBbLTM0LjA2NTQyMTY2NDMzOTQ1MywgMTMuNDkwODc2MzA5ODg5NzAzXSwgWy0zNC4wNjY0NjQ3NDkyNjMxNzYsIDEzLjQ4NzE0MzkxODcwMDU2MV0sIFstMzQuMDY2NDcyMzk3NjA5NzAxLCAxMy40ODE4NzAyNTYzMzkzMzFdLCBbLTM0LjA2NjIyNTY1NzU1NTg2OSwgMTMuNDc4MDk1OTI5NDUxMTMzXV0sCiAgICAgICAgICAgICAgICAgICAgewogICJidWJibGluZ01vdXNlRXZlbnRzIjogdHJ1ZSwKICAiY29sb3IiOiAib3JhbmdlIiwKICAiZGFzaEFycmF5IjogbnVsbCwKICAiZGFzaE9mZnNldCI6IG51bGwsCiAgImZpbGwiOiBmYWxzZSwKICAiZmlsbENvbG9yIjogIm9yYW5nZSIsCiAgImZpbGxPcGFjaXR5IjogMC4yLAogICJmaWxsUnVsZSI6ICJldmVub2RkIiwKICAibGluZUNhcCI6ICJyb3VuZCIsCiAgImxpbmVKb2luIjogInJvdW5kIiwKICAibm9DbGlwIjogZmFsc2UsCiAgIm9wYWNpdHkiOiAwLjYsCiAgInNtb290aEZhY3RvciI6IDEuMCwKICAic3Ryb2tlIjogdHJ1ZSwKICAid2VpZ2h0IjogOAp9KS5hZGRUbyhtYXBfMGY5MDU3NDZiYTVhNDczMWFkZTE1YWMyMTQzNTYxMjEpOwogICAgICAgICAgICAKICAgIAogICAgICAgICAgICB2YXIgcG9wdXBfODMyY2NmMTgxNGY5NGEwODllNjE0OWY3ZTM1ODI3MjMgPSBMLnBvcHVwKHttYXhXaWR0aDogJzMwMCd9KTsKCiAgICAgICAgICAgIAogICAgICAgICAgICAgICAgdmFyIGh0bWxfM2MzMGZjYmZlYjg3NDdlZDhjN2QxMGZlOWJjZDllNjkgPSAkKCc8ZGl2IGlkPSJodG1sXzNjMzBmY2JmZWI4NzQ3ZWQ4YzdkMTBmZTliY2Q5ZTY5IiBzdHlsZT0id2lkdGg6IDEwMC4wJTsgaGVpZ2h0OiAxMDAuMCU7Ij5TbG9jdW0gR2xpZGVyIHJ1MjkgRGVwbG95ZWQgb24gMjAxNS0wNi0yMzwvZGl2PicpWzBdOwogICAgICAgICAgICAgICAgcG9wdXBfODMyY2NmMTgxNGY5NGEwODllNjE0OWY3ZTM1ODI3MjMuc2V0Q29udGVudChodG1sXzNjMzBmY2JmZWI4NzQ3ZWQ4YzdkMTBmZTliY2Q5ZTY5KTsKICAgICAgICAgICAgCgogICAgICAgICAgICBwb2x5X2xpbmVfOGQ3Y2UyOTc3NGMxNGU2Njk2ZjljNWRiYTIyMmI1MmYuYmluZFBvcHVwKHBvcHVwXzgzMmNjZjE4MTRmOTRhMDg5ZTYxNDlmN2UzNTgyNzIzKTsKCiAgICAgICAgICAgIAogICAgICAgIAo8L3NjcmlwdD4=" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div></div></div>
+</div>
+<p>One might be interested in a the individual profiles of each dive. Lets extract the deepest dive and plot it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Find the deepest profile.</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="o">~</span><span class="n">T</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">ncols</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span> <span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+    <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="n">ncols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">3.25</span> <span class="o">*</span> <span class="n">ncols</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;cornflowerblue&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">z</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">z</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">spines</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+
+
+<span class="p">[</span><span class="n">spines</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span> <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span> <span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)]</span>
+
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Depth (m)&quot;</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Temperature (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Salinity (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">salt</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Density (</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dens</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+
+<span class="n">ax0</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2016-11-15-glider_data_example_10_0.png" src="../../../_images/2016-11-15-glider_data_example_10_0.png" />
+</div>
+</div>
+<p>We can also visualize the whole track as a cross-section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seawater</span> <span class="k">as</span> <span class="nn">sw</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1.inset_locator</span> <span class="kn">import</span> <span class="n">inset_axes</span>
+
+
+<span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;km&quot;</span><span class="p">):</span>
+    <span class="n">dist</span><span class="p">,</span> <span class="n">pha</span> <span class="o">=</span> <span class="n">sw</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">units</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">dist</span><span class="p">)]</span>
+
+
+<span class="k">def</span> <span class="nf">plot_glider</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">),</span> <span class="n">track_inset</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">):</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">distance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;km&quot;</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">dist</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">broadcast_arrays</span><span class="p">(</span><span class="n">dist</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">z</span><span class="p">)</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">snap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.65</span><span class="p">)</span>
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">track_inset</span><span class="p">:</span>
+        <span class="n">axin</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s2">&quot;25%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;30%&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">axin</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;k.&quot;</span><span class="p">)</span>
+        <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">)</span>
+        <span class="n">axin</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">*</span><span class="n">start</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="n">axin</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">*</span><span class="n">end</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="n">axin</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Distance (km)&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Depth (m)&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cbar</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">palettable</span> <span class="kn">import</span> <span class="n">cmocean</span>
+
+<span class="n">haline</span> <span class="o">=</span> <span class="n">cmocean</span><span class="o">.</span><span class="n">sequential</span><span class="o">.</span><span class="n">Haline_20</span><span class="o">.</span><span class="n">mpl_colormap</span>
+<span class="n">thermal</span> <span class="o">=</span> <span class="n">cmocean</span><span class="o">.</span><span class="n">sequential</span><span class="o">.</span><span class="n">Thermal_20</span><span class="o">.</span><span class="n">mpl_colormap</span>
+<span class="n">dense</span> <span class="o">=</span> <span class="n">cmocean</span><span class="o">.</span><span class="n">sequential</span><span class="o">.</span><span class="n">Dense_20</span><span class="o">.</span><span class="n">mpl_colormap</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cbar</span> <span class="o">=</span> <span class="n">plot_glider</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">haline</span><span class="p">,</span> <span class="n">track_inset</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(g kg$^{-1}$)&quot;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Salinity&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cbar</span> <span class="o">=</span> <span class="n">plot_glider</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">thermal</span><span class="p">,</span> <span class="n">track_inset</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;($^\circ$C)&quot;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cbar</span> <span class="o">=</span> <span class="n">plot_glider</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">D</span> <span class="o">-</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">dense</span><span class="p">,</span> <span class="n">track_inset</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(kg m$^{-3}$C)&quot;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_position</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data collected from </span><span class="si">{}</span><span class="s2"> to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data collected from 2015-06-23 10:57:59 to 2016-03-31 09:25:31
+</pre></div>
+</div>
+<img alt="../../../_images/2016-11-15-glider_data_example_13_1.png" src="../../../_images/2016-11-15-glider_data_example_13_1.png" />
+<img alt="../../../_images/2016-11-15-glider_data_example_13_2.png" src="../../../_images/2016-11-15-glider_data_example_13_2.png" />
+<img alt="../../../_images/2016-11-15-glider_data_example_13_3.png" src="../../../_images/2016-11-15-glider_data_example_13_3.png" />
+</div>
+</div>
+<p>Glider cross-section also very be useful but we need to be careful when interpreting those due to the many turns the glider took,
+and the time it took to complete the track.</p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">x-axis</span></code> can be either time or distance. Note that this particular track took ~281 days to complete!</p>
+<p>For those interested into more fancy ways to plot glider data check <a class="reference external" href="https://github.com/lukecampbell">&#64;lukecampbell’s</a> <a class="reference external" href="https://github.com/ioos/glider-dac-status/blob/master/status/profile_plots.py">profile_plots.py</a> script.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/Code Gallery/data_plotting"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="data_plotting.html" title="previous page">Data Plotting</a>
+    <a class='right-next' id="next-link" href="../data_analysis/data_analysis.html" title="next page">Data Analysis</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

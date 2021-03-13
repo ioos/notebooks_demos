@@ -1,0 +1,1001 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetching data from a CSW catalog with Python tools &#8212; The U.S. Integrated Ocean Observing System (IOOS)</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="erddapy: a python client/URL builder for ERDDAP" href="2018-03-01-erddapy.html" />
+    <link rel="prev" title="Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site" href="2017-07-25-HFRadar_currents.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS-logo_little.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The U.S. Integrated Ocean Observing System (IOOS)</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   IOOS Data Demo Center
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="data_collection.html">
+   Data Collection Process
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_analysis/data_analysis.html">
+   Data Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_preprocessing/data_preprocessing.html">
+   Data Preprocessing
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core - Sampling Event with Measurement or Fact using Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html#event-file">
+     Event file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html#occurrence-file">
+     Occurrence file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html#measurement-or-fact">
+     Measurement Or Fact
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2018-02-27-pocean-timeSeries-demo.html">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2017-11-01-Creating-Archives-Using-Bagit.html">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ioos.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/noos.html">
+   NANOOS Visualization System (NVS)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/glos.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ooi.html">
+   OOI Demonstration Videos
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/python_dem.html">
+   Python Demonstration Videos
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Other Resources
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Other%20Resources/ioos_installation_conda.html">
+   Installing the IOOS Conda Environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+   Opening netCDF files - hints from AODN
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+   Unidata Ju[yter Notebook Gallery
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://iobis.org/tutorial/">
+   Extracting and Enriching OBIS data with R
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/USGS-R">
+   USGS-R Examples
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Contact Us
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../contact_us.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/data_collection/2017-12-15-finding_HFRadar_currents.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/data_collection/2017-12-15-finding_HFRadar_currents.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/data_collection/2017-12-15-finding_HFRadar_currents.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="fetching-data-from-a-csw-catalog-with-python-tools">
+<h1>Fetching data from a CSW catalog with Python tools<a class="headerlink" href="#fetching-data-from-a-csw-catalog-with-python-tools" title="Permalink to this headline">¶</a></h1>
+<p>This notebook shows a typical workflow to query a <a class="reference external" href="https://en.wikipedia.org/wiki/Catalog_Service_for_the_Web">Catalog Service for the Web (CSW)</a> and create a request for data endpoints that are suitable for download.</p>
+<p>In this queries multiple catalogs for the near real time HF-Radar current data.</p>
+<p>The first step is to create the data filter based on the geographical region bounding box, the time span, and the CF variable standard name.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="c1"># Region: West coast.</span>
+<span class="n">min_lon</span><span class="p">,</span> <span class="n">max_lon</span> <span class="o">=</span> <span class="o">-</span><span class="mi">123</span><span class="p">,</span> <span class="o">-</span><span class="mi">121</span>
+<span class="n">min_lat</span><span class="p">,</span> <span class="n">max_lat</span> <span class="o">=</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">40</span>
+
+<span class="n">bbox</span> <span class="o">=</span> <span class="p">[</span><span class="n">min_lon</span><span class="p">,</span> <span class="n">min_lat</span><span class="p">,</span> <span class="n">max_lon</span><span class="p">,</span> <span class="n">max_lat</span><span class="p">]</span>
+<span class="n">crs</span> <span class="o">=</span> <span class="s2">&quot;urn:ogc:def:crs:OGC:1.3:CRS84&quot;</span>
+
+<span class="c1"># Temporal range: past week.</span>
+<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+<span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">)),</span> <span class="n">now</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+
+<span class="c1"># Surface velocity CF names.</span>
+<span class="n">cf_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;surface_northward_sea_water_velocity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;surface_eastward_sea_water_velocity&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">*standard_names*: </span><span class="si">{cf_names}</span><span class="s2"></span>
+<span class="s2">*start and stop dates*: </span><span class="si">{start}</span><span class="s2"> to </span><span class="si">{stop}</span><span class="s2"></span>
+<span class="s2">*bounding box*:</span><span class="si">{bbox}</span><span class="s2"></span>
+<span class="s2">*crs*: </span><span class="si">{crs}</span><span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">msg</span><span class="p">(</span>
+        <span class="o">**</span><span class="p">{</span>
+            <span class="s2">&quot;cf_names&quot;</span><span class="p">:</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cf_names</span><span class="p">),</span>
+            <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span>
+            <span class="s2">&quot;stop&quot;</span><span class="p">:</span> <span class="n">stop</span><span class="p">,</span>
+            <span class="s2">&quot;bbox&quot;</span><span class="p">:</span> <span class="n">bbox</span><span class="p">,</span>
+            <span class="s2">&quot;crs&quot;</span><span class="p">:</span> <span class="n">crs</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>*standard_names*: surface_northward_sea_water_velocity, surface_eastward_sea_water_velocity
+*start and stop dates*: 2021-02-27 21:55:32.470503 to 2021-03-06 21:55:32.470503
+*bounding box*:[-123, 36, -121, 40]
+*crs*: urn:ogc:def:crs:OGC:1.3:CRS84
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now it is possible to assemble a <a class="reference external" href="http://www.opengeospatial.org/standards/filter">OGC Filter Encoding (FE)</a> for the search using <code class="docutils literal notranslate"><span class="pre">owslib.fes</span></code>*. Note that the final result is only a list with all the filtering conditions.</p>
+<p>* OWSLib is a Python package for client programming with Open Geospatial Consortium (OGC) web service (hence OWS) interface standards, and their related content models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">owslib</span> <span class="kn">import</span> <span class="n">fes</span>
+
+
+<span class="k">def</span> <span class="nf">fes_date_filter</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">constraint</span><span class="o">=</span><span class="s2">&quot;overlaps&quot;</span><span class="p">):</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:00&quot;</span><span class="p">)</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">stop</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:00&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">constraint</span> <span class="o">==</span> <span class="s2">&quot;overlaps&quot;</span><span class="p">:</span>
+        <span class="n">propertyname</span> <span class="o">=</span> <span class="s2">&quot;apiso:TempExtent_begin&quot;</span>
+        <span class="n">begin</span> <span class="o">=</span> <span class="n">fes</span><span class="o">.</span><span class="n">PropertyIsLessThanOrEqualTo</span><span class="p">(</span><span class="n">propertyname</span><span class="o">=</span><span class="n">propertyname</span><span class="p">,</span> <span class="n">literal</span><span class="o">=</span><span class="n">stop</span><span class="p">)</span>
+        <span class="n">propertyname</span> <span class="o">=</span> <span class="s2">&quot;apiso:TempExtent_end&quot;</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">fes</span><span class="o">.</span><span class="n">PropertyIsGreaterThanOrEqualTo</span><span class="p">(</span>
+            <span class="n">propertyname</span><span class="o">=</span><span class="n">propertyname</span><span class="p">,</span> <span class="n">literal</span><span class="o">=</span><span class="n">start</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">constraint</span> <span class="o">==</span> <span class="s2">&quot;within&quot;</span><span class="p">:</span>
+        <span class="n">propertyname</span> <span class="o">=</span> <span class="s2">&quot;apiso:TempExtent_begin&quot;</span>
+        <span class="n">begin</span> <span class="o">=</span> <span class="n">fes</span><span class="o">.</span><span class="n">PropertyIsGreaterThanOrEqualTo</span><span class="p">(</span>
+            <span class="n">propertyname</span><span class="o">=</span><span class="n">propertyname</span><span class="p">,</span> <span class="n">literal</span><span class="o">=</span><span class="n">start</span>
+        <span class="p">)</span>
+        <span class="n">propertyname</span> <span class="o">=</span> <span class="s2">&quot;apiso:TempExtent_end&quot;</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">fes</span><span class="o">.</span><span class="n">PropertyIsLessThanOrEqualTo</span><span class="p">(</span><span class="n">propertyname</span><span class="o">=</span><span class="n">propertyname</span><span class="p">,</span> <span class="n">literal</span><span class="o">=</span><span class="n">stop</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;Unrecognized constraint </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">constraint</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">6036</span><span class="n">fbb96d23</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">owslib</span> <span class="kn">import</span> <span class="n">fes</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span> 
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">def</span> <span class="nf">fes_date_filter</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">constraint</span><span class="o">=</span><span class="s2">&quot;overlaps&quot;</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:00&quot;</span><span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;owslib&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">wildCard</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">escapeChar</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">singleChar</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span> <span class="n">propertyname</span><span class="o">=</span><span class="s2">&quot;apiso:AnyText&quot;</span><span class="p">)</span>
+
+<span class="n">or_filt</span> <span class="o">=</span> <span class="n">fes</span><span class="o">.</span><span class="n">Or</span><span class="p">([</span><span class="n">fes</span><span class="o">.</span><span class="n">PropertyIsLike</span><span class="p">(</span><span class="n">literal</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;*</span><span class="si">%s</span><span class="s2">*&quot;</span> <span class="o">%</span> <span class="n">val</span><span class="p">),</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">cf_names</span><span class="p">])</span>
+
+<span class="c1"># Exclude GNOME returns.</span>
+<span class="n">not_filt</span> <span class="o">=</span> <span class="n">fes</span><span class="o">.</span><span class="n">Not</span><span class="p">([</span><span class="n">fes</span><span class="o">.</span><span class="n">PropertyIsLike</span><span class="p">(</span><span class="n">literal</span><span class="o">=</span><span class="s2">&quot;*GNOME*&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)])</span>
+
+<span class="n">begin</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">fes_date_filter</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span>
+<span class="n">bbox_crs</span> <span class="o">=</span> <span class="n">fes</span><span class="o">.</span><span class="n">BBox</span><span class="p">(</span><span class="n">bbox</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">crs</span><span class="p">)</span>
+<span class="n">filter_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">fes</span><span class="o">.</span><span class="n">And</span><span class="p">([</span><span class="n">bbox_crs</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">or_filt</span><span class="p">,</span> <span class="n">not_filt</span><span class="p">])]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It is possible to use the same filter to search multiple catalogs. The cell below loops over 3 catalogs hoping to find which one is more up-to-date and returns the near real time data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_csw_records</span><span class="p">(</span><span class="n">csw</span><span class="p">,</span> <span class="n">filter_list</span><span class="p">,</span> <span class="n">pagesize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">maxrecords</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Iterate `maxrecords`/`pagesize` times until the requested value in</span>
+<span class="sd">    `maxrecords` is reached.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">owslib.fes</span> <span class="kn">import</span> <span class="n">SortBy</span><span class="p">,</span> <span class="n">SortProperty</span>
+
+    <span class="c1"># Iterate over sorted results.</span>
+    <span class="n">sortby</span> <span class="o">=</span> <span class="n">SortBy</span><span class="p">([</span><span class="n">SortProperty</span><span class="p">(</span><span class="s2">&quot;dc:title&quot;</span><span class="p">,</span> <span class="s2">&quot;ASC&quot;</span><span class="p">)])</span>
+    <span class="n">csw_records</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">startposition</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">nextrecord</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">csw</span><span class="p">,</span> <span class="s2">&quot;results&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">nextrecord</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">csw</span><span class="o">.</span><span class="n">getrecords2</span><span class="p">(</span>
+            <span class="n">constraints</span><span class="o">=</span><span class="n">filter_list</span><span class="p">,</span>
+            <span class="n">startposition</span><span class="o">=</span><span class="n">startposition</span><span class="p">,</span>
+            <span class="n">maxrecords</span><span class="o">=</span><span class="n">pagesize</span><span class="p">,</span>
+            <span class="n">sortby</span><span class="o">=</span><span class="n">sortby</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">csw_records</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">csw</span><span class="o">.</span><span class="n">records</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">csw</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;nextrecord&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">startposition</span> <span class="o">+=</span> <span class="n">pagesize</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># Last one is included.</span>
+        <span class="k">if</span> <span class="n">startposition</span> <span class="o">&gt;=</span> <span class="n">maxrecords</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="n">csw</span><span class="o">.</span><span class="n">records</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">csw_records</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">owslib.csw</span> <span class="kn">import</span> <span class="n">CatalogueServiceWeb</span>
+
+<span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;https://data.ioos.us/csw&quot;</span>
+
+<span class="n">csw</span> <span class="o">=</span> <span class="n">CatalogueServiceWeb</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">get_csw_records</span><span class="p">(</span><span class="n">csw</span><span class="p">,</span> <span class="n">filter_list</span><span class="p">,</span> <span class="n">pagesize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">maxrecords</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">records</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">csw</span><span class="o">.</span><span class="n">records</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Found </span><span class="si">{}</span><span class="s2"> records.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">csw</span><span class="o">.</span><span class="n">records</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">csw</span><span class="o">.</span><span class="n">records</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">{}</span><span class="s2">]: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 5 records.
+
+[HYbrid Coordinate Ocean Model (HYCOM): Global]: hycom_global
+[Near-Real Time Surface Ocean Velocity, U.S. West Coast,
+1 km Resolution]: HFR/USWC/1km/hourly/RTV/HFRADAR_US_West_Coast_1km_Resolution_Hourly_RTV_best.ncd
+[Near-Real Time Surface Ocean Velocity, U.S. West Coast,
+2 km Resolution]: HFR/USWC/2km/hourly/RTV/HFRADAR_US_West_Coast_2km_Resolution_Hourly_RTV_best.ncd
+[Near-Real Time Surface Ocean Velocity, U.S. West Coast,
+500 m Resolution]: HFR/USWC/500m/hourly/RTV/HFRADAR_US_West_Coast_500m_Resolution_Hourly_RTV_best.ncd
+[Near-Real Time Surface Ocean Velocity, U.S. West Coast,
+6 km Resolution]: HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us check the 6 km resolution metadata record we found above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">value</span> <span class="o">=</span> <span class="n">csw</span><span class="o">.</span><span class="n">records</span><span class="p">[</span>
+    <span class="s2">&quot;HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd&quot;</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">abstract</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Surface ocean velocities estimated from HF-Radar are
+representative of the upper 0.3 - 2.5 meters of the
+ocean.  The main objective of near-real time
+processing is to produce the best product from
+available data at the time of processing.  Radial
+velocity measurements are obtained from individual
+radar sites through the U.S. HF-Radar Network.
+Hourly radial data are processed by unweighted
+least-squares on a 6 km resolution grid of the U.S.
+West Coast to produce near real-time surface current
+maps.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">attrs</span> <span class="o">=</span> <span class="p">[</span><span class="n">attr</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">attr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)]</span>
+<span class="n">nonzero</span> <span class="o">=</span> <span class="p">[</span><span class="n">attr</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span> <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">attr</span><span class="p">)]</span>
+<span class="n">nonzero</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;abstract&#39;,
+ &#39;bbox&#39;,
+ &#39;identifier&#39;,
+ &#39;identifiers&#39;,
+ &#39;modified&#39;,
+ &#39;references&#39;,
+ &#39;subjects&#39;,
+ &#39;title&#39;,
+ &#39;type&#39;,
+ &#39;xml&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">xml</span></code> has the full dataset metadata from the catalog. Let’s print a few key ones here:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">value</span><span class="o">.</span><span class="n">subjects</span>  <span class="c1"># What is in there?</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;SIO/UCSD&#39;,
+ &#39;surface_eastward_sea_water_velocity&#39;,
+ &#39;surface_northward_sea_water_velocity&#39;,
+ &#39;latitude&#39;,
+ &#39;longitude&#39;,
+ &#39;forecast_period&#39;,
+ &#39;latitude&#39;,
+ &#39;longitude&#39;,
+ &#39;time&#39;,
+ &#39;forecast_reference_time&#39;,
+ &#39;climatologyMeteorologyAtmosphere&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">value</span><span class="o">.</span><span class="n">modified</span>  <span class="c1"># Is it up-to-date?</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;2018-10-04&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bbox</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">bbox</span><span class="o">.</span><span class="n">minx</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">bbox</span><span class="o">.</span><span class="n">miny</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">bbox</span><span class="o">.</span><span class="n">maxx</span><span class="p">,</span> <span class="n">value</span><span class="o">.</span><span class="n">bbox</span><span class="o">.</span><span class="n">maxy</span>
+<span class="n">bbox</span>  <span class="c1"># The actual bounding box of the data.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;-130.36&#39;, &#39;30.25&#39;, &#39;-115.81&#39;, &#39;49.99&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next step is to inspect the type services and schemes available for downloading the data.
+The easiest way to accomplish that is with by “sniffing” the URLs with <code class="docutils literal notranslate"><span class="pre">geolinks</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolinks</span> <span class="kn">import</span> <span class="n">sniff_link</span>
+
+<span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;geolink: </span><span class="si">{geolink}</span><span class="se">\n</span><span class="s2">scheme: </span><span class="si">{scheme}</span><span class="se">\n</span><span class="s2">URL: </span><span class="si">{url}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span>
+<span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">references</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">ref</span><span class="p">[</span><span class="s2">&quot;scheme&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;OPeNDAP:OPeNDAP&quot;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">ref</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">(</span><span class="n">geolink</span><span class="o">=</span><span class="n">sniff_link</span><span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]),</span> <span class="o">**</span><span class="n">ref</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>geolink: WWW:LINK
+scheme: WWW:LINK
+URL: http://hfrnet-tds.ucsd.edu/thredds/dodsC/HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd.html
+
+geolink: None
+scheme: WWW:LINK
+URL: http://www.ncdc.noaa.gov/oa/wct/wct-jnlp-beta.php?singlefile=http://hfrnet-tds.ucsd.edu/thredds/dodsC/HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd
+
+geolink: None
+scheme: OPeNDAP:OPeNDAP
+URL: http://hfrnet-tds.ucsd.edu/thredds/dodsC/HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd
+
+geolink: OGC:WCS
+scheme: OGC:WCS
+URL: http://hfrnet-tds.ucsd.edu/thredds/wcs/HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd?service=WCS&amp;version=1.0.0&amp;request=GetCapabilities
+
+geolink: OGC:WMS
+scheme: OGC:WMS
+URL: http://hfrnet-tds.ucsd.edu/thredds/wms/HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd?service=WMS&amp;version=1.3.0&amp;request=GetCapabilities
+
+geolink: UNIDATA:NCSS
+scheme: UNIDATA:NCSS
+URL: http://hfrnet-tds.ucsd.edu/thredds/ncss/grid/HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd/dataset.html
+</pre></div>
+</div>
+</div>
+</div>
+<p>For a detailed description of what those <code class="docutils literal notranslate"><span class="pre">geolink</span></code> results mean check the <a class="reference external" href="https://github.com/OSGeo/Cat-Interop/blob/master/LinkPropertyLookupTable.csv">lookup</a> table.
+There are Web Coverage Service (WCS), Web Map Service (WMS),
+direct links, and OPeNDAP services available.</p>
+<p>We can use any of those to obtain the data but the easiest one to explore interactively is the open OPeNDAP endpoint.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">ds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
+Dimensions:       (lat: 367, lon: 234, nProcParam: 7, nSites: 54, time: 61425)
+Coordinates:
+  * lat           (lat) float32 30.25 30.30394 30.35788 ... 49.9381 49.99204
+  * lon           (lon) float32 -130.36 -130.29753 ... -115.86803 -115.805565
+  * time          (time) datetime64[ns] 2011-10-01 ... 2018-10-05T18:00:00
+    time_run      (time) datetime64[ns] ...
+Dimensions without coordinates: nProcParam, nSites
+Data variables:
+    site_lat      (nSites) float32 ...
+    site_lon      (nSites) float32 ...
+    site_code     (nSites) |S64 ...
+    site_netCode  (nSites) |S64 ...
+    procParams    (nProcParam) float32 ...
+    time_offset   (time) datetime64[ns] ...
+    u             (time, lat, lon) float32 ...
+    v             (time, lat, lon) float32 ...
+    DOPx          (time, lat, lon) float32 ...
+    DOPy          (time, lat, lon) float32 ...
+Attributes:
+    netcdf_library_version:  4.1.3
+    format_version:          HFRNet_1.0.0
+    product_version:         HFRNet_1.1.05
+    Conventions:             CF-1.4
+    title:                   Near-Real Time Surface Ocean Velocity, U.S. West...
+    institution:             Scripps Institution of Oceanography
+    source:                  Surface Ocean HF-Radar
+    history:                 05-Oct-2018 08:07:19: NetCDF file created\n05-Oc...
+    references:              Terrill, E. et al., 2006. Data Management and Re...
+    creator_name:            Mark Otero
+    creator_email:           motero@ucsd.edu
+    creator_url:             http://cordc.ucsd.edu/projects/mapping/
+    summary:                 Surface ocean velocities estimated from HF-Radar...
+    geospatial_lat_min:      30.25
+    geospatial_lat_max:      49.99204
+    geospatial_lon_min:      -130.36
+    geospatial_lon_max:      -115.805565
+    grid_resolution:         6km
+    grid_projection:         equidistant cylindrical
+    regional_description:    Unites States, West Coast
+    _CoordSysBuilder:        ucar.nc2.dataset.conv.CF1Convention
+    cdm_data_type:           GRID
+    featureType:             GRID
+    location:                Proto fmrc:HFRADAR_US_West_Coast_6km_Resolution_...
+    DODS.strlen:             25
+    DODS.dimName:            nSites_maxStrlen
+</pre></div>
+</div>
+</div>
+</div>
+<p>Select “yesterday” data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="n">yesterday</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">yesterday</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Compute the speed while masking invalid values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="k">as</span> <span class="nn">ma</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;v&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+
+<span class="n">lon</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;lon&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This cell is only a trick to show all quiver arrows with the same length,
+for visualization purposes,
+and indicate the vector magnitude with colors instead.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">oceans.ocfis</span> <span class="kn">import</span> <span class="n">spdir2uv</span><span class="p">,</span> <span class="n">uv2spdir</span>
+
+<span class="n">angle</span><span class="p">,</span> <span class="n">speed</span> <span class="o">=</span> <span class="n">uv2spdir</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="n">us</span><span class="p">,</span> <span class="n">vs</span> <span class="o">=</span> <span class="n">spdir2uv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">speed</span><span class="p">),</span> <span class="n">angle</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And now we are ready to create the plot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">cartopy</span> <span class="kn">import</span> <span class="n">feature</span>
+<span class="kn">from</span> <span class="nn">cartopy.mpl.gridliner</span> <span class="kn">import</span> <span class="n">LATITUDE_FORMATTER</span><span class="p">,</span> <span class="n">LONGITUDE_FORMATTER</span>
+
+<span class="n">LAND</span> <span class="o">=</span> <span class="n">feature</span><span class="o">.</span><span class="n">NaturalEarthFeature</span><span class="p">(</span>
+    <span class="s2">&quot;physical&quot;</span><span class="p">,</span> <span class="s2">&quot;land&quot;</span><span class="p">,</span> <span class="s2">&quot;10m&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;face&quot;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;lightgray&quot;</span>
+<span class="p">)</span>
+
+<span class="n">sub</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="n">dy</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">center</span> <span class="o">=</span> <span class="o">-</span><span class="mf">122.416667</span><span class="p">,</span> <span class="mf">37.783333</span>  <span class="c1"># San Francisco.</span>
+<span class="n">bbox</span> <span class="o">=</span> <span class="n">lon</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">lon</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">lat</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">lat</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax0</span><span class="p">,</span> <span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+    <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
+<span class="p">)</span>
+
+
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">bbox</span><span class="p">)</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">ax0</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">speed</span><span class="p">))</span>
+<span class="n">gl</span> <span class="o">=</span> <span class="n">ax0</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_top</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">ylabels_right</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xformatter</span> <span class="o">=</span> <span class="n">LONGITUDE_FORMATTER</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">yformatter</span> <span class="o">=</span> <span class="n">LATITUDE_FORMATTER</span>
+
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.45</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;speed m s$^{-1}$&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+
+<span class="n">ax0</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">LAND</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">ax0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">dx</span> <span class="o">-</span> <span class="n">dx</span><span class="p">,</span> <span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">dy</span><span class="p">,</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">dy</span><span class="p">])</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span>
+    <span class="n">lon</span><span class="p">[::</span><span class="n">sub</span><span class="p">],</span>
+    <span class="n">lat</span><span class="p">[::</span><span class="n">sub</span><span class="p">],</span>
+    <span class="n">us</span><span class="p">[::</span><span class="n">sub</span><span class="p">,</span> <span class="p">::</span><span class="n">sub</span><span class="p">],</span>
+    <span class="n">vs</span><span class="p">[::</span><span class="n">sub</span><span class="p">,</span> <span class="p">::</span><span class="n">sub</span><span class="p">],</span>
+    <span class="n">speed</span><span class="p">[::</span><span class="n">sub</span><span class="p">,</span> <span class="p">::</span><span class="n">sub</span><span class="p">],</span>
+    <span class="n">scale</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">quiverkey</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;1 m s$^{-1}$&quot;</span><span class="p">,</span> <span class="n">coordinates</span><span class="o">=</span><span class="s2">&quot;axes&quot;</span><span class="p">)</span>
+<span class="n">gl</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xlabels_top</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">ylabels_right</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">xformatter</span> <span class="o">=</span> <span class="n">LONGITUDE_FORMATTER</span>
+<span class="n">gl</span><span class="o">.</span><span class="n">yformatter</span> <span class="o">=</span> <span class="n">LATITUDE_FORMATTER</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">LAND</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;site_lon&quot;</span><span class="p">],</span> <span class="n">ds</span><span class="p">[</span><span class="s2">&quot;site_lat&quot;</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;darkorange&quot;</span>
+<span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;San Francisco Bay area&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-12-15-finding_HFRadar_currents_26_0.png" src="../../../_images/2017-12-15-finding_HFRadar_currents_26_0.png" />
+</div>
+</div>
+<p>And here is yesterday’s sea surface currents from the west coast with a zoom in the San Francisco Bay area.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/Code Gallery/data_collection"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="2017-07-25-HFRadar_currents.html" title="previous page">Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site</a>
+    <a class='right-next' id="next-link" href="2018-03-01-erddapy.html" title="next page">erddapy: a python client/URL builder for ERDDAP</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

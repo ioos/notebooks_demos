@@ -1,0 +1,897 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exploring the THREDDS catalog with Unidata’s Siphon &#8212; The U.S. Integrated Ocean Observing System (IOOS)</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Read realtime data from IOOS Sensor Map via ERDDAP tabledap" href="2017-03-21-ERDDAP_IOOS_Sensor_Map.html" />
+    <link rel="prev" title="Accessing glider data via the Glider DAC API with Python" href="2016-12-20-searching_glider_deployments.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS-logo_little.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The U.S. Integrated Ocean Observing System (IOOS)</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   IOOS Data Demo Center
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="data_collection.html">
+   Data Collection Process
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-12-15-finding_HFRadar_currents.html">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_analysis/data_analysis.html">
+   Data Analysis
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis/2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_preprocessing/data_preprocessing.html">
+   Data Preprocessing
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core - Sampling Event with Measurement or Fact using Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html#event-file">
+     Event file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html#occurrence-file">
+     Occurrence file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2020-12-08-DataToDwC.html#measurement-or-fact">
+     Measurement Or Fact
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2018-02-27-pocean-timeSeries-demo.html">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_preprocessing/2017-11-01-Creating-Archives-Using-Bagit.html">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ioos.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/noos.html">
+   NANOOS Visualization System (NVS)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/glos.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ooi.html">
+   OOI Demonstration Videos
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/python_dem.html">
+   Python Demonstration Videos
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Other Resources
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Other%20Resources/ioos_installation_conda.html">
+   Installing the IOOS Conda Environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+   Opening netCDF files - hints from AODN
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+   Unidata Ju[yter Notebook Gallery
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://iobis.org/tutorial/">
+   Extracting and Enriching OBIS data with R
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/USGS-R">
+   USGS-R Examples
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Contact Us
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../contact_us.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/data_collection/2017-01-18-siphon-explore-thredds.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/data_collection/2017-01-18-siphon-explore-thredds.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/data_collection/2017-01-18-siphon-explore-thredds.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="exploring-the-thredds-catalog-with-unidatas-siphon">
+<h1>Exploring the THREDDS catalog with Unidata’s Siphon<a class="headerlink" href="#exploring-the-thredds-catalog-with-unidatas-siphon" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://siphon.readthedocs.io/en/latest/">Siphon</a> is a Python module for accessing data hosted on a THREDDS data server.
+Siphon works by parsing the catalog XML and exposing it with higher level functions.</p>
+<p>In this notebook we will explore data available on the Central &amp; Northern California Ocean Observing System (CeNCOOS) THREDDS. The cell below extracts the catalog information</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">siphon.catalog</span> <span class="kn">import</span> <span class="n">TDSCatalog</span>
+
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">TDSCatalog</span><span class="p">(</span><span class="s2">&quot;https://thredds.cencoos.org/thredds/catalog.xml&quot;</span><span class="p">)</span>
+
+
+<span class="n">info</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Catalog information</span>
+<span class="s2">-------------------</span>
+
+<span class="s2">Base THREDDS URL: </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">Catalog name: </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">Catalog URL: </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">Metadata: </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">catalog</span><span class="o">.</span><span class="n">base_tds_url</span><span class="p">,</span> <span class="n">catalog</span><span class="o">.</span><span class="n">catalog_name</span><span class="p">,</span> <span class="n">catalog</span><span class="o">.</span><span class="n">catalog_url</span><span class="p">,</span> <span class="n">catalog</span><span class="o">.</span><span class="n">metadata</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">fa1a6082a7c3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">siphon.catalog</span> <span class="kn">import</span> <span class="n">TDSCatalog</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">catalog</span> <span class="o">=</span> <span class="n">TDSCatalog</span><span class="p">(</span><span class="s2">&quot;https://thredds.cencoos.org/thredds/catalog.xml&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span> 
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;siphon&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Unfortunately this catalog has no metadata. So let’s check what kind of services are available.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">service</span> <span class="ow">in</span> <span class="n">catalog</span><span class="o">.</span><span class="n">services</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">service</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>all
+allandsos
+wms
+</pre></div>
+</div>
+</div>
+</div>
+<p>And what datasets are there?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>California Coastal Regional Ocean Modeling System (ROMS) Nowcast
+California Coastal Regional Ocean Modeling System (ROMS) Forecast
+Monterey Bay (MB) Regional Ocean Modeling System (ROMS) Nowcast
+Monterey Bay (MB) Regional Ocean Modeling System (ROMS) Forecast
+Southern California Bight (SCB) Regional Ocean Modeling System (ROMS) Nowcast
+UCSC California Current System Model
+HAB Cellular Domoic Acid Forecast
+HAB Cellular Domoic Acid Nowcast
+HAB Particulate Domoic Acid Forecast
+HAB Particulate Domoic Acid Nowcast
+HAB Pseudo Nitzschia Forecast
+HAB Pseudo Nitzschia Nowcast
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Relative Humidity
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Total Precipitation
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Visibility
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Wind 10 m
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Air Temp 2 m
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Cloud Base
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Ground and Sea Temp
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Pressure Reduce to MSL
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Net Short-wave Radiation Surface
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) IR Heat Flux
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Monthly Averaged Winds
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Wind 10 m (Historical)
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Ground and Sea Temp (Historical)
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Air Temp 2 m (Historical)
+Hybrid Coordinate Ocean Model
+Southern California Regional NCOM Model
+Maurer Meteorological Data
+Global 1-km Sea Surface Temperature (G1SST)
+High Resolution Chlorophyll-a concentration from MODIS/Aqua (1 Day Composite)
+High Resolution Chlorophyll-a concentration from MODIS/Aqua (8 Day Composite)
+High Resolution Chlorophyll-a concentration from MODIS/Aqua (1 Month Composite)
+High Resolution Sea Surface Temperature from the Advanced Very-High Resolution Radiometer (1 Day Composite)
+High Resolution Sea Surface Temperature from the Advanced Very-High Resolution Radiometer (8 Day Composite)
+High Resolution Sea Surface Temperature from the Advanced Very-High Resolution Radiometer (1 Month Composite)
+Ocean Surface Currents Monthly Averaged - CORDC High-Frequency Radar (US West Coast), 6 km
+</pre></div>
+</div>
+</div>
+</div>
+<p>It looks like model runs as well as satellite and HFR data. One can also check the catalog refs for more information</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">catalog_refs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Global
+Dynamic
+Static
+HF RADAR, US West Coast
+HF RADAR, US West Coast (GNOME Format)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ref</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">catalog_refs</span><span class="p">[</span><span class="s2">&quot;Global&quot;</span><span class="p">]</span>
+
+<span class="p">[</span><span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;follow&#39;, &#39;href&#39;, &#39;name&#39;, &#39;title&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">info</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Href: </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">Name: </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">Title: </span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">ref</span><span class="o">.</span><span class="n">href</span><span class="p">,</span> <span class="n">ref</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ref</span><span class="o">.</span><span class="n">title</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Href: https://thredds.cencoos.org/thredds/global.xml
+Name: 
+Title: Global
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">follow</span></code> method navigates to that catalog <code class="docutils literal notranslate"><span class="pre">ref</span></code> and returns a new <code class="docutils literal notranslate"><span class="pre">siphon.catalog.TDSCatalog</span></code> object for that part of the THREDDS catalog.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">follow</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">cat</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;siphon.catalog.TDSCatalog&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>That makes it easier to explore a small subset of the datasets available in the catalog.
+Here are the data from the <em>Global</em> subset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cat</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NCEP Reanalysis Daily Averages Surface Flux
+Global 1-km Sea Surface Temperature (G1SST)
+NCEP Global Forecast System Model (GFS)
+Aquarius V 3.0 Scatterometer Daily Aggregate
+Aquarius V 3.0 Scatterometer Seven-Day Aggregate
+Aquarius V 3.0 Scatterometer Monthly Aggregate
+Aquarius V 3.0 Radiometer Daily Aggregate
+Aquarius V 3.0 Radiometer Seven-Day Aggregate
+Aquarius V 3.0 Radiometer Monthly Aggregate
+Aquarius V 4.0 Scatterometer Daily Aggregate
+Aquarius V 4.0 Scatterometer Seven-Day Aggregate
+Aquarius V 4.0 Scatterometer Monthly Aggregate
+Aquarius V 4.0 Radiometer Daily Aggregate
+Aquarius V 4.0 Radiometer Seven-Day Aggregate
+Aquarius V 4.0 Radiometer Monthly Aggregate
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s extract the <code class="docutils literal notranslate"><span class="pre">Global</span> <span class="pre">1-km</span> <span class="pre">Sea</span> <span class="pre">Surface</span> <span class="pre">Temperature</span></code> dataset from the global <code class="docutils literal notranslate"><span class="pre">ref</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="s2">&quot;Global 1-km Sea Surface Temperature (G1SST)&quot;</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">cat</span><span class="o">.</span><span class="n">datasets</span><span class="p">[</span><span class="n">dataset</span><span class="p">]</span>
+
+<span class="n">ds</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">url_path</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;Global 1-km Sea Surface Temperature (G1SST)&#39;, &#39;G1_SST_GLOBAL.nc&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Siphon has a <code class="docutils literal notranslate"><span class="pre">ncss</span></code> (NetCDF subset service) access, here is a quote from the documentation:</p>
+<blockquote>
+<div><p>This module contains code to support making data requests to
+the NetCDF subset service (NCSS) on a THREDDS Data Server (TDS). This includes
+forming proper queries as well as parsing the returned data.</p>
+</div></blockquote>
+<p>Let’s check if the catalog offers the <code class="docutils literal notranslate"><span class="pre">NetcdfSubset</span></code> in the <code class="docutils literal notranslate"><span class="pre">access_urls</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">ds</span> <span class="ow">in</span> <span class="n">catalog</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">ds</span><span class="o">.</span><span class="n">access_urls</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>California Coastal Regional Ocean Modeling System (ROMS) Nowcast
+California Coastal Regional Ocean Modeling System (ROMS) Forecast
+Monterey Bay (MB) Regional Ocean Modeling System (ROMS) Nowcast
+Monterey Bay (MB) Regional Ocean Modeling System (ROMS) Forecast
+Southern California Bight (SCB) Regional Ocean Modeling System (ROMS) Nowcast
+UCSC California Current System Model
+HAB Cellular Domoic Acid Forecast
+HAB Cellular Domoic Acid Nowcast
+HAB Particulate Domoic Acid Forecast
+HAB Particulate Domoic Acid Nowcast
+HAB Pseudo Nitzschia Forecast
+HAB Pseudo Nitzschia Nowcast
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Relative Humidity
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Total Precipitation
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Visibility
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Wind 10 m
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Air Temp 2 m
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Cloud Base
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Ground and Sea Temp
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Pressure Reduce to MSL
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Net Short-wave Radiation Surface
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) IR Heat Flux
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Monthly Averaged Winds
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Wind 10 m (Historical)
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Ground and Sea Temp (Historical)
+Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Air Temp 2 m (Historical)
+Hybrid Coordinate Ocean Model
+Southern California Regional NCOM Model
+Maurer Meteorological Data
+High Resolution Chlorophyll-a concentration from MODIS/Aqua (1 Day Composite)
+High Resolution Chlorophyll-a concentration from MODIS/Aqua (8 Day Composite)
+High Resolution Chlorophyll-a concentration from MODIS/Aqua (1 Month Composite)
+High Resolution Sea Surface Temperature from the Advanced Very-High Resolution Radiometer (1 Day Composite)
+High Resolution Sea Surface Temperature from the Advanced Very-High Resolution Radiometer (8 Day Composite)
+High Resolution Sea Surface Temperature from the Advanced Very-High Resolution Radiometer (1 Month Composite)
+Ocean Surface Currents Monthly Averaged - CORDC High-Frequency Radar (US West Coast), 6 km
+</pre></div>
+</div>
+</div>
+</div>
+<p>All <code class="docutils literal notranslate"><span class="pre">access_urls</span></code> returned empty… Maybe that is just a metadata issue because there is <code class="docutils literal notranslate"><span class="pre">NetcdfSubset</span></code> access when navigating in the webpage.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+
+<span class="n">iframe</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;&lt;iframe src=&quot;</span><span class="si">{src}</span><span class="s1">&quot; width=&quot;800&quot; height=&quot;550&quot; style=&quot;border:none;&quot;&gt;&lt;/iframe&gt;&#39;</span><span class="o">.</span><span class="n">format</span>
+<span class="p">)</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://thredds.cencoos.org/thredds/catalog.html?dataset=G1_SST_US_WEST_COAST&quot;</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">iframe</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">url</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe src="https://thredds.cencoos.org/thredds/catalog.html?dataset=G1_SST_US_WEST_COAST" width="800" height="550" style="border:none;"></iframe></div></div>
+</div>
+<p>To finish the post let’s check if there is any WMS service available and overlay the data in a slippy (interactive) map.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">services</span> <span class="o">=</span> <span class="p">[</span><span class="n">service</span> <span class="k">for</span> <span class="n">service</span> <span class="ow">in</span> <span class="n">catalog</span><span class="o">.</span><span class="n">services</span> <span class="k">if</span> <span class="n">service</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;wms&quot;</span><span class="p">]</span>
+
+<span class="n">services</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;siphon.catalog.SimpleService at 0x7fd651b720f0&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Found only one, let’s tease that out and check the URL.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="o">=</span> <span class="n">services</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">base</span>
+
+<span class="n">url</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;https://data.axds.co/ncWMS/wms&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>OWSLib helps to inspect the available layers before plotting. Here we will get the first layer that has G1_SST_US_WEST_COAST on it.</p>
+<p>Note, however, we are skipping the discovery step of the <code class="docutils literal notranslate"><span class="pre">wms</span></code> information and hard-coding it instead.
+That is to save time because parsing the URL <a class="reference external" href="http://pdx.axiomalaska.com/ncWMS/wms">http://pdx.axiomalaska.com/ncWMS/wms</a> takes ~ 10 minutes. See <a class="reference external" href="https://github.com/ioos/notebooks_demos/pull/171#issuecomment-271705056">this</a> issue for more information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">owslib.wms</span> <span class="kn">import</span> <span class="n">WebMapService</span>
+
+<span class="k">if</span> <span class="kc">False</span><span class="p">:</span>
+    <span class="n">web_map_services</span> <span class="o">=</span> <span class="n">WebMapService</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">web_map_services</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="s2">&quot;G1_SST_US_WEST_COAST&quot;</span> <span class="ow">in</span> <span class="n">key</span>
+    <span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">wms</span> <span class="o">=</span> <span class="n">web_map_services</span><span class="o">.</span><span class="n">contents</span><span class="p">[</span><span class="n">layer</span><span class="p">]</span>
+
+    <span class="n">title</span> <span class="o">=</span> <span class="n">wms</span><span class="o">.</span><span class="n">title</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="p">(</span><span class="n">wms</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">wms</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="p">(</span><span class="n">wms</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">wms</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">wms</span><span class="o">.</span><span class="n">defaulttimeposition</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="s2">&quot;G1_SST_US_WEST_COAST/analysed_sst&quot;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Sea Surface Temperature&quot;</span>
+    <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="o">-</span><span class="mf">122.50</span><span class="p">,</span> <span class="mf">39.50</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="s2">&quot;undefined&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">folium</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">folium</span><span class="o">.</span><span class="n">WmsTileLayer</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> at </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">time</span><span class="p">),</span>
+    <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+    <span class="n">layers</span><span class="o">=</span><span class="n">layer</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;image/png&quot;</span><span class="p">,</span>
+    <span class="n">transparent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">()</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">m</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><iframe src="data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+CjxoZWFkPiAgICAKICAgIDxtZXRhIGh0dHAtZXF1aXY9ImNvbnRlbnQtdHlwZSIgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PVVURi04IiAvPgogICAgPHNjcmlwdD5MX1BSRUZFUl9DQU5WQVMgPSBmYWxzZTsgTF9OT19UT1VDSCA9IGZhbHNlOyBMX0RJU0FCTEVfM0QgPSBmYWxzZTs8L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2xlYWZsZXRAMS4yLjAvZGlzdC9sZWFmbGV0LmpzIj48L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL2FqYXguZ29vZ2xlYXBpcy5jb20vYWpheC9saWJzL2pxdWVyeS8xLjExLjEvanF1ZXJ5Lm1pbi5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvMy4yLjAvanMvYm9vdHN0cmFwLm1pbi5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvTGVhZmxldC5hd2Vzb21lLW1hcmtlcnMvMi4wLjIvbGVhZmxldC5hd2Vzb21lLW1hcmtlcnMuanMiPjwvc2NyaXB0PgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2xlYWZsZXRAMS4yLjAvZGlzdC9sZWFmbGV0LmNzcyIgLz4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvMy4yLjAvY3NzL2Jvb3RzdHJhcC5taW4uY3NzIiAvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL21heGNkbi5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjIuMC9jc3MvYm9vdHN0cmFwLXRoZW1lLm1pbi5jc3MiIC8+CiAgICA8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vZm9udC1hd2Vzb21lLzQuNi4zL2Nzcy9mb250LWF3ZXNvbWUubWluLmNzcyIgLz4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvTGVhZmxldC5hd2Vzb21lLW1hcmtlcnMvMi4wLjIvbGVhZmxldC5hd2Vzb21lLW1hcmtlcnMuY3NzIiAvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL3Jhd2dpdC5jb20vcHl0aG9uLXZpc3VhbGl6YXRpb24vZm9saXVtL21hc3Rlci9mb2xpdW0vdGVtcGxhdGVzL2xlYWZsZXQuYXdlc29tZS5yb3RhdGUuY3NzIiAvPgogICAgPHN0eWxlPmh0bWwsIGJvZHkge3dpZHRoOiAxMDAlO2hlaWdodDogMTAwJTttYXJnaW46IDA7cGFkZGluZzogMDt9PC9zdHlsZT4KICAgIDxzdHlsZT4jbWFwIHtwb3NpdGlvbjphYnNvbHV0ZTt0b3A6MDtib3R0b206MDtyaWdodDowO2xlZnQ6MDt9PC9zdHlsZT4KICAgIAogICAgICAgICAgICA8c3R5bGU+ICNtYXBfMzg5MWU3NDVlY2EyNDM2NzljMzgyODQwMGU0YTBkODkgewogICAgICAgICAgICAgICAgcG9zaXRpb24gOiByZWxhdGl2ZTsKICAgICAgICAgICAgICAgIHdpZHRoIDogMTAwLjAlOwogICAgICAgICAgICAgICAgaGVpZ2h0OiAxMDAuMCU7CiAgICAgICAgICAgICAgICBsZWZ0OiAwLjAlOwogICAgICAgICAgICAgICAgdG9wOiAwLjAlOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICA8L3N0eWxlPgogICAgICAgIAo8L2hlYWQ+Cjxib2R5PiAgICAKICAgIAogICAgICAgICAgICA8ZGl2IGNsYXNzPSJmb2xpdW0tbWFwIiBpZD0ibWFwXzM4OTFlNzQ1ZWNhMjQzNjc5YzM4Mjg0MDBlNGEwZDg5IiA+PC9kaXY+CiAgICAgICAgCjwvYm9keT4KPHNjcmlwdD4gICAgCiAgICAKCiAgICAgICAgICAgIAogICAgICAgICAgICAgICAgdmFyIGJvdW5kcyA9IG51bGw7CiAgICAgICAgICAgIAoKICAgICAgICAgICAgdmFyIG1hcF8zODkxZTc0NWVjYTI0MzY3OWMzODI4NDAwZTRhMGQ4OSA9IEwubWFwKAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJ21hcF8zODkxZTc0NWVjYTI0MzY3OWMzODI4NDAwZTRhMGQ4OScsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB7Y2VudGVyOiBbMzkuNSwtMTIyLjVdLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgem9vbTogNCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1heEJvdW5kczogYm91bmRzLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbGF5ZXJzOiBbXSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdvcmxkQ29weUp1bXA6IGZhbHNlLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY3JzOiBMLkNSUy5FUFNHMzg1NwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB9KTsKICAgICAgICAgICAgCiAgICAgICAgCiAgICAKICAgICAgICAgICAgdmFyIHRpbGVfbGF5ZXJfNTRkMmU3YTQ0ODMzNGMxY2FjMjQ2M2UwNjI5MzJlMTMgPSBMLnRpbGVMYXllcigKICAgICAgICAgICAgICAgICdodHRwczovL3tzfS50aWxlLm9wZW5zdHJlZXRtYXAub3JnL3t6fS97eH0ve3l9LnBuZycsCiAgICAgICAgICAgICAgICB7CiAgImF0dHJpYnV0aW9uIjogbnVsbCwKICAiZGV0ZWN0UmV0aW5hIjogZmFsc2UsCiAgIm1heFpvb20iOiAxOCwKICAibWluWm9vbSI6IDEsCiAgIm5vV3JhcCI6IGZhbHNlLAogICJzdWJkb21haW5zIjogImFiYyIKfQogICAgICAgICAgICAgICAgKS5hZGRUbyhtYXBfMzg5MWU3NDVlY2EyNDM2NzljMzgyODQwMGU0YTBkODkpOwogICAgICAgIAogICAgCiAgICAgICAgICAgIHZhciBtYWNyb19lbGVtZW50XzMwYjI1Mzk2NTczNzQ2NzQ4YWFjNGEwYWY0NmUwODI0ID0gTC50aWxlTGF5ZXIud21zKAogICAgICAgICAgICAgICAgJ2h0dHBzOi8vZGF0YS5heGRzLmNvL25jV01TL3dtcycsCiAgICAgICAgICAgICAgICB7CiAgImF0dHJpYnV0aW9uIjogIiIsCiAgImNycyI6IG51bGwsCiAgImZvcm1hdCI6ICJpbWFnZS9wbmciLAogICJsYXllcnMiOiAiRzFfU1NUX1VTX1dFU1RfQ09BU1QvYW5hbHlzZWRfc3N0IiwKICAic3R5bGVzIjogIiIsCiAgInRyYW5zcGFyZW50IjogdHJ1ZSwKICAidXBwZXJjYXNlIjogZmFsc2UsCiAgInZlcnNpb24iOiAiMS4xLjEiCn0KICAgICAgICAgICAgICAgICkuYWRkVG8obWFwXzM4OTFlNzQ1ZWNhMjQzNjc5YzM4Mjg0MDBlNGEwZDg5KTsKCiAgICAgICAgCiAgICAKICAgICAgICAgICAgdmFyIGxheWVyX2NvbnRyb2xfMDFiNWY5MzI5ZDlmNDU4MWIxZGJlMjg0M2E2ZDU4YzIgPSB7CiAgICAgICAgICAgICAgICBiYXNlX2xheWVycyA6IHsgIm9wZW5zdHJlZXRtYXAiIDogdGlsZV9sYXllcl81NGQyZTdhNDQ4MzM0YzFjYWMyNDYzZTA2MjkzMmUxMywgfSwKICAgICAgICAgICAgICAgIG92ZXJsYXlzIDogeyAiU2VhIFN1cmZhY2UgVGVtcGVyYXR1cmUgYXQgdW5kZWZpbmVkIiA6IG1hY3JvX2VsZW1lbnRfMzBiMjUzOTY1NzM3NDY3NDhhYWM0YTBhZjQ2ZTA4MjQsIH0KICAgICAgICAgICAgICAgIH07CiAgICAgICAgICAgIEwuY29udHJvbC5sYXllcnMoCiAgICAgICAgICAgICAgICBsYXllcl9jb250cm9sXzAxYjVmOTMyOWQ5ZjQ1ODFiMWRiZTI4NDNhNmQ1OGMyLmJhc2VfbGF5ZXJzLAogICAgICAgICAgICAgICAgbGF5ZXJfY29udHJvbF8wMWI1ZjkzMjlkOWY0NTgxYjFkYmUyODQzYTZkNThjMi5vdmVybGF5cywKICAgICAgICAgICAgICAgIHtwb3NpdGlvbjogJ3RvcHJpZ2h0JywKICAgICAgICAgICAgICAgICBjb2xsYXBzZWQ6IHRydWUsCiAgICAgICAgICAgICAgICAgYXV0b1pJbmRleDogdHJ1ZQogICAgICAgICAgICAgICAgfSkuYWRkVG8obWFwXzM4OTFlNzQ1ZWNhMjQzNjc5YzM4Mjg0MDBlNGEwZDg5KTsKICAgICAgICAKPC9zY3JpcHQ+" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div></div></div>
+</div>
+<p>Last but not least a static image for the page thumbnail.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">Image</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">_to_png</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-01-18-siphon-explore-thredds_28_0.png" src="../../../_images/2017-01-18-siphon-explore-thredds_28_0.png" />
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/Code Gallery/data_collection"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="2016-12-20-searching_glider_deployments.html" title="previous page">Accessing glider data via the Glider DAC API with Python</a>
+    <a class='right-next' id="next-link" href="2017-03-21-ERDDAP_IOOS_Sensor_Map.html" title="next page">Read realtime data from IOOS Sensor Map via ERDDAP tabledap</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
