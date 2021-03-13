@@ -8,6 +8,10 @@
           - file: content/Code Gallery/data_collection/2016-10-12-fetching_data.ipynb
           - file: content/Code Gallery/data_collection/2017-05-14-running_compliance_checker.ipynb
     - file: content/Code Gallery/data_plotting/data_plotting.md
+      sections:
+        -file: content/Code Gallery/data_plotting/2016-11-15-glider_data_example.ipynb
+    - file: content/Code Gallery/data_analysis/data-analysis.md
+    - file: content/Code Gallery/data_analysis/data-analysis.md
     - file: content/Code Gallery/data_analysis/data-analysis.md
 
 - part: Video Tutorials
