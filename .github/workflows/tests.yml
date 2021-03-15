@@ -35,7 +35,7 @@ jobs:
               exit 1
          fi
          source activate IOOS
-         python -c 'import gdal; print(dir(gdal))'
+         python -c 'import osgeo.gdal; print(dir(osgeo.gdal))'
 
     - name: Notebook tests
       shell: bash -l {0}
