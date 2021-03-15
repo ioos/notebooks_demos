@@ -4,8 +4,8 @@ layout: single
 ---
 
 For IOOS python users we recommend the free
-[Miniconda](http://conda.pydata.org/miniconda.html) Python distribution,
-a lightweight version of the [Anaconda Scientific Python Distribution](https://store.continuum.io/cshop/anaconda/).
+[Miniconda](https://docs.conda.io/en/latest/miniconda.html) Python distribution,
+a lightweight version of the [Anaconda Scientific Python Distribution](https://www.anaconda.com/products/individual).
 While the full Anaconda distribution will also work,
 it's faster to install Miniconda,
 and you install only the packages you need.
@@ -14,7 +14,7 @@ you can install it by typing `conda install anaconda` using miniconda.
 
 ## Install
 
-Download and install the appropriate Miniconda installer from [http://conda.pydata.org/miniconda.html](http://conda.pydata.org/miniconda.html).
+Download and install the appropriate Miniconda installer from [https://docs.conda.io/en/latest/miniconda.html](https://docs.conda.io/en/latest/miniconda.html).
 With Anaconda you can create environments that use any Python version (e.g. Python 2.7 or Python 3.6),
 so install the latest Python 3.x and if find out later you need a Python 2.7 environment,
 you can create one.
@@ -41,9 +41,9 @@ Copy-and-paste this:
 
 ```shell
 if [[ $(uname) == "Darwin" ]]; then
-  url=https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
+  url=https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
 elif [[ $(uname) == "Linux" ]]; then
-  url=https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+  url=https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 fi
 curl $url -o miniconda.sh
 bash miniconda.sh -b
@@ -64,7 +64,7 @@ by right clicking with the mouse and choosing `save as...`,
 or, on `OS X` and `Linux`, use these commands to download:
 
 ```bash
-url=https://raw.githubusercontent.com/ioos/notebooks_demos/master/environment.yml
+url=https://raw.githubusercontent.com/ioos/notebooks_demos/master/.binder/environment.yml
 curl $url -o environment.yml
 ```
 
