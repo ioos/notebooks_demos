@@ -1,15 +1,4 @@
 Traceback (most recent call last):
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 622, in _async_poll_for_reply
-    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/util.py", line 85, in ensure_async
-    result = await obj
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/jupyter_client/asynchronous/channels.py", line 48, in get_msg
-    raise Empty
-queue.Empty
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
   File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/jupyter_cache/executors/utils.py", line 56, in single_nb_execution
     record_timing=False,
   File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 1112, in execute
@@ -22,21 +11,28 @@ Traceback (most recent call last):
     return future.result()
   File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 554, in async_execute
     cell, index, execution_count=self.code_cells_executed + 1
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 841, in async_execute_cell
-    exec_reply = await self.task_poll_for_reply
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 646, in _async_poll_for_reply
-    await self._async_handle_timeout(timeout, cell)
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 697, in _async_handle_timeout
-    "Cell execution timed out", timeout, cell
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
-The message was: Cell execution timed out.
-Here is a preview of the cell contents:
--------------------
-get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000)
+  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 857, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 760, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from geolinks import sniff_link
 
-records = "\n".join(csw.records.keys())
-print("Found {} records.\n".format(len(csw.records.keys())))
-for key, value in list(csw.records.items()):
-    print(u"[{}]\n{}\n".format(value.title, key))
--------------------
+msg = "geolink: {geolink}\nscheme: {scheme}\nURL: {url}\n".format
+for ref in value.references:
+    print(msg(geolink=sniff_link(ref["url"]), **ref))
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[0;32m<ipython-input-11-5c02a003aeab>[0m in [0;36m<module>[0;34m[0m
+[0;32m----> 1[0;31m [0;32mfrom[0m [0mgeolinks[0m [0;32mimport[0m [0msniff_link[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      2[0m [0;34m[0m[0m
+[1;32m      3[0m [0mmsg[0m [0;34m=[0m [0;34m"geolink: {geolink}\nscheme: {scheme}\nURL: {url}\n"[0m[0;34m.[0m[0mformat[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0;32mfor[0m [0mref[0m [0;32min[0m [0mvalue[0m[0;34m.[0m[0mreferences[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m     [0mprint[0m[0;34m([0m[0mmsg[0m[0;34m([0m[0mgeolink[0m[0;34m=[0m[0msniff_link[0m[0;34m([0m[0mref[0m[0;34m[[0m[0;34m"url"[0m[0;34m][0m[0;34m)[0m[0;34m,[0m [0;34m**[0m[0mref[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mModuleNotFoundError[0m: No module named 'geolinks'
+ModuleNotFoundError: No module named 'geolinks'
 
