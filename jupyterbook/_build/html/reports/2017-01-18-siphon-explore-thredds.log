@@ -17,35 +17,32 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-from siphon.catalog import TDSCatalog
+import folium
 
-catalog = TDSCatalog("https://thredds.cencoos.org/thredds/catalog.xml")
+m = folium.Map(location=[lat, lon], zoom_start=4)
 
+folium.WmsTileLayer(
+    name="{} at {}".format(title, time),
+    url=url,
+    layers=layer,
+    fmt="image/png",
+    transparent=True,
+).add_to(m)
 
-info = """
-Catalog information
--------------------
+folium.LayerControl().add_to(m)
 
-Base THREDDS URL: {}
-Catalog name: {}
-Catalog URL: {}
-Metadata: {}
-""".format(
-    catalog.base_tds_url, catalog.catalog_name, catalog.catalog_url, catalog.metadata
-)
-
-print(info)
+m
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m<ipython-input-1-fa1a6082a7c3>[0m in [0;36m<module>[0;34m[0m
-[0;32m----> 1[0;31m [0;32mfrom[0m [0msiphon[0m[0;34m.[0m[0mcatalog[0m [0;32mimport[0m [0mTDSCatalog[0m[0;34m[0m[0;34m[0m[0m
+[0;32m<ipython-input-15-d712acf9f8d6>[0m in [0;36m<module>[0;34m[0m
+[0;32m----> 1[0;31m [0;32mimport[0m [0mfolium[0m[0;34m[0m[0;34m[0m[0m
 [0m[1;32m      2[0m [0;34m[0m[0m
-[1;32m      3[0m [0mcatalog[0m [0;34m=[0m [0mTDSCatalog[0m[0;34m([0m[0;34m"https://thredds.cencoos.org/thredds/catalog.xml"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      3[0m [0mm[0m [0;34m=[0m [0mfolium[0m[0;34m.[0m[0mMap[0m[0;34m([0m[0mlocation[0m[0;34m=[0m[0;34m[[0m[0mlat[0m[0;34m,[0m [0mlon[0m[0;34m][0m[0;34m,[0m [0mzoom_start[0m[0;34m=[0m[0;36m4[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 [1;32m      4[0m [0;34m[0m[0m
-[1;32m      5[0m [0;34m[0m[0m
+[1;32m      5[0m folium.WmsTileLayer(
 
-[0;31mModuleNotFoundError[0m: No module named 'siphon'
-ModuleNotFoundError: No module named 'siphon'
+[0;31mModuleNotFoundError[0m: No module named 'folium'
+ModuleNotFoundError: No module named 'folium'
 

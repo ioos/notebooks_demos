@@ -101,8 +101,8 @@
 </p>
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1 current active collapsible-parent">
-  <a class="reference internal" href="data_collection.html">
-   Data Collection Process
+  <a class="reference internal" href="data_access.html">
+   Data Access Notebooks
   </a>
   <ul class="current collapse-ul">
    <li class="toctree-l2">
@@ -155,8 +155,8 @@
   </i>
  </li>
  <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../data_analysis/data_analysis.html">
-   Data Analysis
+  <a class="reference internal" href="../data_analysis/data_analysis_and_visualization.html">
+   Data Analysis And Visualization Notebooks
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -219,8 +219,8 @@
   </i>
  </li>
  <li class="toctree-l1 collapsible-parent">
-  <a class="reference internal" href="../data_preprocessing/data_preprocessing.html">
-   Data Preprocessing
+  <a class="reference internal" href="../data_preprocessing/data_publication.html">
+   Data Publication
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -497,7 +497,7 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>*standard_names*: surface_northward_sea_water_velocity, surface_eastward_sea_water_velocity
-*start and stop dates*: 2021-02-27 21:55:32.470503 to 2021-03-06 21:55:32.470503
+*start and stop dates*: 2021-03-09 11:17:57.503155 to 2021-03-16 11:17:57.503155
 *bounding box*:[-123, 36, -121, 40]
 *crs*: urn:ogc:def:crs:OGC:1.3:CRS84
 </pre></div>
@@ -531,20 +531,6 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;Unrecognized constraint </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">constraint</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">6036</span><span class="n">fbb96d23</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">owslib</span> <span class="kn">import</span> <span class="n">fes</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> 
-<span class="g g-Whitespace">      </span><span class="mi">3</span> 
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">def</span> <span class="nf">fes_date_filter</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">constraint</span><span class="o">=</span><span class="s2">&quot;overlaps&quot;</span><span class="p">):</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">start</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:00&quot;</span><span class="p">)</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;owslib&#39;
 </pre></div>
 </div>
 </div>
@@ -614,17 +600,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 5 records.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 4 records.
 
-[HYbrid Coordinate Ocean Model (HYCOM): Global]: hycom_global
-[Near-Real Time Surface Ocean Velocity, U.S. West Coast,
-1 km Resolution]: HFR/USWC/1km/hourly/RTV/HFRADAR_US_West_Coast_1km_Resolution_Hourly_RTV_best.ncd
-[Near-Real Time Surface Ocean Velocity, U.S. West Coast,
-2 km Resolution]: HFR/USWC/2km/hourly/RTV/HFRADAR_US_West_Coast_2km_Resolution_Hourly_RTV_best.ncd
-[Near-Real Time Surface Ocean Velocity, U.S. West Coast,
-500 m Resolution]: HFR/USWC/500m/hourly/RTV/HFRADAR_US_West_Coast_500m_Resolution_Hourly_RTV_best.ncd
-[Near-Real Time Surface Ocean Velocity, U.S. West Coast,
-6 km Resolution]: HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd
+[(CeNCOOS) Line 67 Glider - sp028-20210218T2317]: sp028_20210218t2317
+[(CeNCOOS) Line 67 Glider - sp040-20210218T2325]: sp040_20210218t2325
+[sp028-20210218T2317]: sp028-20210218T2317
+[sp040-20210218T2325]: sp040-20210218T2325
 </pre></div>
 </div>
 </div>
@@ -641,17 +622,16 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Surface ocean velocities estimated from HF-Radar are
-representative of the upper 0.3 - 2.5 meters of the
-ocean.  The main objective of near-real time
-processing is to produce the best product from
-available data at the time of processing.  Radial
-velocity measurements are obtained from individual
-radar sites through the U.S. HF-Radar Network.
-Hourly radial data are processed by unweighted
-least-squares on a 6 km resolution grid of the U.S.
-West Coast to produce near real-time surface current
-maps.
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">6</span><span class="o">-</span><span class="mi">28</span><span class="n">a84dbfbfbd</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">value</span> <span class="o">=</span> <span class="n">csw</span><span class="o">.</span><span class="n">records</span><span class="p">[</span>
+<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="s2">&quot;HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd&quot;</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="nb">print</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">abstract</span><span class="p">)</span>
+
+<span class="ne">KeyError</span>: &#39;HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd&#39;
 </pre></div>
 </div>
 </div>

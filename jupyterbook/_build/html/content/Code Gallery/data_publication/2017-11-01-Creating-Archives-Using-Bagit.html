@@ -1,0 +1,753 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Using BagIt to tag oceanographic data &#8212; The U.S. Integrated Ocean Observing System (IOOS)</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="IOOS" href="../../Video%20Tutorials/ioos.html" />
+    <link rel="prev" title="Creating a CF-1.6 timeSeries using pocean" href="2018-02-27-pocean-timeSeries-demo.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS-logo_little.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The U.S. Integrated Ocean Observing System (IOOS)</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../intro.html">
+   IOOS Data Demo Center
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_access/data_access.html">
+   Data Access Notebooks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-12-15-finding_HFRadar_currents.html">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_analysis_and_visualization/data_analysis_and_visualization.html">
+   Data Analysis And Visualization Notebooks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="data_publication.html">
+   Data Publication
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core - Sampling Event with Measurement or Fact using Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2020-12-08-DataToDwC.html#event-file">
+     Event file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2020-12-08-DataToDwC.html#occurrence-file">
+     Occurrence file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2020-12-08-DataToDwC.html#measurement-or-fact">
+     Measurement Or Fact
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-02-27-pocean-timeSeries-demo.html">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ioos.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/noos.html">
+   NANOOS Visualization System (NVS)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/glos.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ooi.html">
+   OOI Demonstration Videos
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/python_dem.html">
+   Python Demonstration Videos
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Other Resources
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Other%20Resources/ioos_installation_conda.html">
+   Installing the IOOS Conda Environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+   Opening netCDF files - hints from AODN
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+   Unidata Ju[yter Notebook Gallery
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://iobis.org/tutorial/">
+   Extracting and Enriching OBIS data with R
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/USGS-R">
+   USGS-R Examples
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Contact Us
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../contact_us.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/data_publication/2017-11-01-Creating-Archives-Using-Bagit.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/data_publication/2017-11-01-Creating-Archives-Using-Bagit.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/data_publication/2017-11-01-Creating-Archives-Using-Bagit.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="using-bagit-to-tag-oceanographic-data">
+<h1>Using BagIt to tag oceanographic data<a class="headerlink" href="#using-bagit-to-tag-oceanographic-data" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/BagIt"><code class="docutils literal notranslate"><span class="pre">BagIt</span></code></a> is a packaging format that supports storage of arbitrary digital content. The “bag” consists of arbitrary content and “tags,” the metadata files. <code class="docutils literal notranslate"><span class="pre">BagIt</span></code> packages can be used to facilitate data sharing with federal archive centers - thus ensuring digital preservation of oceanographic datasets within IOOS and its regional associations. NOAA NCEI supports reading from a Web Accessible Folder (WAF) containing bagit archives. For an example please see: <a class="reference external" href="http://ncei.axiomdatascience.com/cencoos/">http://ncei.axiomdatascience.com/cencoos/</a></p>
+<p>On this notebook we will use the <a class="reference external" href="http://libraryofcongress.github.io/bagit-python">python interface</a> for <code class="docutils literal notranslate"><span class="pre">BagIt</span></code> to create a “bag” of a time-series profile data. First let us load our data from a comma separated values file (<code class="docutils literal notranslate"><span class="pre">CSV</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;dsg&quot;</span><span class="p">,</span> <span class="s2">&quot;timeseriesProfile.csv&quot;</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">646334</span><span class="n">dd60ad</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;dsg&quot;</span><span class="p">,</span> <span class="s2">&quot;timeseriesProfile.csv&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> 
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">])</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="nn">~/miniconda3/envs/ioos/lib/python3.6/site-packages/pandas/io/parsers.py</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, dialect, error_bad_lines, warn_bad_lines, delim_whitespace, low_memory, memory_map, float_precision)</span>
+<span class="g g-Whitespace">    </span><span class="mi">686</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">687</span> 
+<span class="ne">--&gt; </span><span class="mi">688</span>     <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">689</span> 
+<span class="g g-Whitespace">    </span><span class="mi">690</span> 
+
+<span class="nn">~/miniconda3/envs/ioos/lib/python3.6/site-packages/pandas/io/parsers.py</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">452</span> 
+<span class="g g-Whitespace">    </span><span class="mi">453</span>     <span class="c1"># Create the parser.</span>
+<span class="ne">--&gt; </span><span class="mi">454</span>     <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">fp_or_buf</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">455</span> 
+<span class="g g-Whitespace">    </span><span class="mi">456</span>     <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
+
+<span class="nn">~/miniconda3/envs/ioos/lib/python3.6/site-packages/pandas/io/parsers.py</span> in <span class="ni">__init__</span><span class="nt">(self, f, engine, **kwds)</span>
+<span class="g g-Whitespace">    </span><span class="mi">946</span>             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">947</span> 
+<span class="ne">--&gt; </span><span class="mi">948</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">949</span> 
+<span class="g g-Whitespace">    </span><span class="mi">950</span>     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="nn">~/miniconda3/envs/ioos/lib/python3.6/site-packages/pandas/io/parsers.py</span> in <span class="ni">_make_engine</span><span class="nt">(self, engine)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1178</span>     <span class="k">def</span> <span class="nf">_make_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1179</span>         <span class="k">if</span> <span class="n">engine</span> <span class="o">==</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1180</span>             <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="n">CParserWrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1181</span>         <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1182</span>             <span class="k">if</span> <span class="n">engine</span> <span class="o">==</span> <span class="s2">&quot;python&quot;</span><span class="p">:</span>
+
+<span class="nn">~/miniconda3/envs/ioos/lib/python3.6/site-packages/pandas/io/parsers.py</span> in <span class="ni">__init__</span><span class="nt">(self, src, **kwds)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2008</span>         <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;usecols&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">usecols</span>
+<span class="g g-Whitespace">   </span><span class="mi">2009</span> 
+<span class="ne">-&gt; </span><span class="mi">2010</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_reader</span> <span class="o">=</span> <span class="n">parsers</span><span class="o">.</span><span class="n">TextReader</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2011</span>         <span class="bp">self</span><span class="o">.</span><span class="n">unnamed_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reader</span><span class="o">.</span><span class="n">unnamed_cols</span>
+<span class="g g-Whitespace">   </span><span class="mi">2012</span> 
+
+<span class="nn">pandas/_libs/parsers.pyx</span> in <span class="ni">pandas._libs.parsers.TextReader.__cinit__</span><span class="nt">()</span>
+
+<span class="nn">pandas/_libs/parsers.pyx</span> in <span class="ni">pandas._libs.parsers.TextReader._setup_parser_source</span><span class="nt">()</span>
+
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;data/dsg/timeseriesProfile.csv&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Instead of “bagging” the <code class="docutils literal notranslate"><span class="pre">CSV</span></code> file we will use this create a metadata rich netCDF file.</p>
+<p>We can convert the table to a <code class="docutils literal notranslate"><span class="pre">DSG</span></code>, Discrete Sampling Geometry, using <code class="docutils literal notranslate"><span class="pre">pocean.dsg</span></code>. The first thing we need to do is to create a mapping from the data column names to the netCDF <code class="docutils literal notranslate"><span class="pre">axes</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">axes</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;lon&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="s2">&quot;depth&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can create a <a class="reference external" href="http://cfconventions.org/cf-conventions/v1.6.0/cf-conventions.html#_orthogonal_multidimensional_array_representation_of_time_series">Orthogonal Multidimensional Timeseries Profile</a> object…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+
+<span class="kn">from</span> <span class="nn">pocean.dsg</span> <span class="kn">import</span> <span class="n">OrthogonalMultidimensionalTimeseriesProfile</span> <span class="k">as</span> <span class="n">omtsp</span>
+
+<span class="n">output_fp</span><span class="p">,</span> <span class="n">output</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">output_fp</span><span class="p">)</span>
+
+<span class="n">ncd</span> <span class="o">=</span> <span class="n">omtsp</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>… And add some extra metadata before we close the file.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">naming_authority</span> <span class="o">=</span> <span class="s2">&quot;ioos&quot;</span>
+<span class="n">st_id</span> <span class="o">=</span> <span class="s2">&quot;Station1&quot;</span>
+
+<span class="n">ncd</span><span class="o">.</span><span class="n">naming_authority</span> <span class="o">=</span> <span class="n">naming_authority</span>
+<span class="n">ncd</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">st_id</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ncd</span><span class="p">)</span>
+<span class="n">ncd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pocean.dsg.timeseriesProfile.om.OrthogonalMultidimensionalTimeseriesProfile&#39;&gt;
+root group (NETCDF4 data model, file format HDF5):
+    Conventions: CF-1.6
+    date_created: 2017-11-27T15:11:00Z
+    featureType: timeSeriesProfile
+    cdm_data_type: TimeseriesProfile
+    naming_authority: ioos
+    id: Station1
+    dimensions(sizes): station(1), time(100), depth(4)
+    variables(dimensions): &lt;class &#39;str&#39;&gt; station(station), float64 lat(station), float64 lon(station), int32 crs(), float64 time(time), int32 depth(depth), int32 index(time,depth,station), float64 humidity(time,depth,station), float64 temperature(time,depth,station)
+    groups: 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Time to create the archive for the file with <code class="docutils literal notranslate"><span class="pre">BagIt</span></code>. We have to create a folder for the bag.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp_bagit_folder</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+<span class="n">temp_data_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">temp_bagit_folder</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can create the bag and copy the netCDF file to a <code class="docutils literal notranslate"><span class="pre">data</span></code> sub-folder.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="kn">import</span> <span class="nn">bagit</span>
+
+<span class="n">bag</span> <span class="o">=</span> <span class="n">bagit</span><span class="o">.</span><span class="n">make_bag</span><span class="p">(</span><span class="n">temp_bagit_folder</span><span class="p">,</span> <span class="n">checksum</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;sha256&quot;</span><span class="p">])</span>
+
+<span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">temp_data_folder</span> <span class="o">+</span> <span class="s2">&quot;/parameter1.nc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;/tmp/tmp5qrdn3qe/data/parameter1.nc&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Last, but not least, we have to set bag metadata and update the existing bag with it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">urn</span> <span class="o">=</span> <span class="s2">&quot;urn:ioos:station:</span><span class="si">{naming_authority}</span><span class="s2">:</span><span class="si">{st_id}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">naming_authority</span><span class="o">=</span><span class="n">naming_authority</span><span class="p">,</span> <span class="n">st_id</span><span class="o">=</span><span class="n">st_id</span>
+<span class="p">)</span>
+
+<span class="n">bag_meta</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Bag-Count&quot;</span><span class="p">:</span> <span class="s2">&quot;1 of 1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Bag-Group-Identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;ioos_bagit_testing&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Contact-Name&quot;</span><span class="p">:</span> <span class="s2">&quot;Kyle Wilcox&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Contact-Phone&quot;</span><span class="p">:</span> <span class="s2">&quot;907-230-0304&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Contact-Email&quot;</span><span class="p">:</span> <span class="s2">&quot;axiom+ncei@axiomdatascience.com&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;External-Identifier&quot;</span><span class="p">:</span> <span class="n">urn</span><span class="p">,</span>
+    <span class="s2">&quot;External-Description&quot;</span><span class="p">:</span> <span class="s2">&quot;Sensor data from station </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">urn</span><span class="p">),</span>
+    <span class="s2">&quot;Internal-Sender-Identifier&quot;</span><span class="p">:</span> <span class="n">urn</span><span class="p">,</span>
+    <span class="s2">&quot;Internal-Sender-Description&quot;</span><span class="p">:</span> <span class="s2">&quot;Station - URN:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">urn</span><span class="p">),</span>
+    <span class="s2">&quot;Organization-address&quot;</span><span class="p">:</span> <span class="s2">&quot;1016 W 6th Ave, Ste. 105, Anchorage, AK 99501, USA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Source-Organization&quot;</span><span class="p">:</span> <span class="s2">&quot;Axiom Data Science&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="n">bag</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">bag_meta</span><span class="p">)</span>
+<span class="n">bag</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">manifests</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>That is it! Simple and efficient!!</p>
+<p>The cell below illustrates the bag directory tree.</p>
+<p>(Note that the commands below will not work on Windows and some *nix systems may require the installation of the command <code class="docutils literal notranslate"><span class="pre">tree</span></code>, however, they are only need for this demonstration.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>tree <span class="nv">$temp_bagit_folder</span>
+<span class="o">!</span>cat <span class="nv">$temp_bagit_folder</span>/manifest-sha256.txt
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Blue">/tmp/tmp5qrdn3qe</span>
+├── bag-info.txt
+├── bagit.txt
+├── <span class=" -Color -Color-Bold -Color-Bold-Blue">data</span>
+│   └── parameter1.nc
+├── manifest-sha256.txt
+└── tagmanifest-sha256.txt
+
+1 directory, 5 files
+63d47afc3b8b227aac251a234ecbb9cfc6cc01d1dd1aa34c65969fdabf0740f1  data/parameter1.nc
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can add more files to the bag as needed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">temp_data_folder</span> <span class="o">+</span> <span class="s2">&quot;/parameter2.nc&quot;</span><span class="p">)</span>
+<span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">temp_data_folder</span> <span class="o">+</span> <span class="s2">&quot;/parameter3.nc&quot;</span><span class="p">)</span>
+<span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">temp_data_folder</span> <span class="o">+</span> <span class="s2">&quot;/parameter4.nc&quot;</span><span class="p">)</span>
+
+<span class="n">bag</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">manifests</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>tree <span class="nv">$temp_bagit_folder</span>
+<span class="o">!</span>cat <span class="nv">$temp_bagit_folder</span>/manifest-sha256.txt
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Blue">/tmp/tmp5qrdn3qe</span>
+├── bag-info.txt
+├── bagit.txt
+├── <span class=" -Color -Color-Bold -Color-Bold-Blue">data</span>
+│   ├── parameter1.nc
+│   ├── parameter2.nc
+│   ├── parameter3.nc
+│   └── parameter4.nc
+├── manifest-sha256.txt
+└── tagmanifest-sha256.txt
+
+1 directory, 8 files
+63d47afc3b8b227aac251a234ecbb9cfc6cc01d1dd1aa34c65969fdabf0740f1  data/parameter1.nc
+63d47afc3b8b227aac251a234ecbb9cfc6cc01d1dd1aa34c65969fdabf0740f1  data/parameter2.nc
+63d47afc3b8b227aac251a234ecbb9cfc6cc01d1dd1aa34c65969fdabf0740f1  data/parameter3.nc
+63d47afc3b8b227aac251a234ecbb9cfc6cc01d1dd1aa34c65969fdabf0740f1  data/parameter4.nc
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/Code Gallery/data_publication"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="2018-02-27-pocean-timeSeries-demo.html" title="previous page">Creating a CF-1.6 timeSeries using pocean</a>
+    <a class='right-next' id="next-link" href="../../Video%20Tutorials/ioos.html" title="next page">IOOS</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

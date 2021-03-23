@@ -17,40 +17,22 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-from owslib import fes
+value = csw.records[
+    "HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd"
+]
 
-
-def fes_date_filter(start, stop, constraint="overlaps"):
-    start = start.strftime("%Y-%m-%d %H:00")
-    stop = stop.strftime("%Y-%m-%d %H:00")
-    if constraint == "overlaps":
-        propertyname = "apiso:TempExtent_begin"
-        begin = fes.PropertyIsLessThanOrEqualTo(propertyname=propertyname, literal=stop)
-        propertyname = "apiso:TempExtent_end"
-        end = fes.PropertyIsGreaterThanOrEqualTo(
-            propertyname=propertyname, literal=start
-        )
-    elif constraint == "within":
-        propertyname = "apiso:TempExtent_begin"
-        begin = fes.PropertyIsGreaterThanOrEqualTo(
-            propertyname=propertyname, literal=start
-        )
-        propertyname = "apiso:TempExtent_end"
-        end = fes.PropertyIsLessThanOrEqualTo(propertyname=propertyname, literal=stop)
-    else:
-        raise NameError("Unrecognized constraint {}".format(constraint))
-    return begin, end
+print(value.abstract)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m<ipython-input-2-6036fbb96d23>[0m in [0;36m<module>[0;34m[0m
-[0;32m----> 1[0;31m [0;32mfrom[0m [0mowslib[0m [0;32mimport[0m [0mfes[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      2[0m [0;34m[0m[0m
-[1;32m      3[0m [0;34m[0m[0m
-[1;32m      4[0m [0;32mdef[0m [0mfes_date_filter[0m[0;34m([0m[0mstart[0m[0;34m,[0m [0mstop[0m[0;34m,[0m [0mconstraint[0m[0;34m=[0m[0;34m"overlaps"[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m     [0mstart[0m [0;34m=[0m [0mstart[0m[0;34m.[0m[0mstrftime[0m[0;34m([0m[0;34m"%Y-%m-%d %H:00"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mKeyError[0m                                  Traceback (most recent call last)
+[0;32m<ipython-input-6-28a84dbfbfbd>[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m value = csw.records[
+[0;32m----> 2[0;31m     [0;34m"HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd"[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      3[0m ]
+[1;32m      4[0m [0;34m[0m[0m
+[1;32m      5[0m [0mprint[0m[0;34m([0m[0mvalue[0m[0;34m.[0m[0mabstract[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mModuleNotFoundError[0m: No module named 'owslib'
-ModuleNotFoundError: No module named 'owslib'
+[0;31mKeyError[0m: 'HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd'
+KeyError: 'HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd'
 
