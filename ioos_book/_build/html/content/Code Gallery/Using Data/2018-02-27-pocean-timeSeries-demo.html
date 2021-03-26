@@ -1,0 +1,993 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creating a CF-1.6 timeSeries using pocean &#8212; The IOOS Data Demo Center</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Investigating ocean models skill for sea surface height with IOOS catalog and Python" href="2018-03-15-ssh-skillscore.html" />
+    <link rel="prev" title="Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma" href="2017-09-09-hurricane_irma.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The IOOS Data Demo Center</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  The IOOS Data Demo Center
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/about.html">
+   About Us
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/ioos_conda.html">
+   Installing the IOOS conda environment
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../IOOS/Others/others.html">
+   Other Resources
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+     Opening netCDF files - hints from AODN
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+     Unidata Ju[yter Notebook Gallery
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://iobis.org/tutorial/">
+     Extracting and Enriching OBIS data with R
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="https://github.com/USGS-R">
+     USGS-R Examples
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/contact.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../R%20Code/R_code.html">
+   R Code
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R%20Code/2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R%20Code/2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Matlab%20Code/Matlab_code.html">
+   Matlab Code
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Matlab%20Code/2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Finding%20Data/finding_data.html">
+   Finding Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-11-30-rerddap.html">
+     Calling R libraries from Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-12-15-finding_HFRadar_currents.html">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files Part 1
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="using_data.html">
+   Using Data
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Managing%20Data/managing_data.html">
+   Managing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2017-11-01-Creating-Archives-Using-Bagit.html">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/IOOS.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/NOOS.html">
+   NANOOS Visualization System
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/GLOS.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/OOI.html">
+   OOI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/PYTHON.html">
+   Python
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/Using Data/2018-02-27-pocean-timeSeries-demo.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/Using Data/2018-02-27-pocean-timeSeries-demo.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/Using Data/2018-02-27-pocean-timeSeries-demo.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="creating-a-cf-1-6-timeseries-using-pocean">
+<h1>Creating a CF-1.6 timeSeries using pocean<a class="headerlink" href="#creating-a-cf-1-6-timeseries-using-pocean" title="Permalink to this headline">¶</a></h1>
+<p>IOOS recommends to data providers that their netCDF files follow the CF-1.6 standard. In this notebook we will create a <a class="reference external" href="http://cfconventions.org/latest.html">CF-1.6 compliant</a> file that follows file that follows the <a class="reference external" href="http://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/build/ch09.html">Discrete Sampling Geometries</a> (DSG) of a <code class="docutils literal notranslate"><span class="pre">timeSeries</span></code> from a pandas DataFrame.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">pocean</span></code> module can handle all the DSGs described in the CF-1.6 document: <code class="docutils literal notranslate"><span class="pre">point</span></code>, <code class="docutils literal notranslate"><span class="pre">timeSeries</span></code>, <code class="docutils literal notranslate"><span class="pre">trajectory</span></code>, <code class="docutils literal notranslate"><span class="pre">profile</span></code>, <code class="docutils literal notranslate"><span class="pre">timeSeriesProfile</span></code>, and <code class="docutils literal notranslate"><span class="pre">trajectoryProfile</span></code>. These DSGs array may be represented in the netCDF file as:</p>
+<ul class="simple">
+<li><p><strong>orthogonal multidimensional</strong>: when the coordinates along the element axis of the features are identical;</p></li>
+<li><p><strong>incomplete multidimensional</strong>: when the features within a collection do not all have the same number but space is not an issue and using longest feature to all features is convenient;</p></li>
+<li><p><strong>contiguous ragged</strong>: can be used if the size of each feature is known;</p></li>
+<li><p><strong>indexed ragged</strong>: stores the features interleaved along the sample dimension in the data variable.</p></li>
+</ul>
+<p>Here we will use the orthogonal multidimensional array to represent time-series data from am hypothetical current meter. We’ll use fake data for this example for convenience.</p>
+<p>Our fake data represents a current meter located at 10 meters depth collected last week.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))],</span>
+        <span class="s2">&quot;longitude&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">48.6256</span><span class="p">,</span>
+        <span class="s2">&quot;latitude&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">27.5717</span><span class="p">,</span>
+        <span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s2">&quot;u&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+        <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+        <span class="s2">&quot;station&quot;</span><span class="p">:</span> <span class="s2">&quot;fake buoy&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+
+<span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>longitude</th>
+      <th>latitude</th>
+      <th>depth</th>
+      <th>u</th>
+      <th>v</th>
+      <th>station</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>95</th>
+      <td>2019-05-24 17:27:54.693087</td>
+      <td>-48.6256</td>
+      <td>-27.5717</td>
+      <td>10</td>
+      <td>0.440129</td>
+      <td>-0.897934</td>
+      <td>fake buoy</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>2019-05-25 17:27:54.693087</td>
+      <td>-48.6256</td>
+      <td>-27.5717</td>
+      <td>10</td>
+      <td>0.348287</td>
+      <td>-0.937388</td>
+      <td>fake buoy</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>2019-05-26 17:27:54.693087</td>
+      <td>-48.6256</td>
+      <td>-27.5717</td>
+      <td>10</td>
+      <td>0.252964</td>
+      <td>-0.967476</td>
+      <td>fake buoy</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>2019-05-27 17:27:54.693087</td>
+      <td>-48.6256</td>
+      <td>-27.5717</td>
+      <td>10</td>
+      <td>0.155114</td>
+      <td>-0.987897</td>
+      <td>fake buoy</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>2019-05-28 17:27:54.693087</td>
+      <td>-48.6256</td>
+      <td>-27.5717</td>
+      <td>10</td>
+      <td>0.055714</td>
+      <td>-0.998447</td>
+      <td>fake buoy</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Let’s take a look at our fake data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">oceans.plotting</span> <span class="kn">import</span> <span class="n">stick_plot</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">stick_plot</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">to_pydatetime</span><span class="p">()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;time&quot;</span><span class="p">]],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;v&quot;</span><span class="p">])</span>
+
+<span class="n">ref</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">qk</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">quiverkey</span><span class="p">(</span>
+    <span class="n">q</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ref</span><span class="si">}</span><span class="s2"> m s$^</span><span class="si">{</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="n">labelpos</span><span class="o">=</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="n">coordinates</span><span class="o">=</span><span class="s2">&quot;axes&quot;</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2018-02-27-pocean-timeSeries-demo_3_0.png" src="../../../_images/2018-02-27-pocean-timeSeries-demo_3_0.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pocean.dsg</span></code> is relatively simple to use. The user must provide a DataFrame, like the one above, and a dictionary of attributes that maps to the data and adhere to the DSG conventions desired.</p>
+<p>Because we want the file to work seamlessly with ERDDAP we also added some ERDDAP specific attributes like <code class="docutils literal notranslate"><span class="pre">cdm_timeseries_variables</span></code>, and <code class="docutils literal notranslate"><span class="pre">subsetVariables</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;global&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Fake mooring&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="s2">&quot;Vector current meter ADCP @ 10 m&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;institution&quot;</span><span class="p">:</span> <span class="s2">&quot;Restaurant at the end of the universe&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cdm_timeseries_variables&quot;</span><span class="p">:</span> <span class="s2">&quot;station&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;subsetVariables&quot;</span><span class="p">:</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;longitude&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;degrees_east&quot;</span><span class="p">,</span> <span class="s2">&quot;standard_name&quot;</span><span class="p">:</span> <span class="s2">&quot;longitude&quot;</span><span class="p">,},</span>
+    <span class="s2">&quot;latitude&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;degrees_north&quot;</span><span class="p">,</span> <span class="s2">&quot;standard_name&quot;</span><span class="p">:</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,},</span>
+    <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;m&quot;</span><span class="p">,</span> <span class="s2">&quot;standard_name&quot;</span><span class="p">:</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="s2">&quot;positive&quot;</span><span class="p">:</span> <span class="s2">&quot;down&quot;</span><span class="p">,},</span>
+    <span class="s2">&quot;u&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;m/s&quot;</span><span class="p">,</span> <span class="s2">&quot;standard_name&quot;</span><span class="p">:</span> <span class="s2">&quot;eastward_sea_water_velocity&quot;</span><span class="p">,},</span>
+    <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="s2">&quot;m/s&quot;</span><span class="p">,</span> <span class="s2">&quot;standard_name&quot;</span><span class="p">:</span> <span class="s2">&quot;northward_sea_water_velocity&quot;</span><span class="p">,},</span>
+    <span class="s2">&quot;station&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;cf_role&quot;</span><span class="p">:</span> <span class="s2">&quot;timeseries_id&quot;</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We also need to map the our data axes to <a class="reference external" href="https://github.com/pyoceans/pocean-core/blob/master/pocean/utils.py#L50-L59"><code class="docutils literal notranslate"><span class="pre">pocean</span></code>’s defaults</a>. This step is not needed if the data axes are already named like the default ones.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">axes</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="s2">&quot;depth&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pocean.dsg.timeseries.om</span> <span class="kn">import</span> <span class="n">OrthogonalMultidimensionalTimeseries</span>
+<span class="kn">from</span> <span class="nn">pocean.utils</span> <span class="kn">import</span> <span class="n">downcast_dataframe</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">downcast_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>  <span class="c1"># safely cast depth np.int64 to np.int32</span>
+<span class="n">dsg</span> <span class="o">=</span> <span class="n">OrthogonalMultidimensionalTimeseries</span><span class="o">.</span><span class="n">from_dataframe</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;fake_buoy.nc&quot;</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">OrthogonalMultidimensionalTimeseries</span></code> saves the DataFrame into a CF-1.6 TimeSeries DSG.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>ncdump -h fake_buoy.nc
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>netcdf fake_buoy {
+dimensions:
+	station = 1 ;
+	time = 100 ;
+variables:
+	int crs ;
+	double time(time) ;
+		time:units = &quot;seconds since 1990-01-01 00:00:00Z&quot; ;
+		time:standard_name = &quot;time&quot; ;
+		time:axis = &quot;T&quot; ;
+	string station(station) ;
+		station:cf_role = &quot;timeseries_id&quot; ;
+		station:long_name = &quot;station identifier&quot; ;
+	double latitude(station) ;
+		latitude:axis = &quot;Y&quot; ;
+		latitude:units = &quot;degrees_north&quot; ;
+		latitude:standard_name = &quot;latitude&quot; ;
+	double longitude(station) ;
+		longitude:axis = &quot;X&quot; ;
+		longitude:units = &quot;degrees_east&quot; ;
+		longitude:standard_name = &quot;longitude&quot; ;
+	int depth(station) ;
+		depth:_FillValue = -9999 ;
+		depth:axis = &quot;Z&quot; ;
+	double u(station, time) ;
+		u:_FillValue = -9999.9 ;
+		u:units = &quot;m/s&quot; ;
+		u:standard_name = &quot;eastward_sea_water_velocity&quot; ;
+		u:coordinates = &quot;time depth longitude latitude&quot; ;
+	double v(station, time) ;
+		v:_FillValue = -9999.9 ;
+		v:units = &quot;m/s&quot; ;
+		v:standard_name = &quot;northward_sea_water_velocity&quot; ;
+		v:coordinates = &quot;time depth longitude latitude&quot; ;
+
+// global attributes:
+		:Conventions = &quot;CF-1.6&quot; ;
+		:date_created = &quot;2019-02-25T20:27:00Z&quot; ;
+		:featureType = &quot;timeseries&quot; ;
+		:cdm_data_type = &quot;Timeseries&quot; ;
+		:title = &quot;Fake mooring&quot; ;
+		:summary = &quot;Vector current meter ADCP @ 10 m&quot; ;
+		:institution = &quot;Restaurant at the end of the universe&quot; ;
+		:cdm_timeseries_variables = &quot;station&quot; ;
+		:subsetVariables = &quot;depth&quot; ;
+}
+</pre></div>
+</div>
+</div>
+</div>
+<p>It also outputs the dsg object for inspection. Let us check a few things to see if our objects was created as expected. (Note that some of the metadata was “free” due t the built-in defaults in <code class="docutils literal notranslate"><span class="pre">pocean</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsg</span><span class="o">.</span><span class="n">getncattr</span><span class="p">(</span><span class="s2">&quot;featureType&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;timeseries&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">dsg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pocean.dsg.timeseries.om.OrthogonalMultidimensionalTimeseries
+</pre></div>
+</div>
+</div>
+</div>
+<p>In addition to standard <code class="docutils literal notranslate"><span class="pre">netCDF4-python</span></code> object <code class="docutils literal notranslate"><span class="pre">.variables</span></code> method <code class="docutils literal notranslate"><span class="pre">pocean</span></code>’s DSGs provides an “categorized” version of the variables in the <code class="docutils literal notranslate"><span class="pre">data_vars</span></code>, <code class="docutils literal notranslate"><span class="pre">ancillary_vars</span></code>, and the DSG axes methods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="n">v</span><span class="o">.</span><span class="n">standard_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">dsg</span><span class="o">.</span><span class="n">data_vars</span><span class="p">()]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;eastward_sea_water_velocity&#39;, &#39;northward_sea_water_velocity&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsg</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;class &#39;netCDF4._netCDF4.Variable&#39;&gt;
+ float64 time(time)
+     units: seconds since 1990-01-01 00:00:00Z
+     standard_name: time
+     axis: T
+ unlimited dimensions: 
+ current shape = (100,)
+ filling on, default _FillValue of 9.969209968386869e+36 used]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsg</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;class &#39;netCDF4._netCDF4.Variable&#39;&gt;
+ int32 depth(station)
+     _FillValue: -9999
+     axis: Z
+ unlimited dimensions: 
+ current shape = (1,)
+ filling on]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsg</span><span class="o">.</span><span class="n">vatts</span><span class="p">(</span><span class="s2">&quot;station&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;cf_role&#39;: &#39;timeseries_id&#39;, &#39;long_name&#39;: &#39;station identifier&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsg</span><span class="p">[</span><span class="s2">&quot;station&quot;</span><span class="p">][:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;fake buoy&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsg</span><span class="o">.</span><span class="n">vatts</span><span class="p">(</span><span class="s2">&quot;u&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;_FillValue&#39;: -9999.9,
+ &#39;units&#39;: &#39;m/s&#39;,
+ &#39;standard_name&#39;: &#39;eastward_sea_water_velocity&#39;,
+ &#39;coordinates&#39;: &#39;time depth longitude latitude&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can easily round-trip back to the pandas DataFrame object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dsg</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>t</th>
+      <th>x</th>
+      <th>y</th>
+      <th>z</th>
+      <th>station</th>
+      <th>u</th>
+      <th>v</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019-02-18 17:27:54.693087</td>
+      <td>-48.6256</td>
+      <td>-27.5717</td>
+      <td>10</td>
+      <td>fake buoy</td>
+      <td>-0.506366</td>
+      <td>0.862319</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019-02-19 17:27:54.693087</td>
+      <td>-48.6256</td>
+      <td>-27.5717</td>
+      <td>10</td>
+      <td>fake buoy</td>
+      <td>-0.417748</td>
+      <td>0.908563</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2019-02-20 17:27:54.693087</td>
+      <td>-48.6256</td>
+      <td>-27.5717</td>
+      <td>10</td>
+      <td>fake buoy</td>
+      <td>-0.324956</td>
+      <td>0.945729</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2019-02-21 17:27:54.693087</td>
+      <td>-48.6256</td>
+      <td>-27.5717</td>
+      <td>10</td>
+      <td>fake buoy</td>
+      <td>-0.228917</td>
+      <td>0.973446</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2019-02-22 17:27:54.693087</td>
+      <td>-48.6256</td>
+      <td>-27.5717</td>
+      <td>10</td>
+      <td>fake buoy</td>
+      <td>-0.130591</td>
+      <td>0.991436</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>For more information on <code class="docutils literal notranslate"><span class="pre">pocean</span></code> please check the <a class="reference external" href="https://pyoceans.github.io/pocean-core/docs/api/pocean.html">API docs</a>.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content\Code Gallery\Using Data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="2017-09-09-hurricane_irma.html" title="previous page">Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma</a>
+    <a class='right-next' id="next-link" href="2018-03-15-ssh-skillscore.html" title="next page">Investigating ocean models skill for sea surface height with IOOS catalog and Python</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

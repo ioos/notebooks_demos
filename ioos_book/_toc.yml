@@ -1,0 +1,76 @@
+- file: content/IOOS/index
+  title: The IOOS Data Demo Center
+  
+- part: The IOOS Data Demo Center
+  chapters:
+    - file: content/IOOS/about.md
+      title: About Us
+    - file: content/IOOS/ioos_conda.md
+    - file: content/IOOS/Others/others.md
+      sections:
+        - url: https://help.aodn.org.au/aodn-data-tools/user-code-library/
+          title: Opening netCDF files - hints from AODN
+        - url: http://unidata.github.io/notebook-gallery/
+          title: Unidata Ju[yter Notebook Gallery
+        - url: http://iobis.org/tutorial/
+          title: Extracting and Enriching OBIS data with R
+        - url: https://github.com/USGS-R
+          title: USGS-R Examples
+    - file: content/IOOS/contact.md
+
+    
+- part: Code Gallery
+  chapters:
+    - file: content/Code Gallery/R Code/R_code.md
+      sections:
+        - file: content/Code Gallery/R Code/2017-01-23-R-notebook.ipynb
+        - file: content/Code Gallery/R Code/2017-08-01-xtractoR.ipynb
+    - file: content/Code Gallery/Matlab Code/Matlab_code.md
+      sections:
+        - file: content/Code Gallery/Matlab Code/2017-03-30-octave_notebook_example.ipynb
+    - file: content/Code Gallery/Finding Data/finding_data.md
+      sections:
+        - file: content/Code Gallery/Finding Data/2016-10-12-fetching_data.ipynb
+        - file: content/Code Gallery/Finding Data/2016-12-19-exploring_csw.ipynb
+        - file: content/Code Gallery/Finding Data/2016-12-20-searching_glider_deployments.ipynb
+        - file: content/Code Gallery/Finding Data/2017-01-18-siphon-explore-thredds.ipynb
+        - file: content/Code Gallery/Finding Data/2017-03-21-ERDDAP_IOOS_Sensor_Map.ipynb
+        - file: content/Code Gallery/Finding Data/2017-05-14-running_compliance_checker.ipynb
+        - file: content/Code Gallery/Finding Data/2017-06-12-NCEI_RA_archive_history.ipynb
+        - file: content/Code Gallery/Finding Data/2017-07-25-HFRadar_currents.ipynb
+        - file: content/Code Gallery/Finding Data/2017-11-30-rerddap.ipynb
+        - file: content/Code Gallery/Finding Data/2017-12-15-finding_HFRadar_currents.ipynb
+        - file: content/Code Gallery/Finding Data/2018-02-20-obis.ipynb
+        - file: content/Code Gallery/Finding Data/2019-02-26-hurricane_gis_part01.ipynb
+        - file: content/Code Gallery/Finding Data/2019-05-27-hurricane_gis_part02.ipynb
+    - file: content/Code Gallery/Using Data/using_data.md
+      sections:
+        - file: content/Code Gallery/Using Data/2016-11-15-glider_data_example.ipynb
+        - file: content/Code Gallery/Using Data/2016-12-22-boston_light_swim.ipynb
+        - file: content/Code Gallery/Using Data/2017-09-09-hurricane_irma.ipynb
+        - file: content/Code Gallery/Using Data/2018-02-27-pocean-timeSeries-demo.ipynb
+        - file: content/Code Gallery/Using Data/2018-03-15-ssh-skillscore.ipynb
+        - file: content/Code Gallery/Using Data/2018-03-30-wave_height_assessment.ipynb
+        - file: content/Code Gallery/Using Data/2018-12-04-grids.ipynb
+        - file: content/Code Gallery/Using Data/2019-03-08-grids-temperature.ipynb
+        - file: content/Code Gallery/Using Data/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.ipynb
+        - file: content/Code Gallery/Using Data/2020-10-10-GTS.ipynb
+    - file: content/Code Gallery/Managing Data/managing_data.md
+      sections:
+        - file: content/Code Gallery/Managing Data/2016-11-16-CF-UGRID-SGRID-conventions.ipynb
+        - file: content/Code Gallery/Managing Data/2017-11-01-Creating-Archives-Using-Bagit.ipynb
+        - file: content/Code Gallery/Managing Data/2018-03-01-erddapy.ipynb
+        - file: content/Code Gallery/Managing Data/2020-12-08-DataToDwC.ipynb
+        
+- part: Video Tutorials
+  chapters:
+    - file: content/Video Tutorials/IOOS.md
+      title: IOOS
+    - file: content/Video Tutorials/NOOS.md
+      title: NANOOS Visualization System
+    - file: content/Video Tutorials/GLOS.md
+      title: GLOS
+    - file: content/Video Tutorials/OOI.md
+      title: OOI
+    - file: content/Video Tutorials/PYTHON.md
+      title: Python    

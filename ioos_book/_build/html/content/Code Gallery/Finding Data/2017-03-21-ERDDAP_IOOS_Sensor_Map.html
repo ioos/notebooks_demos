@@ -1,0 +1,955 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Read realtime data from IOOS Sensor Map via ERDDAP tabledap &#8212; The IOOS Data Demo Center</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Shore Station Compliance Checker Script" href="2017-05-14-running_compliance_checker.html" />
+    <link rel="prev" title="Exploring the THREDDS catalog with Unidata’s Siphon" href="2017-01-18-siphon-explore-thredds.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The IOOS Data Demo Center</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  The IOOS Data Demo Center
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/about.html">
+   About Us
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/ioos_conda.html">
+   Installing the IOOS conda environment
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../IOOS/Others/others.html">
+   Other Resources
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+     Opening netCDF files - hints from AODN
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+     Unidata Ju[yter Notebook Gallery
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://iobis.org/tutorial/">
+     Extracting and Enriching OBIS data with R
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="https://github.com/USGS-R">
+     USGS-R Examples
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/contact.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../R%20Code/R_code.html">
+   R Code
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R%20Code/2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R%20Code/2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Matlab%20Code/Matlab_code.html">
+   Matlab Code
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Matlab%20Code/2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="finding_data.html">
+   Finding Data
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-11-30-rerddap.html">
+     Calling R libraries from Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-12-15-finding_HFRadar_currents.html">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files Part 1
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Using%20Data/using_data.html">
+   Using Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-02-27-pocean-timeSeries-demo.html">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Managing%20Data/managing_data.html">
+   Managing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2017-11-01-Creating-Archives-Using-Bagit.html">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/IOOS.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/NOOS.html">
+   NANOOS Visualization System
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/GLOS.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/OOI.html">
+   OOI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/PYTHON.html">
+   Python
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/Finding Data/2017-03-21-ERDDAP_IOOS_Sensor_Map.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/Finding Data/2017-03-21-ERDDAP_IOOS_Sensor_Map.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/Finding Data/2017-03-21-ERDDAP_IOOS_Sensor_Map.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="read-realtime-data-from-ioos-sensor-map-via-erddap-tabledap">
+<h1>Read realtime data from IOOS Sensor Map via ERDDAP tabledap<a class="headerlink" href="#read-realtime-data-from-ioos-sensor-map-via-erddap-tabledap" title="Permalink to this headline">¶</a></h1>
+<p>Web Map Services are a great way to find data you may be looking for in a particular geographic area.</p>
+<p>Suppose you were exploring the <a class="reference external" href="https://via.hypothes.is/https://sensors.ioos.us/#map">IOOS Sensor Map</a>,
+and after selecting Significant Wave Height,
+had selected buoy 44011 on George’s Bank:</p>
+<p><img alt="2017-03-27_16-21-08" src="https://cloud.githubusercontent.com/assets/1872600/24376518/213e6c4c-130a-11e7-9744-2f23e9660adf.png" /></p>
+<p>You click the <code class="docutils literal notranslate"><span class="pre">ERDDAP</span></code> link and generate a URL to download the data as <code class="docutils literal notranslate"><span class="pre">CSV</span></code> <img alt="2017-03-27_16-24-35" src="https://cloud.githubusercontent.com/assets/1872600/24376521/2377afc8-130a-11e7-9a3b-c1c46e43d20d.png" />.</p>
+<p>You notice that the URL that is generated</p>
+<p>[<code class="docutils literal notranslate"><span class="pre">https://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&amp;time&gt;=2017-02-27T12:00:00Z&amp;station=&quot;urn:ioos:station:wmo:44011&quot;&amp;parameter=&quot;Significant</span> <span class="pre">Wave</span> <span class="pre">Height&quot;&amp;unit=&quot;m&quot;</span></code>](<a class="reference external" href="http://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&amp;time">http://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&amp;time</a>&gt;=2017-02-27T12:00:00Z&amp;station=”urn:ioos:station:wmo:44011”&amp;parameter=”Significant Wave Height”&amp;unit=”m”)</p>
+<p>is fairly easy to understand,
+and that a program could construct that URL fairly easily.
+Let’s explore how that could work…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlencode</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlencode</span>
+
+
+<span class="k">def</span> <span class="nf">encode_erddap</span><span class="p">(</span><span class="n">urlbase</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    urlbase: the base string for the endpoint</span>
+<span class="sd">             (e.g.: https://erddap.axiomdatascience.com/erddap/tabledap).</span>
+<span class="sd">    fname: the data source (e.g.: `sensor_service`) and the response (e.g.: `.csvp` for CSV).</span>
+<span class="sd">    columns: the columns of the return table.</span>
+<span class="sd">    params: the parameters for the query.</span>
+
+<span class="sd">    Returns a valid ERDDAP endpoint.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">urlbase</span> <span class="o">=</span> <span class="n">urlbase</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">urlbase</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">&quot;http:&quot;</span><span class="p">,</span> <span class="s2">&quot;https:&quot;</span><span class="p">)):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Expected valid URL but got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">(</span><span class="n">urlbase</span><span class="p">))</span>
+
+    <span class="n">columns</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">urlencode</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{urlbase}</span><span class="s2">/</span><span class="si">{fname}</span><span class="s2">?</span><span class="si">{columns}</span><span class="s2">&amp;</span><span class="si">{params}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="n">endpoint</span><span class="p">(</span><span class="n">urlbase</span><span class="o">=</span><span class="n">urlbase</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="n">fname</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">url</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using the function we defined above, we can now bypass the forms and get the data by generating the URL “by hand”. Below we have a query for <code class="docutils literal notranslate"><span class="pre">Significant</span> <span class="pre">Wave</span> <span class="pre">Height</span></code> from buoy <code class="docutils literal notranslate"><span class="pre">44011</span></code>, a buoy on George’s Bank off the coast of Cape Cod, MA, starting at the beginning of the year 2017.</p>
+<p>* For more information on how to use tabledap, please check the <a class="reference external" href="https://via.hypothes.is/http://coastwatch.pfeg.noaa.gov/erddap/tabledap/documentation.html">NOAA ERDDAP documentation</a> for more information on the various parameters and responses of ERDDAP.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">unquote</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib2</span> <span class="kn">import</span> <span class="n">unquote</span>
+
+
+<span class="n">urlbase</span> <span class="o">=</span> <span class="s2">&quot;https://erddap.axiomdatascience.com/erddap/tabledap&quot;</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;sensor_service.csvp&quot;</span>
+
+<span class="n">columns</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;time&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;value&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;station&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;longitude&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;latitude&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;parameter&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;unit&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;depth&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Inequalities do not exist in HTTP parameters,</span>
+    <span class="c1"># so we need to hardcode the `&gt;` in the time key to get a &#39;&gt;=&#39;.</span>
+    <span class="c1"># Note that a &#39;&gt;&#39; or &#39;&lt;&#39; cannot be encoded with `urlencode`, only `&gt;=` and `&lt;=`.</span>
+    <span class="s2">&quot;time&gt;&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-01-00T00:00:00Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;station&quot;</span><span class="p">:</span> <span class="s1">&#39;&quot;urn:ioos:station:wmo:44011&quot;&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;parameter&quot;</span><span class="p">:</span> <span class="s1">&#39;&quot;Significant Wave Height&quot;&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="s1">&#39;&quot;m&quot;&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">encode_erddap</span><span class="p">(</span><span class="n">urlbase</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">unquote</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>https://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,value,station,longitude,latitude,parameter,unit,depth&amp;time&gt;=2017-01-00T00:00:00Z&amp;station=&quot;urn:ioos:station:wmo:44011&quot;&amp;parameter=&quot;Significant+Wave+Height&quot;&amp;unit=&quot;m&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here is a cool part about ERDDAP <code class="docutils literal notranslate"><span class="pre">tabledap</span></code> - The data <code class="docutils literal notranslate"><span class="pre">tabledap</span></code> <code class="docutils literal notranslate"><span class="pre">csvp</span></code> response can be easily read by Python’s pandas <code class="docutils literal notranslate"><span class="pre">read_csv</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">read_csv</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Prevent :station: from turning into an emoji in the webpage.</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;station&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">station</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>value</th>
+      <th>station</th>
+      <th>longitude (degrees_east)</th>
+      <th>latitude (degrees_north)</th>
+      <th>parameter</th>
+      <th>unit</th>
+      <th>depth (m)</th>
+    </tr>
+    <tr>
+      <th>time (UTC)</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2018-03-25 14:00:00+00:00</th>
+      <td>5.6</td>
+      <td>urn_ioos_station_wmo_44011</td>
+      <td>-66.619</td>
+      <td>41.098</td>
+      <td>Significant Wave Height</td>
+      <td>m</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-25 13:50:00+00:00</th>
+      <td>5.6</td>
+      <td>urn_ioos_station_wmo_44011</td>
+      <td>-66.619</td>
+      <td>41.098</td>
+      <td>Significant Wave Height</td>
+      <td>m</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-25 13:00:00+00:00</th>
+      <td>4.6</td>
+      <td>urn_ioos_station_wmo_44011</td>
+      <td>-66.619</td>
+      <td>41.098</td>
+      <td>Significant Wave Height</td>
+      <td>m</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-25 12:50:00+00:00</th>
+      <td>4.6</td>
+      <td>urn_ioos_station_wmo_44011</td>
+      <td>-66.619</td>
+      <td>41.098</td>
+      <td>Significant Wave Height</td>
+      <td>m</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-25 12:00:00+00:00</th>
+      <td>5.1</td>
+      <td>urn_ioos_station_wmo_44011</td>
+      <td>-66.619</td>
+      <td>41.098</td>
+      <td>Significant Wave Height</td>
+      <td>m</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>With the <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> we can easily plot the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">2.75</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;parameter&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/pandas/core/sorting.py:257: FutureWarning: Converting timezone-aware DatetimeArray to timezone-naive ndarray with &#39;datetime64[ns]&#39; dtype. In the future, this will return an ndarray with &#39;object&#39; dtype where each element is a &#39;pandas.Timestamp&#39; with the correct &#39;tz&#39;.
+	To accept the future behavior, pass &#39;dtype=object&#39;.
+	To keep the old behavior, pass &#39;dtype=&quot;datetime64[ns]&quot;&#39;.
+  items = np.asanyarray(items)
+</pre></div>
+</div>
+<img alt="../../../_images/2017-03-21-ERDDAP_IOOS_Sensor_Map_7_1.png" src="../../../_images/2017-03-21-ERDDAP_IOOS_Sensor_Map_7_1.png" />
+</div>
+</div>
+<p>You may notice that slicing the time dimension on the sever side is very fast when compared with an OPeNDAP request. The downloading of the time dimension data, slice, and subsequent downloading of the actual data are all much faster.</p>
+<p>ERDDAP also allows for filtering of the variable’s values. For example, let’s get Wave Heights that are bigger than 6 meters starting from 2016.</p>
+<p>** Note how we can lazily build on top of the previous query using Python’s dictionaries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;value&gt;&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;time&gt;&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-01-00T00:00:00Z&quot;</span><span class="p">,}</span>
+<span class="p">)</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">encode_erddap</span><span class="p">(</span><span class="n">urlbase</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Prevent :station: from turning into an emoji in the webpage.</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;station&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">station</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>value</th>
+      <th>station</th>
+      <th>longitude (degrees_east)</th>
+      <th>latitude (degrees_north)</th>
+      <th>parameter</th>
+      <th>unit</th>
+      <th>depth (m)</th>
+    </tr>
+    <tr>
+      <th>time (UTC)</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2018-03-17 06:00:00+00:00</th>
+      <td>6.0</td>
+      <td>urn_ioos_station_wmo_44011</td>
+      <td>-66.619</td>
+      <td>41.098</td>
+      <td>Significant Wave Height</td>
+      <td>m</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-17 05:50:00+00:00</th>
+      <td>6.0</td>
+      <td>urn_ioos_station_wmo_44011</td>
+      <td>-66.619</td>
+      <td>41.098</td>
+      <td>Significant Wave Height</td>
+      <td>m</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-17 05:00:00+00:00</th>
+      <td>6.0</td>
+      <td>urn_ioos_station_wmo_44011</td>
+      <td>-66.619</td>
+      <td>41.098</td>
+      <td>Significant Wave Height</td>
+      <td>m</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-17 04:50:00+00:00</th>
+      <td>6.0</td>
+      <td>urn_ioos_station_wmo_44011</td>
+      <td>-66.619</td>
+      <td>41.098</td>
+      <td>Significant Wave Height</td>
+      <td>m</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2018-03-17 02:00:00+00:00</th>
+      <td>6.1</td>
+      <td>urn_ioos_station_wmo_44011</td>
+      <td>-66.619</td>
+      <td>41.098</td>
+      <td>Significant Wave Height</td>
+      <td>m</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>And now we can visualize the frequency of <code class="docutils literal notranslate"><span class="pre">Significant</span> <span class="pre">Wave</span> <span class="pre">Height</span></code> greater than 6 meters by month.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">key</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">month</span>
+
+
+<span class="n">grouped</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Significant Wave Height events &gt; 6 meters&quot;</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;Jan&quot;</span><span class="p">,</span> <span class="s2">&quot;Feb&quot;</span><span class="p">,</span> <span class="s2">&quot;Mar&quot;</span><span class="p">,</span> <span class="s2">&quot;Apr&quot;</span><span class="p">,</span> <span class="s2">&quot;May&quot;</span><span class="p">,</span> <span class="s2">&quot;Jun&quot;</span><span class="p">,</span> <span class="s2">&quot;Jul&quot;</span><span class="p">,</span> <span class="s2">&quot;Ago&quot;</span><span class="p">,</span> <span class="s2">&quot;Sep&quot;</span><span class="p">,</span> <span class="s2">&quot;Oct&quot;</span><span class="p">,</span> <span class="s2">&quot;Nov&quot;</span><span class="p">,</span> <span class="s2">&quot;Dec&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-03-21-ERDDAP_IOOS_Sensor_Map_11_0.png" src="../../../_images/2017-03-21-ERDDAP_IOOS_Sensor_Map_11_0.png" />
+</div>
+</div>
+<p>Wow! Wintertime is pretty rough out on George’s Bank!</p>
+<p>There is also a built-in relative time functionality so you can specify a specific time frame you look at. Here we demonstrate this part of the tool by getting the last 2 hours and displaying that with the <code class="docutils literal notranslate"><span class="pre">HTML</span></code> response in an <code class="docutils literal notranslate"><span class="pre">IFrame</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;sensor_service.htmlTable&quot;</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;time&gt;&quot;</span><span class="p">:</span> <span class="s2">&quot;now-2hours&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;time&lt;&quot;</span><span class="p">:</span> <span class="s2">&quot;now&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;station&quot;</span><span class="p">:</span> <span class="s1">&#39;&quot;urn:ioos:station:nerrs:wqbchmet&quot;&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;parameter&quot;</span><span class="p">:</span> <span class="s1">&#39;&quot;Wind Speed&quot;&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="s1">&#39;&quot;m.s-1&quot;&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">encode_erddap</span><span class="p">(</span><span class="n">urlbase</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+<span class="n">iframe</span> <span class="o">=</span> <span class="s1">&#39;&lt;iframe src=&quot;</span><span class="si">{src}</span><span class="s1">&quot; width=&quot;650&quot; height=&quot;370&quot;&gt;&lt;/iframe&gt;&#39;</span><span class="o">.</span><span class="n">format</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">iframe</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">url</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/IPython/core/display.py:689: UserWarning: Consider using IPython.display.IFrame instead
+  warnings.warn(&quot;Consider using IPython.display.IFrame instead&quot;)
+</pre></div>
+</div>
+<div class="output text_html"><iframe src="https://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.htmlTable?time,value,station,longitude,latitude,parameter,unit,depth&time%3E=now-2hours&time%3C=now&station=%22urn%3Aioos%3Astation%3Anerrs%3Awqbchmet%22&parameter=%22Wind+Speed%22&unit=%22m.s-1%22" width="650" height="370"></iframe></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ERDDAP</span></code> responses are very rich. There are even multiple image formats in the automate graph responses.
+Here is how to get a <code class="docutils literal notranslate"><span class="pre">.png</span></code> file for the temperature time-series. While you can specify the width and height, we chose just an arbitrary size.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;sensor_service.png&quot;</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;time&gt;&quot;</span><span class="p">:</span> <span class="s2">&quot;now-7days&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;station&quot;</span><span class="p">:</span> <span class="s1">&#39;&quot;urn:ioos:station:nerrs:wqbchmet&quot;&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;parameter&quot;</span><span class="p">:</span> <span class="s1">&#39;&quot;Wind Speed&quot;&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="s1">&#39;&quot;m.s-1&quot;&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">500</span>
+<span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;.size&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">|</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)})</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="n">encode_erddap</span><span class="p">(</span><span class="n">urlbase</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+<span class="n">iframe</span> <span class="o">=</span> <span class="s1">&#39;&lt;iframe src=&quot;</span><span class="si">{src}</span><span class="s1">&quot; width=&quot;</span><span class="si">{width}</span><span class="s1">&quot; height=&quot;</span><span class="si">{height}</span><span class="s1">&quot;&gt;&lt;/iframe&gt;&#39;</span><span class="o">.</span><span class="n">format</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">iframe</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">height</span> <span class="o">+</span> <span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe src="https://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.png?time,value,station,longitude,latitude,parameter,unit,depth&time%3E=now-7days&station=%22urn%3Aioos%3Astation%3Anerrs%3Awqbchmet%22&parameter=%22Wind+Speed%22&unit=%22m.s-1%22&.size=450%7C500" width="455" height="505"></iframe></div></div>
+</div>
+<p>This example tells us it is rough and cold out on George’s Bank!</p>
+<p>To explore more datasets, use the IOOS sensor map <a class="reference external" href="https://sensors.ioos.us/#map">website</a>!</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content\Code Gallery\Finding Data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="2017-01-18-siphon-explore-thredds.html" title="previous page">Exploring the THREDDS catalog with Unidata’s Siphon</a>
+    <a class='right-next' id="next-link" href="2017-05-14-running_compliance_checker.html" title="next page">Shore Station Compliance Checker Script</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

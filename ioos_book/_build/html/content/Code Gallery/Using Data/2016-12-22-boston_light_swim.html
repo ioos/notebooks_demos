@@ -1,0 +1,1510 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Boston Light Swim temperature analysis with Python &#8212; The IOOS Data Demo Center</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma" href="2017-09-09-hurricane_irma.html" />
+    <link rel="prev" title="Plotting Glider data with Python tools" href="2016-11-15-glider_data_example.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The IOOS Data Demo Center</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  The IOOS Data Demo Center
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/about.html">
+   About Us
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/ioos_conda.html">
+   Installing the IOOS conda environment
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../IOOS/Others/others.html">
+   Other Resources
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+     Opening netCDF files - hints from AODN
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+     Unidata Ju[yter Notebook Gallery
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://iobis.org/tutorial/">
+     Extracting and Enriching OBIS data with R
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="https://github.com/USGS-R">
+     USGS-R Examples
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/contact.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../R%20Code/R_code.html">
+   R Code
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R%20Code/2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R%20Code/2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Matlab%20Code/Matlab_code.html">
+   Matlab Code
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Matlab%20Code/2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Finding%20Data/finding_data.html">
+   Finding Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-11-30-rerddap.html">
+     Calling R libraries from Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-12-15-finding_HFRadar_currents.html">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files Part 1
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="using_data.html">
+   Using Data
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-02-27-pocean-timeSeries-demo.html">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Managing%20Data/managing_data.html">
+   Managing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2017-11-01-Creating-Archives-Using-Bagit.html">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/IOOS.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/NOOS.html">
+   NANOOS Visualization System
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/GLOS.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/OOI.html">
+   OOI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/PYTHON.html">
+   Python
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/Using Data/2016-12-22-boston_light_swim.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/Using Data/2016-12-22-boston_light_swim.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/Using Data/2016-12-22-boston_light_swim.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="the-boston-light-swim-temperature-analysis-with-python">
+<h1>The Boston Light Swim temperature analysis with Python<a class="headerlink" href="#the-boston-light-swim-temperature-analysis-with-python" title="Permalink to this headline">¶</a></h1>
+<p>In the past we demonstrated how to perform a CSW catalog search with <a class="reference external" href="https://ioos.github.io/notebooks_demos//notebooks/2016-12-19-exploring_csw"><code class="docutils literal notranslate"><span class="pre">OWSLib</span></code></a>,
+and how to obtain near real-time data with <a class="reference external" href="https://ioos.github.io/notebooks_demos//notebooks/2016-10-12-fetching_data"><code class="docutils literal notranslate"><span class="pre">pyoos</span></code></a>.
+In this notebook we will use both to find all observations and model data around the Boston Harbor to access the sea water temperature.</p>
+<p>This workflow is part of an example to advise swimmers of the annual <a class="reference external" href="http://bostonlightswim.org/">Boston lighthouse swim</a> of the Boston Harbor water temperature conditions prior to the race. For more information regarding the workflow presented here see <a class="reference external" href="http://dx.doi.org/10.3390/jmse4040068">Signell, Richard P.; Fernandes, Filipe; Wilcox, Kyle.   2016. “Dynamic Reusable Workflows for Ocean Science.” <em>J. Mar. Sci. Eng.</em> 4, no. 4: 68</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="c1"># Suppresing warnings for a &quot;pretty output.&quot;</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This notebook is quite big and complex,
+so to help us keep things organized we’ll define a cell with the most important options and switches.</p>
+<p>Below we can define the date,
+bounding box, phenomena <code class="docutils literal notranslate"><span class="pre">SOS</span></code> and <code class="docutils literal notranslate"><span class="pre">CF</span></code> names and units,
+and the catalogs we will search.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%writefile</span> config.yaml
+
+<span class="c1"># Specify a YYYY-MM-DD hh:mm:ss date or integer day offset.</span>
+<span class="c1"># If both start and stop are offsets they will be computed relative to datetime.today() at midnight.</span>
+<span class="c1"># Use the dates commented below to reproduce the last Boston Light Swim event forecast.</span>
+<span class="n">date</span><span class="p">:</span>
+    <span class="n">start</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span> <span class="c1"># 2016-8-16 00:00:00</span>
+    <span class="n">stop</span><span class="p">:</span> <span class="o">+</span><span class="mi">4</span> <span class="c1"># 2016-8-29 00:00:00</span>
+
+<span class="n">run_name</span><span class="p">:</span> <span class="s1">&#39;latest&#39;</span>
+
+<span class="c1"># Boston harbor.</span>
+<span class="n">region</span><span class="p">:</span>
+    <span class="n">bbox</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mf">71.3</span><span class="p">,</span> <span class="mf">42.03</span><span class="p">,</span> <span class="o">-</span><span class="mf">70.57</span><span class="p">,</span> <span class="mf">42.63</span><span class="p">]</span>
+    <span class="c1"># Try the bounding box below to see how the notebook will behave for a different region.</span>
+    <span class="c1">#bbox: [-74.5, 40, -72., 41.5]</span>
+    <span class="n">crs</span><span class="p">:</span> <span class="s1">&#39;urn:ogc:def:crs:OGC:1.3:CRS84&#39;</span>
+
+<span class="n">sos_name</span><span class="p">:</span> <span class="s1">&#39;sea_water_temperature&#39;</span>
+
+<span class="n">cf_names</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">sea_water_temperature</span>
+    <span class="o">-</span> <span class="n">sea_surface_temperature</span>
+    <span class="o">-</span> <span class="n">sea_water_potential_temperature</span>
+    <span class="o">-</span> <span class="n">equivalent_potential_temperature</span>
+    <span class="o">-</span> <span class="n">sea_water_conservative_temperature</span>
+    <span class="o">-</span> <span class="n">pseudo_equivalent_potential_temperature</span>
+
+<span class="n">units</span><span class="p">:</span> <span class="s1">&#39;celsius&#39;</span>
+
+<span class="n">catalogs</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">data</span><span class="o">.</span><span class="n">ioos</span><span class="o">.</span><span class="n">us</span><span class="o">/</span><span class="n">csw</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Overwriting config.yaml
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll print some of the search configuration options along the way to keep track of them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">ioos_tools.ioos</span> <span class="kn">import</span> <span class="n">parse_config</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">parse_config</span><span class="p">(</span><span class="s2">&quot;config.yaml&quot;</span><span class="p">)</span>
+
+<span class="c1"># Saves downloaded data into a temporary directory.</span>
+<span class="n">save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;run_name&quot;</span><span class="p">])</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_dir</span><span class="p">):</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
+
+<span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:*^64}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="p">(</span><span class="s2">&quot;Saving data inside directory </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="p">(</span><span class="s2">&quot; Run information &quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run date: {:%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start: {:%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;start&quot;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stop: {:%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;stop&quot;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Bounding box: </span><span class="si">{0:3.2f}</span><span class="s2">, </span><span class="si">{1:3.2f}</span><span class="s2">,&quot;</span>
+    <span class="s2">&quot;</span><span class="si">{2:3.2f}</span><span class="s2">, </span><span class="si">{3:3.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">][</span><span class="s2">&quot;bbox&quot;</span><span class="p">])</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Saving data inside directory /home/filipe/IOOS/notebooks_demos/notebooks/latest
+*********************** Run information ************************
+Run date: 2019-07-03 16:59:01
+Start: 2019-06-28 00:00:00
+Stop: 2019-07-07 00:00:00
+Bounding box: -71.30, 42.03,-70.57, 42.63
+</pre></div>
+</div>
+</div>
+</div>
+<p>We already created an <code class="docutils literal notranslate"><span class="pre">OWSLib.fes</span></code> filter <a class="reference external" href="https://ioos.github.io/notebooks_demos//notebooks/2016-12-19-exploring_csw">before</a>.
+The main difference here is that we do not want the atmosphere model data,
+so we are filtering out all the <code class="docutils literal notranslate"><span class="pre">GRIB-2</span></code> data format.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_filter</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">owslib</span> <span class="kn">import</span> <span class="n">fes</span>
+    <span class="kn">from</span> <span class="nn">ioos_tools.ioos</span> <span class="kn">import</span> <span class="n">fes_date_filter</span>
+
+    <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">wildCard</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">escapeChar</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">singleChar</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span> <span class="n">propertyname</span><span class="o">=</span><span class="s2">&quot;apiso:AnyText&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">or_filt</span> <span class="o">=</span> <span class="n">fes</span><span class="o">.</span><span class="n">Or</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">fes</span><span class="o">.</span><span class="n">PropertyIsLike</span><span class="p">(</span><span class="n">literal</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;*</span><span class="si">%s</span><span class="s2">*&quot;</span> <span class="o">%</span> <span class="n">val</span><span class="p">),</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;cf_names&quot;</span><span class="p">]]</span>
+    <span class="p">)</span>
+
+    <span class="n">not_filt</span> <span class="o">=</span> <span class="n">fes</span><span class="o">.</span><span class="n">Not</span><span class="p">([</span><span class="n">fes</span><span class="o">.</span><span class="n">PropertyIsLike</span><span class="p">(</span><span class="n">literal</span><span class="o">=</span><span class="s2">&quot;GRIB-2&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)])</span>
+
+    <span class="n">begin</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">fes_date_filter</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;start&quot;</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;stop&quot;</span><span class="p">])</span>
+    <span class="n">bbox_crs</span> <span class="o">=</span> <span class="n">fes</span><span class="o">.</span><span class="n">BBox</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">][</span><span class="s2">&quot;bbox&quot;</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">][</span><span class="s2">&quot;crs&quot;</span><span class="p">])</span>
+    <span class="n">filter_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">fes</span><span class="o">.</span><span class="n">And</span><span class="p">([</span><span class="n">bbox_crs</span><span class="p">,</span> <span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">or_filt</span><span class="p">,</span> <span class="n">not_filt</span><span class="p">])]</span>
+    <span class="k">return</span> <span class="n">filter_list</span>
+
+
+<span class="n">filter_list</span> <span class="o">=</span> <span class="n">make_filter</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the cell below we ask the catalog for all the returns that match the filter and have an OPeNDAP endpoint.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ioos_tools.ioos</span> <span class="kn">import</span> <span class="n">get_csw_records</span><span class="p">,</span> <span class="n">service_urls</span>
+<span class="kn">from</span> <span class="nn">owslib.csw</span> <span class="kn">import</span> <span class="n">CatalogueServiceWeb</span>
+
+<span class="n">dap_urls</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="p">(</span><span class="s2">&quot; Catalog information &quot;</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">endpoint</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;catalogs&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;URL: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">endpoint</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">csw</span> <span class="o">=</span> <span class="n">CatalogueServiceWeb</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="k">continue</span>
+    <span class="n">csw</span> <span class="o">=</span> <span class="n">get_csw_records</span><span class="p">(</span><span class="n">csw</span><span class="p">,</span> <span class="n">filter_list</span><span class="p">,</span> <span class="n">esn</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">)</span>
+    <span class="n">OPeNDAP</span> <span class="o">=</span> <span class="n">service_urls</span><span class="p">(</span><span class="n">csw</span><span class="o">.</span><span class="n">records</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="s2">&quot;OPeNDAP:OPeNDAP&quot;</span><span class="p">)</span>
+    <span class="n">odp</span> <span class="o">=</span> <span class="n">service_urls</span><span class="p">(</span>
+        <span class="n">csw</span><span class="o">.</span><span class="n">records</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="s2">&quot;urn:x-esri:specification:ServiceType:odp:url&quot;</span>
+    <span class="p">)</span>
+    <span class="n">dap</span> <span class="o">=</span> <span class="n">OPeNDAP</span> <span class="o">+</span> <span class="n">odp</span>
+    <span class="n">dap_urls</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">dap</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of datasets available: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">csw</span><span class="o">.</span><span class="n">records</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+
+    <span class="k">for</span> <span class="n">rec</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">csw</span><span class="o">.</span><span class="n">records</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">title</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">dap</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="p">(</span><span class="s2">&quot; DAP &quot;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">dap</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.html&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get only unique endpoints.</span>
+<span class="n">dap_urls</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">dap_urls</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>********************* Catalog information **********************
+URL: https://data.ioos.us/csw
+Number of datasets available: 30
+NECOFS Massachusetts (FVCOM) - Massachusetts Coastal - Latest Forecast
+NERACOOS Gulf of Maine Ocean Array: Realtime Buoy Observations: A01 Massachusetts Bay: A01 ACCELEROMETER Massachusetts Bay
+NERACOOS Gulf of Maine Ocean Array: Realtime Buoy Observations: A01 Massachusetts Bay: A01 CTD1m Massachusetts Bay
+NERACOOS Gulf of Maine Ocean Array: Realtime Buoy Observations: A01 Massachusetts Bay: A01 CTD20m Massachusetts Bay
+NERACOOS Gulf of Maine Ocean Array: Realtime Buoy Observations: A01 Massachusetts Bay: A01 MET Massachusetts Bay
+NERACOOS Gulf of Maine Ocean Array: Realtime Buoy Observations: A01 Massachusetts Bay: A01 OPTICS3m Massachusetts Bay
+NERACOOS Gulf of Maine Ocean Array: Realtime Buoy Observations: A01 Massachusetts Bay: A01 OPTODE51m Massachusetts Bay
+NOAA Coral Reef Watch Operational Daily Near-Real-Time Global 5-km Satellite Coral Bleaching Monitoring Products
+ROMS doppio Real-Time Operational PSAS Forecast System Version 1 FMRC Averages
+ROMS doppio Real-Time Operational PSAS Forecast System Version 1 FMRC History
+A01 Accelerometer - Waves
+A01 Directional Waves
+A01 Met - Meteorology
+A01 Optics - Chlorophyll / Turbidity
+A01 Optode - Oxygen
+A01 SBE16 Oxygen
+A01 Sbe37 - CTD
+BOSTON 16 NM East of Boston, MA
+Buoy A01 - Massachusetts Bay
+Department of Physical Oceanography, School of Marine Sciences, University of Maine A01 Accelerometer Buoy Sensor
+Department of Physical Oceanography, School of Marine Sciences, University of Maine A01 Met Buoy Sensor
+Department of Physical Oceanography, School of Marine Sciences, University of Maine A01 Optode 51m Buoy Sensor
+Department of Physical Oceanography, School of Marine Sciences, University of Maine A01 Sbe37 1m Buoy Sensor
+Department of Physical Oceanography, School of Marine Sciences, University of Maine A01 Sbe37 20m Buoy Sensor
+Directional wave and sea surface temperature measurements collected in situ by Datawell DWR-M3 directional buoy located near CLATSOP SPIT, OR from 2018/02/07 22:03:45 to 2019/07/02 18:00:25.
+Directional wave and sea surface temperature measurements collected in situ by Datawell DWR-M3 directional buoy located near GRAYS HARBOR, WA from 2018/06/28 19:03:45 to 2019/07/02 18:00:25.
+Directional wave and sea surface temperature measurements collected in situ by Datawell DWR-M3 directional buoy located near KAUMALAPAU SOUTHWEST, LANAI, HI from 2018/10/02 16:03:45 to 2019/07/02 17:30:25.
+Latest CDIP real-time buoy observations, 3-day aggregate
+NDBC Standard Meteorological Buoy Data, 1970-present
+NECOFS (FVCOM) - Scituate - Latest Forecast
+***************************** DAP ******************************
+http://oos.soest.hawaii.edu/thredds/dodsC/hioos/satellite/dhw_5km.html
+http://tds.marine.rutgers.edu/thredds/dodsC/roms/doppio/2017_da/avg/Averages_Best.html
+http://tds.marine.rutgers.edu/thredds/dodsC/roms/doppio/2017_da/his/History_Best.html
+http://thredds.cdip.ucsd.edu/thredds/dodsC/cdip/realtime/036p1_rt.nc.html
+http://thredds.cdip.ucsd.edu/thredds/dodsC/cdip/realtime/162p1_rt.nc.html
+http://thredds.cdip.ucsd.edu/thredds/dodsC/cdip/realtime/239p1_rt.nc.html
+http://thredds.cdip.ucsd.edu/thredds/dodsC/cdip/realtime/latest_gudb_3day.nc.html
+http://www.neracoos.org/thredds/dodsC/UMO/DSG/SOS/A01/Accelerometer/HistoricRealtime.html
+http://www.neracoos.org/thredds/dodsC/UMO/DSG/SOS/A01/CTD1m/HistoricRealtime.html
+http://www.neracoos.org/thredds/dodsC/UMO/DSG/SOS/A01/CTD20m/HistoricRealtime.html
+http://www.neracoos.org/thredds/dodsC/UMO/DSG/SOS/A01/Met/HistoricRealtime.html
+http://www.neracoos.org/thredds/dodsC/UMO/DSG/SOS/A01/OPTICS_S3m/HistoricRealtime.html
+http://www.neracoos.org/thredds/dodsC/UMO/DSG/SOS/A01/OPTODE51m/HistoricRealtime.html
+http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.accelerometer.realtime.nc.html
+http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.met.realtime.nc.html
+http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.optode.realtime.51m.nc.html
+http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.sbe37.realtime.1m.nc.html
+http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.sbe37.realtime.20m.nc.html
+http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc.html
+http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_SCITUATE_FORECAST.nc.html
+</pre></div>
+</div>
+</div>
+</div>
+<p>We found some models, and observations from NERACOOS there.
+However, we do know that there are some buoys from NDBC and CO-OPS available too.
+Also, those NERACOOS observations seem to be from a <a class="reference external" href="http://www.neracoos.org/thredds/dodsC/UMO/DSG/SOS/A01/CTD1m/HistoricRealtime/Agg.ncml.html">CTD</a> mounted at 65 meters below the sea surface. Rendering them useless from our purpose.</p>
+<p>So let’s use the catalog only for the models by filtering the observations with <code class="docutils literal notranslate"><span class="pre">is_station</span></code> below.
+And we’ll rely <code class="docutils literal notranslate"><span class="pre">CO-OPS</span></code> and <code class="docutils literal notranslate"><span class="pre">NDBC</span></code> services for the observations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ioos_tools.ioos</span> <span class="kn">import</span> <span class="n">is_station</span>
+<span class="kn">from</span> <span class="nn">timeout_decorator</span> <span class="kn">import</span> <span class="ne">TimeoutError</span>
+
+<span class="c1"># Filter out some station endpoints.</span>
+<span class="n">non_stations</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">dap_urls</span><span class="p">:</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">#fillmismatch&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_station</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+            <span class="n">non_stations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">IOError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">,</span> <span class="ne">TimeoutError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not access URL </span><span class="si">{}</span><span class="s2">.html</span><span class="se">\n</span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+
+<span class="n">dap_urls</span> <span class="o">=</span> <span class="n">non_stations</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="p">(</span><span class="s2">&quot; Filtered DAP &quot;</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">dap_urls</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.html&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>************************* Filtered DAP *************************
+http://tds.marine.rutgers.edu/thredds/dodsC/roms/doppio/2017_da/his/History_Best#fillmismatch.html
+http://oos.soest.hawaii.edu/thredds/dodsC/hioos/satellite/dhw_5km#fillmismatch.html
+http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.sbe37.realtime.1m.nc#fillmismatch.html
+http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.met.realtime.nc#fillmismatch.html
+http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.accelerometer.realtime.nc#fillmismatch.html
+http://tds.marine.rutgers.edu/thredds/dodsC/roms/doppio/2017_da/avg/Averages_Best#fillmismatch.html
+http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.sbe37.realtime.20m.nc#fillmismatch.html
+http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.optode.realtime.51m.nc#fillmismatch.html
+http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_SCITUATE_FORECAST.nc#fillmismatch.html
+http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc#fillmismatch.html
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use <code class="docutils literal notranslate"><span class="pre">pyoos</span></code> collectors for <code class="docutils literal notranslate"><span class="pre">NdbcSos</span></code>,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyoos.collectors.ndbc.ndbc_sos</span> <span class="kn">import</span> <span class="n">NdbcSos</span>
+
+<span class="n">collector_ndbc</span> <span class="o">=</span> <span class="n">NdbcSos</span><span class="p">()</span>
+
+<span class="n">collector_ndbc</span><span class="o">.</span><span class="n">set_bbox</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">][</span><span class="s2">&quot;bbox&quot;</span><span class="p">])</span>
+<span class="n">collector_ndbc</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;stop&quot;</span><span class="p">]</span>
+<span class="n">collector_ndbc</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;start&quot;</span><span class="p">]</span>
+<span class="n">collector_ndbc</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sos_name&quot;</span><span class="p">]]</span>
+
+<span class="n">ofrs</span> <span class="o">=</span> <span class="n">collector_ndbc</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">offerings</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">collector_ndbc</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">identification</span><span class="o">.</span><span class="n">title</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="p">(</span><span class="s2">&quot; NDBC Collector offerings &quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2"> offerings&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ofrs</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>******************* NDBC Collector offerings *******************
+National Data Buoy Center SOS: 1062 offerings
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">ioos_tools.ioos</span> <span class="kn">import</span> <span class="n">collector2table</span>
+
+<span class="n">ndbc</span> <span class="o">=</span> <span class="n">collector2table</span><span class="p">(</span>
+    <span class="n">collector</span><span class="o">=</span><span class="n">collector_ndbc</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;sea_water_temperature (C)&quot;</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">ndbc</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">station_name</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;station_name&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ndbc</span><span class="p">],</span>
+        <span class="n">station_code</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;station_code&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ndbc</span><span class="p">],</span>
+        <span class="n">sensor</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sensor&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ndbc</span><span class="p">],</span>
+        <span class="n">lon</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lon&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ndbc</span><span class="p">],</span>
+        <span class="n">lat</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lat&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ndbc</span><span class="p">],</span>
+        <span class="n">depth</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;depth&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">ndbc</span><span class="p">],</span>
+    <span class="p">)</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;station_code&quot;</span><span class="p">)</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>station_name</th>
+      <th>sensor</th>
+      <th>lon</th>
+      <th>lat</th>
+      <th>depth</th>
+    </tr>
+    <tr>
+      <th>station_code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>44013</th>
+      <td>BOSTON 16 NM East of Boston, MA</td>
+      <td>urn:ioos:sensor:wmo:44013::watertemp1</td>
+      <td>-70.651</td>
+      <td>42.346</td>
+      <td>0.6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>and <code class="docutils literal notranslate"><span class="pre">CoopsSos</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyoos.collectors.coops.coops_sos</span> <span class="kn">import</span> <span class="n">CoopsSos</span>
+
+<span class="n">collector_coops</span> <span class="o">=</span> <span class="n">CoopsSos</span><span class="p">()</span>
+
+<span class="n">collector_coops</span><span class="o">.</span><span class="n">set_bbox</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">][</span><span class="s2">&quot;bbox&quot;</span><span class="p">])</span>
+<span class="n">collector_coops</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;stop&quot;</span><span class="p">]</span>
+<span class="n">collector_coops</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;start&quot;</span><span class="p">]</span>
+<span class="n">collector_coops</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;sos_name&quot;</span><span class="p">]]</span>
+
+<span class="n">ofrs</span> <span class="o">=</span> <span class="n">collector_coops</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">offerings</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">collector_coops</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">identification</span><span class="o">.</span><span class="n">title</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="p">(</span><span class="s2">&quot; Collector offerings &quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2"> offerings&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ofrs</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>********************* Collector offerings **********************
+NOAA.NOS.CO-OPS SOS: 1227 offerings
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coops</span> <span class="o">=</span> <span class="n">collector2table</span><span class="p">(</span>
+    <span class="n">collector</span><span class="o">=</span><span class="n">collector_coops</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;sea_water_temperature (C)&quot;</span>
+<span class="p">)</span>
+
+<span class="k">if</span> <span class="n">coops</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">station_name</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;station_name&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">coops</span><span class="p">],</span>
+        <span class="n">station_code</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;station_code&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">coops</span><span class="p">],</span>
+        <span class="n">sensor</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sensor&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">coops</span><span class="p">],</span>
+        <span class="n">lon</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lon&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">coops</span><span class="p">],</span>
+        <span class="n">lat</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lat&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">coops</span><span class="p">],</span>
+        <span class="n">depth</span><span class="o">=</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">_metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;depth&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">coops</span><span class="p">],</span>
+    <span class="p">)</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;station_code&quot;</span><span class="p">)</span>
+<span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>station_name</th>
+      <th>sensor</th>
+      <th>lon</th>
+      <th>lat</th>
+      <th>depth</th>
+    </tr>
+    <tr>
+      <th>station_code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>44013</th>
+      <td>BOSTON 16 NM East of Boston, MA</td>
+      <td>urn:ioos:sensor:wmo:44013::watertemp1</td>
+      <td>-70.651</td>
+      <td>42.346</td>
+      <td>0.6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We will join all the observations into an uniform series, interpolated to 1-hour interval, for the model-data comparison.</p>
+<p>This step is necessary because the observations can be 7 or 10 minutes resolution,
+while the models can be 30 to 60 minutes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">ndbc</span> <span class="o">+</span> <span class="n">coops</span>
+
+<span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span>
+    <span class="n">start</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;start&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="n">end</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;stop&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">tzinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+    <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;1H&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Preserve metadata with `reindex`.</span>
+<span class="n">observations</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">series</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">_metadata</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">_metadata</span>
+    <span class="n">series</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">series</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">)</span>
+    <span class="n">obs</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="n">_metadata</span>
+    <span class="n">observations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this next cell we will save the data for quicker access later.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">from</span> <span class="nn">ioos_tools.tardis</span> <span class="kn">import</span> <span class="n">series2cube</span>
+
+<span class="n">attr</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">featureType</span><span class="o">=</span><span class="s2">&quot;timeSeries&quot;</span><span class="p">,</span>
+    <span class="n">Conventions</span><span class="o">=</span><span class="s2">&quot;CF-1.6&quot;</span><span class="p">,</span>
+    <span class="n">standard_name_vocabulary</span><span class="o">=</span><span class="s2">&quot;CF-1.6&quot;</span><span class="p">,</span>
+    <span class="n">cdm_data_type</span><span class="o">=</span><span class="s2">&quot;Station&quot;</span><span class="p">,</span>
+    <span class="n">comment</span><span class="o">=</span><span class="s2">&quot;Data from http://opendap.co-ops.nos.noaa.gov&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">cubes</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">CubeList</span><span class="p">([</span><span class="n">series2cube</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="n">attr</span><span class="p">)</span> <span class="k">for</span> <span class="n">obs</span> <span class="ow">in</span> <span class="n">observations</span><span class="p">])</span>
+
+<span class="n">outfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s2">&quot;OBS_DATA.nc&quot;</span><span class="p">)</span>
+<span class="n">iris</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">cubes</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Taking a quick look at the observations:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">2.25</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2016-12-22-boston_light_swim_23_0.png" src="../../../_images/2016-12-22-boston_light_swim_23_0.png" />
+</div>
+</div>
+<p>Now it is time to loop the models we found above,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ioos_tools.ioos</span> <span class="kn">import</span> <span class="n">get_model_name</span>
+<span class="kn">from</span> <span class="nn">ioos_tools.tardis</span> <span class="kn">import</span> <span class="n">get_surface</span><span class="p">,</span> <span class="n">is_model</span><span class="p">,</span> <span class="n">proc_cube</span><span class="p">,</span> <span class="n">quick_load_cubes</span>
+<span class="kn">from</span> <span class="nn">iris.exceptions</span> <span class="kn">import</span> <span class="n">ConstraintMismatchError</span><span class="p">,</span> <span class="n">CoordinateNotFoundError</span><span class="p">,</span> <span class="n">MergeError</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="p">(</span><span class="s2">&quot; Models &quot;</span><span class="p">))</span>
+<span class="n">cubes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dap_urls</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[Reading url </span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">]: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dap_urls</span><span class="p">),</span> <span class="n">url</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cube</span> <span class="o">=</span> <span class="n">quick_load_cubes</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;cf_names&quot;</span><span class="p">],</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_model</span><span class="p">(</span><span class="n">cube</span><span class="p">):</span>
+            <span class="n">cube</span> <span class="o">=</span> <span class="n">proc_cube</span><span class="p">(</span>
+                <span class="n">cube</span><span class="p">,</span>
+                <span class="n">bbox</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">][</span><span class="s2">&quot;bbox&quot;</span><span class="p">],</span>
+                <span class="n">time</span><span class="o">=</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;start&quot;</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;date&quot;</span><span class="p">][</span><span class="s2">&quot;stop&quot;</span><span class="p">]),</span>
+                <span class="n">units</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Not model data]: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+            <span class="k">continue</span>
+        <span class="n">cube</span> <span class="o">=</span> <span class="n">get_surface</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
+        <span class="n">mod_name</span> <span class="o">=</span> <span class="n">get_model_name</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">cubes</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">mod_name</span><span class="p">:</span> <span class="n">cube</span><span class="p">})</span>
+    <span class="k">except</span> <span class="p">(</span>
+        <span class="ne">RuntimeError</span><span class="p">,</span>
+        <span class="ne">ValueError</span><span class="p">,</span>
+        <span class="n">ConstraintMismatchError</span><span class="p">,</span>
+        <span class="n">CoordinateNotFoundError</span><span class="p">,</span>
+        <span class="ne">IndexError</span><span class="p">,</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cannot get cube for: </span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>**************************** Models ****************************
+
+[Reading url 1/10]: http://tds.marine.rutgers.edu/thredds/dodsC/roms/doppio/2017_da/his/History_Best#fillmismatch
+
+[Reading url 2/10]: http://oos.soest.hawaii.edu/thredds/dodsC/hioos/satellite/dhw_5km#fillmismatch
+
+[Reading url 3/10]: http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.sbe37.realtime.1m.nc#fillmismatch
+[Not model data]: http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.sbe37.realtime.1m.nc#fillmismatch
+
+[Reading url 4/10]: http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.met.realtime.nc#fillmismatch
+Cannot get cube for: http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.met.realtime.nc#fillmismatch
+Cannot find [&#39;sea_water_temperature&#39;, &#39;sea_surface_temperature&#39;, &#39;sea_water_potential_temperature&#39;, &#39;equivalent_potential_temperature&#39;, &#39;sea_water_conservative_temperature&#39;, &#39;pseudo_equivalent_potential_temperature&#39;] in http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.met.realtime.nc#fillmismatch.
+
+[Reading url 5/10]: http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.accelerometer.realtime.nc#fillmismatch
+Cannot get cube for: http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.accelerometer.realtime.nc#fillmismatch
+Cannot find [&#39;sea_water_temperature&#39;, &#39;sea_surface_temperature&#39;, &#39;sea_water_potential_temperature&#39;, &#39;equivalent_potential_temperature&#39;, &#39;sea_water_conservative_temperature&#39;, &#39;pseudo_equivalent_potential_temperature&#39;] in http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.accelerometer.realtime.nc#fillmismatch.
+
+[Reading url 6/10]: http://tds.marine.rutgers.edu/thredds/dodsC/roms/doppio/2017_da/avg/Averages_Best#fillmismatch
+
+[Reading url 7/10]: http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.sbe37.realtime.20m.nc#fillmismatch
+[Not model data]: http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.sbe37.realtime.20m.nc#fillmismatch
+
+[Reading url 8/10]: http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.optode.realtime.51m.nc#fillmismatch
+[Not model data]: http://www.neracoos.org/thredds/dodsC/UMO/Realtime/SOS/A01/DSG_A0141.optode.realtime.51m.nc#fillmismatch
+
+[Reading url 9/10]: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_SCITUATE_FORECAST.nc#fillmismatch
+
+[Reading url 10/10]: http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc#fillmismatch
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we will match them with the nearest observed time-series. The <code class="docutils literal notranslate"><span class="pre">max_dist=0.08</span></code> is in degrees, that is roughly 8 kilometers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">from</span> <span class="nn">ioos_tools.tardis</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">add_station</span><span class="p">,</span>
+    <span class="n">ensure_timeseries</span><span class="p">,</span>
+    <span class="n">get_nearest_water</span><span class="p">,</span>
+    <span class="n">make_tree</span><span class="p">,</span>
+    <span class="n">remove_ssh</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">iris.pandas</span> <span class="kn">import</span> <span class="n">as_series</span>
+
+<span class="k">for</span> <span class="n">mod_name</span><span class="p">,</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">cubes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.nc&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">)</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fmt</span><span class="p">(</span><span class="s2">&quot; Downloading to file </span><span class="si">{}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname</span><span class="p">)))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tree</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">make_tree</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">CoordinateNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cannot make KDTree for: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">))</span>
+        <span class="k">continue</span>
+    <span class="c1"># Get model series at observed locations.</span>
+    <span class="n">raw_series</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">obs</span> <span class="ow">in</span> <span class="n">observations</span><span class="p">:</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">_metadata</span>
+        <span class="n">station</span> <span class="o">=</span> <span class="n">obs</span><span class="p">[</span><span class="s2">&quot;station_code&quot;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_dist</span><span class="o">=</span><span class="mf">0.08</span><span class="p">,</span> <span class="n">min_var</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">cube</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">obs</span><span class="p">[</span><span class="s2">&quot;lon&quot;</span><span class="p">],</span> <span class="n">obs</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">series</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">get_nearest_water</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cannot download </span><span class="si">{!r}</span><span class="s2">.</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+                <span class="n">series</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;No Data&quot;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">{}</span><span class="s2">] </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">obs</span><span class="p">[</span><span class="s2">&quot;station_name&quot;</span><span class="p">]))</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">series</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;Land   &quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">raw_series</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">station</span><span class="p">:</span> <span class="n">series</span><span class="p">})</span>
+            <span class="n">series</span> <span class="o">=</span> <span class="n">as_series</span><span class="p">(</span><span class="n">series</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;Water  &quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[</span><span class="si">{}</span><span class="s2">] </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">obs</span><span class="p">[</span><span class="s2">&quot;station_name&quot;</span><span class="p">]))</span>
+    <span class="k">if</span> <span class="n">raw_series</span><span class="p">:</span>  <span class="c1"># Save cube.</span>
+        <span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">cube</span> <span class="ow">in</span> <span class="n">raw_series</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">cube</span> <span class="o">=</span> <span class="n">add_station</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">station</span><span class="p">)</span>
+            <span class="n">cube</span> <span class="o">=</span> <span class="n">remove_ssh</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cube</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">cube</span><span class="o">.</span><span class="n">CubeList</span><span class="p">(</span><span class="n">raw_series</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">merge_cube</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">MergeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">ensure_timeseries</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">iris</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="c1"># FIXME: we should patch the bad attribute instead of removing everything.</span>
+            <span class="n">cube</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">iris</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">cube</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finished processing [</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/latest/roms_doppio_2017_da-History_Best#fillmismatch.nc 
+[Water  ] BOSTON 16 NM East of Boston, MA
+Finished processing [roms_doppio_2017_da-History_Best#fillmismatch]
+ Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/latest/hioos_satellite-dhw_5km#fillmismatch.nc 
+[Water  ] BOSTON 16 NM East of Boston, MA
+Finished processing [hioos_satellite-dhw_5km#fillmismatch]
+ Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/latest/roms_doppio_2017_da_avg-Averages_Best#fillmismatch.nc 
+[Water  ] BOSTON 16 NM East of Boston, MA
+Finished processing [roms_doppio_2017_da_avg-Averages_Best#fillmismatch]
+ Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/latest/Forecasts-NECOFS_FVCOM_OCEAN_SCITUATE_FORECAST.nc#fillmismatch.nc 
+[No Data] BOSTON 16 NM East of Boston, MA
+Finished processing [Forecasts-NECOFS_FVCOM_OCEAN_SCITUATE_FORECAST.nc#fillmismatch]
+ Downloading to file /home/filipe/IOOS/notebooks_demos/notebooks/latest/Forecasts-NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc#fillmismatch.nc 
+Cannot download &lt;iris &#39;Cube&#39; of sea_water_potential_temperature / (degrees_C) (time: 144; -- : 31358)&gt;.
+NetCDF: file not found
+[Land   ] BOSTON 16 NM East of Boston, MA
+Finished processing [Forecasts-NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST.nc#fillmismatch]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now it is possible to compute some simple comparison metrics. First we’ll calculate the model mean bias:</p>
+<div class="math notranslate nohighlight">
+\[ \text{MB} = \mathbf{\overline{m}} - \mathbf{\overline{o}}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ioos_tools.ioos</span> <span class="kn">import</span> <span class="n">stations_keys</span>
+
+
+<span class="k">def</span> <span class="nf">rename_cols</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">stations_keys</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;station_name&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ioos_tools.ioos</span> <span class="kn">import</span> <span class="n">load_ncs</span>
+<span class="kn">from</span> <span class="nn">ioos_tools.skill_score</span> <span class="kn">import</span> <span class="n">apply_skill</span><span class="p">,</span> <span class="n">mean_bias</span>
+
+<span class="n">dfs</span> <span class="o">=</span> <span class="n">load_ncs</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">apply_skill</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">mean_bias</span><span class="p">,</span> <span class="n">remove_mean</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filter_tides</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">skill_score</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">mean_bias</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+
+<span class="c1"># Filter out stations with no valid comparison.</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the root mean squared rrror of the deviations from the mean:
+$<span class="math notranslate nohighlight">\( \text{CRMS} = \sqrt{\left(\mathbf{m'} - \mathbf{o'}\right)^2}\)</span>$</p>
+<p>where: <span class="math notranslate nohighlight">\(\mathbf{m'} = \mathbf{m} - \mathbf{\overline{m}}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{o'} = \mathbf{o} - \mathbf{\overline{o}}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ioos_tools.skill_score</span> <span class="kn">import</span> <span class="n">rmse</span>
+
+<span class="n">dfs</span> <span class="o">=</span> <span class="n">load_ncs</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">apply_skill</span><span class="p">(</span><span class="n">dfs</span><span class="p">,</span> <span class="n">rmse</span><span class="p">,</span> <span class="n">remove_mean</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filter_tides</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">skill_score</span><span class="p">[</span><span class="s2">&quot;rmse&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+<span class="c1"># Filter out stations with no valid comparison.</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next 2 cells make the scores “pretty” for plotting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Stringfy keys.</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">skill_score</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">skill_score</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">skill_score</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+<span class="n">mean_bias</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">skill_score</span><span class="p">[</span><span class="s2">&quot;mean_bias&quot;</span><span class="p">])</span>
+<span class="n">mean_bias</span> <span class="o">=</span> <span class="n">mean_bias</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+
+<span class="n">skill_score</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">skill_score</span><span class="p">[</span><span class="s2">&quot;rmse&quot;</span><span class="p">])</span>
+<span class="n">skill_score</span> <span class="o">=</span> <span class="n">skill_score</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;nan&quot;</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">folium</span>
+<span class="kn">from</span> <span class="nn">ioos_tools.ioos</span> <span class="kn">import</span> <span class="n">get_coordinates</span>
+
+
+<span class="k">def</span> <span class="nf">make_map</span><span class="p">(</span><span class="n">bbox</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">layers</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;layers&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">zoom_start</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;zoom_start&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+    <span class="n">lon</span> <span class="o">=</span> <span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span>
+        <span class="n">width</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;100%&quot;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="n">zoom_start</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">layers</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://oos.soest.hawaii.edu/thredds/wms/hioos/satellite/dhw_5km&quot;</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">WmsTileLayer</span><span class="p">(</span>
+            <span class="n">url</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Sea Surface Temperature&quot;</span><span class="p">,</span>
+            <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;image/png&quot;</span><span class="p">,</span>
+            <span class="n">layers</span><span class="o">=</span><span class="s2">&quot;CRW_SST&quot;</span><span class="p">,</span>
+            <span class="n">attr</span><span class="o">=</span><span class="s2">&quot;PacIOOS TDS&quot;</span><span class="p">,</span>
+            <span class="n">overlay</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">transparent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">w</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">PolyLine</span><span class="p">(</span>
+            <span class="n">get_coordinates</span><span class="p">(</span><span class="n">bbox</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#FF0000&quot;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">m</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bbox</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">][</span><span class="s2">&quot;bbox&quot;</span><span class="p">]</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">make_map</span><span class="p">(</span><span class="n">bbox</span><span class="p">,</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The cells from <code class="docutils literal notranslate"><span class="pre">[20]</span></code> to <code class="docutils literal notranslate"><span class="pre">[25]</span></code> create a <a class="reference external" href="https://github.com/python-visualization/folium"><code class="docutils literal notranslate"><span class="pre">folium</span></code></a> map with <a class="reference external" href="http://bokeh.pydata.org/en/latest/"><code class="docutils literal notranslate"><span class="pre">bokeh</span></code></a> for the time-series at the observed points.</p>
+<p>Note that we did mark the nearest model cell location used in the comparison.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_obs</span> <span class="o">=</span> <span class="n">stations_keys</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+
+<span class="kn">import</span> <span class="nn">iris</span>
+<span class="kn">from</span> <span class="nn">folium.plugins</span> <span class="kn">import</span> <span class="n">MarkerCluster</span>
+
+<span class="n">iris</span><span class="o">.</span><span class="n">FUTURE</span><span class="o">.</span><span class="n">netcdf_promote</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">big_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s2">&quot;*.nc&quot;</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="s2">&quot;OBS_DATA&quot;</span> <span class="ow">in</span> <span class="n">fname</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="n">cube</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load_cube</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">lons</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">lats</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;Y&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">stations</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;station_code&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="p">]</span> <span class="o">*</span> <span class="n">lons</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">lista</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">lons</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">lats</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">stations</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+    <span class="n">big_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">lista</span><span class="p">)</span>
+
+<span class="n">big_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">big_list</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;lon&quot;</span><span class="p">,</span> <span class="s2">&quot;lat&quot;</span><span class="p">,</span> <span class="s2">&quot;station&quot;</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;station&quot;</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+
+<span class="n">locations</span><span class="p">,</span> <span class="n">popups</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">station</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+    <span class="n">sta_name</span> <span class="o">=</span> <span class="n">all_obs</span><span class="p">[</span><span class="n">station</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+        <span class="n">locations</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">])</span>
+        <span class="n">popups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="s2">&quot;[</span><span class="si">{}</span><span class="s2">]: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;fillmismatch&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">),</span> <span class="n">sta_name</span><span class="p">)</span>
+        <span class="p">)</span>
+
+<span class="n">MarkerCluster</span><span class="p">(</span><span class="n">locations</span><span class="o">=</span><span class="n">locations</span><span class="p">,</span> <span class="n">popups</span><span class="o">=</span><span class="n">popups</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Cluster&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we use a dictionary with some models we expect to find so we can create a better legend for the plots. If any new models are found, we will use its filename in the legend as a default until we can go back and add a short name to our library.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titles</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;coawst_4_use_best&quot;</span><span class="p">:</span> <span class="s2">&quot;COAWST_4&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;global&quot;</span><span class="p">:</span> <span class="s2">&quot;HYCOM&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NECOFS_GOM3_FORECAST&quot;</span><span class="p">:</span> <span class="s2">&quot;NECOFS_GOM3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST&quot;</span><span class="p">:</span> <span class="s2">&quot;NECOFS_MassBay&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;OBS_DATA&quot;</span><span class="p">:</span> <span class="s2">&quot;Observations&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">cycle</span>
+
+<span class="kn">from</span> <span class="nn">bokeh.embed</span> <span class="kn">import</span> <span class="n">file_html</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="kn">import</span> <span class="n">HoverTool</span>
+<span class="kn">from</span> <span class="nn">bokeh.palettes</span> <span class="kn">import</span> <span class="n">Category20</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span>
+<span class="kn">from</span> <span class="nn">bokeh.resources</span> <span class="kn">import</span> <span class="n">CDN</span>
+<span class="kn">from</span> <span class="nn">folium</span> <span class="kn">import</span> <span class="n">IFrame</span>
+
+<span class="c1"># Plot defaults.</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">Category20</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">colorcycler</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+<span class="n">tools</span> <span class="o">=</span> <span class="s2">&quot;pan,box_zoom,reset&quot;</span>
+<span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">750</span><span class="p">,</span> <span class="mi">250</span>
+
+
+<span class="k">def</span> <span class="nf">make_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">station</span><span class="p">):</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span>
+        <span class="n">toolbar_location</span><span class="o">=</span><span class="s2">&quot;above&quot;</span><span class="p">,</span>
+        <span class="n">x_axis_type</span><span class="o">=</span><span class="s2">&quot;datetime&quot;</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span>
+        <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">station</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">column</span><span class="p">,</span> <span class="n">series</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="n">series</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">series</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;OBS_DATA&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">column</span><span class="p">:</span>
+                <span class="n">bias</span> <span class="o">=</span> <span class="n">mean_bias</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">station</span><span class="p">)][</span><span class="n">column</span><span class="p">]</span>
+                <span class="n">skill</span> <span class="o">=</span> <span class="n">skill_score</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">station</span><span class="p">)][</span><span class="n">column</span><span class="p">]</span>
+                <span class="n">line_color</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">colorcycler</span><span class="p">)</span>
+                <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.65</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="n">line_color</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">skill</span> <span class="o">=</span> <span class="n">bias</span> <span class="o">=</span> <span class="s2">&quot;NA&quot;</span>
+                <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;crimson&quot;</span><span class="p">)</span>
+            <span class="n">legend</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">titles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">legend</span> <span class="o">=</span> <span class="n">legend</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;fillmismatch&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">series</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">series</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="n">legend</span><span class="o">=</span><span class="n">legend</span><span class="p">,</span>
+                <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">line_cap</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span>
+                <span class="n">line_join</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kw</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">add_tools</span><span class="p">(</span>
+                <span class="n">HoverTool</span><span class="p">(</span>
+                    <span class="n">tooltips</span><span class="o">=</span><span class="p">[</span>
+                        <span class="p">(</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">titles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">column</span><span class="p">))),</span>
+                        <span class="p">(</span><span class="s2">&quot;Bias&quot;</span><span class="p">,</span> <span class="n">bias</span><span class="p">),</span>
+                        <span class="p">(</span><span class="s2">&quot;Skill&quot;</span><span class="p">,</span> <span class="n">skill</span><span class="p">),</span>
+                    <span class="p">],</span>
+                    <span class="n">renderers</span><span class="o">=</span><span class="p">[</span><span class="n">line</span><span class="p">],</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span>
+
+
+<span class="k">def</span> <span class="nf">make_marker</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">station</span><span class="p">):</span>
+    <span class="n">lons</span> <span class="o">=</span> <span class="n">stations_keys</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;lon&quot;</span><span class="p">)</span>
+    <span class="n">lats</span> <span class="o">=</span> <span class="n">stations_keys</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;lat&quot;</span><span class="p">)</span>
+
+    <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">lons</span><span class="p">[</span><span class="n">station</span><span class="p">],</span> <span class="n">lats</span><span class="p">[</span><span class="n">station</span><span class="p">]</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">file_html</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">CDN</span><span class="p">,</span> <span class="n">station</span><span class="p">)</span>
+    <span class="n">iframe</span> <span class="o">=</span> <span class="n">IFrame</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span> <span class="o">+</span> <span class="mi">40</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">height</span> <span class="o">+</span> <span class="mi">80</span><span class="p">)</span>
+
+    <span class="n">popup</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Popup</span><span class="p">(</span><span class="n">iframe</span><span class="p">,</span> <span class="n">max_width</span><span class="o">=</span><span class="mi">2650</span><span class="p">)</span>
+    <span class="n">icon</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Icon</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;stats&quot;</span><span class="p">)</span>
+    <span class="n">marker</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Marker</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">],</span> <span class="n">popup</span><span class="o">=</span><span class="n">popup</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="n">icon</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">marker</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfs</span> <span class="o">=</span> <span class="n">load_ncs</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">station</span> <span class="ow">in</span> <span class="n">dfs</span><span class="p">:</span>
+    <span class="n">sta_name</span> <span class="o">=</span> <span class="n">all_obs</span><span class="p">[</span><span class="n">station</span><span class="p">]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">[</span><span class="n">station</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">make_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">station</span><span class="p">)</span>
+    <span class="n">marker</span> <span class="o">=</span> <span class="n">make_marker</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">station</span><span class="p">)</span>
+    <span class="n">marker</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">()</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+
+<span class="n">m</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><iframe src="data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+CjxoZWFkPiAgICAKICAgIDxtZXRhIGh0dHAtZXF1aXY9ImNvbnRlbnQtdHlwZSIgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PVVURi04IiAvPgogICAgCiAgICAgICAgPHNjcmlwdD4KICAgICAgICAgICAgTF9OT19UT1VDSCA9IGZhbHNlOwogICAgICAgICAgICBMX0RJU0FCTEVfM0QgPSBmYWxzZTsKICAgICAgICA8L3NjcmlwdD4KICAgIAogICAgPHNjcmlwdCBzcmM9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vbGVhZmxldEAxLjQuMC9kaXN0L2xlYWZsZXQuanMiPjwvc2NyaXB0PgogICAgPHNjcmlwdCBzcmM9Imh0dHBzOi8vY29kZS5qcXVlcnkuY29tL2pxdWVyeS0xLjEyLjQubWluLmpzIj48L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL21heGNkbi5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjIuMC9qcy9ib290c3RyYXAubWluLmpzIj48L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL2NkbmpzLmNsb3VkZmxhcmUuY29tL2FqYXgvbGlicy9MZWFmbGV0LmF3ZXNvbWUtbWFya2Vycy8yLjAuMi9sZWFmbGV0LmF3ZXNvbWUtbWFya2Vycy5qcyI+PC9zY3JpcHQ+CiAgICA8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vbGVhZmxldEAxLjQuMC9kaXN0L2xlYWZsZXQuY3NzIi8+CiAgICA8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vYm9vdHN0cmFwLzMuMi4wL2Nzcy9ib290c3RyYXAubWluLmNzcyIvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL21heGNkbi5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjIuMC9jc3MvYm9vdHN0cmFwLXRoZW1lLm1pbi5jc3MiLz4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9mb250LWF3ZXNvbWUvNC42LjMvY3NzL2ZvbnQtYXdlc29tZS5taW4uY3NzIi8+CiAgICA8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Imh0dHBzOi8vY2RuanMuY2xvdWRmbGFyZS5jb20vYWpheC9saWJzL0xlYWZsZXQuYXdlc29tZS1tYXJrZXJzLzIuMC4yL2xlYWZsZXQuYXdlc29tZS1tYXJrZXJzLmNzcyIvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL3Jhd2Nkbi5naXRoYWNrLmNvbS9weXRob24tdmlzdWFsaXphdGlvbi9mb2xpdW0vbWFzdGVyL2ZvbGl1bS90ZW1wbGF0ZXMvbGVhZmxldC5hd2Vzb21lLnJvdGF0ZS5jc3MiLz4KICAgIDxzdHlsZT5odG1sLCBib2R5IHt3aWR0aDogMTAwJTtoZWlnaHQ6IDEwMCU7bWFyZ2luOiAwO3BhZGRpbmc6IDA7fTwvc3R5bGU+CiAgICA8c3R5bGU+I21hcCB7cG9zaXRpb246YWJzb2x1dGU7dG9wOjA7Ym90dG9tOjA7cmlnaHQ6MDtsZWZ0OjA7fTwvc3R5bGU+CiAgICAKICAgICAgICAgICAgPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwKICAgICAgICAgICAgICAgIGluaXRpYWwtc2NhbGU9MS4wLCBtYXhpbXVtLXNjYWxlPTEuMCwgdXNlci1zY2FsYWJsZT1ubyIgLz4KICAgICAgICAgICAgPHN0eWxlPgogICAgICAgICAgICAgICAgI21hcF8xZDc3NDhjYmFiYWQ0N2MzYWQzNDFkYzViZGNlMTBiZCB7CiAgICAgICAgICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlOwogICAgICAgICAgICAgICAgICAgIHdpZHRoOiAxMDAuMCU7CiAgICAgICAgICAgICAgICAgICAgaGVpZ2h0OiAxMDAuMCU7CiAgICAgICAgICAgICAgICAgICAgbGVmdDogMC4wJTsKICAgICAgICAgICAgICAgICAgICB0b3A6IDAuMCU7CiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgIDwvc3R5bGU+CiAgICAgICAgCiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvbGVhZmxldC5tYXJrZXJjbHVzdGVyLzEuMS4wL2xlYWZsZXQubWFya2VyY2x1c3Rlci5qcyI+PC9zY3JpcHQ+CiAgICA8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Imh0dHBzOi8vY2RuanMuY2xvdWRmbGFyZS5jb20vYWpheC9saWJzL2xlYWZsZXQubWFya2VyY2x1c3Rlci8xLjEuMC9NYXJrZXJDbHVzdGVyLmNzcyIvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL2NkbmpzLmNsb3VkZmxhcmUuY29tL2FqYXgvbGlicy9sZWFmbGV0Lm1hcmtlcmNsdXN0ZXIvMS4xLjAvTWFya2VyQ2x1c3Rlci5EZWZhdWx0LmNzcyIvPgo8L2hlYWQ+Cjxib2R5PiAgICAKICAgIAogICAgICAgICAgICA8ZGl2IGNsYXNzPSJmb2xpdW0tbWFwIiBpZD0ibWFwXzFkNzc0OGNiYWJhZDQ3YzNhZDM0MWRjNWJkY2UxMGJkIiA+PC9kaXY+CiAgICAgICAgCjwvYm9keT4KPHNjcmlwdD4gICAgCiAgICAKICAgICAgICAgICAgdmFyIG1hcF8xZDc3NDhjYmFiYWQ0N2MzYWQzNDFkYzViZGNlMTBiZCA9IEwubWFwKAogICAgICAgICAgICAgICAgIm1hcF8xZDc3NDhjYmFiYWQ0N2MzYWQzNDFkYzViZGNlMTBiZCIsCiAgICAgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgICAgY2VudGVyOiBbNDIuMzMsIC03MC45MzVdLAogICAgICAgICAgICAgICAgICAgIGNyczogTC5DUlMuRVBTRzM4NTcsCiAgICAgICAgICAgICAgICAgICAgem9vbTogMTEsCiAgICAgICAgICAgICAgICAgICAgem9vbUNvbnRyb2w6IHRydWUsCiAgICAgICAgICAgICAgICAgICAgcHJlZmVyQ2FudmFzOiBmYWxzZSwKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgKTsKCiAgICAgICAgICAgIAoKICAgICAgICAKICAgIAogICAgICAgICAgICB2YXIgdGlsZV9sYXllcl9lZDcxYmRmOTE4Zjc0NGM0YWVkM2M0MWNkYmJjNzRiMCA9IEwudGlsZUxheWVyKAogICAgICAgICAgICAgICAgImh0dHBzOi8ve3N9LnRpbGUub3BlbnN0cmVldG1hcC5vcmcve3p9L3t4fS97eX0ucG5nIiwKICAgICAgICAgICAgICAgIHsiYXR0cmlidXRpb24iOiAiRGF0YSBieSBcdTAwMjZjb3B5OyBcdTAwM2NhIGhyZWY9XCJodHRwOi8vb3BlbnN0cmVldG1hcC5vcmdcIlx1MDAzZU9wZW5TdHJlZXRNYXBcdTAwM2MvYVx1MDAzZSwgdW5kZXIgXHUwMDNjYSBocmVmPVwiaHR0cDovL3d3dy5vcGVuc3RyZWV0bWFwLm9yZy9jb3B5cmlnaHRcIlx1MDAzZU9EYkxcdTAwM2MvYVx1MDAzZS4iLCAiZGV0ZWN0UmV0aW5hIjogZmFsc2UsICJtYXhOYXRpdmVab29tIjogMTgsICJtYXhab29tIjogMTgsICJtaW5ab29tIjogMCwgIm5vV3JhcCI6IGZhbHNlLCAib3BhY2l0eSI6IDEsICJzdWJkb21haW5zIjogImFiYyIsICJ0bXMiOiBmYWxzZX0KICAgICAgICAgICAgKS5hZGRUbyhtYXBfMWQ3NzQ4Y2JhYmFkNDdjM2FkMzQxZGM1YmRjZTEwYmQpOwogICAgICAgIAogICAgCiAgICAgICAgICAgIHZhciBtYWNyb19lbGVtZW50XzRkMDc3ZWQ3Mjc4YTQ3MzM4MjBkODM0NmY2YzE3ZjI1ID0gTC50aWxlTGF5ZXIud21zKAogICAgICAgICAgICAgICAgImh0dHA6Ly9vb3Muc29lc3QuaGF3YWlpLmVkdS90aHJlZGRzL3dtcy9oaW9vcy9zYXRlbGxpdGUvZGh3XzVrbSIsCiAgICAgICAgICAgICAgICB7ImF0dHJpYnV0aW9uIjogIlBhY0lPT1MgVERTIiwgImZvcm1hdCI6ICJpbWFnZS9wbmciLCAibGF5ZXJzIjogIkNSV19TU1QiLCAic3R5bGVzIjogIiIsICJ0cmFuc3BhcmVudCI6IHRydWUsICJ2ZXJzaW9uIjogIjEuMS4xIn0KICAgICAgICAgICAgKS5hZGRUbyhtYXBfMWQ3NzQ4Y2JhYmFkNDdjM2FkMzQxZGM1YmRjZTEwYmQpOwogICAgICAgIAogICAgCiAgICAgICAgICAgIHZhciBwb2x5X2xpbmVfYTAwZDhhMzNkYzdlNGYyMjgzYTRkM2M4YzY1OGQyMGQgPSBMLnBvbHlsaW5lKAogICAgICAgICAgICAgICAgW1s0Mi4wMywgLTcxLjNdLCBbNDIuMDMsIC03MC41N10sIFs0Mi42MywgLTcwLjU3XSwgWzQyLjYzLCAtNzEuM10sIFs0Mi4wMywgLTcxLjNdXSwKICAgICAgICAgICAgICAgIHsiYnViYmxpbmdNb3VzZUV2ZW50cyI6IHRydWUsICJjb2xvciI6ICIjRkYwMDAwIiwgImRhc2hBcnJheSI6IG51bGwsICJkYXNoT2Zmc2V0IjogbnVsbCwgImZpbGwiOiBmYWxzZSwgImZpbGxDb2xvciI6ICIjRkYwMDAwIiwgImZpbGxPcGFjaXR5IjogMC4yLCAiZmlsbFJ1bGUiOiAiZXZlbm9kZCIsICJsaW5lQ2FwIjogInJvdW5kIiwgImxpbmVKb2luIjogInJvdW5kIiwgIm5vQ2xpcCI6IGZhbHNlLCAib3BhY2l0eSI6IDAuOSwgInNtb290aEZhY3RvciI6IDEuMCwgInN0cm9rZSI6IHRydWUsICJ3ZWlnaHQiOiAyfQogICAgICAgICAgICApLmFkZFRvKG1hcF8xZDc3NDhjYmFiYWQ0N2MzYWQzNDFkYzViZGNlMTBiZCk7CiAgICAgICAgCiAgICAKICAgICAgICAgICAgdmFyIG1hcmtlcl9jbHVzdGVyXzUwMmFkOThlOTE0YjQzOWU5ZWU2NDhmZjc5NmRlM2IxID0gTC5tYXJrZXJDbHVzdGVyR3JvdXAoCiAgICAgICAgICAgICAgICB7fQogICAgICAgICAgICApOwogICAgICAgICAgICBtYXBfMWQ3NzQ4Y2JhYmFkNDdjM2FkMzQxZGM1YmRjZTEwYmQuYWRkTGF5ZXIobWFya2VyX2NsdXN0ZXJfNTAyYWQ5OGU5MTRiNDM5ZTllZTY0OGZmNzk2ZGUzYjEpOwogICAgICAgIAogICAgCiAgICAgICAgICAgIHZhciBtYXJrZXJfYjUxYWY3NGU3OGE5NDQ3NjliYThmYmZmNjRmYTMyMTMgPSBMLm1hcmtlcigKICAgICAgICAgICAgICAgIFs0Mi4zMzcyMTA0MDg2MTk0NywgLTcwLjY4OTg5MDY2MDA5OTQyXSwKICAgICAgICAgICAgICAgIHt9CiAgICAgICAgICAgICkuYWRkVG8obWFya2VyX2NsdXN0ZXJfNTAyYWQ5OGU5MTRiNDM5ZTllZTY0OGZmNzk2ZGUzYjEpOwogICAgICAgIAogICAgCiAgICAgICAgdmFyIHBvcHVwXzhkZDM4OTBkMGI2YTQyNmI4YmFkODNjODk0YzYyYmUwID0gTC5wb3B1cCh7Im1heFdpZHRoIjogIjEwMCUifSk7CgogICAgICAgIAogICAgICAgICAgICB2YXIgaHRtbF81NGVmNGFhMTQ0MmQ0MDFhODYxNjViMTIxNjViYjk4MSA9ICQoYDxkaXYgaWQ9Imh0bWxfNTRlZjRhYTE0NDJkNDAxYTg2MTY1YjEyMTY1YmI5ODEiIHN0eWxlPSJ3aWR0aDogMTAwLjAlOyBoZWlnaHQ6IDEwMC4wJTsiPltIaXN0b3J5X0Jlc3RdOiBCT1NUT04gMTYgTk0gRWFzdCBvZiBCb3N0b24sIE1BPC9kaXY+YClbMF07CiAgICAgICAgICAgIHBvcHVwXzhkZDM4OTBkMGI2YTQyNmI4YmFkODNjODk0YzYyYmUwLnNldENvbnRlbnQoaHRtbF81NGVmNGFhMTQ0MmQ0MDFhODYxNjViMTIxNjViYjk4MSk7CiAgICAgICAgCgogICAgICAgIG1hcmtlcl9iNTFhZjc0ZTc4YTk0NDc2OWJhOGZiZmY2NGZhMzIxMy5iaW5kUG9wdXAocG9wdXBfOGRkMzg5MGQwYjZhNDI2YjhiYWQ4M2M4OTRjNjJiZTApCiAgICAgICAgOwoKICAgICAgICAKICAgIAogICAgCiAgICAgICAgICAgIHZhciBtYXJrZXJfMzk4ZmUyN2EwZTkwNDc4ZTk0NGE5ZGMxNTQ5NGRjZjAgPSBMLm1hcmtlcigKICAgICAgICAgICAgICAgIFs0Mi4zMzcyMTA0MDg2MTk0NywgLTcwLjY4OTg5MDY2MDA5OTQyXSwKICAgICAgICAgICAgICAgIHt9CiAgICAgICAgICAgICkuYWRkVG8obWFya2VyX2NsdXN0ZXJfNTAyYWQ5OGU5MTRiNDM5ZTllZTY0OGZmNzk2ZGUzYjEpOwogICAgICAgIAogICAgCiAgICAgICAgdmFyIHBvcHVwX2ZlOTc0MTliNWFjNzRhMzNhY2ZmMTQwNTQ4YjIzMTk3ID0gTC5wb3B1cCh7Im1heFdpZHRoIjogIjEwMCUifSk7CgogICAgICAgIAogICAgICAgICAgICB2YXIgaHRtbF85ZTJiMGE4MWI1MGQ0M2MyOTAwNDUxYjdlODU4N2E4NiA9ICQoYDxkaXYgaWQ9Imh0bWxfOWUyYjBhODFiNTBkNDNjMjkwMDQ1MWI3ZTg1ODdhODYiIHN0eWxlPSJ3aWR0aDogMTAwLjAlOyBoZWlnaHQ6IDEwMC4wJTsiPltBdmVyYWdlc19CZXN0XTogQk9TVE9OIDE2IE5NIEVhc3Qgb2YgQm9zdG9uLCBNQTwvZGl2PmApWzBdOwogICAgICAgICAgICBwb3B1cF9mZTk3NDE5YjVhYzc0YTMzYWNmZjE0MDU0OGIyMzE5Ny5zZXRDb250ZW50KGh0bWxfOWUyYjBhODFiNTBkNDNjMjkwMDQ1MWI3ZTg1ODdhODYpOwogICAgICAgIAoKICAgICAgICBtYXJrZXJfMzk4ZmUyN2EwZTkwNDc4ZTk0NGE5ZGMxNTQ5NGRjZjAuYmluZFBvcHVwKHBvcHVwX2ZlOTc0MTliNWFjNzRhMzNhY2ZmMTQwNTQ4YjIzMTk3KQogICAgICAgIDsKCiAgICAgICAgCiAgICAKICAgIAogICAgICAgICAgICB2YXIgbWFya2VyX2Y3YzhlZDAxYWFhMjQxN2Y5NjU2NTVkY2JkODhhYWEyID0gTC5tYXJrZXIoCiAgICAgICAgICAgICAgICBbNDIuMzI1MDA0NTc3NjM2NzUsIC03MC42NzQ5OTU0MjIzNjMzMl0sCiAgICAgICAgICAgICAgICB7fQogICAgICAgICAgICApLmFkZFRvKG1hcmtlcl9jbHVzdGVyXzUwMmFkOThlOTE0YjQzOWU5ZWU2NDhmZjc5NmRlM2IxKTsKICAgICAgICAKICAgIAogICAgICAgIHZhciBwb3B1cF8wNTZmODFhNTkyMTQ0MmVhOTYwZDk1YjI0NDlhYzM0OCA9IEwucG9wdXAoeyJtYXhXaWR0aCI6ICIxMDAlIn0pOwoKICAgICAgICAKICAgICAgICAgICAgdmFyIGh0bWxfYTZiODkyMWIwNTRiNDI3MzhmMzI1OWI0ODc1MTRkODkgPSAkKGA8ZGl2IGlkPSJodG1sX2E2Yjg5MjFiMDU0YjQyNzM4ZjMyNTliNDg3NTE0ZDg5IiBzdHlsZT0id2lkdGg6IDEwMC4wJTsgaGVpZ2h0OiAxMDAuMCU7Ij5bZGh3XzVrbV06IEJPU1RPTiAxNiBOTSBFYXN0IG9mIEJvc3RvbiwgTUE8L2Rpdj5gKVswXTsKICAgICAgICAgICAgcG9wdXBfMDU2ZjgxYTU5MjE0NDJlYTk2MGQ5NWIyNDQ5YWMzNDguc2V0Q29udGVudChodG1sX2E2Yjg5MjFiMDU0YjQyNzM4ZjMyNTliNDg3NTE0ZDg5KTsKICAgICAgICAKCiAgICAgICAgbWFya2VyX2Y3YzhlZDAxYWFhMjQxN2Y5NjU2NTVkY2JkODhhYWEyLmJpbmRQb3B1cChwb3B1cF8wNTZmODFhNTkyMTQ0MmVhOTYwZDk1YjI0NDlhYzM0OCkKICAgICAgICA7CgogICAgICAgIAogICAgCiAgICAKICAgICAgICAgICAgdmFyIG1hcmtlcl9jMjM0Njc4NDNjNWU0NmU5YTVmMTg5OTBlNzZkOGE0MyA9IEwubWFya2VyKAogICAgICAgICAgICAgICAgWzQyLjM0NjAwMDAwMDAwMDAwNCwgLTcwLjY1MTAwMDAwMDAwMDAxXSwKICAgICAgICAgICAgICAgIHt9CiAgICAgICAgICAgICkuYWRkVG8obWFwXzFkNzc0OGNiYWJhZDQ3YzNhZDM0MWRjNWJkY2UxMGJkKTsKICAgICAgICAKICAgIAogICAgICAgICAgICB2YXIgaWNvbl82OTEzOGEyMmM5ZjY0ZTg1OGY1MTZiYzdlZmM2ZDU2NSA9IEwuQXdlc29tZU1hcmtlcnMuaWNvbigKICAgICAgICAgICAgICAgIHsiZXh0cmFDbGFzc2VzIjogImZhLXJvdGF0ZS0wIiwgImljb24iOiAic3RhdHMiLCAiaWNvbkNvbG9yIjogIndoaXRlIiwgIm1hcmtlckNvbG9yIjogImdyZWVuIiwgInByZWZpeCI6ICJnbHlwaGljb24ifQogICAgICAgICAgICApOwogICAgICAgICAgICBtYXJrZXJfYzIzNDY3ODQzYzVlNDZlOWE1ZjE4OTkwZTc2ZDhhNDMuc2V0SWNvbihpY29uXzY5MTM4YTIyYzlmNjRlODU4ZjUxNmJjN2VmYzZkNTY1KTsKICAgICAgICAKICAgIAogICAgICAgIHZhciBwb3B1cF9lN2I2ZDg0NDI4MTg0NGNjYTkxOGNhYTU5ZjU2NzdjOCA9IEwucG9wdXAoeyJtYXhXaWR0aCI6IDI2NTB9KTsKCiAgICAgICAgCiAgICAgICAgICAgIHZhciBpX2ZyYW1lX2FkZmYzZWI4NDRlYjQ3MWQ5ZTAyMjk2MWFjOTA4ZDJmID0gJChgPGlmcmFtZSBzcmM9ImRhdGE6dGV4dC9odG1sO2NoYXJzZXQ9dXRmLTg7YmFzZTY0LENpQWdJQ0FLQ2dvS1BDRkVUME5VV1ZCRklHaDBiV3crQ2p4b2RHMXNJR3hoYm1jOUltVnVJajRLSUNBS0lDQThhR1ZoWkQ0S0lDQWdJQW9nSUNBZ0lDQThiV1YwWVNCamFHRnljMlYwUFNKMWRHWXRPQ0krQ2lBZ0lDQWdJRHgwYVhSc1pUNDBOREF4TXp3dmRHbDBiR1UrQ2lBZ0lDQWdJQW9nSUNBZ0lDQUtJQ0FnSUNBZ0lDQUtJQ0FnSUNBZ0lDQWdJQW9nSUNBZ0lDQWdJRHhzYVc1cklISmxiRDBpYzNSNWJHVnphR1ZsZENJZ2FISmxaajBpYUhSMGNITTZMeTlqWkc0dWNIbGtZWFJoTG05eVp5OWliMnRsYUM5eVpXeGxZWE5sTDJKdmEyVm9MVEV1TWk0d0xtMXBiaTVqYzNNaUlIUjVjR1U5SW5SbGVIUXZZM056SWlBdlBnb2dJQ0FnSUNBZ0lBb2dJQ0FnSUNBZ0lBb2dJQ0FnSUNBZ0lDQWdDaUFnSUNBZ0lDQWdQSE5qY21sd2RDQjBlWEJsUFNKMFpYaDBMMnBoZG1GelkzSnBjSFFpSUhOeVl6MGlhSFIwY0hNNkx5OWpaRzR1Y0hsa1lYUmhMbTl5Wnk5aWIydGxhQzl5Wld4bFlYTmxMMkp2YTJWb0xURXVNaTR3TG0xcGJpNXFjeUkrUEM5elkzSnBjSFErQ2lBZ0lDQWdJQ0FnUEhOamNtbHdkQ0IwZVhCbFBTSjBaWGgwTDJwaGRtRnpZM0pwY0hRaVBnb2dJQ0FnSUNBZ0lDQWdJQ0JDYjJ0bGFDNXpaWFJmYkc5blgyeGxkbVZzS0NKcGJtWnZJaWs3Q2lBZ0lDQWdJQ0FnUEM5elkzSnBjSFErQ2lBZ0lDQWdJQ0FnQ2lBZ0lDQWdJQW9nSUNBZ0lDQUtJQ0FnSUFvZ0lEd3ZhR1ZoWkQ0S0lDQUtJQ0FLSUNBOFltOWtlVDRLSUNBZ0lBb2dJQ0FnSUNBS0lDQWdJQ0FnSUNBS0lDQWdJQ0FnSUNBZ0lBb2dJQ0FnSUNBZ0lDQWdDaUFnSUNBZ0lDQWdJQ0FnSUFvZ0lDQWdJQ0FnSUNBZ0lDQWdJRHhrYVhZZ1kyeGhjM005SW1KckxYSnZiM1FpSUdsa1BTSTJNMk01TmpNNE5TMWhNRFpsTFRSa09Ea3RPR0psTmkweVkyWXhORE0wWm1NMk1UWWlJR1JoZEdFdGNtOXZkQzFwWkQwaU1UQXdNU0krUEM5a2FYWStDaUFnSUNBZ0lDQWdJQ0FnSUFvZ0lDQWdJQ0FnSUNBZ0NpQWdJQ0FnSUNBZ0NpQWdJQ0FnSUFvZ0lDQWdJQ0FLSUNBZ0lDQWdJQ0E4YzJOeWFYQjBJSFI1Y0dVOUltRndjR3hwWTJGMGFXOXVMMnB6YjI0aUlHbGtQU0l4TXpnd0lqNEtJQ0FnSUNBZ0lDQWdJSHNpWlRnMFpESTJOekl0T1dFd1lpMDBNRGxsTFdGaE1qa3ROakl6TW1KbU16azBNbU15SWpwN0luSnZiM1J6SWpwN0luSmxabVZ5Wlc1alpYTWlPbHQ3SW1GMGRISnBZblYwWlhNaU9uc2lZMkZzYkdKaFkyc2lPbTUxYkd3c0ltUmhkR0VpT25zaWVDSTZleUpmWDI1a1lYSnlZWGxmWHlJNklrRkJRMmRIV1ZNMlpHdEpRVUZKYVVsb04zQXlVV2RCUVdOUVpVdDFibHBESWl3aVpIUjVjR1VpT2lKbWJHOWhkRFkwSWl3aWMyaGhjR1VpT2xzelhYMHNJbmtpT25zaVgxOXVaR0Z5Y21GNVgxOGlPaUpCUVVGQlowMUpNVTFWUVVGQlFVTkJkMnBWZUZGQlFVRkJTVVJEVGxSR1FTSXNJbVIwZVhCbElqb2labXh2WVhRMk5DSXNJbk5vWVhCbElqcGJNMTE5ZlN3aWMyVnNaV04wWldRaU9uc2lhV1FpT2lJeE1UY3dJaXdpZEhsd1pTSTZJbE5sYkdWamRHbHZiaUo5TENKelpXeGxZM1JwYjI1ZmNHOXNhV041SWpwN0ltbGtJam9pTVRFM01TSXNJblI1Y0dVaU9pSlZibWx2YmxKbGJtUmxjbVZ5Y3lKOWZTd2lhV1FpT2lJeE1URTBJaXdpZEhsd1pTSTZJa052YkhWdGJrUmhkR0ZUYjNWeVkyVWlmU3g3SW1GMGRISnBZblYwWlhNaU9uc2liVzl1ZEdoeklqcGJNQ3d4TERJc015dzBMRFVzTml3M0xEZ3NPU3d4TUN3eE1WMTlMQ0pwWkNJNklqRXdORGNpTENKMGVYQmxJam9pVFc5dWRHaHpWR2xqYTJWeUluMHNleUpoZEhSeWFXSjFkR1Z6SWpwN0ltWnZjbTFoZEhSbGNpSTZleUpwWkNJNklqRXdNelVpTENKMGVYQmxJam9pUkdGMFpYUnBiV1ZVYVdOclJtOXliV0YwZEdWeUluMHNJblJwWTJ0bGNpSTZleUpwWkNJNklqRXdNVE1pTENKMGVYQmxJam9pUkdGMFpYUnBiV1ZVYVdOclpYSWlmWDBzSW1sa0lqb2lNVEF4TWlJc0luUjVjR1VpT2lKRVlYUmxkR2x0WlVGNGFYTWlmU3g3SW1GMGRISnBZblYwWlhNaU9uc2liVzl1ZEdoeklqcGJNQ3cyWFgwc0ltbGtJam9pTVRBMU1DSXNJblI1Y0dVaU9pSk5iMjUwYUhOVWFXTnJaWElpZlN4N0ltRjBkSEpwWW5WMFpYTWlPbnNpWkdGMFlWOXpiM1Z5WTJVaU9uc2lhV1FpT2lJeE1ESTVJaXdpZEhsd1pTSTZJa052YkhWdGJrUmhkR0ZUYjNWeVkyVWlmU3dpWjJ4NWNHZ2lPbnNpYVdRaU9pSXhNRE13SWl3aWRIbHdaU0k2SWt4cGJtVWlmU3dpYUc5MlpYSmZaMng1Y0dnaU9tNTFiR3dzSW0xMWRHVmtYMmRzZVhCb0lqcHVkV3hzTENKdWIyNXpaV3hsWTNScGIyNWZaMng1Y0dnaU9uc2lhV1FpT2lJeE1ETXhJaXdpZEhsd1pTSTZJa3hwYm1VaWZTd2ljMlZzWldOMGFXOXVYMmRzZVhCb0lqcHVkV3hzTENKMmFXVjNJanA3SW1sa0lqb2lNVEF6TXlJc0luUjVjR1VpT2lKRFJGTldhV1YzSW4xOUxDSnBaQ0k2SWpFd016SWlMQ0owZVhCbElqb2lSMng1Y0doU1pXNWtaWEpsY2lKOUxIc2lZWFIwY21saWRYUmxjeUk2ZTMwc0ltbGtJam9pTVRBeU1pSXNJblI1Y0dVaU9pSlFZVzVVYjI5c0luMHNleUpoZEhSeWFXSjFkR1Z6SWpwN0lteHBibVZmWVd4d2FHRWlPakF1TmpVc0lteHBibVZmWTJGd0lqb2ljbTkxYm1RaUxDSnNhVzVsWDJOdmJHOXlJam9pSTJabU4yWXdaU0lzSW14cGJtVmZhbTlwYmlJNkluSnZkVzVrSWl3aWJHbHVaVjkzYVdSMGFDSTZOU3dpZUNJNmV5Sm1hV1ZzWkNJNkluZ2lmU3dpZVNJNmV5Sm1hV1ZzWkNJNklua2lmWDBzSW1sa0lqb2lNVEV4TlNJc0luUjVjR1VpT2lKTWFXNWxJbjBzZXlKaGRIUnlhV0oxZEdWeklqcDdJbUpsYkc5M0lqcGJleUpwWkNJNklqRXdNVElpTENKMGVYQmxJam9pUkdGMFpYUnBiV1ZCZUdsekluMWRMQ0pqWlc1MFpYSWlPbHQ3SW1sa0lqb2lNVEF4TmlJc0luUjVjR1VpT2lKSGNtbGtJbjBzZXlKcFpDSTZJakV3TWpFaUxDSjBlWEJsSWpvaVIzSnBaQ0o5TEhzaWFXUWlPaUl4TURVeUlpd2lkSGx3WlNJNklreGxaMlZ1WkNKOVhTd2liR1ZtZENJNlczc2lhV1FpT2lJeE1ERTNJaXdpZEhsd1pTSTZJa3hwYm1WaGNrRjRhWE1pZlYwc0luQnNiM1JmYUdWcFoyaDBJam95TlRBc0luQnNiM1JmZDJsa2RHZ2lPamMxTUN3aWNtVnVaR1Z5WlhKeklqcGJleUpwWkNJNklqRXdNeklpTENKMGVYQmxJam9pUjJ4NWNHaFNaVzVrWlhKbGNpSjlMSHNpYVdRaU9pSXhNRFU1SWl3aWRIbHdaU0k2SWtkc2VYQm9VbVZ1WkdWeVpYSWlmU3g3SW1sa0lqb2lNVEE0TnlJc0luUjVjR1VpT2lKSGJIbHdhRkpsYm1SbGNtVnlJbjBzZXlKcFpDSTZJakV4TVRjaUxDSjBlWEJsSWpvaVIyeDVjR2hTWlc1a1pYSmxjaUo5WFN3aWRHbDBiR1VpT25zaWFXUWlPaUl4TURBeUlpd2lkSGx3WlNJNklsUnBkR3hsSW4wc0luUnZiMnhpWVhJaU9uc2lhV1FpT2lJeE1ESTFJaXdpZEhsd1pTSTZJbFJ2YjJ4aVlYSWlmU3dpZEc5dmJHSmhjbDlzYjJOaGRHbHZiaUk2SW1GaWIzWmxJaXdpZUY5eVlXNW5aU0k2ZXlKcFpDSTZJakV3TURRaUxDSjBlWEJsSWpvaVJHRjBZVkpoYm1kbE1XUWlmU3dpZUY5elkyRnNaU0k2ZXlKcFpDSTZJakV3TURnaUxDSjBlWEJsSWpvaVRHbHVaV0Z5VTJOaGJHVWlmU3dpZVY5eVlXNW5aU0k2ZXlKcFpDSTZJakV3TURZaUxDSjBlWEJsSWpvaVJHRjBZVkpoYm1kbE1XUWlmU3dpZVY5elkyRnNaU0k2ZXlKcFpDSTZJakV3TVRBaUxDSjBlWEJsSWpvaVRHbHVaV0Z5VTJOaGJHVWlmWDBzSW1sa0lqb2lNVEF3TVNJc0luTjFZblI1Y0dVaU9pSkdhV2QxY21VaUxDSjBlWEJsSWpvaVVHeHZkQ0o5TEhzaVlYUjBjbWxpZFhSbGN5STZlMzBzSW1sa0lqb2lNVEExTVNJc0luUjVjR1VpT2lKWlpXRnljMVJwWTJ0bGNpSjlMSHNpWVhSMGNtbGlkWFJsY3lJNmV5SnNhVzVsWDJGc2NHaGhJam93TGpFc0lteHBibVZmWTJGd0lqb2ljbTkxYm1RaUxDSnNhVzVsWDJOdmJHOXlJam9pSXpGbU56ZGlOQ0lzSW14cGJtVmZhbTlwYmlJNkluSnZkVzVrSWl3aWJHbHVaVjkzYVdSMGFDSTZOU3dpZUNJNmV5Sm1hV1ZzWkNJNkluZ2lmU3dpZVNJNmV5Sm1hV1ZzWkNJNklua2lmWDBzSW1sa0lqb2lNVEV4TmlJc0luUjVjR1VpT2lKTWFXNWxJbjBzZXlKaGRIUnlhV0oxZEdWeklqcDdJbVJoZEdGZmMyOTFjbU5sSWpwN0ltbGtJam9pTVRFeE5DSXNJblI1Y0dVaU9pSkRiMngxYlc1RVlYUmhVMjkxY21ObEluMHNJbWRzZVhCb0lqcDdJbWxrSWpvaU1URXhOU0lzSW5SNWNHVWlPaUpNYVc1bEluMHNJbWh2ZG1WeVgyZHNlWEJvSWpwdWRXeHNMQ0p0ZFhSbFpGOW5iSGx3YUNJNmJuVnNiQ3dpYm05dWMyVnNaV04wYVc5dVgyZHNlWEJvSWpwN0ltbGtJam9pTVRFeE5pSXNJblI1Y0dVaU9pSk1hVzVsSW4wc0luTmxiR1ZqZEdsdmJsOW5iSGx3YUNJNmJuVnNiQ3dpZG1sbGR5STZleUpwWkNJNklqRXhNVGdpTENKMGVYQmxJam9pUTBSVFZtbGxkeUo5ZlN3aWFXUWlPaUl4TVRFM0lpd2lkSGx3WlNJNklrZHNlWEJvVW1WdVpHVnlaWElpZlN4N0ltRjBkSEpwWW5WMFpYTWlPbnNpYVhSbGJYTWlPbHQ3SW1sa0lqb2lNVEExTXlJc0luUjVjR1VpT2lKTVpXZGxibVJKZEdWdEluMHNleUpwWkNJNklqRXdPREVpTENKMGVYQmxJam9pVEdWblpXNWtTWFJsYlNKOUxIc2lhV1FpT2lJeE1URXhJaXdpZEhsd1pTSTZJa3hsWjJWdVpFbDBaVzBpZlN4N0ltbGtJam9pTVRFME15SXNJblI1Y0dVaU9pSk1aV2RsYm1SSmRHVnRJbjFkZlN3aWFXUWlPaUl4TURVeUlpd2lkSGx3WlNJNklreGxaMlZ1WkNKOUxIc2lZWFIwY21saWRYUmxjeUk2ZXlKc2FXNWxYMkZzY0doaElqb3dMalkxTENKc2FXNWxYMk5oY0NJNkluSnZkVzVrSWl3aWJHbHVaVjlqYjJ4dmNpSTZJaU14WmpjM1lqUWlMQ0pzYVc1bFgycHZhVzRpT2lKeWIzVnVaQ0lzSW14cGJtVmZkMmxrZEdnaU9qVXNJbmdpT25zaVptbGxiR1FpT2lKNEluMHNJbmtpT25zaVptbGxiR1FpT2lKNUluMTlMQ0pwWkNJNklqRXdNekFpTENKMGVYQmxJam9pVEdsdVpTSjlMSHNpWVhSMGNtbGlkWFJsY3lJNmV5SnVkVzFmYldsdWIzSmZkR2xqYTNNaU9qVXNJblJwWTJ0bGNuTWlPbHQ3SW1sa0lqb2lNVEEwTUNJc0luUjVjR1VpT2lKQlpHRndkR2wyWlZScFkydGxjaUo5TEhzaWFXUWlPaUl4TURReElpd2lkSGx3WlNJNklrRmtZWEIwYVhabFZHbGphMlZ5SW4wc2V5SnBaQ0k2SWpFd05ESWlMQ0owZVhCbElqb2lRV1JoY0hScGRtVlVhV05yWlhJaWZTeDdJbWxrSWpvaU1UQTBNeUlzSW5SNWNHVWlPaUpFWVhselZHbGphMlZ5SW4wc2V5SnBaQ0k2SWpFd05EUWlMQ0owZVhCbElqb2lSR0Y1YzFScFkydGxjaUo5TEhzaWFXUWlPaUl4TURRMUlpd2lkSGx3WlNJNklrUmhlWE5VYVdOclpYSWlmU3g3SW1sa0lqb2lNVEEwTmlJc0luUjVjR1VpT2lKRVlYbHpWR2xqYTJWeUluMHNleUpwWkNJNklqRXdORGNpTENKMGVYQmxJam9pVFc5dWRHaHpWR2xqYTJWeUluMHNleUpwWkNJNklqRXdORGdpTENKMGVYQmxJam9pVFc5dWRHaHpWR2xqYTJWeUluMHNleUpwWkNJNklqRXdORGtpTENKMGVYQmxJam9pVFc5dWRHaHpWR2xqYTJWeUluMHNleUpwWkNJNklqRXdOVEFpTENKMGVYQmxJam9pVFc5dWRHaHpWR2xqYTJWeUluMHNleUpwWkNJNklqRXdOVEVpTENKMGVYQmxJam9pV1dWaGNuTlVhV05yWlhJaWZWMTlMQ0pwWkNJNklqRXdNVE1pTENKMGVYQmxJam9pUkdGMFpYUnBiV1ZVYVdOclpYSWlmU3g3SW1GMGRISnBZblYwWlhNaU9uc2ljMjkxY21ObElqcDdJbWxrSWpvaU1URXhOQ0lzSW5SNWNHVWlPaUpEYjJ4MWJXNUVZWFJoVTI5MWNtTmxJbjE5TENKcFpDSTZJakV4TVRnaUxDSjBlWEJsSWpvaVEwUlRWbWxsZHlKOUxIc2lZWFIwY21saWRYUmxjeUk2ZTMwc0ltbGtJam9pTVRFME1TSXNJblI1Y0dVaU9pSlRaV3hsWTNScGIyNGlmU3g3SW1GMGRISnBZblYwWlhNaU9uc2liR0ZpWld3aU9uc2lkbUZzZFdVaU9pSkJkbVZ5WVdkbGMxOUNaWE4wSW4wc0luSmxibVJsY21WeWN5STZXM3NpYVdRaU9pSXhNRE15SWl3aWRIbHdaU0k2SWtkc2VYQm9VbVZ1WkdWeVpYSWlmVjE5TENKcFpDSTZJakV3TlRNaUxDSjBlWEJsSWpvaVRHVm5aVzVrU1hSbGJTSjlMSHNpWVhSMGNtbGlkWFJsY3lJNmV5SmhZM1JwZG1WZlpISmhaeUk2SW1GMWRHOGlMQ0poWTNScGRtVmZhVzV6Y0dWamRDSTZJbUYxZEc4aUxDSmhZM1JwZG1WZmJYVnNkR2tpT201MWJHd3NJbUZqZEdsMlpWOXpZM0p2Ykd3aU9pSmhkWFJ2SWl3aVlXTjBhWFpsWDNSaGNDSTZJbUYxZEc4aUxDSjBiMjlzY3lJNlczc2lhV1FpT2lJeE1ESXlJaXdpZEhsd1pTSTZJbEJoYmxSdmIyd2lmU3g3SW1sa0lqb2lNVEF5TXlJc0luUjVjR1VpT2lKQ2IzaGFiMjl0Vkc5dmJDSjlMSHNpYVdRaU9pSXhNREkwSWl3aWRIbHdaU0k2SWxKbGMyVjBWRzl2YkNKOUxIc2lhV1FpT2lJeE1EVTBJaXdpZEhsd1pTSTZJa2h2ZG1WeVZHOXZiQ0o5TEhzaWFXUWlPaUl4TURneUlpd2lkSGx3WlNJNklraHZkbVZ5Vkc5dmJDSjlMSHNpYVdRaU9pSXhNVEV5SWl3aWRIbHdaU0k2SWtodmRtVnlWRzl2YkNKOUxIc2lhV1FpT2lJeE1UUTBJaXdpZEhsd1pTSTZJa2h2ZG1WeVZHOXZiQ0o5WFgwc0ltbGtJam9pTVRBeU5TSXNJblI1Y0dVaU9pSlViMjlzWW1GeUluMHNleUpoZEhSeWFXSjFkR1Z6SWpwN2ZTd2lhV1FpT2lJeE1ERTRJaXdpZEhsd1pTSTZJa0poYzJsalZHbGphMlZ5SW4wc2V5SmhkSFJ5YVdKMWRHVnpJanA3ZlN3aWFXUWlPaUl4TVRReUlpd2lkSGx3WlNJNklsVnVhVzl1VW1WdVpHVnlaWEp6SW4wc2V5SmhkSFJ5YVdKMWRHVnpJanA3SW14aFltVnNJanA3SW5aaGJIVmxJam9pWkdoM1h6VnJiU0o5TENKeVpXNWtaWEpsY25NaU9sdDdJbWxrSWpvaU1URXhOeUlzSW5SNWNHVWlPaUpIYkhsd2FGSmxibVJsY21WeUluMWRmU3dpYVdRaU9pSXhNVFF6SWl3aWRIbHdaU0k2SWt4bFoyVnVaRWwwWlcwaWZTeDdJbUYwZEhKcFluVjBaWE1pT25zaVkyRnNiR0poWTJzaU9tNTFiR3dzSW5KbGJtUmxjbVZ5Y3lJNlczc2lhV1FpT2lJeE1URTNJaXdpZEhsd1pTSTZJa2RzZVhCb1VtVnVaR1Z5WlhJaWZWMHNJblJ2YjJ4MGFYQnpJanBiV3lKT1lXMWxJaXdpWkdoM1h6VnJiU05tYVd4c2JXbHpiV0YwWTJnaVhTeGJJa0pwWVhNaUxDSXRNQzR6TmlKZExGc2lVMnRwYkd3aUxDSXdMakl4SWwxZGZTd2lhV1FpT2lJeE1UUTBJaXdpZEhsd1pTSTZJa2h2ZG1WeVZHOXZiQ0o5TEhzaVlYUjBjbWxpZFhSbGN5STZleUpzYVc1bFgyRnNjR2hoSWpvd0xqRXNJbXhwYm1WZlkyRndJam9pY205MWJtUWlMQ0pzYVc1bFgyTnZiRzl5SWpvaUl6Rm1OemRpTkNJc0lteHBibVZmYW05cGJpSTZJbkp2ZFc1a0lpd2liR2x1WlY5M2FXUjBhQ0k2TlN3aWVDSTZleUptYVdWc1pDSTZJbmdpZlN3aWVTSTZleUptYVdWc1pDSTZJbmtpZlgwc0ltbGtJam9pTVRBMU9DSXNJblI1Y0dVaU9pSk1hVzVsSW4wc2V5SmhkSFJ5YVdKMWRHVnpJanA3ZlN3aWFXUWlPaUl4TURNMUlpd2lkSGx3WlNJNklrUmhkR1YwYVcxbFZHbGphMFp2Y20xaGRIUmxjaUo5TEhzaVlYUjBjbWxpZFhSbGN5STZleUpzYVc1bFgyRnNjR2hoSWpvd0xqWTFMQ0pzYVc1bFgyTmhjQ0k2SW5KdmRXNWtJaXdpYkdsdVpWOWpiMnh2Y2lJNklpTmhaV00zWlRnaUxDSnNhVzVsWDJwdmFXNGlPaUp5YjNWdVpDSXNJbXhwYm1WZmQybGtkR2dpT2pVc0luZ2lPbnNpWm1sbGJHUWlPaUo0SW4wc0lua2lPbnNpWm1sbGJHUWlPaUo1SW4xOUxDSnBaQ0k2SWpFd05UY2lMQ0owZVhCbElqb2lUR2x1WlNKOUxIc2lZWFIwY21saWRYUmxjeUk2ZXlKbWIzSnRZWFIwWlhJaU9uc2lhV1FpT2lJeE1ETTNJaXdpZEhsd1pTSTZJa0poYzJsalZHbGphMFp2Y20xaGRIUmxjaUo5TENKMGFXTnJaWElpT25zaWFXUWlPaUl4TURFNElpd2lkSGx3WlNJNklrSmhjMmxqVkdsamEyVnlJbjE5TENKcFpDSTZJakV3TVRjaUxDSjBlWEJsSWpvaVRHbHVaV0Z5UVhocGN5SjlMSHNpWVhSMGNtbGlkWFJsY3lJNmV5SmpZV3hzWW1GamF5STZiblZzYkN3aWNtVnVaR1Z5WlhKeklqcGJleUpwWkNJNklqRXdNeklpTENKMGVYQmxJam9pUjJ4NWNHaFNaVzVrWlhKbGNpSjlYU3dpZEc5dmJIUnBjSE1pT2x0YklrNWhiV1VpTENKQmRtVnlZV2RsYzE5Q1pYTjBJMlpwYkd4dGFYTnRZWFJqYUNKZExGc2lRbWxoY3lJc0lqQXVORE1pWFN4YklsTnJhV3hzSWl3aU1DNDBPQ0pkWFgwc0ltbGtJam9pTVRBMU5DSXNJblI1Y0dVaU9pSkliM1psY2xSdmIyd2lmU3g3SW1GMGRISnBZblYwWlhNaU9uc2lZMkZzYkdKaFkyc2lPbTUxYkd4OUxDSnBaQ0k2SWpFd01EWWlMQ0owZVhCbElqb2lSR0YwWVZKaGJtZGxNV1FpZlN4N0ltRjBkSEpwWW5WMFpYTWlPbnNpWTJGc2JHSmhZMnNpT201MWJHeDlMQ0pwWkNJNklqRXdNRFFpTENKMGVYQmxJam9pUkdGMFlWSmhibWRsTVdRaWZTeDdJbUYwZEhKcFluVjBaWE1pT25zaVkyRnNiR0poWTJzaU9tNTFiR3dzSW1SaGRHRWlPbnNpZUNJNmV5SmZYMjVrWVhKeVlYbGZYeUk2SWtGQlFrRkhOMkUxWkd0SlFVRkRhVXQxWW13eVVXZEJRVVZRYlRoMVdGcERRVUZFTkZvNFF6VmthMGxCUVU5RVYzYzNiREpSWjBGQmVVVllTSFZZV2tOQlFVTjNkRTF4TldSclNVRkJTbWRxZW5Kc01sRm5RVUZuU2t4U2RWaGFRMEZCUW05QlpGYzFaR3RKUVVGR1FuY3lUR3d5VVdkQlFVOU9MMkoxV0ZwRFFVRkJaMVIwS3pWa2EwbEJRVUZwT1RSeWJESlJaMEZCT0VOMmJYVllXa05CUVVSWmJYVnROV1JyU1VGQlRVRktOMkpzTWxGblFVRnhTR3AzZFZoYVEwRkJRMUUxTDA4MVpHdEpRVUZJYUZjNU4yd3lVV2RCUVZsTldEWjFXRnBEUVVGQ1NVNVFOalZrYTBsQlFVUkRha0ZpY0RKUlowRkJSMEpKUm5WdVdrTkJRVUZCWjFGcE5tUnJTVUZCVDJwMlF6ZHdNbEZuUVVFd1JqUlFkVzVhUTBGQlF6UjZVa3MyWkd0SlFVRkxRVGhHY25BeVVXZEJRV2xMYzFwMWJscERRVUZDZDBkb01qWmthMGxCUVVacFNrbE1jREpSWjBGQlVWQm5hblZ1V2tOQlFVRnZXbmxsTm1SclNVRkJRa1JYUzNKd01sRm5RVUVyUlZGMWRXNWFRMEZCUkdkemVrYzJaR3RKUVVGTloybE9ZbkF5VVdkQlFYTktSVFIxYmxwRFFVRkRXVUZFZVRaa2EwbEJRVWxDZGxBM2NESlJaMEZCWVU0MVEzVnVXa05CUVVKUlZGVmhObVJyU1VGQlJHazRVMkp3TWxGblFVRkpRM1JPZFc1YVEwRkJRVWx0YkVNMlpHdEpRVUZRUVVsV1RIQXlVV2RCUVRKSVpGaDFibHBEUVVGRVFUVnNjVFprYTBsQlFVdG9WbGh5Y0RKUlowRkJhMDFTYUhWdVdrTkJRVUkwVFRKWE5tUnJTVUZCUjBOcFlVeHdNbEZuUVVGVFFrWnpkVzVhUTBGQlFYZG5SeXMyWkd0SlFVRkNhblpqY25BeVVXZEJRVUZHTlRKMWJscERRVUZFYjNwSWJUWmthMGxCUVU1Qk4yWmljREpSWjBGQmRVdHhRWFZ1V2tOQlFVTm5SMWxUTm1SclNVRkJTV2xKYURkd01sRm5RVUZqVUdWTGRXNWFRMEZCUWxsYWJ6WTJaR3RKUVVGRlJGWnJZbkF5VVdkQlFVdEZVMVoxYmxwRFFVRkJVWE0xYVRaa2EwbEJRVkJuYUc1TWNESlJaMEZCTkVwRFpuVnVXa05CUVVSSkx6WkxObVJyU1VGQlRFSjFjSEp3TWxGblFVRnRUakp3ZFc1YVEwRkJRMEZVU3pJMlpHdEpRVUZIYVRkelRIQXlVV2RCUVZWRGNUQjFibHBEUVVGQk5HMWlaVFprYTBsQlFVTkJTWFUzY0RKUlowRkJRMGhsSzNWdVdrTkJRVVIzTldOSE5tUnJTVUZCVG1oVmVHSndNbEZuUVVGM1RWQkpkVzVhUTBGQlEyOU5jM2syWkd0SlFVRktRMmg2TjNBeVVXZEJRV1ZDUkZSMWJscERRVUZDWjJZNVlUWmthMGxCUVVWcWRUSmljREpSWjBGQlRVWXpaSFZ1V2tOQlFVRlplazlETm1SclNVRkJRVUUzTlV4d01sRm5RVUUyUzI1dWRXNWFRMEZCUkZGSFQzVTJaR3RKUVVGTWFVZzNjbkF5VVdkQlFXOVFZbmgxYmxwRFFVRkRTVnBtVnpaa2EwbEJRVWhFVlN0TWNESlJaMEZCVjBWUU9IVnVXa05CUVVKQmMzWXJObVJyU1VGQlEyZG9RVGQwTWxGblFVRkZTa0ZIZFROYVEwRkJSRFF2WjIwM1pHdEpRVUZQUW5SRVluUXlVV2RCUVhsT2QxRjFNMXBEUVVGRGQxTjRVemRrYTBsQlFVcHBOa1kzZERKUlowRkJaME5yWW5VeldrTkJRVUp2YlVJMk4yUnJTVUZCUmtGSVNYSjBNbEZuUVVGUFNGbHNkVE5hUTBGQlFXYzFVMmszWkd0SlFVRkJhRlZNVEhReVVXZEJRVGhOU1haMU0xcERRVUZFV1UxVVR6ZGthMGxCUVUxRFowNXlkREpSWjBGQmNVRTROblV6V2tOQlFVTlJabW95TjJSclNVRkJTR3AwVVV4ME1sRm5RVUZaUm5oRmRUTmFRMEZCUWtsNU1HVTNaR3RKUVVGRVFUWlROM1F5VVdkQlFVZExiRTkxTTFwRFFVRkJRVWRHU3pka2EwbEJRVTlwUjFaaWRESlJaMEZCTUZCV1dYVXpXa05CUVVNMFdrWjVOMlJyU1VGQlMwUlVXRGQwTWxGblFVRnBSVXBxZFROYVEwRkJRbmR6VjJFM1pHdEpRVUZHWjJkaGNuUXlVV2RCUVZGSk9YUjFNMXBEUVVGQmJ5OXVRemRrYTBsQlFVSkNkR1JNZERKUlowRkJLMDUwTTNVeldrTkJRVVJuVTI1MU4yUnJTVUZCVFdrMVpuSjBNbEZuUVVGelEybERkVE5hUTBGQlExbHNORmMzWkd0SlFVRkpRVWRwWW5ReVVXZEJRV0ZJVjAxMU0xcERRVUZDVVRWSkt6ZGthMGxCUVVSb1ZHczNkREpSWjBGQlNVMUxWM1V6V2tOQlFVRkpUVnB4TjJSclNVRkJVRU5tYm1KME1sRm5RVUV5UVRab2RUTmFRMEZCUkVGbVlWTTNaR3RKUVVGTGFuTndOM1F5VVdkQlFXdEdkWEoxTTFwRFFVRkNOSGx4Tmpka2EwbEJRVWRCTlhOeWRESlJaMEZCVTB0cE1YVXpXa05CUVVGM1JqZHROMlJyU1VGQlFtbEhka3gwTWxGblFVRkJVRmN2ZFROYVEwRkJSRzlaT0U4M1pHdEpRVUZPUkZONGNuUXlVV2RCUVhWRlNFdDFNMXBEUVVGRFozTk5NamRrYTBsQlFVbG5aakJpZERKUlowRkJZMGszVlhVeldrTkJRVUpaTDJSbE4yUnJTVUZCUlVKek1qZDBNbEZuUVVGTFRuWmxkVE5hUTBGQlFWRlRkVXMzWkd0SlFVRlFhVFExWW5ReVVXZEJRVFJEWm5CMU0xcERRVUZFU1d4MWVUZGthMGxCUVV4QlJqaE1kREpSWjBGQmJVaFVlblV6V2tOQlFVTkJOQzloTjJSclNVRkJSMmhUSzNKME1sRm5RVUZWVFVnNWRUTmFRMEZCUVRSTlFVYzRaR3RKUVVGRFEyWkNUSGd5VVdkQlFVTkJORWwyU0ZwRFFVRkVkMlpCZFRoa2EwbEJRVTVxY2tSeWVESlJaMEZCZDBadlUzWklXa05CUVVOdmVWSlhPR1JyU1VGQlNrRTBSMko0TWxGblFVRmxTMk5qZGtoYVEwRkJRbWRHYVVNNFpHdEpRVUZGYVVaSk4zZ3lVV2RCUVUxUVVXMTJTRnBEUVVGQldWbDVjVGhrYTBsQlFVRkVVMHhpZURKUlowRkJOa1ZCZUhaSVdrTkJRVVJSY25wVE9HUnJTVUZCVEdkbFQweDRNbEZuUVVGdlNUQTNka2hhUTBGQlEwa3ZSRFk0Wkd0SlFVRklRbkpSY25neVVXZEJRVmRPY0VaMlNGcERRVUZDUVZOVmJUaGthMGxCUVVOcE5GUk1lREpSWjBGQlJVTmtVWFpJV2tOQlFVUTBiRlpQT0dSclNVRkJUMEZGVmpkNE1sRm5RVUY1U0U1aGRraGFRMEZCUTNjMGJESTRaR3RKUVVGS2FGSlpZbmd5VVdkQlFXZE5RbXQyU0ZwRFFVRkNiMHd5YVRoa2EwbEJRVVpEWldFM2VESlJaMEZCVDBFeGRuWklXa05CUVVGblpraExPR1JyU1VGQlFXcHlaR0o0TWxGblBUMGlMQ0prZEhsd1pTSTZJbVpzYjJGME5qUWlMQ0p6YUdGd1pTSTZXekl3TmwxOUxDSjVJanA3SWw5ZmJtUmhjbkpoZVY5Zklqb2lRVUZCUVRSSFdsSk1NRUZCUVVGRFFWQmFkM1pSUVVGQlFVOURVbXRET1VGQlFVRkJaMDlIVEV3d1FVRkJRVU5uT1Zrd2RsRkJRVUZCVFVOaWEyazVRVUZCUVVGQlNEWmFUREJCUVVGQlFVRktZVWwyVVVGQlFVRkxRV055YVRsQlFVRkJRVkZKWlRGTU1FRkJRVUZCUVZsTlFYWlJRVUZCUVVsQ01qSkRPVUZCUVVGQlFVcDZPRXd3UVVGQlFVRm5OWGhqZDFGQlFVRkJRMEY1VUVSQ1FVRkJRVUZuUTJ4cVRVVkJRVUZCUkdkU1dVVjNVVUZCUVVGSFJEbHVha0pCUVVGQlFXZE1jVE5OUlVGQlFVRkRRVzVOYjNkUlFVRkJRVUZCUlRGNlFrRkJRVUZCTkVKRVpFMUZRVUZCUVVObmNDdEJkMUZCUVVGQlEwRk1OVlJDUVVGQlFVRTBRWHB2VFVWQlFVRkJRa0ZvZUUxNFVVRkJRVUZMUVRSR2FrWkJRVUZCUVhkSk9GcE5WVUZCUVVGQ1FUaG9NSGhSUVVGQlFVMUVSRXBFUmtGQlFVRkJORTlCY1UxVlFVRkJRVUZuTldrNGVGRkJRVUZCUTBNeFRYcEdRVUZCUVVGdlJtTXlUVlZCUVVGQlFXZERhbXQ0VVVGQlFVRkJRa0pRVkVaQlFVRkJRVzlMVmtWTlZVRkJRVUZCWjJSRk9IaFJRVUZCUVVsQlVGaHFSa0ZCUVVGQlNVZG9kazFWUVVGQlFVRkJTVzlSZUZGQlFVRkJTMEpHYm1wR1FVRkJRVUZuUkhrM1RWVkJRVUZCUkVGMlRsbDRVVUZCUVVGRFF6QTNha1pCUVVGQlFUUlBjaXROVlVGQlFVRkNaMGxuWjNsUlFVRkJRVWRCVmtOVVNrRkJRVUZCU1U5WlFVMXJRVUZCUVVOblMxY3dlVkZCUVVGQlEwRTBZa1JLUVVGQlFVRm5TMUoxVFd0QlFVRkJSRUV5U0VGNVVVRkJRVUZQUTNkalJFcEJRVUZCUVhkS09YVk5hMEZCUVVGQloybHRhM2xSUVVGQlFVVkRSbGxVU2tGQlFVRkJTVVYwVVUxclFVRkJRVVJCUTBSM2VWRkJRVUZCUTBGcVRrUktRVUZCUVVGQlQwVjFUV3RCUVVGQlJHZEVVM041VVVGQlFVRkhRWGhMUkVwQlFVRkJRVmxRZDIxTmEwRkJRVUZEWnpGcFkzbFJRVUZCUVVkRE0wdFVTa0ZCUVVGQlNVOVpjazFyUVVGQlFVRkJRVk0wZVZGQlFVRkJRVU5CVEhwS1FVRkJRVUZKU2tsMlRXdEJRVUZCUTBGQlF6QjVVVUZCUVVGSlFYaEtWRXBCUVVGQlFWRkRZMVJOYTBGQlFVRkVRVzlvYjNsUlFVRkJRVUZEUlVKVVNrRkJRVUZCZDBsNmVVMVZRVUZCUVVKblpqazRlRkZCUVVGQlIwTTRlbFJHUVVGQlFVRkJRM0VyVFZWQlFVRkJRa0V6WWtGNFVVRkJRVUZEUW5Sd1ZFWkJRVUZCUVRST0syRk5WVUZCUVVGRVFXTmFUWGhSUVVGQlFVRkJSV3Q2UmtGQlFVRkJTVTgyV2sxVlFVRkJRVUpuYm1GcmVGRkJRVUZCUjBNdmQycEdRVUZCUVVGblNDOXJUVlZCUVVGQlFXZHpkekI1VVVGQlFVRkxRekJRZWtwQlFVRkJRVUZMYkhwTmEwRkJRVUZDWnpJMlNYbFJRVUZCUVV0Q2JIaDZTa0ZCUVVGQlowSjJZMDFyUVVGQlFVSm5NMlZGZVZGQlFVRkJTMEowTTNwS1FVRkJRVUZKUkdaV1RXdEJRVUZCUWtGaU9HTjVVVUZCUVVGQlFYSjFWRXBCUVVGQlFWRkRSM0ZOYTBGQlFVRkNaMWR3YzNsUlFVRkJRVWxFY0dwVVNrRkJRVUZCWjBkSFEwMXJRVUZCUVVOQlJWaG5lVkZCUVVGQlRVSk5ZbnBLUVVGQlFVRkpRa3B3VFd0QlFVRkJRMmR1YlZsNVVVRkJRVUZOUkdOaGVrcEJRVUZCUVdkRVFqUk5hMEZCUVVGRFFXVkpjM2xSUVVGQlFVZEJTM0JVU2tGQlFVRkJVVXBxUkUxclFVRkJRVVJuTXl0UmVWRkJRVUZCUTBKblFtcE9RVUZCUVVGQlNGbHRUVEJCUVVGQlFrRTBSVWw2VVVGQlFVRk5RVGxXZWs1QlFVRkJRVFJDVW1oTk1FRkJRVUZEUVhkWFJYcFJRVUZCUVVkQ1ZGZDZUa0ZCUVVGQlFVZGtVVTB3UVVGQlFVRkJTWHB6ZWxGQlFVRkJUVUprUzFST1FVRkJRVUZuVEdOaVRUQkJRVUZCUTJkVWFFbDZVVUZCUVVGUFFrWkRhazVCUVVGQlFXZElORU5OTUVGQlFVRkRaMFZtYzNsUlFVRkJRVU5EUlRoNlNrRkJRVUZCUVV4dWMwMXJRVUZCUVVKbmNDdHJlVkZCUVVGQlFVTkNPRlJLUVVGQlFVRlpRelJHVFRCQlFVRkJRMmRrYVZGNlVVRkJRVUZEUTJOVWFrNUJRVUZCUVhkTU5rRk5NRUZCUVVGQ1FWTk1aM3BSUVVGQlFVMUNXVGRFVGtGQlFVRkJTVkJ6VDA1RlFVRkJRVUZuZDFSQk1GRkJRVUZCUlVFMlUwUlNRVUZCUVVGdlF6RlVUa1ZCUVVGQlFtZFRNVUV3VVVGQlFVRkxRekpSYWxKQlFVRkJRV2RQUVd4T1JVRkJRVUZEWjJWQlNUQlJRVUZCUVU5Q0t6VnFUa0ZCUVVGQldVWjJVMDB3UVVGQlFVUkJLM05KZWxGQlFVRkJUME5yZEZST1FVRkJRVUZaVFZOdlRUQkJRVUZCUTBGTWNIZDZVVUZCUVVGUFFscHJSRTVCUVVGQlFYZEhRMFpOTUVGQlFVRkRaeXRZTkhwUlFVRkJRVXREYldoRVRrRkJRVUZCVVVWRFYwMHdRVUZCUVVOQlIweFJlbEZCUVVGQlQwTm1NMVJPUVVGQlFVRnZURkZQVGtWQlFVRkJRV2N6VkRBd1VVRkJRVUZIUkZGaFZGSkJRVUZCUVVGRVMxWk9SVUZCUVVGQlFVMXliekJSUVVGQlFVMUVkVEZxVWtGQlFVRkJORWxxY0U1RlFVRkJRVU5uYW5VME1GRkJRVUZCUzBKMU5VUlNRVUZCUVVGM1VHWklUa1ZCUVVGQlJHZHJZVUV3VVVGQlFVRkxRV0psVkZKQlFVRkJRWGRIVGxKT1JVRkJRVUZEWjBwRE5EQlJRVUZCUVVORVpFVkVVa0ZCUVVGQlFVaFlNMDB3UVVGQlFVRm5XaXRCZWxGQlFVRkJUME5xZVhwT1FVRkJRVUUwVFNzMVRUQkJRVUZCUTJkcWNUQjZVVUZCUVVGRlFYWnlWRTVCUVVGQlFXOUdLek5OTUVGQlFVRkVaMmhqYTNwUlFVRkJRVU5DVWpSVVRrRkJRVUZCV1VsTU9FMHdRVUZCUVVKbmMxSnJNRkZCUVVGQlNVRXJUbnBTUVVGQlFVRm5SR3hWVGtWQlFVRkJRVUU1TWpRd1VVRkJRVUZCUTFobmVsSkJRVUZCUVc5Q01rOU9SVUZCUVVGRVFVZHZiekJSUVVGQlFVOUNSbVZFVWtGQlFVRkJaMEZLWlU1RlFVRkJRVUpuUWxWRk1GRkJRVUZCUjBGSVNXcFNRVUZCUVVGQlMzSTRUVEJCUVVGQlJFRkVaR042VVVGQlFVRkxSQ3QwYWs1QlFVRkJRVWxGVTJWTk1FRkJRVUZDWjBWSmMzcFJRVUZCUVU5RWFHVnFUa0ZCUVVGQldVUm9kRTB3UVVGQlFVRm5kekpOZWxGQlFVRkJUMEpoV0hwT1FVRkJRVUUwUm5CbVRUQkJRVUZCUkdkWGJEaDZVVUU5UFNJc0ltUjBlWEJsSWpvaVpteHZZWFEyTkNJc0luTm9ZWEJsSWpwYk1qQTJYWDE5TENKelpXeGxZM1JsWkNJNmV5SnBaQ0k2SWpFeE1Ea2lMQ0owZVhCbElqb2lVMlZzWldOMGFXOXVJbjBzSW5ObGJHVmpkR2x2Ymw5d2IyeHBZM2tpT25zaWFXUWlPaUl4TVRFd0lpd2lkSGx3WlNJNklsVnVhVzl1VW1WdVpHVnlaWEp6SW4xOUxDSnBaQ0k2SWpFd05UWWlMQ0owZVhCbElqb2lRMjlzZFcxdVJHRjBZVk52ZFhKalpTSjlMSHNpWVhSMGNtbGlkWFJsY3lJNmUzMHNJbWxrSWpvaU1UQTNPU0lzSW5SNWNHVWlPaUpUWld4bFkzUnBiMjRpZlN4N0ltRjBkSEpwWW5WMFpYTWlPbnNpZEdsamEyVnlJanA3SW1sa0lqb2lNVEF4TXlJc0luUjVjR1VpT2lKRVlYUmxkR2x0WlZScFkydGxjaUo5ZlN3aWFXUWlPaUl4TURFMklpd2lkSGx3WlNJNklrZHlhV1FpZlN4N0ltRjBkSEpwWW5WMFpYTWlPbnNpWW1GelpTSTZOakFzSW0xaGJuUnBjM05oY3lJNld6RXNNaXcxTERFd0xERTFMREl3TERNd1hTd2liV0Y0WDJsdWRHVnlkbUZzSWpveE9EQXdNREF3TGpBc0ltMXBibDlwYm5SbGNuWmhiQ0k2TVRBd01DNHdMQ0p1ZFcxZmJXbHViM0pmZEdsamEzTWlPakI5TENKcFpDSTZJakV3TkRFaUxDSjBlWEJsSWpvaVFXUmhjSFJwZG1WVWFXTnJaWElpZlN4N0ltRjBkSEpwWW5WMFpYTWlPbnNpYkdsdVpWOWhiSEJvWVNJNk1DNHhMQ0pzYVc1bFgyTmhjQ0k2SW5KdmRXNWtJaXdpYkdsdVpWOWpiMnh2Y2lJNklpTXhaamMzWWpRaUxDSnNhVzVsWDJwdmFXNGlPaUp5YjNWdVpDSXNJbXhwYm1WZmQybGtkR2dpT2pVc0luZ2lPbnNpWm1sbGJHUWlPaUo0SW4wc0lua2lPbnNpWm1sbGJHUWlPaUo1SW4xOUxDSnBaQ0k2SWpFd016RWlMQ0owZVhCbElqb2lUR2x1WlNKOUxIc2lZWFIwY21saWRYUmxjeUk2ZXlKallXeHNZbUZqYXlJNmJuVnNiQ3dpWkdGMFlTSTZleUo0SWpwN0lsOWZibVJoY25KaGVWOWZJam9pUVVGQloxUjBLelZrYTBsQlFVRnBPVFJ5YkRKUlowRkJPRU4yYlhWWVdrTkJRVVJuYzNwSE5tUnJTVUZCVFdkcFRtSndNbEZuUVVGelNrVTBkVzVhUTBGQlEyZEhXVk0yWkd0SlFVRkphVWxvTjNBeVVXZEJRV05RWlV0MWJscERRVUZDWjJZNVlUWmthMGxCUVVWcWRUSmljREpSWjBGQlRVWXpaSFZ1V2tOQlFVRm5OVk5wTjJSclNVRkJRV2hWVEV4ME1sRm5RVUU0VFVsMmRUTmFRMEZCUkdkVGJuVTNaR3RKUVVGTmFUVm1jblF5VVdkQlFYTkRhVU4xTTFwRFFVRkRaM05OTWpka2EwbEJRVWxuWmpCaWRESlJaMEZCWTBrM1ZYVXpXa01pTENKa2RIbHdaU0k2SW1ac2IyRjBOalFpTENKemFHRndaU0k2V3pJeFhYMHNJbmtpT25zaVgxOXVaR0Z5Y21GNVgxOGlPaUpCUVVGQlowVjNORTFGUVVGQlFVTkJVVVZWZDFGQlFVRkJTMEV3VldwQ1FVRkJRVUZaUXpGMlRWVkJRVUZCUWtGRU0yZDRVVUZCUVVGQlJIaG5SRVpCUVVGQlFVRkdiRVZOYTBGQlFVRkNaMVZGU1hsUlFVRkJRVXRDU0ZGRVNrRkJRVUZCUVVsclZFMXJRVUZCUVVOQlUyaHplVkZCUVVGQlFVRk5TWHBLUVVGQlFVRlpTek5PVFd0QlFVRkJSR2QxT1ZGNVVVRkJRVUZIUkVzeWVrcEJRVUZCUVhkQmFETk5NRUZCUVVGRVoycElNSHBSUVVGQlFVTkJVbWhFVGtGQlFVRkJTVWN3VkU1RlFVRkJRVUZuWWxKTk1GRkJRVUZCUTBKMFJYcFNRU0lzSW1SMGVYQmxJam9pWm14dllYUTJOQ0lzSW5Ob1lYQmxJanBiTWpGZGZYMHNJbk5sYkdWamRHVmtJanA3SW1sa0lqb2lNVEEzT1NJc0luUjVjR1VpT2lKVFpXeGxZM1JwYjI0aWZTd2ljMlZzWldOMGFXOXVYM0J2YkdsamVTSTZleUpwWkNJNklqRXdPREFpTENKMGVYQmxJam9pVlc1cGIyNVNaVzVrWlhKbGNuTWlmWDBzSW1sa0lqb2lNVEF5T1NJc0luUjVjR1VpT2lKRGIyeDFiVzVFWVhSaFUyOTFjbU5sSW4wc2V5SmhkSFJ5YVdKMWRHVnpJanA3SW0xaGJuUnBjM05oY3lJNld6RXNNaXcxWFN3aWJXRjRYMmx1ZEdWeWRtRnNJam8xTURBdU1Dd2liblZ0WDIxcGJtOXlYM1JwWTJ0eklqb3dmU3dpYVdRaU9pSXhNRFF3SWl3aWRIbHdaU0k2SWtGa1lYQjBhWFpsVkdsamEyVnlJbjBzZXlKaGRIUnlhV0oxZEdWeklqcDdJbVJoZEdGZmMyOTFjbU5sSWpwN0ltbGtJam9pTVRBMU5pSXNJblI1Y0dVaU9pSkRiMngxYlc1RVlYUmhVMjkxY21ObEluMHNJbWRzZVhCb0lqcDdJbWxrSWpvaU1UQTFOeUlzSW5SNWNHVWlPaUpNYVc1bEluMHNJbWh2ZG1WeVgyZHNlWEJvSWpwdWRXeHNMQ0p0ZFhSbFpGOW5iSGx3YUNJNmJuVnNiQ3dpYm05dWMyVnNaV04wYVc5dVgyZHNlWEJvSWpwN0ltbGtJam9pTVRBMU9DSXNJblI1Y0dVaU9pSk1hVzVsSW4wc0luTmxiR1ZqZEdsdmJsOW5iSGx3YUNJNmJuVnNiQ3dpZG1sbGR5STZleUpwWkNJNklqRXdOakFpTENKMGVYQmxJam9pUTBSVFZtbGxkeUo5ZlN3aWFXUWlPaUl4TURVNUlpd2lkSGx3WlNJNklrZHNlWEJvVW1WdVpHVnlaWElpZlN4N0ltRjBkSEpwWW5WMFpYTWlPbnQ5TENKcFpDSTZJakV3TXpjaUxDSjBlWEJsSWpvaVFtRnphV05VYVdOclJtOXliV0YwZEdWeUluMHNleUpoZEhSeWFXSjFkR1Z6SWpwN0ltUnBiV1Z1YzJsdmJpSTZNU3dpZEdsamEyVnlJanA3SW1sa0lqb2lNVEF4T0NJc0luUjVjR1VpT2lKQ1lYTnBZMVJwWTJ0bGNpSjlmU3dpYVdRaU9pSXhNREl4SWl3aWRIbHdaU0k2SWtkeWFXUWlmU3g3SW1GMGRISnBZblYwWlhNaU9uc2ljMjkxY21ObElqcDdJbWxrSWpvaU1UQTFOaUlzSW5SNWNHVWlPaUpEYjJ4MWJXNUVZWFJoVTI5MWNtTmxJbjE5TENKcFpDSTZJakV3TmpBaUxDSjBlWEJsSWpvaVEwUlRWbWxsZHlKOUxIc2lZWFIwY21saWRYUmxjeUk2ZXlKa1lYbHpJanBiTVN3eE5WMTlMQ0pwWkNJNklqRXdORFlpTENKMGVYQmxJam9pUkdGNWMxUnBZMnRsY2lKOUxIc2lZWFIwY21saWRYUmxjeUk2ZXlKa1lYbHpJanBiTVN3NExERTFMREl5WFgwc0ltbGtJam9pTVRBME5TSXNJblI1Y0dVaU9pSkVZWGx6VkdsamEyVnlJbjBzZXlKaGRIUnlhV0oxZEdWeklqcDdmU3dpYVdRaU9pSXhNVGN4SWl3aWRIbHdaU0k2SWxWdWFXOXVVbVZ1WkdWeVpYSnpJbjBzZXlKaGRIUnlhV0oxZEdWeklqcDdmU3dpYVdRaU9pSXhNREkwSWl3aWRIbHdaU0k2SWxKbGMyVjBWRzl2YkNKOUxIc2lZWFIwY21saWRYUmxjeUk2ZXlKemIzVnlZMlVpT25zaWFXUWlPaUl4TURJNUlpd2lkSGx3WlNJNklrTnZiSFZ0YmtSaGRHRlRiM1Z5WTJVaWZYMHNJbWxrSWpvaU1UQXpNeUlzSW5SNWNHVWlPaUpEUkZOV2FXVjNJbjBzZXlKaGRIUnlhV0oxZEdWeklqcDdmU3dpYVdRaU9pSXhNRGd3SWl3aWRIbHdaU0k2SWxWdWFXOXVVbVZ1WkdWeVpYSnpJbjBzZXlKaGRIUnlhV0oxZEdWeklqcDdJbXhoWW1Wc0lqcDdJblpoYkhWbElqb2lTR2x6ZEc5eWVWOUNaWE4wSW4wc0luSmxibVJsY21WeWN5STZXM3NpYVdRaU9pSXhNRFU1SWl3aWRIbHdaU0k2SWtkc2VYQm9VbVZ1WkdWeVpYSWlmVjE5TENKcFpDSTZJakV3T0RFaUxDSjBlWEJsSWpvaVRHVm5aVzVrU1hSbGJTSjlMSHNpWVhSMGNtbGlkWFJsY3lJNmV5SnZkbVZ5YkdGNUlqcDdJbWxrSWpvaU1UQXpPU0lzSW5SNWNHVWlPaUpDYjNoQmJtNXZkR0YwYVc5dUluMTlMQ0pwWkNJNklqRXdNak1pTENKMGVYQmxJam9pUW05NFdtOXZiVlJ2YjJ3aWZTeDdJbUYwZEhKcFluVjBaWE1pT25zaVltOTBkRzl0WDNWdWFYUnpJam9pYzJOeVpXVnVJaXdpWm1sc2JGOWhiSEJvWVNJNmV5SjJZV3gxWlNJNk1DNDFmU3dpWm1sc2JGOWpiMnh2Y2lJNmV5SjJZV3gxWlNJNklteHBaMmgwWjNKbGVTSjlMQ0pzWldaMFgzVnVhWFJ6SWpvaWMyTnlaV1Z1SWl3aWJHVjJaV3dpT2lKdmRtVnliR0Y1SWl3aWJHbHVaVjloYkhCb1lTSTZleUoyWVd4MVpTSTZNUzR3ZlN3aWJHbHVaVjlqYjJ4dmNpSTZleUoyWVd4MVpTSTZJbUpzWVdOckluMHNJbXhwYm1WZlpHRnphQ0k2V3pRc05GMHNJbXhwYm1WZmQybGtkR2dpT25zaWRtRnNkV1VpT2pKOUxDSnlaVzVrWlhKZmJXOWtaU0k2SW1OemN5SXNJbkpwWjJoMFgzVnVhWFJ6SWpvaWMyTnlaV1Z1SWl3aWRHOXdYM1Z1YVhSeklqb2ljMk55WldWdUluMHNJbWxrSWpvaU1UQXpPU0lzSW5SNWNHVWlPaUpDYjNoQmJtNXZkR0YwYVc5dUluMHNleUpoZEhSeWFXSjFkR1Z6SWpwN0ltUmhlWE1pT2xzeExESXNNeXcwTERVc05pdzNMRGdzT1N3eE1Dd3hNU3d4TWl3eE15d3hOQ3d4TlN3eE5pd3hOeXd4T0N3eE9Td3lNQ3d5TVN3eU1pd3lNeXd5TkN3eU5Td3lOaXd5Tnl3eU9Dd3lPU3d6TUN3ek1WMTlMQ0pwWkNJNklqRXdORE1pTENKMGVYQmxJam9pUkdGNWMxUnBZMnRsY2lKOUxIc2lZWFIwY21saWRYUmxjeUk2ZXlKallXeHNZbUZqYXlJNmJuVnNiQ3dpY21WdVpHVnlaWEp6SWpwYmV5SnBaQ0k2SWpFd05Ua2lMQ0owZVhCbElqb2lSMng1Y0doU1pXNWtaWEpsY2lKOVhTd2lkRzl2YkhScGNITWlPbHRiSWs1aGJXVWlMQ0pJYVhOMGIzSjVYMEpsYzNRalptbHNiRzFwYzIxaGRHTm9JbDBzV3lKQ2FXRnpJaXdpTFRBdU5UVWlYU3hiSWxOcmFXeHNJaXdpTUM0Mk5TSmRYWDBzSW1sa0lqb2lNVEE0TWlJc0luUjVjR1VpT2lKSWIzWmxjbFJ2YjJ3aWZTeDdJbUYwZEhKcFluVjBaWE1pT25zaWRHVjRkQ0k2SWpRME1ERXpJbjBzSW1sa0lqb2lNVEF3TWlJc0luUjVjR1VpT2lKVWFYUnNaU0o5TEhzaVlYUjBjbWxpZFhSbGN5STZleUpqWVd4c1ltRmpheUk2Ym5Wc2JDd2laR0YwWVNJNmV5SjRJanA3SWw5ZmJtUmhjbkpoZVY5Zklqb2lRVUZDUVVjM1lUVmthMGxCUVVOcFMzVmliREpSWjBGQlJWQnRPSFZZV2tOQlFVUTBXamhETldSclNVRkJUMFJYZHpkc01sRm5RVUY1UlZoSWRWaGFRMEZCUTNkMFRYRTFaR3RKUVVGS1oycDZjbXd5VVdkQlFXZEtURkoxV0ZwRFFVRkNiMEZrVnpWa2EwbEJRVVpDZHpKTWJESlJaMEZCVDA0dlluVllXa05CUVVGblZIUXJOV1JyU1VGQlFXazVOSEpzTWxGblFVRTRRM1p0ZFZoYVEwRkJSRmx0ZFcwMVpHdEpRVUZOUVVvM1ltd3lVV2RCUVhGSWFuZDFXRnBEUVVGRFVUVXZUelZrYTBsQlFVaG9WemszYkRKUlowRkJXVTFZTm5WWVdrTkJRVUpKVGxBMk5XUnJTVUZCUkVOcVFXSndNbEZuUVVGSFFrbEdkVzVhUTBGQlFVRm5VV2syWkd0SlFVRlBhblpETjNBeVVXZEJRVEJHTkZCMWJscERRVUZETkhwU1N6WmthMGxCUVV0Qk9FWnljREpSWjBGQmFVdHpXblZ1V2tOQlFVSjNSMmd5Tm1SclNVRkJSbWxLU1V4d01sRm5RVUZSVUdkcWRXNWFRMEZCUVc5YWVXVTJaR3RKUVVGQ1JGZExjbkF5VVdkQlFTdEZVWFYxYmxwRFFVRkVaM042Unpaa2EwbEJRVTFuYVU1aWNESlJaMEZCYzBwRk5IVnVXa05CUVVOWlFVUjVObVJyU1VGQlNVSjJVRGR3TWxGblFVRmhUalZEZFc1YVEwRkJRbEZVVldFMlpHdEpRVUZFYVRoVFluQXlVV2RCUVVsRGRFNTFibHBEUVVGQlNXMXNRelprYTBsQlFWQkJTVlpNY0RKUlowRkJNa2hrV0hWdVdrTkJRVVJCTld4eE5tUnJTVUZCUzJoV1dISndNbEZuUVVGclRWSm9kVzVhUTBGQlFqUk5NbGMyWkd0SlFVRkhRMmxoVEhBeVVXZEJRVk5DUm5OMWJscERRVUZCZDJkSEt6WmthMGxCUVVKcWRtTnljREpSWjBGQlFVWTFNblZ1V2tOQlFVUnZla2h0Tm1SclNVRkJUa0UzWm1Kd01sRm5RVUYxUzNGQmRXNWFRMEZCUTJkSFdWTTJaR3RKUVVGSmFVbG9OM0F5VVdkQlFXTlFaVXQxYmxwRFFVRkNXVnB2Tmpaa2EwbEJRVVZFVm10aWNESlJaMEZCUzBWVFZuVnVXa05CUVVGUmN6VnBObVJyU1VGQlVHZG9ia3h3TWxGblFVRTBTa05tZFc1YVEwRkJSRWt2TmtzMlpHdEpRVUZNUW5Wd2NuQXlVV2RCUVcxT01uQjFibHBEUVVGRFFWUkxNalprYTBsQlFVZHBOM05NY0RKUlowRkJWVU54TUhWdVdrTkJRVUUwYldKbE5tUnJTVUZCUTBGSmRUZHdNbEZuUVVGRFNHVXJkVzVhUTBGQlJIYzFZMGMyWkd0SlFVRk9hRlY0WW5BeVVXZEJRWGROVUVsMWJscERRVUZEYjAxemVUWmthMGxCUVVwRGFIbzNjREpSWjBGQlpVSkVWSFZ1V2tOQlFVSm5aamxoTm1SclNVRkJSV3AxTW1Kd01sRm5RVUZOUmpOa2RXNWFRMEZCUVZsNlQwTTJaR3RKUVVGQlFUYzFUSEF5VVdkQlFUWkxibTUxYmxwRFFVRkVVVWRQZFRaa2EwbEJRVXhwU0RkeWNESlJaMEZCYjFCaWVIVnVXa05CUVVOSldtWlhObVJyU1VGQlNFUlZLMHh3TWxGblFVRlhSVkE0ZFc1YVEwRkJRa0Z6ZGlzMlpHdEpRVUZEWjJoQk4zUXlVV2RCUVVWS1FVZDFNMXBEUVVGRU5DOW5iVGRrYTBsQlFVOUNkRVJpZERKUlowRkJlVTUzVVhVeldrTkJRVU4zVTNoVE4yUnJTVUZCU21rMlJqZDBNbEZuUVVGblEydGlkVE5hUTBGQlFtOXRRalkzWkd0SlFVRkdRVWhKY25ReVVXZEJRVTlJV1d4MU0xcERRVUZCWnpWVGFUZGthMGxCUVVGb1ZVeE1kREpSWjBGQk9FMUpkblV6V2tOQlFVUlpUVlJQTjJSclNVRkJUVU5uVG5KME1sRm5RVUZ4UVRnMmRUTmFRMEZCUTFGbWFqSTNaR3RKUVVGSWFuUlJUSFF5VVdkQlFWbEdlRVYxTTFwRFFVRkNTWGt3WlRka2EwbEJRVVJCTmxNM2RESlJaMEZCUjB0c1QzVXpXa05CUVVGQlIwWkxOMlJyU1VGQlQybEhWbUowTWxGblFVRXdVRlpaZFROYVEwRkJRelJhUm5rM1pHdEpRVUZMUkZSWU4zUXlVV2RCUVdsRlNtcDFNMXBEUVVGQ2QzTlhZVGRrYTBsQlFVWm5aMkZ5ZERKUlowRkJVVWs1ZEhVeldrTkJRVUZ2TDI1RE4yUnJTVUZCUWtKMFpFeDBNbEZuUVVFclRuUXpkVE5hUTBGQlJHZFRiblUzWkd0SlFVRk5hVFZtY25ReVVXZEJRWE5EYVVOMU0xcERRVUZEV1d3MFZ6ZGthMGxCUVVsQlIybGlkREpSWnowOUlpd2laSFI1Y0dVaU9pSm1iRzloZERZMElpd2ljMmhoY0dVaU9sc3hNemRkZlN3aWVTSTZleUpmWDI1a1lYSnlZWGxmWHlJNklscHRXbTFhYldKdFRVVkNiVnB0V20xYWRWbDNVVWRhYlZwdFdtMDFha0pCV20xYWJWcHRZbTFOUlVST2VrMTZUWHBOZDNkUlRUTk5lazE2VFhwRVFrRjZZM3BOZWsxNlRVMUZSRTU2VFhwTmVrMTNkMUZFVFhwTmVrMTZjM3BDUVVGQlFVRkJRVU5CVFVWQlFVRkJRVUZCUVVGM1VVZGFiVnB0V20xYWFUbEJlbU42VFhwTmVrMU1NRU5oYlZwdFdtMVNhM2RSUkUxNlRYcE5lbk42UWtGTmVrMTZUWHBQZWsxRlFVRkJRVUZCUVVGQmVGRkhXbTFhYlZwdFdtcEdRVzF3YlZwdFdtdGFUVlZCUVVGQlFVRkJTVUY0VVVkYWJWcHRXbTAxYWtKQmJYQnRXbTFhYlZwTlJVTmhiVnB0V20xYWEzZFJSRTE2VFhwTmVuTjZRa0Z0Y0cxYWJWcHRXazFGUVhwTmVrMTZUVGROZDFGRVRYcE5lazE2YzNwQ1FXMXdiVnB0V20xYVRVVkJRVUZCUVVGQlNVRjNVVUZCUVVGQlFVRm5SRUpCYlhCdFdtMWFiVnBOUlVOaGJWcHRXbTFhYTNkUlFVRkJRVUZCUVdkRVFrRjZZM3BOZWsxNFRVMUZRWHBOZWsxNlRYcE5kMUZOTTAxNlRYcE5WRVJDUVhwamVrMTZUWGhOVFVWQ2JWcHRXbTFhYlZsM1VVcHhXbTFhYlZwdFZFSkJlbU42VFhwTmVrMU5SVUp0V20xYWJWcDFXWGRSUVVGQlFVRkJRV2RFUmtGQlFVRkJRVUZCUVUxclJFNTZUWHBOZWtWM2VWRktjVnB0V20xYVIxUktRVUZCUVVGQlFVRkJUV3RDYlZwdFdtMWFkVmw0VVUwelRYcE5lazE2UkVaQlFVRkJRVUZCUTBGTlZVSnRXbTFhYlZwMVdYaFJUVE5OZWsxNlRYcEVSa0Z0Y0cxYWJWcHRXazFWUVVGQlFVRkJRVWxCZUZGQlFVRkJRVUZCWjBSR1FWcHRXbTFhYlZwdFRWVkJlazE2VFhwTmVrMTRVVXB4V20xYWJWcEhWRVpCYlhCdFdtMWFhMXBOVlVOaGJWcHRXbTFTYTNoUlFVRkJRVUZCUVVGRVJrRjZZM3BOZWsxNFRVMVZRMkZ0V20xYWJWcHJlRkZOTTAxNlRYcE5la1JHUVcxd2JWcHRXbXRhVFd0RFlXMWFiVnB0V210NVVVcHhXbTFhYlZwdFZFcEJUWHBOZWsxNlRYcE5hMEY2VFhwTmVrMTZUWGxSUVVGQlFVRkJRV2RFU2tGNlkzcE5lazE0VFUxclJFNTZUWHBOZWtWM2VWRkJRVUZCUVVGQlFVUktRVUZCUVVGQlFVRkJUV3REWVcxYWJWcHRVbXQ1VVVkYWJWcHRXbTAxYWtaQlRYcE5lazE2VDNwTlZVRjZUWHBOZWswM1RYaFJUVE5OZWsxNlRYcEVSa0ZhYlZwdFdtMWliVTFWUTJGdFdtMWFiVkpyZVZGS2NWcHRXbTFhUjFSS1FYcGplazE2VFhwTlRWVkRZVzFhYlZwdFdtdDRVVWRhYlZwdFdtMDFha1pCUVVGQlFVRkJRVUZOYTBGNlRYcE5lazE2VFhsUlIxcHRXbTFhYlZwcVNrRkJRVUZCUVVGRFFVMXJRbTFhYlZwdFduVlplVkZCUVVGQlFVRkJaMFJPUVcxd2JWcHRXbXRhVGtWRFlXMWFiVnB0VW1zd1VVRkJRVUZCUVVGQlJGSkJiWEJ0V20xYWExcE9SVU5oYlZwdFdtMWFhM3BSVFROTmVrMTZUVlJFVGtGdGNHMWFiVnByV2swd1FVRkJRVUZCUVVGQmVsRkJRVUZCUVVGQlFVUk9RVUZCUVVGQlFVRkJUVEJCUVVGQlFVRkJRVUY2VVVkYWJWcHRXbTAxYWtwQmVtTjZUWHBOZWsxTmEwRjZUWHBOZWswM1RYbFJTbkZhYlZwdFdtMVVTa0Z0Y0cxYWJWcHRXazFyUTJGdFdtMWFiVnByZVZGQlFVRkJRVUZCWjBSS1FVRkJRVUZCUVVOQlRXdEJRVUZCUVVGQlNVRjVVVTB6VFhwTmVrMTZSRXBCV20xYWJWcHRZbTFOYTBOaGJWcHRXbTFTYTNwUlJFMTZUWHBOZWsxNlRrRmFiVnB0V20xYWJVMHdRMkZ0V20xYWJWcHJlbEZOTTAxNlRYcE5la1JPUVhwamVrMTZUWGhOVGtWRVRucE5lazE2Ulhjd1VVZGFiVnB0V20xYWFsSkJlbU42VFhwTmVFMU9SVUY2VFhwTmVrMTZUVEJSUVVGQlFVRkJRVUZFVWtGNlkzcE5lazE2VFUwd1JFNTZUWHBOZWsxM2VsRkVUWHBOZWsxNmMzcE9RVzF3YlZwdFdtMWFUVEJCUVVGQlFVRkJTVUY2VVVkYWJWcHRXbTFhYWs1QldtMWFiVnB0V20xTk1FUk9lazE2VFhwRmQzcFJUVE5OZWsxNlRWUkVUa0ZhYlZwdFdtMWFiVTB3UVVGQlFVRkJRVWxCZWxGQlFVRkJRVUZCUVVSU1FVRkJRVUZCUVVGQlRsVkVUbnBOZWsxNlRYY3dVVUU5UFNJc0ltUjBlWEJsSWpvaVpteHZZWFEyTkNJc0luTm9ZWEJsSWpwYk1UTTNYWDE5TENKelpXeGxZM1JsWkNJNmV5SnBaQ0k2SWpFeE5ERWlMQ0owZVhCbElqb2lVMlZzWldOMGFXOXVJbjBzSW5ObGJHVmpkR2x2Ymw5d2IyeHBZM2tpT25zaWFXUWlPaUl4TVRReUlpd2lkSGx3WlNJNklsVnVhVzl1VW1WdVpHVnlaWEp6SW4xOUxDSnBaQ0k2SWpFd09EUWlMQ0owZVhCbElqb2lRMjlzZFcxdVJHRjBZVk52ZFhKalpTSjlMSHNpWVhSMGNtbGlkWFJsY3lJNmV5SnNhVzVsWDJOaGNDSTZJbkp2ZFc1a0lpd2liR2x1WlY5amIyeHZjaUk2SW1OeWFXMXpiMjRpTENKc2FXNWxYMnB2YVc0aU9pSnliM1Z1WkNJc0lteHBibVZmZDJsa2RHZ2lPalVzSW5naU9uc2labWxsYkdRaU9pSjRJbjBzSW5raU9uc2labWxsYkdRaU9pSjVJbjE5TENKcFpDSTZJakV3T0RVaUxDSjBlWEJsSWpvaVRHbHVaU0o5TEhzaVlYUjBjbWxpZFhSbGN5STZleUpzYVc1bFgyRnNjR2hoSWpvd0xqRXNJbXhwYm1WZlkyRndJam9pY205MWJtUWlMQ0pzYVc1bFgyTnZiRzl5SWpvaUl6Rm1OemRpTkNJc0lteHBibVZmYW05cGJpSTZJbkp2ZFc1a0lpd2liR2x1WlY5M2FXUjBhQ0k2TlN3aWVDSTZleUptYVdWc1pDSTZJbmdpZlN3aWVTSTZleUptYVdWc1pDSTZJbmtpZlgwc0ltbGtJam9pTVRBNE5pSXNJblI1Y0dVaU9pSk1hVzVsSW4wc2V5SmhkSFJ5YVdKMWRHVnpJanA3SW1SaGRHRmZjMjkxY21ObElqcDdJbWxrSWpvaU1UQTROQ0lzSW5SNWNHVWlPaUpEYjJ4MWJXNUVZWFJoVTI5MWNtTmxJbjBzSW1kc2VYQm9JanA3SW1sa0lqb2lNVEE0TlNJc0luUjVjR1VpT2lKTWFXNWxJbjBzSW1odmRtVnlYMmRzZVhCb0lqcHVkV3hzTENKdGRYUmxaRjluYkhsd2FDSTZiblZzYkN3aWJtOXVjMlZzWldOMGFXOXVYMmRzZVhCb0lqcDdJbWxrSWpvaU1UQTROaUlzSW5SNWNHVWlPaUpNYVc1bEluMHNJbk5sYkdWamRHbHZibDluYkhsd2FDSTZiblZzYkN3aWRtbGxkeUk2ZXlKcFpDSTZJakV3T0RnaUxDSjBlWEJsSWpvaVEwUlRWbWxsZHlKOWZTd2lhV1FpT2lJeE1EZzNJaXdpZEhsd1pTSTZJa2RzZVhCb1VtVnVaR1Z5WlhJaWZTeDdJbUYwZEhKcFluVjBaWE1pT25zaWMyOTFjbU5sSWpwN0ltbGtJam9pTVRBNE5DSXNJblI1Y0dVaU9pSkRiMngxYlc1RVlYUmhVMjkxY21ObEluMTlMQ0pwWkNJNklqRXdPRGdpTENKMGVYQmxJam9pUTBSVFZtbGxkeUo5TEhzaVlYUjBjbWxpZFhSbGN5STZlMzBzSW1sa0lqb2lNVEF4TUNJc0luUjVjR1VpT2lKTWFXNWxZWEpUWTJGc1pTSjlMSHNpWVhSMGNtbGlkWFJsY3lJNmV5SmtZWGx6SWpwYk1TdzBMRGNzTVRBc01UTXNNVFlzTVRrc01qSXNNalVzTWpoZGZTd2lhV1FpT2lJeE1EUTBJaXdpZEhsd1pTSTZJa1JoZVhOVWFXTnJaWElpZlN4N0ltRjBkSEpwWW5WMFpYTWlPbnQ5TENKcFpDSTZJakV4TURraUxDSjBlWEJsSWpvaVUyVnNaV04wYVc5dUluMHNleUpoZEhSeWFXSjFkR1Z6SWpwN2ZTd2lhV1FpT2lJeE1UY3dJaXdpZEhsd1pTSTZJbE5sYkdWamRHbHZiaUo5TEhzaVlYUjBjbWxpZFhSbGN5STZleUppWVhObElqb3lOQ3dpYldGdWRHbHpjMkZ6SWpwYk1Td3lMRFFzTml3NExERXlYU3dpYldGNFgybHVkR1Z5ZG1Gc0lqbzBNekl3TURBd01DNHdMQ0p0YVc1ZmFXNTBaWEoyWVd3aU9qTTJNREF3TURBdU1Dd2liblZ0WDIxcGJtOXlYM1JwWTJ0eklqb3dmU3dpYVdRaU9pSXhNRFF5SWl3aWRIbHdaU0k2SWtGa1lYQjBhWFpsVkdsamEyVnlJbjBzZXlKaGRIUnlhV0oxZEdWeklqcDdmU3dpYVdRaU9pSXhNVEV3SWl3aWRIbHdaU0k2SWxWdWFXOXVVbVZ1WkdWeVpYSnpJbjBzZXlKaGRIUnlhV0oxZEdWeklqcDdJbXhoWW1Wc0lqcDdJblpoYkhWbElqb2lUMkp6WlhKMllYUnBiMjRpZlN3aWNtVnVaR1Z5WlhKeklqcGJleUpwWkNJNklqRXdPRGNpTENKMGVYQmxJam9pUjJ4NWNHaFNaVzVrWlhKbGNpSjlYWDBzSW1sa0lqb2lNVEV4TVNJc0luUjVjR1VpT2lKTVpXZGxibVJKZEdWdEluMHNleUpoZEhSeWFXSjFkR1Z6SWpwN2ZTd2lhV1FpT2lJeE1EQTRJaXdpZEhsd1pTSTZJa3hwYm1WaGNsTmpZV3hsSW4wc2V5SmhkSFJ5YVdKMWRHVnpJanA3SW0xdmJuUm9jeUk2V3pBc05DdzRYWDBzSW1sa0lqb2lNVEEwT1NJc0luUjVjR1VpT2lKTmIyNTBhSE5VYVdOclpYSWlmU3g3SW1GMGRISnBZblYwWlhNaU9uc2lZMkZzYkdKaFkyc2lPbTUxYkd3c0luSmxibVJsY21WeWN5STZXM3NpYVdRaU9pSXhNRGczSWl3aWRIbHdaU0k2SWtkc2VYQm9VbVZ1WkdWeVpYSWlmVjBzSW5SdmIyeDBhWEJ6SWpwYld5Sk9ZVzFsSWl3aVQySnpaWEoyWVhScGIyNXpJbDBzV3lKQ2FXRnpJaXdpVGtFaVhTeGJJbE5yYVd4c0lpd2lUa0VpWFYxOUxDSnBaQ0k2SWpFeE1USWlMQ0owZVhCbElqb2lTRzkyWlhKVWIyOXNJbjBzZXlKaGRIUnlhV0oxZEdWeklqcDdJbTF2Ym5Sb2N5STZXekFzTWl3MExEWXNPQ3d4TUYxOUxDSnBaQ0k2SWpFd05EZ2lMQ0owZVhCbElqb2lUVzl1ZEdoelZHbGphMlZ5SW4xZExDSnliMjkwWDJsa2N5STZXeUl4TURBeElsMTlMQ0owYVhSc1pTSTZJa0p2YTJWb0lFRndjR3hwWTJGMGFXOXVJaXdpZG1WeWMybHZiaUk2SWpFdU1pNHdJbjE5Q2lBZ0lDQWdJQ0FnUEM5elkzSnBjSFErQ2lBZ0lDQWdJQ0FnUEhOamNtbHdkQ0IwZVhCbFBTSjBaWGgwTDJwaGRtRnpZM0pwY0hRaVBnb2dJQ0FnSUNBZ0lDQWdLR1oxYm1OMGFXOXVLQ2tnZXdvZ0lDQWdJQ0FnSUNBZ0lDQjJZWElnWm00Z1BTQm1kVzVqZEdsdmJpZ3BJSHNLSUNBZ0lDQWdJQ0FnSUNBZ0lDQkNiMnRsYUM1ellXWmxiSGtvWm5WdVkzUnBiMjRvS1NCN0NpQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBb1puVnVZM1JwYjI0b2NtOXZkQ2tnZXdvZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNCbWRXNWpkR2x2YmlCbGJXSmxaRjlrYjJOMWJXVnVkQ2h5YjI5MEtTQjdDaUFnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnQ2lBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUhaaGNpQmtiMk56WDJwemIyNGdQU0JrYjJOMWJXVnVkQzVuWlhSRmJHVnRaVzUwUW5sSlpDZ25NVE00TUNjcExuUmxlSFJEYjI1MFpXNTBPd29nSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0IyWVhJZ2NtVnVaR1Z5WDJsMFpXMXpJRDBnVzNzaVpHOWphV1FpT2lKbE9EUmtNalkzTWkwNVlUQmlMVFF3T1dVdFlXRXlPUzAyTWpNeVltWXpPVFF5WXpJaUxDSnliMjkwY3lJNmV5SXhNREF4SWpvaU5qTmpPVFl6T0RVdFlUQTJaUzAwWkRnNUxUaGlaVFl0TW1ObU1UUXpOR1pqTmpFMkluMTlYVHNLSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnY205dmRDNUNiMnRsYUM1bGJXSmxaQzVsYldKbFpGOXBkR1Z0Y3loa2IyTnpYMnB6YjI0c0lISmxibVJsY2w5cGRHVnRjeWs3Q2lBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FLSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnZlFvZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNCcFppQW9jbTl2ZEM1Q2IydGxhQ0FoUFQwZ2RXNWtaV1pwYm1Wa0tTQjdDaUFnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnWlcxaVpXUmZaRzlqZFcxbGJuUW9jbTl2ZENrN0NpQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lIMGdaV3h6WlNCN0NpQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdkbUZ5SUdGMGRHVnRjSFJ6SUQwZ01Ec0tJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0IyWVhJZ2RHbHRaWElnUFNCelpYUkpiblJsY25aaGJDaG1kVzVqZEdsdmJpaHliMjkwS1NCN0NpQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0JwWmlBb2NtOXZkQzVDYjJ0bGFDQWhQVDBnZFc1a1pXWnBibVZrS1NCN0NpQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUdWdFltVmtYMlJ2WTNWdFpXNTBLSEp2YjNRcE93b2dJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNCamJHVmhja2x1ZEdWeWRtRnNLSFJwYldWeUtUc0tJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUgwS0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJR0YwZEdWdGNIUnpLeXM3Q2lBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQnBaaUFvWVhSMFpXMXdkSE1nUGlBeE1EQXBJSHNLSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdZMjl1YzI5c1pTNXNiMmNvSWtKdmEyVm9PaUJGVWxKUFVqb2dWVzVoWW14bElIUnZJSEoxYmlCQ2IydGxhRXBUSUdOdlpHVWdZbVZqWVhWelpTQkNiMnRsYUVwVElHeHBZbkpoY25rZ2FYTWdiV2x6YzJsdVp5SXBPd29nSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQmpiR1ZoY2tsdWRHVnlkbUZzS0hScGJXVnlLVHNLSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lIMEtJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0I5TENBeE1Dd2djbTl2ZENrS0lDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ2ZRb2dJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ2ZTa29kMmx1Wkc5M0tUc0tJQ0FnSUNBZ0lDQWdJQ0FnSUNCOUtUc0tJQ0FnSUNBZ0lDQWdJQ0FnZlRzS0lDQWdJQ0FnSUNBZ0lDQWdhV1lnS0dSdlkzVnRaVzUwTG5KbFlXUjVVM1JoZEdVZ0lUMGdJbXh2WVdScGJtY2lLU0JtYmlncE93b2dJQ0FnSUNBZ0lDQWdJQ0JsYkhObElHUnZZM1Z0Wlc1MExtRmtaRVYyWlc1MFRHbHpkR1Z1WlhJb0lrUlBUVU52Ym5SbGJuUk1iMkZrWldRaUxDQm1iaWs3Q2lBZ0lDQWdJQ0FnSUNCOUtTZ3BPd29nSUNBZ0lDQWdJRHd2YzJOeWFYQjBQZ29nSUNBZ0NpQWdQQzlpYjJSNVBnb2dJQW84TDJoMGJXdysiIHdpZHRoPSI3OTAiIHN0eWxlPSJib3JkZXI6bm9uZSAhaW1wb3J0YW50OyIgaGVpZ2h0PSIzMzAiPjwvaWZyYW1lPmApWzBdOwogICAgICAgICAgICBwb3B1cF9lN2I2ZDg0NDI4MTg0NGNjYTkxOGNhYTU5ZjU2NzdjOC5zZXRDb250ZW50KGlfZnJhbWVfYWRmZjNlYjg0NGViNDcxZDllMDIyOTYxYWM5MDhkMmYpOwogICAgICAgIAoKICAgICAgICBtYXJrZXJfYzIzNDY3ODQzYzVlNDZlOWE1ZjE4OTkwZTc2ZDhhNDMuYmluZFBvcHVwKHBvcHVwX2U3YjZkODQ0MjgxODQ0Y2NhOTE4Y2FhNTlmNTY3N2M4KQogICAgICAgIDsKCiAgICAgICAgCiAgICAKICAgIAogICAgICAgICAgICB2YXIgbGF5ZXJfY29udHJvbF82ZjI0MDVhNWEyZWI0ZjQ0OGQ0MjA5ZDk2YjA4ZjIxMCA9IHsKICAgICAgICAgICAgICAgIGJhc2VfbGF5ZXJzIDogewogICAgICAgICAgICAgICAgICAgICJvcGVuc3RyZWV0bWFwIiA6IHRpbGVfbGF5ZXJfZWQ3MWJkZjkxOGY3NDRjNGFlZDNjNDFjZGJiYzc0YjAsCiAgICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAgb3ZlcmxheXMgOiAgewogICAgICAgICAgICAgICAgICAgICJTZWEgU3VyZmFjZSBUZW1wZXJhdHVyZSIgOiBtYWNyb19lbGVtZW50XzRkMDc3ZWQ3Mjc4YTQ3MzM4MjBkODM0NmY2YzE3ZjI1LAogICAgICAgICAgICAgICAgICAgICJDbHVzdGVyIiA6IG1hcmtlcl9jbHVzdGVyXzUwMmFkOThlOTE0YjQzOWU5ZWU2NDhmZjc5NmRlM2IxLAogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgfTsKICAgICAgICAgICAgTC5jb250cm9sLmxheWVycygKICAgICAgICAgICAgICAgIGxheWVyX2NvbnRyb2xfNmYyNDA1YTVhMmViNGY0NDhkNDIwOWQ5NmIwOGYyMTAuYmFzZV9sYXllcnMsCiAgICAgICAgICAgICAgICBsYXllcl9jb250cm9sXzZmMjQwNWE1YTJlYjRmNDQ4ZDQyMDlkOTZiMDhmMjEwLm92ZXJsYXlzLAogICAgICAgICAgICAgICAgeyJhdXRvWkluZGV4IjogdHJ1ZSwgImNvbGxhcHNlZCI6IHRydWUsICJwb3NpdGlvbiI6ICJ0b3ByaWdodCJ9CiAgICAgICAgICAgICkuYWRkVG8obWFwXzFkNzc0OGNiYWJhZDQ3YzNhZDM0MWRjNWJkY2UxMGJkKTsKICAgICAgICAKPC9zY3JpcHQ+" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div></div></div>
+</div>
+<p>Now we can navigate the map and click on the markers to explorer our findings.</p>
+<p>The green markers locate the observations locations. They pop-up an interactive plot with the time-series and scores for the models (hover over the lines to se the scores). The blue markers indicate the nearest model grid point found for the comparison.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content\Code Gallery\Using Data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="2016-11-15-glider_data_example.html" title="previous page">Plotting Glider data with Python tools</a>
+    <a class='right-next' id="next-link" href="2017-09-09-hurricane_irma.html" title="next page">Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

@@ -1,0 +1,44 @@
+#######################################################################################
+# Book settings
+title : The IOOS Data Demo Center
+author: IOOS
+copyright: "2021"
+logo: 'images/IOOS.png'
+
+
+description: >-
+  Jupyter Book for IOOS Demos.
+
+
+launch_buttons:
+  notebook_interface: "classic" # The interface interactive links will activate ["classic", "jupyterlab"]
+  binderhub_url: "https://mybinder.org"
+  colab_url: "https://colab.research.google.com"
+  thebe: true
+
+#######################################################################################
+# Execution settings
+execute:
+  execute_notebooks           : cache
+
+#######################################################################################
+# HTML-specific settings
+html:
+  home_page_in_navbar         : false
+
+# #######################################################################################
+# Interact link settings
+notebook_interface            : "notebook"
+
+#######################################################################################
+# Launch button settings
+#repository:
+#  url                         : https://github.com/
+
+#  use_repository_button     : true  # Whether to add a link to your repository button
+#  use_issues_button         : true  # Whether to add an "open an issue" button
+  
+latex:
+  latex_engine                : "xelatex"
+  latex_documents:
+    targetname: book.tex

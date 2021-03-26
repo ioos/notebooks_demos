@@ -1,0 +1,689 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Using the xtractomatic R package to track Pacific Blue Marlin &#8212; The IOOS Data Demo Center</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Matlab Code" href="../Matlab%20Code/Matlab_code.html" />
+    <link rel="prev" title="Quick demonstration of R-notebooks using the r-oce library" href="2017-01-23-R-notebook.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The IOOS Data Demo Center</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  The IOOS Data Demo Center
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/about.html">
+   About Us
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/ioos_conda.html">
+   Installing the IOOS conda environment
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../IOOS/Others/others.html">
+   Other Resources
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+     Opening netCDF files - hints from AODN
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+     Unidata Ju[yter Notebook Gallery
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://iobis.org/tutorial/">
+     Extracting and Enriching OBIS data with R
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="https://github.com/USGS-R">
+     USGS-R Examples
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/contact.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="R_code.html">
+   R Code
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Matlab%20Code/Matlab_code.html">
+   Matlab Code
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Matlab%20Code/2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Finding%20Data/finding_data.html">
+   Finding Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-11-30-rerddap.html">
+     Calling R libraries from Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-12-15-finding_HFRadar_currents.html">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files Part 1
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Using%20Data/using_data.html">
+   Using Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-02-27-pocean-timeSeries-demo.html">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Managing%20Data/managing_data.html">
+   Managing Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2017-11-01-Creating-Archives-Using-Bagit.html">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Managing%20Data/2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/IOOS.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/NOOS.html">
+   NANOOS Visualization System
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/GLOS.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/OOI.html">
+   OOI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/PYTHON.html">
+   Python
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/R Code/2017-08-01-xtractoR.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/R Code/2017-08-01-xtractoR.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/R Code/2017-08-01-xtractoR.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="using-the-xtractomatic-r-package-to-track-pacific-blue-marlin">
+<h1>Using the <code class="docutils literal notranslate"><span class="pre">xtractomatic</span></code> R package to track Pacific Blue Marlin<a class="headerlink" href="#using-the-xtractomatic-r-package-to-track-pacific-blue-marlin" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">xtractomatic</span></code> package can be used to subset data from remote servers. From the <a class="reference external" href="https://github.com/rmendels/xtractomatic">GitHub README</a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>xtractomatic is an R package developed to subset and extract satellite and other oceanographic related data from a remote server. The program can extract data for a moving point in time along a user-supplied set of longitude, latitude and time points; in a 3D bounding box; or within a polygon (through time). The xtractomatic functions were originally developed for the marine biology tagging community, to match up environmental data available from satellites (sea-surface temperature, sea-surface chlorophyll, sea-surface height, sea-surface salinity, vector winds) to track data from various tagged animals or shiptracks
+</pre></div>
+</div>
+<p>There are routines to extract data from a <code class="docutils literal notranslate"><span class="pre">lon</span></code>, <code class="docutils literal notranslate"><span class="pre">lat</span></code>, <code class="docutils literal notranslate"><span class="pre">time</span></code> track (like a drifter or glider trajectory), a 3D bounding box, or within a polygon. For this example let us use the built-in dataset for the tagged blue marlin fish in the Pacific Ocean (<code class="docutils literal notranslate"><span class="pre">Marlintag38606</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&#39;xtractomatic&#39;</span><span class="p">)</span>
+
+<span class="nf">str</span><span class="p">(</span><span class="n">Marlintag38606</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;data.frame&#39;:	152 obs. of  7 variables:
+ $ date  : Date, format: &quot;2003-04-23&quot; &quot;2003-04-24&quot; ...
+ $ lon   : num  204 204 204 204 204 ...
+ $ lat   : num  19.7 19.8 20.4 20.3 20.3 ...
+ $ lowLon: num  204 204 204 204 204 ...
+ $ higLon: num  204 204 204 204 204 ...
+ $ lowLat: num  19.7 18.8 18.8 18.9 18.9 ...
+ $ higLat: num  19.7 20.9 21.9 21.7 21.7 ...
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is a “track-like” data set of the tagged marlin with <code class="docutils literal notranslate"><span class="pre">lon</span></code>, <code class="docutils literal notranslate"><span class="pre">lat</span></code>, <code class="docutils literal notranslate"><span class="pre">time</span></code> arrays.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">tagData</span> <span class="o">&lt;-</span> <span class="n">Marlintag38606</span>
+<span class="n">xpos</span> <span class="o">&lt;-</span> <span class="n">tagData</span><span class="o">$</span><span class="n">lon</span>
+<span class="n">ypos</span> <span class="o">&lt;-</span> <span class="n">tagData</span><span class="o">$</span><span class="n">lat</span>
+<span class="n">tpos</span> <span class="o">&lt;-</span> <span class="n">tagData</span><span class="o">$</span><span class="n">date</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can extract, for example, SeaWiFS chlorophyll 8 day composite(<code class="docutils literal notranslate"><span class="pre">swchla8day</span></code>) data around the recorded tags to see if the marlin follow areas of high productivity to presumably find food.</p>
+<p>Note the that <code class="docutils literal notranslate"><span class="pre">xlen=0.2</span></code> and <code class="docutils literal notranslate"><span class="pre">ylen=0.2</span></code> is the bounding latitude/longitude box (in decimal degrees) for finding the data around the desired positions</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">swchl</span> <span class="o">&lt;-</span> <span class="nf">xtracto</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">ypos</span><span class="p">,</span> <span class="n">tpos</span><span class="p">,</span> <span class="s">&#39;swchla8day&#39;</span><span class="p">,</span> <span class="n">xlen</span><span class="o">=</span><span class="m">0.2</span><span class="p">,</span> <span class="n">ylen</span><span class="o">=</span><span class="m">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="n">swchl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;data.frame&#39;:	152 obs. of  11 variables:
+ $ mean             : num  0.073 NaN 0.074 0.0653 0.0403 ...
+ $ stdev            : num  NA NA 0.00709 0.00768 0.02278 ...
+ $ n                : int  1 0 16 4 7 9 4 3 0 6 ...
+ $ satellite date   : chr  &quot;2003-04-19T00:00:00Z&quot; &quot;2003-04-27T00:00:00Z&quot; &quot;2003-04-27T00:00:00Z&quot; &quot;2003-04-27T00:00:00Z&quot; ...
+ $ requested lon min: num  204 204 204 204 204 ...
+ $ requested lon max: num  204 204 204 204 204 ...
+ $ requested lat min: num  19.6 19.7 20.3 20.2 20.2 ...
+ $ requested lat max: num  19.8 19.9 20.5 20.4 20.4 ...
+ $ requested date   : num  12165 12166 12172 12173 12174 ...
+ $ median           : num  0.073 NA 0.073 0.0645 0.031 ...
+ $ mad              : num  0 NA 0.00297 0.00741 0.0089 ...
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use the <code class="docutils literal notranslate"><span class="pre">maps</span></code> and <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> packages to plot the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="s">&#39;ggplot2&#39;</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">&#39;maps&#39;</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="s">&#39;mapdata&#39;</span><span class="p">)</span>
+
+<span class="c1"># Combine the two data-frames.</span>
+<span class="n">alldata</span> <span class="o">&lt;-</span> <span class="nf">cbind</span><span class="p">(</span><span class="n">tagData</span><span class="p">,</span> <span class="n">swchl</span><span class="p">)</span>
+
+<span class="c1"># Adjust the longitudes to be (-180, 180).</span>
+<span class="n">alldata</span><span class="o">$</span><span class="n">lon</span> <span class="o">&lt;-</span> <span class="n">alldata</span><span class="o">$</span><span class="n">lon</span> <span class="o">-</span> <span class="m">360</span>
+
+<span class="c1"># R does not have plotting support for NA so we need to a variable for it.</span>
+<span class="n">alldata</span><span class="o">$</span><span class="n">missing</span> <span class="o">&lt;-</span> <span class="nf">is.na</span><span class="p">(</span><span class="n">alldata</span><span class="o">$</span><span class="n">mean</span><span class="p">)</span> <span class="o">*</span> <span class="m">1</span>
+
+<span class="c1"># Map limits.</span>
+<span class="n">ylim</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">15</span><span class="p">,</span> <span class="m">30</span><span class="p">)</span>
+<span class="n">xlim</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">-160</span><span class="p">,</span> <span class="m">-105</span><span class="p">)</span>
+
+<span class="c1"># Get outline data for map.</span>
+<span class="n">w</span> <span class="o">&lt;-</span> <span class="nf">map_data</span><span class="p">(</span><span class="s">&#39;worldHires&#39;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="n">xlim</span><span class="p">)</span>
+
+<span class="n">z</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">alldata</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">lat</span><span class="p">))</span> <span class="o">+</span>
+     <span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">colour</span><span class="o">=</span><span class="n">mean</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="nf">factor</span><span class="p">(</span><span class="n">missing</span><span class="p">)),</span> <span class="n">size</span><span class="o">=</span><span class="m">2.0</span><span class="p">)</span> <span class="o">+</span>
+     <span class="nf">scale_shape_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">19</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+
+<span class="n">z</span> <span class="o">+</span> <span class="nf">geom_polygon</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">long</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="s">&#39;grey80&#39;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme_bw</span><span class="p">()</span> <span class="o">+</span>
+    <span class="nf">scale_colour_gradient</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="s">&#39;#56B1F7&#39;</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="s">&#39;#132B43&#39;</span><span class="p">,</span>
+                          <span class="n">limits</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0.0</span><span class="p">,</span> <span class="m">0.32</span><span class="p">),</span>
+                          <span class="nf">expression</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="n">Mean</span><span class="o">~</span><span class="n">chla</span><span class="o">~</span><span class="n">values</span><span class="o">~</span><span class="p">(</span><span class="n">mu</span><span class="o">~</span><span class="n">g</span><span class="o">~</span><span class="n">l</span><span class="o">^</span><span class="m">-1</span><span class="p">))))</span> <span class="o">+</span>
+    <span class="nf">coord_fixed</span><span class="p">(</span><span class="m">1.3</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="n">xlim</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">ggtitle</span><span class="p">(</span><span class="s">&#39;Mean chla values at marlin tag locations&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-08-01-xtractoR_8_1.png" src="../../../_images/2017-08-01-xtractoR_8_1.png" />
+</div>
+</div>
+<p>We can do the same for topography data. Let’s use the <code class="docutils literal notranslate"><span class="pre">ETOPO360</span></code> dataset to display the depth at the tag locations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ylim</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">15</span><span class="p">,</span> <span class="m">30</span><span class="p">)</span>
+<span class="n">xlim</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">-160</span><span class="p">,</span> <span class="m">-105</span><span class="p">)</span>
+<span class="n">topo</span> <span class="o">&lt;-</span> <span class="nf">xtracto</span><span class="p">(</span><span class="n">tagData</span><span class="o">$</span><span class="n">lon</span><span class="p">,</span> <span class="n">tagData</span><span class="o">$</span><span class="n">lat</span><span class="p">,</span> <span class="n">tagData</span><span class="o">$</span><span class="n">date</span><span class="p">,</span> <span class="s">&#39;ETOPO360&#39;</span><span class="p">,</span> <span class="m">0.1</span><span class="p">,</span> <span class="m">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">ylim</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">15</span><span class="p">,</span> <span class="m">30</span><span class="p">)</span>
+<span class="n">xlim</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">-160</span><span class="p">,</span> <span class="m">-105</span><span class="p">)</span>
+<span class="n">alldata</span> <span class="o">&lt;-</span> <span class="nf">cbind</span><span class="p">(</span><span class="n">tagData</span><span class="p">,</span> <span class="n">topo</span><span class="p">)</span>
+<span class="n">alldata</span><span class="o">$</span><span class="n">lon</span> <span class="o">&lt;-</span> <span class="n">alldata</span><span class="o">$</span><span class="n">lon</span> <span class="o">-</span> <span class="m">360</span>
+
+<span class="n">z</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">alldata</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">lat</span><span class="p">))</span> <span class="o">+</span>
+     <span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">colour</span><span class="o">=</span><span class="n">mean</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="m">2.0</span><span class="p">)</span> <span class="o">+</span>
+     <span class="nf">scale_shape_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">19</span><span class="p">,</span> <span class="m">1</span><span class="p">))</span>
+
+<span class="n">z</span> <span class="o">+</span> <span class="nf">geom_polygon</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">w</span><span class="p">,</span>
+                 <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">long</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">),</span>
+                 <span class="n">fill</span><span class="o">=</span><span class="s">&#39;grey80&#39;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme_bw</span><span class="p">()</span> <span class="o">+</span>
+    <span class="nf">scale_colour_gradient</span><span class="p">(</span><span class="s">&#39;Depth (m)&#39;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">coord_fixed</span><span class="p">(</span><span class="m">1.3</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="n">xlim</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="n">ylim</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">ggtitle</span><span class="p">(</span><span class="s">&#39;Bathymetry at marlin tag locations&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-08-01-xtractoR_11_1.png" src="../../../_images/2017-08-01-xtractoR_11_1.png" />
+</div>
+</div>
+<p>For more information and example on the other routines see the full example from the documentation at <a class="reference external" href="https://cran.r-project.org/web/packages/xtractomatic/vignettes/Usingxtractomatic.html">https://cran.r-project.org/web/packages/xtractomatic/vignettes/Usingxtractomatic.html</a></p>
+<p>PS: note that R and all the <code class="docutils literal notranslate"><span class="pre">xtractomatic</span></code> dependencies are already included in the <a class="reference external" href="http://ioos.github.io/notebooks_demos/other_resources/">IOOS conda environment</a>.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            kernelName: "ir",
+            path: "./content\Code Gallery\R Code"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="2017-01-23-R-notebook.html" title="previous page">Quick demonstration of R-notebooks using the r-oce library</a>
+    <a class='right-next' id="next-link" href="../Matlab%20Code/Matlab_code.html" title="next page">Matlab Code</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

@@ -1,0 +1,1603 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aligning Data to Darwin Core &#8212; The IOOS Data Demo Center</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="IOOS" href="../../Video%20Tutorials/IOOS.html" />
+    <link rel="prev" title="erddapy: a python client/URL builder for ERDDAP" href="2018-03-01-erddapy.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The IOOS Data Demo Center</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  The IOOS Data Demo Center
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/about.html">
+   About Us
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/ioos_conda.html">
+   Installing the IOOS conda environment
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../IOOS/Others/others.html">
+   Other Resources
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+     Opening netCDF files - hints from AODN
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+     Unidata Ju[yter Notebook Gallery
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://iobis.org/tutorial/">
+     Extracting and Enriching OBIS data with R
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="https://github.com/USGS-R">
+     USGS-R Examples
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/contact.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../R%20Code/R_code.html">
+   R Code
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R%20Code/2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R%20Code/2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Matlab%20Code/Matlab_code.html">
+   Matlab Code
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Matlab%20Code/2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Finding%20Data/finding_data.html">
+   Finding Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-11-30-rerddap.html">
+     Calling R libraries from Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-12-15-finding_HFRadar_currents.html">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files Part 1
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Using%20Data/using_data.html">
+   Using Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-02-27-pocean-timeSeries-demo.html">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="managing_data.html">
+   Managing Data
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-11-01-Creating-Archives-Using-Bagit.html">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Aligning Data to Darwin Core
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/IOOS.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/NOOS.html">
+   NANOOS Visualization System
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/GLOS.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/OOI.html">
+   OOI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/PYTHON.html">
+   Python
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/Managing Data/2020-12-08-DataToDwC.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/Managing Data/2020-12-08-DataToDwC.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/Managing Data/2020-12-08-DataToDwC.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-event-core-with-an-occurrence-and-extended-measurement-or-fact-extension-using-python">
+   Creating event core with an occurrence and extended measurement or fact extension using Python
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#event-file">
+   Event file
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#occurrence-file">
+   Occurrence file
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#taxonomic-name-matching">
+   Taxonomic Name Matching
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extended-measurement-or-fact-emof">
+   Extended Measurement Or Fact (eMoF)
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="aligning-data-to-darwin-core">
+<h1>Aligning Data to Darwin Core<a class="headerlink" href="#aligning-data-to-darwin-core" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="creating-event-core-with-an-occurrence-and-extended-measurement-or-fact-extension-using-python">
+<h2>Creating event core with an occurrence and extended measurement or fact extension using Python<a class="headerlink" href="#creating-event-core-with-an-occurrence-and-extended-measurement-or-fact-extension-using-python" title="Permalink to this headline">¶</a></h2>
+<p><em>Caution:</em> This notebook was created for the <a class="reference external" href="https://www.glos.us/code-sprint/">IOOS DMAC Code Sprint</a> Biological Data Session.
+The data in this notebook were created specifically as an example and meant solely to be
+illustrative of the process for aligning data to the biological data standard - <a class="reference external" href="https://dwc.tdwg.org/">Darwin Core</a>.
+These data should not be considered actual occurrences of species and any measurements
+are also contrived. This notebook is meant to provide a step by step process for taking
+original data and aligning it to Darwin Core. It has been adapted from the R markdown notebook created by Abby Benson <a class="reference external" href="https://github.com/ioos/bio_data_guide/blob/master/Standardizing%20Marine%20Biological%20Data/datasets/example_script_with_fake_data/IOOS_DMAC_DataToDwC_Notebook_event.md">IOOS_DMAC_DataToDWC_Notebook_event.md</a>.</p>
+<p>First let’s bring in the appropriate libraries to work with the tabular data files and generate the appropriate content for the Darwin Core requirements.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">pyworms</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we need to read in the raw data file using <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html">pandas.read_csv()</a>. Here we display the first ten rows of data to give the user an idea of what observations are contained in the <a class="reference external" href="https://github.com/ioos/notebooks_demos/blob/master/notebooks/data/dwc/raw/MadeUpDataForBiologicalDataTraining.csv">raw file</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;data/dwc/raw/MadeUpDataForBiologicalDataTraining.csv&#39;</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>region</th>
+      <th>station</th>
+      <th>transect</th>
+      <th>scientific name</th>
+      <th>percent cover</th>
+      <th>depth</th>
+      <th>bottom type</th>
+      <th>rugosity</th>
+      <th>temperature</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7/16/2004</td>
+      <td>18.29788</td>
+      <td>-64.79451</td>
+      <td>St. John</td>
+      <td>250</td>
+      <td>1</td>
+      <td>Acropora cervicornis</td>
+      <td>0</td>
+      <td>25</td>
+      <td>shallow reef flat</td>
+      <td>0.295833</td>
+      <td>25.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7/16/2004</td>
+      <td>18.29788</td>
+      <td>-64.79451</td>
+      <td>St. John</td>
+      <td>250</td>
+      <td>1</td>
+      <td>Madracis auretenra</td>
+      <td>5</td>
+      <td>25</td>
+      <td>shallow reef flat</td>
+      <td>0.295833</td>
+      <td>25.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7/16/2004</td>
+      <td>18.29788</td>
+      <td>-64.79451</td>
+      <td>St. John</td>
+      <td>250</td>
+      <td>1</td>
+      <td>Mussa angulosa</td>
+      <td>15</td>
+      <td>25</td>
+      <td>shallow reef flat</td>
+      <td>0.295833</td>
+      <td>25.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7/16/2004</td>
+      <td>18.29788</td>
+      <td>-64.79451</td>
+      <td>St. John</td>
+      <td>250</td>
+      <td>1</td>
+      <td>Siderastrea radians</td>
+      <td>0</td>
+      <td>25</td>
+      <td>shallow reef flat</td>
+      <td>0.295833</td>
+      <td>25.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7/16/2004</td>
+      <td>18.29788</td>
+      <td>-64.79451</td>
+      <td>St. John</td>
+      <td>250</td>
+      <td>2</td>
+      <td>Acropora cervicornis</td>
+      <td>0</td>
+      <td>35</td>
+      <td>complex back reef</td>
+      <td>0.364583</td>
+      <td>24.8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>First we need to to decide if we will build an <strong>occurrence only</strong> version of the data or an <strong>event core</strong> with an <strong>occurrence</strong> and <strong>extended measurement or facts extension (eMoF)</strong> version of the data.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://dwc.tdwg.org/terms/#occurrence"><strong>Occurrence only</strong></a>:</p>
+<ul>
+<li><p>Easier to create.</p></li>
+<li><p>It’s only one file to produce.</p></li>
+<li><p>However, several pieces of information will be left out if we choose that option.</p></li>
+</ul>
+</li>
+<li><p><strong><a class="reference external" href="https://dwc.tdwg.org/terms/#event">sampling event</a> with <a class="reference external" href="https://dwc.tdwg.org/terms/#occurrence">occurrence</a> and <a class="reference external" href="https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact">extended measurement or fact (eMoF)</a></strong>:</p>
+<ul>
+<li><p>More difficult to create.</p></li>
+<li><p>composed of several files.</p></li>
+<li><p>Can capture all of the data in the file creating a lossless version.</p></li>
+</ul>
+</li>
+</ul>
+<p>Here we decide to use the second option, <strong>extended measurement or fact (eMoF)</strong>, to include as much information as we can.</p>
+<p>First let’s create the <code class="docutils literal notranslate"><span class="pre">eventID</span></code> and <code class="docutils literal notranslate"><span class="pre">occurrenceID</span></code> in the original file so that information can be reused for all necessary files down the line.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;eventID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;station&#39;</span><span class="p">,</span> <span class="s1">&#39;transect&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;occurrenceID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will need to create <em>three</em> separate files to comply with the <strong>sampling event</strong> format.
+We’ll start with the <strong>event file</strong> but we only need to include the columns that are relevant
+to the event file.</p>
+</div>
+<div class="section" id="event-file">
+<h2>Event file<a class="headerlink" href="#event-file" title="Permalink to this headline">¶</a></h2>
+<p>More information on the <strong>event</strong> category in Darwin Core can be found at <a class="reference external" href="https://dwc.tdwg.org/terms/#event">https://dwc.tdwg.org/terms/#event</a>.</p>
+<p>Let’s first make a copy of the DataFrame we pulled in. Only using the data fields of interest for the <strong>event file</strong>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">,</span> <span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;station&#39;</span><span class="p">,</span> <span class="s1">&#39;transect&#39;</span><span class="p">,</span> <span class="s1">&#39;depth&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom type&#39;</span><span class="p">,</span> <span class="s1">&#39;eventID&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next we need to rename any columns of data to match directly to Darwin Core.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;decimalLatitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span>
+<span class="n">event</span><span class="p">[</span><span class="s1">&#39;decimalLongitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span>
+<span class="n">event</span><span class="p">[</span><span class="s1">&#39;minimumDepthInMeters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]</span>
+<span class="n">event</span><span class="p">[</span><span class="s1">&#39;maximumDepthInMeters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;depth&#39;</span><span class="p">]</span>
+<span class="n">event</span><span class="p">[</span><span class="s1">&#39;habitat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;bottom type&#39;</span><span class="p">]</span>
+<span class="n">event</span><span class="p">[</span><span class="s1">&#39;island&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;region&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We need to appropriately read in the date field, so we can export it to <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO format</a>. Also add any missing, required, fields.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;eventDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y&#39;</span><span class="p">)</span>
+<span class="n">event</span><span class="p">[</span><span class="s1">&#39;basisOfRecord&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HumanObservation&#39;</span>
+<span class="n">event</span><span class="p">[</span><span class="s1">&#39;geodeticDatum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;EPSG:4326 WGS84&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we’ll remove any fields that we no longer need to clean things up a bit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">,</span> <span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;station&#39;</span><span class="p">,</span> <span class="s1">&#39;transect&#39;</span><span class="p">,</span> <span class="s1">&#39;depth&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom type&#39;</span><span class="p">],</span>
+    <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have too many repeating rows of information. We can pare this down using eventID which
+is a unique identifier for each sampling event in the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="s1">&#39;eventID&#39;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we write out the <a class="reference external" href="https://github.com/ioos/notebooks_demos/blob/master/notebooks/data/dwc/processed/MadeUpData_event.csv">event file</a>, specifying the ISO date format. We’ve printed ten random rows of the DataFrame to give an example of what the resultant file will look like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+   <span class="s1">&#39;data/dwc/processed/MadeUpData_event.csv&#39;</span><span class="p">,</span>
+   <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+   <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+   <span class="n">date_format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">event</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>eventID</th>
+      <th>decimalLatitude</th>
+      <th>decimalLongitude</th>
+      <th>minimumDepthInMeters</th>
+      <th>maximumDepthInMeters</th>
+      <th>habitat</th>
+      <th>island</th>
+      <th>eventDate</th>
+      <th>basisOfRecord</th>
+      <th>geodeticDatum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>St. John_250_1</td>
+      <td>18.29788</td>
+      <td>-64.79451</td>
+      <td>25</td>
+      <td>25</td>
+      <td>shallow reef flat</td>
+      <td>St. John</td>
+      <td>2004-07-16</td>
+      <td>HumanObservation</td>
+      <td>EPSG:4326 WGS84</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>St. John_250_2</td>
+      <td>18.29788</td>
+      <td>-64.79451</td>
+      <td>35</td>
+      <td>35</td>
+      <td>complex back reef</td>
+      <td>St. John</td>
+      <td>2004-07-16</td>
+      <td>HumanObservation</td>
+      <td>EPSG:4326 WGS84</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>St. John_356_1</td>
+      <td>18.27609</td>
+      <td>-64.75740</td>
+      <td>28</td>
+      <td>28</td>
+      <td>complex back reef</td>
+      <td>St. John</td>
+      <td>2004-07-17</td>
+      <td>HumanObservation</td>
+      <td>EPSG:4326 WGS84</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>St. John_356_2</td>
+      <td>18.27609</td>
+      <td>-64.75740</td>
+      <td>16</td>
+      <td>16</td>
+      <td>shallow reef flat</td>
+      <td>St. John</td>
+      <td>2004-07-17</td>
+      <td>HumanObservation</td>
+      <td>EPSG:4326 WGS84</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>St. John_356_3</td>
+      <td>18.27609</td>
+      <td>-64.75740</td>
+      <td>90</td>
+      <td>90</td>
+      <td>deep reef</td>
+      <td>St. John</td>
+      <td>2004-07-17</td>
+      <td>HumanObservation</td>
+      <td>EPSG:4326 WGS84</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="occurrence-file">
+<h2>Occurrence file<a class="headerlink" href="#occurrence-file" title="Permalink to this headline">¶</a></h2>
+<p>More information on the <strong>occurrence</strong> category in Darwin Core can be found at <a class="reference external" href="https://dwc.tdwg.org/terms/#occurrence">https://dwc.tdwg.org/terms/#occurrence</a>.</p>
+<p>For creating the <strong>occurrence</strong> file, we start by creating the DataFrame and renaming the fields that align directly with Darwin Core. Then, we’ll add the required information that is missing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">occurrence</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;scientific name&#39;</span><span class="p">,</span> <span class="s1">&#39;eventID&#39;</span><span class="p">,</span> <span class="s1">&#39;occurrenceID&#39;</span><span class="p">,</span> <span class="s1">&#39;percent cover&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">occurrence</span><span class="p">[</span><span class="s1">&#39;scientificName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">occurrence</span><span class="p">[</span><span class="s1">&#39;scientific name&#39;</span><span class="p">]</span>
+<span class="n">occurrence</span><span class="p">[</span><span class="s1">&#39;occurrenceStatus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">occurrence</span><span class="p">[</span><span class="s1">&#39;percent cover&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;absent&#39;</span><span class="p">,</span> <span class="s1">&#39;present&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="taxonomic-name-matching">
+<h2>Taxonomic Name Matching<a class="headerlink" href="#taxonomic-name-matching" title="Permalink to this headline">¶</a></h2>
+<p>A requirement for <a class="reference external" href="https://obis.org/">OBIS</a> is that all scientific names match to the <a class="reference external" href="http://www.marinespecies.org/">World Register of
+Marine Species (WoRMS)</a> and a <code class="docutils literal notranslate"><span class="pre">scientificNameID</span></code> is included. A <code class="docutils literal notranslate"><span class="pre">scientificNameID</span></code> looks
+like this <code class="docutils literal notranslate"><span class="pre">urn:lsid:marinespecies.org:taxname:275730</span></code> with the last digits after
+the colon being the <strong>WoRMS aphia ID</strong>. We’ll need to go out to WoRMS to grab this
+information. So, we create a lookup table of the unique scientific names found in the <strong>occurrence</strong> data we created above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lut_worms</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;scientificName&#39;</span><span class="p">],</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">occurrence</span><span class="p">[</span><span class="s1">&#39;scientificName&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we add the known columns that we can grab information from <a class="reference external" href="http://www.marinespecies.org/">WoRMS</a> including the required <code class="docutils literal notranslate"><span class="pre">scientificNameID</span></code> and populate the look up table with empty values for those fields (to initialize the DataFrame for population later).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;acceptedname&#39;</span><span class="p">,</span> <span class="s1">&#39;acceptedID&#39;</span><span class="p">,</span> <span class="s1">&#39;scientificNameID&#39;</span><span class="p">,</span> <span class="s1">&#39;kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;phylum&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;class&#39;</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;family&#39;</span><span class="p">,</span> <span class="s1">&#39;genus&#39;</span><span class="p">,</span> <span class="s1">&#39;scientificNameAuthorship&#39;</span><span class="p">,</span> <span class="s1">&#39;taxonRank&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">head</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+    <span class="n">lut_worms</span><span class="p">[</span><span class="n">head</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we perform a taxonomic lookup using the library <a class="reference external" href="https://pyworms.readthedocs.io/en/latest/">pyworms</a>. Using the function <code class="docutils literal notranslate"><span class="pre">pyworms.aphiaRecordsByMatchNames()</span></code> to collect the information and populate the look up table.</p>
+<p>Here we print the scientific name of the species we are looking up and the matching response from WoRMS with the detailed species information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">lut_worms</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">**Searching for scientific name = </span><span class="si">%s</span><span class="s1">**&#39;</span> <span class="o">%</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;scientificName&#39;</span><span class="p">])</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">pyworms</span><span class="o">.</span><span class="n">aphiaRecordsByMatchNames</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;scientificName&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+    <span class="n">lut_worms</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;acceptedname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;valid_name&#39;</span><span class="p">]</span>
+    <span class="n">lut_worms</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;acceptedID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;valid_AphiaID&#39;</span><span class="p">]</span>
+    <span class="n">lut_worms</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;scientificNameID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;lsid&#39;</span><span class="p">]</span>
+    <span class="n">lut_worms</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;kingdom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;kingdom&#39;</span><span class="p">]</span>
+    <span class="n">lut_worms</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;phylum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;phylum&#39;</span><span class="p">]</span>
+    <span class="n">lut_worms</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span>
+    <span class="n">lut_worms</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span>
+    <span class="n">lut_worms</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;family&#39;</span><span class="p">]</span>
+    <span class="n">lut_worms</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;genus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;genus&#39;</span><span class="p">]</span>
+    <span class="n">lut_worms</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;scientificNameAuthorship&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;authority&#39;</span><span class="p">]</span>
+    <span class="n">lut_worms</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;taxonRank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>**Searching for scientific name = Acropora cervicornis**
+{&#39;AphiaID&#39;: 206989,
+ &#39;authority&#39;: &#39;(Lamarck, 1816)&#39;,
+ &#39;citation&#39;: &#39;Hoeksema, B. W.; Cairns, S. (2021). World List of Scleractinia. &#39;
+             &#39;Acropora cervicornis (Lamarck, 1816). Accessed through: World &#39;
+             &#39;Register of Marine Species at: &#39;
+             &#39;http://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=206989 on &#39;
+             &#39;2021-02-22&#39;,
+ &#39;class&#39;: &#39;Anthozoa&#39;,
+ &#39;family&#39;: &#39;Acroporidae&#39;,
+ &#39;genus&#39;: &#39;Acropora&#39;,
+ &#39;isBrackish&#39;: 0,
+ &#39;isExtinct&#39;: None,
+ &#39;isFreshwater&#39;: 0,
+ &#39;isMarine&#39;: 1,
+ &#39;isTerrestrial&#39;: 0,
+ &#39;kingdom&#39;: &#39;Animalia&#39;,
+ &#39;lsid&#39;: &#39;urn:lsid:marinespecies.org:taxname:206989&#39;,
+ &#39;match_type&#39;: &#39;exact&#39;,
+ &#39;modified&#39;: &#39;2018-08-27T16:36:11.490Z&#39;,
+ &#39;order&#39;: &#39;Scleractinia&#39;,
+ &#39;parentNameUsageID&#39;: 205469,
+ &#39;phylum&#39;: &#39;Cnidaria&#39;,
+ &#39;rank&#39;: &#39;Species&#39;,
+ &#39;scientificname&#39;: &#39;Acropora cervicornis&#39;,
+ &#39;status&#39;: &#39;accepted&#39;,
+ &#39;taxonRankID&#39;: 220,
+ &#39;unacceptreason&#39;: None,
+ &#39;url&#39;: &#39;http://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=206989&#39;,
+ &#39;valid_AphiaID&#39;: 206989,
+ &#39;valid_authority&#39;: &#39;(Lamarck, 1816)&#39;,
+ &#39;valid_name&#39;: &#39;Acropora cervicornis&#39;}
+
+**Searching for scientific name = Madracis auretenra**
+{&#39;AphiaID&#39;: 430664,
+ &#39;authority&#39;: &#39;Locke, Weil &amp; Coates, 2007&#39;,
+ &#39;citation&#39;: &#39;Hoeksema, B. W.; Cairns, S. (2021). World List of Scleractinia. &#39;
+             &#39;Madracis auretenra Locke, Weil &amp; Coates, 2007. Accessed through: &#39;
+             &#39;World Register of Marine Species at: &#39;
+             &#39;http://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=430664 on &#39;
+             &#39;2021-02-22&#39;,
+ &#39;class&#39;: &#39;Anthozoa&#39;,
+ &#39;family&#39;: &#39;Pocilloporidae&#39;,
+ &#39;genus&#39;: &#39;Madracis&#39;,
+ &#39;isBrackish&#39;: 0,
+ &#39;isExtinct&#39;: None,
+ &#39;isFreshwater&#39;: 0,
+ &#39;isMarine&#39;: 1,
+ &#39;isTerrestrial&#39;: 0,
+ &#39;kingdom&#39;: &#39;Animalia&#39;,
+ &#39;lsid&#39;: &#39;urn:lsid:marinespecies.org:taxname:430664&#39;,
+ &#39;match_type&#39;: &#39;exact&#39;,
+ &#39;modified&#39;: &#39;2020-04-10T07:30:40.497Z&#39;,
+ &#39;order&#39;: &#39;Scleractinia&#39;,
+ &#39;parentNameUsageID&#39;: 135125,
+ &#39;phylum&#39;: &#39;Cnidaria&#39;,
+ &#39;rank&#39;: &#39;Species&#39;,
+ &#39;scientificname&#39;: &#39;Madracis auretenra&#39;,
+ &#39;status&#39;: &#39;accepted&#39;,
+ &#39;taxonRankID&#39;: 220,
+ &#39;unacceptreason&#39;: None,
+ &#39;url&#39;: &#39;http://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=430664&#39;,
+ &#39;valid_AphiaID&#39;: 430664,
+ &#39;valid_authority&#39;: &#39;Locke, Weil &amp; Coates, 2007&#39;,
+ &#39;valid_name&#39;: &#39;Madracis auretenra&#39;}
+
+**Searching for scientific name = Mussa angulosa**
+{&#39;AphiaID&#39;: 216135,
+ &#39;authority&#39;: &#39;(Pallas, 1766)&#39;,
+ &#39;citation&#39;: &#39;Hoeksema, B. W.; Cairns, S. (2021). World List of Scleractinia. &#39;
+             &#39;Mussa angulosa (Pallas, 1766). Accessed through: World Register &#39;
+             &#39;of Marine Species at: &#39;
+             &#39;http://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=216135 on &#39;
+             &#39;2021-02-22&#39;,
+ &#39;class&#39;: &#39;Anthozoa&#39;,
+ &#39;family&#39;: &#39;Faviidae&#39;,
+ &#39;genus&#39;: &#39;Mussa&#39;,
+ &#39;isBrackish&#39;: 0,
+ &#39;isExtinct&#39;: 0,
+ &#39;isFreshwater&#39;: 0,
+ &#39;isMarine&#39;: 1,
+ &#39;isTerrestrial&#39;: 0,
+ &#39;kingdom&#39;: &#39;Animalia&#39;,
+ &#39;lsid&#39;: &#39;urn:lsid:marinespecies.org:taxname:216135&#39;,
+ &#39;match_type&#39;: &#39;exact&#39;,
+ &#39;modified&#39;: &#39;2020-06-28T17:27:59.150Z&#39;,
+ &#39;order&#39;: &#39;Scleractinia&#39;,
+ &#39;parentNameUsageID&#39;: 206306,
+ &#39;phylum&#39;: &#39;Cnidaria&#39;,
+ &#39;rank&#39;: &#39;Species&#39;,
+ &#39;scientificname&#39;: &#39;Mussa angulosa&#39;,
+ &#39;status&#39;: &#39;accepted&#39;,
+ &#39;taxonRankID&#39;: 220,
+ &#39;unacceptreason&#39;: None,
+ &#39;url&#39;: &#39;http://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=216135&#39;,
+ &#39;valid_AphiaID&#39;: 216135,
+ &#39;valid_authority&#39;: &#39;(Pallas, 1766)&#39;,
+ &#39;valid_name&#39;: &#39;Mussa angulosa&#39;}
+
+**Searching for scientific name = Siderastrea radians**
+{&#39;AphiaID&#39;: 207517,
+ &#39;authority&#39;: &#39;(Pallas, 1766)&#39;,
+ &#39;citation&#39;: &#39;Hoeksema, B. W.; Cairns, S. (2021). World List of Scleractinia. &#39;
+             &#39;Siderastrea radians (Pallas, 1766). Accessed through: World &#39;
+             &#39;Register of Marine Species at: &#39;
+             &#39;http://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=207517 on &#39;
+             &#39;2021-02-22&#39;,
+ &#39;class&#39;: &#39;Anthozoa&#39;,
+ &#39;family&#39;: &#39;Siderastreidae&#39;,
+ &#39;genus&#39;: &#39;Siderastrea&#39;,
+ &#39;isBrackish&#39;: 0,
+ &#39;isExtinct&#39;: None,
+ &#39;isFreshwater&#39;: 0,
+ &#39;isMarine&#39;: 1,
+ &#39;isTerrestrial&#39;: 0,
+ &#39;kingdom&#39;: &#39;Animalia&#39;,
+ &#39;lsid&#39;: &#39;urn:lsid:marinespecies.org:taxname:207517&#39;,
+ &#39;match_type&#39;: &#39;exact&#39;,
+ &#39;modified&#39;: &#39;2014-06-02T10:15:47.813Z&#39;,
+ &#39;order&#39;: &#39;Scleractinia&#39;,
+ &#39;parentNameUsageID&#39;: 204291,
+ &#39;phylum&#39;: &#39;Cnidaria&#39;,
+ &#39;rank&#39;: &#39;Species&#39;,
+ &#39;scientificname&#39;: &#39;Siderastrea radians&#39;,
+ &#39;status&#39;: &#39;accepted&#39;,
+ &#39;taxonRankID&#39;: 220,
+ &#39;unacceptreason&#39;: None,
+ &#39;url&#39;: &#39;http://www.marinespecies.org/aphia.php?p=taxdetails&amp;id=207517&#39;,
+ &#39;valid_AphiaID&#39;: 207517,
+ &#39;valid_authority&#39;: &#39;(Pallas, 1766)&#39;,
+ &#39;valid_name&#39;: &#39;Siderastrea radians&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>We then merge the lookup table of unique scientific names back into the <strong>occurrence</strong> data. Matching on the field <code class="docutils literal notranslate"><span class="pre">scientificName</span></code>. Then, we remove any unnecessary columns to clean up the DataFrame for writing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">occurrence</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">occurrence</span><span class="p">,</span> <span class="n">lut_worms</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;scientificName&#39;</span><span class="p">)</span>
+
+<span class="n">occurrence</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;scientific name&#39;</span><span class="p">,</span> <span class="s1">&#39;percent cover&#39;</span><span class="p">],</span>
+    <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we write out the <a class="reference external" href="https://github.com/ioos/notebooks_demos/blob/master/notebooks/data/dwc/processed/MadeUpData_Occurrence.csv">occurrence file</a>. We’ve printed ten random rows of the DataFrame to give an example of what the resultant file will look like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sort the columns on scientificName</span>
+<span class="n">occurrence</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;scientificName&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># reorganize column order to be consistent with R example:</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;scientificName&quot;</span><span class="p">,</span><span class="s2">&quot;eventID&quot;</span><span class="p">,</span><span class="s2">&quot;occurrenceID&quot;</span><span class="p">,</span><span class="s2">&quot;occurrenceStatus&quot;</span><span class="p">,</span><span class="s2">&quot;acceptedname&quot;</span><span class="p">,</span><span class="s2">&quot;acceptedID&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;scientificNameID&quot;</span><span class="p">,</span><span class="s2">&quot;kingdom&quot;</span><span class="p">,</span><span class="s2">&quot;phylum&quot;</span><span class="p">,</span><span class="s2">&quot;class&quot;</span><span class="p">,</span><span class="s2">&quot;order&quot;</span><span class="p">,</span><span class="s2">&quot;family&quot;</span><span class="p">,</span><span class="s2">&quot;genus&quot;</span><span class="p">,</span><span class="s2">&quot;scientificNameAuthorship&quot;</span><span class="p">,</span>
+           <span class="s2">&quot;taxonRank&quot;</span><span class="p">]</span>
+
+<span class="n">occurrence</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span>
+   <span class="s2">&quot;data/dwc/processed/MadeUpData_Occurrence.csv&quot;</span><span class="p">,</span>
+   <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+   <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+   <span class="n">quoting</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_ALL</span><span class="p">,</span>
+   <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="n">occurrence</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>eventID</th>
+      <th>occurrenceID</th>
+      <th>scientificName</th>
+      <th>occurrenceStatus</th>
+      <th>acceptedname</th>
+      <th>acceptedID</th>
+      <th>scientificNameID</th>
+      <th>kingdom</th>
+      <th>phylum</th>
+      <th>class</th>
+      <th>order</th>
+      <th>family</th>
+      <th>genus</th>
+      <th>scientificNameAuthorship</th>
+      <th>taxonRank</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>St. John_250_1</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Madracis auretenra</td>
+      <td>present</td>
+      <td>Madracis auretenra</td>
+      <td>430664</td>
+      <td>urn:lsid:marinespecies.org:taxname:430664</td>
+      <td>Animalia</td>
+      <td>Cnidaria</td>
+      <td>Anthozoa</td>
+      <td>Scleractinia</td>
+      <td>Pocilloporidae</td>
+      <td>Madracis</td>
+      <td>Locke, Weil &amp; Coates, 2007</td>
+      <td>Species</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>St. John_250_2</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Acropora cervicornis</td>
+      <td>absent</td>
+      <td>Acropora cervicornis</td>
+      <td>206989</td>
+      <td>urn:lsid:marinespecies.org:taxname:206989</td>
+      <td>Animalia</td>
+      <td>Cnidaria</td>
+      <td>Anthozoa</td>
+      <td>Scleractinia</td>
+      <td>Acroporidae</td>
+      <td>Acropora</td>
+      <td>(Lamarck, 1816)</td>
+      <td>Species</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>St. John_250_2</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Mussa angulosa</td>
+      <td>absent</td>
+      <td>Mussa angulosa</td>
+      <td>216135</td>
+      <td>urn:lsid:marinespecies.org:taxname:216135</td>
+      <td>Animalia</td>
+      <td>Cnidaria</td>
+      <td>Anthozoa</td>
+      <td>Scleractinia</td>
+      <td>Faviidae</td>
+      <td>Mussa</td>
+      <td>(Pallas, 1766)</td>
+      <td>Species</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>St. John_250_3</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Mussa angulosa</td>
+      <td>present</td>
+      <td>Mussa angulosa</td>
+      <td>216135</td>
+      <td>urn:lsid:marinespecies.org:taxname:216135</td>
+      <td>Animalia</td>
+      <td>Cnidaria</td>
+      <td>Anthozoa</td>
+      <td>Scleractinia</td>
+      <td>Faviidae</td>
+      <td>Mussa</td>
+      <td>(Pallas, 1766)</td>
+      <td>Species</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>St. John_356_1</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Madracis auretenra</td>
+      <td>present</td>
+      <td>Madracis auretenra</td>
+      <td>430664</td>
+      <td>urn:lsid:marinespecies.org:taxname:430664</td>
+      <td>Animalia</td>
+      <td>Cnidaria</td>
+      <td>Anthozoa</td>
+      <td>Scleractinia</td>
+      <td>Pocilloporidae</td>
+      <td>Madracis</td>
+      <td>Locke, Weil &amp; Coates, 2007</td>
+      <td>Species</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>St. John_356_1</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Mussa angulosa</td>
+      <td>present</td>
+      <td>Mussa angulosa</td>
+      <td>216135</td>
+      <td>urn:lsid:marinespecies.org:taxname:216135</td>
+      <td>Animalia</td>
+      <td>Cnidaria</td>
+      <td>Anthozoa</td>
+      <td>Scleractinia</td>
+      <td>Faviidae</td>
+      <td>Mussa</td>
+      <td>(Pallas, 1766)</td>
+      <td>Species</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>St. John_356_1</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Siderastrea radians</td>
+      <td>present</td>
+      <td>Siderastrea radians</td>
+      <td>207517</td>
+      <td>urn:lsid:marinespecies.org:taxname:207517</td>
+      <td>Animalia</td>
+      <td>Cnidaria</td>
+      <td>Anthozoa</td>
+      <td>Scleractinia</td>
+      <td>Siderastreidae</td>
+      <td>Siderastrea</td>
+      <td>(Pallas, 1766)</td>
+      <td>Species</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>St. John_356_2</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Siderastrea radians</td>
+      <td>present</td>
+      <td>Siderastrea radians</td>
+      <td>207517</td>
+      <td>urn:lsid:marinespecies.org:taxname:207517</td>
+      <td>Animalia</td>
+      <td>Cnidaria</td>
+      <td>Anthozoa</td>
+      <td>Scleractinia</td>
+      <td>Siderastreidae</td>
+      <td>Siderastrea</td>
+      <td>(Pallas, 1766)</td>
+      <td>Species</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>St. John_356_3</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Acropora cervicornis</td>
+      <td>present</td>
+      <td>Acropora cervicornis</td>
+      <td>206989</td>
+      <td>urn:lsid:marinespecies.org:taxname:206989</td>
+      <td>Animalia</td>
+      <td>Cnidaria</td>
+      <td>Anthozoa</td>
+      <td>Scleractinia</td>
+      <td>Acroporidae</td>
+      <td>Acropora</td>
+      <td>(Lamarck, 1816)</td>
+      <td>Species</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>St. John_356_3</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Madracis auretenra</td>
+      <td>absent</td>
+      <td>Madracis auretenra</td>
+      <td>430664</td>
+      <td>urn:lsid:marinespecies.org:taxname:430664</td>
+      <td>Animalia</td>
+      <td>Cnidaria</td>
+      <td>Anthozoa</td>
+      <td>Scleractinia</td>
+      <td>Pocilloporidae</td>
+      <td>Madracis</td>
+      <td>Locke, Weil &amp; Coates, 2007</td>
+      <td>Species</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="extended-measurement-or-fact-emof">
+<h2>Extended Measurement Or Fact (eMoF)<a class="headerlink" href="#extended-measurement-or-fact-emof" title="Permalink to this headline">¶</a></h2>
+<p>The last file we need to create is the <strong>extended measurement or fact (eMoF)</strong> file. The measurement or fact includes measurements/facts about the event (temp, salinity, etc) as well as about the occurrence (percent cover, abundance, weight, length, etc). They are linked to the events using <code class="docutils literal notranslate"><span class="pre">eventID</span></code> and to the occurrences using <code class="docutils literal notranslate"><span class="pre">occurrenceID</span></code>. <a class="reference external" href="https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact">Extended Measurements Or Facts</a> are any other generic observations that are associated with resources that are described using Darwin Core (eg. water temperature observations). See the <a class="reference external" href="https://dwc.tdwg.org/rdf/#2-implementation-guide">DwC implementation guide</a> for more information.</p>
+<p>For the various <code class="docutils literal notranslate"><span class="pre">TypeID</span></code> fields (eg. <code class="docutils literal notranslate"><span class="pre">measurementTypeID</span></code>) include URI’s from the <a class="reference external" href="https://www.bodc.ac.uk/resources/vocabularies/vocabulary_search/">BODC NERC vocabulary</a> or other <em>nearly permanent</em> source, where possible. For example, <a class="reference external" href="http://vocab.nerc.ac.uk/collection/P25/current/WTEMP/">water temperature</a> in the BODC NERC vocabulary, the URI is <code class="docutils literal notranslate"><span class="pre">http://vocab.nerc.ac.uk/collection/P25/current/WTEMP/</span></code>.</p>
+<p>We then populate the appropriate fields with the information we have available. The <code class="docutils literal notranslate"><span class="pre">measurementValue</span></code> field is populated with the observed values of the measurement described in the <code class="docutils literal notranslate"><span class="pre">measurementType</span></code> and <code class="docutils literal notranslate"><span class="pre">measurementUnit</span></code> field.</p>
+<p>For measurement or facts of the <strong>occurrence</strong> (eg. percent cover, length, density, biomass, etc), we want to be sure to include the <code class="docutils literal notranslate"><span class="pre">occurrenceID</span></code> from the <strong>occurrence</strong> record as those observations are measurements of/from the organism. Other observations are tied to the <strong>event</strong> via the <code class="docutils literal notranslate"><span class="pre">eventID</span></code> (eg. water temperature, rugosity, etc).</p>
+<p>Below we walk through creating three independent DataFrames for <em>temperature</em>, <em>rugosity</em>, and <em>percent cover</em>. Populating each DataFrame with all of the information we have available and removing duplicative fields. We finally concatenate all the <strong>extended measurements or facts</strong> together into one DataFrame.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temperature</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;eventID&#39;</span><span class="p">,</span> <span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">temperature</span><span class="p">[</span><span class="s1">&#39;occurrenceID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">temperature</span><span class="p">[</span><span class="s1">&#39;measurementType&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;temperature&#39;</span>
+<span class="n">temperature</span><span class="p">[</span><span class="s1">&#39;measurementTypeID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;http://vocab.nerc.ac.uk/collection/P25/current/WTEMP/&#39;</span>
+<span class="n">temperature</span><span class="p">[</span><span class="s1">&#39;measurementValue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">temperature</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span>
+<span class="n">temperature</span><span class="p">[</span><span class="s1">&#39;measurementUnit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Celsius&#39;</span>
+<span class="n">temperature</span><span class="p">[</span><span class="s1">&#39;measurementUnitID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;http://vocab.nerc.ac.uk/collection/P06/current/UPAA/&#39;</span>
+<span class="n">temperature</span><span class="p">[</span><span class="s1">&#39;measurementAccuracy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">temperature</span><span class="p">[</span><span class="s1">&#39;measurementDeterminedDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">temperature</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y&#39;</span><span class="p">)</span>
+<span class="n">temperature</span><span class="p">[</span><span class="s1">&#39;measurementMethod&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">temperature</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">rugosity</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;eventID&#39;</span><span class="p">,</span> <span class="s1">&#39;rugosity&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">rugosity</span><span class="p">[</span><span class="s1">&#39;occurrenceID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">rugosity</span><span class="p">[</span><span class="s1">&#39;measurementType&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;rugosity&#39;</span>
+<span class="n">rugosity</span><span class="p">[</span><span class="s1">&#39;measurementTypeID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">rugosity</span><span class="p">[</span><span class="s1">&#39;measurementValue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rugosity</span><span class="p">[</span><span class="s1">&#39;rugosity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:,.6f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">rugosity</span><span class="p">[</span><span class="s1">&#39;measurementUnit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">rugosity</span><span class="p">[</span><span class="s1">&#39;measurementUnitID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">rugosity</span><span class="p">[</span><span class="s1">&#39;measurementAccuracy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">rugosity</span><span class="p">[</span><span class="s1">&#39;measurementDeterminedDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">rugosity</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y&#39;</span><span class="p">)</span>
+<span class="n">rugosity</span><span class="p">[</span><span class="s1">&#39;measurementMethod&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">rugosity</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;rugosity&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">percent_cover</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;eventID&#39;</span><span class="p">,</span> <span class="s1">&#39;occurrenceID&#39;</span><span class="p">,</span> <span class="s1">&#39;percent cover&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">percent_cover</span><span class="p">[</span><span class="s1">&#39;measurementType&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Percent Cover&#39;</span>
+<span class="n">percent_cover</span><span class="p">[</span><span class="s1">&#39;measurementTypeID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;http://vocab.nerc.ac.uk/collection/P01/current/SDBIOL10/&#39;</span>
+<span class="n">percent_cover</span><span class="p">[</span><span class="s1">&#39;measurementValue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">percent_cover</span><span class="p">[</span><span class="s1">&#39;percent cover&#39;</span><span class="p">]</span>
+<span class="n">percent_cover</span><span class="p">[</span><span class="s1">&#39;measurementUnit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Percent/100m^2&#39;</span>
+<span class="n">percent_cover</span><span class="p">[</span><span class="s1">&#39;measurementUnitID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">percent_cover</span><span class="p">[</span><span class="s1">&#39;measurementAccuracy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">percent_cover</span><span class="p">[</span><span class="s1">&#39;measurementDeterminedDate&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">percent_cover</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y&#39;</span><span class="p">)</span>
+<span class="n">percent_cover</span><span class="p">[</span><span class="s1">&#39;measurementMethod&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">percent_cover</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;percent cover&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">measurementorfact</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">temperature</span><span class="p">,</span> <span class="n">rugosity</span><span class="p">,</span> <span class="n">percent_cover</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we write the <a class="reference external" href="https://github.com/ioos/notebooks_demos/blob/master/notebooks/data/dwc/processed/MadeUpData_mof.csv">measurement or fact file</a>, again specifying the ISO date format. We’ve printed ten random rows of the DataFrame to give an example of what the resultant file will look like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measurementorfact</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;data/dwc/processed/MadeUpData_mof.csv&#39;</span><span class="p">,</span>
+                         <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                         <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                         <span class="n">date_format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">measurementorfact</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>eventID</th>
+      <th>occurrenceID</th>
+      <th>measurementType</th>
+      <th>measurementTypeID</th>
+      <th>measurementValue</th>
+      <th>measurementUnit</th>
+      <th>measurementUnitID</th>
+      <th>measurementAccuracy</th>
+      <th>measurementDeterminedDate</th>
+      <th>measurementMethod</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>St. John_250_1</td>
+      <td></td>
+      <td>temperature</td>
+      <td>http://vocab.nerc.ac.uk/collection/P25/current...</td>
+      <td>25.200000</td>
+      <td>Celsius</td>
+      <td>http://vocab.nerc.ac.uk/collection/P06/current...</td>
+      <td>3</td>
+      <td>2004-07-16</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>St. John_356_1</td>
+      <td></td>
+      <td>temperature</td>
+      <td>http://vocab.nerc.ac.uk/collection/P25/current...</td>
+      <td>23.600000</td>
+      <td>Celsius</td>
+      <td>http://vocab.nerc.ac.uk/collection/P06/current...</td>
+      <td>3</td>
+      <td>2004-07-17</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>St. John_250_1</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Percent Cover</td>
+      <td>http://vocab.nerc.ac.uk/collection/P01/current...</td>
+      <td>15</td>
+      <td>Percent/100m^2</td>
+      <td></td>
+      <td>5</td>
+      <td>2004-07-16</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>St. John_250_1</td>
+      <td></td>
+      <td>temperature</td>
+      <td>http://vocab.nerc.ac.uk/collection/P25/current...</td>
+      <td>25.200000</td>
+      <td>Celsius</td>
+      <td>http://vocab.nerc.ac.uk/collection/P06/current...</td>
+      <td>3</td>
+      <td>2004-07-16</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>St. John_356_2</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Percent Cover</td>
+      <td>http://vocab.nerc.ac.uk/collection/P01/current...</td>
+      <td>16</td>
+      <td>Percent/100m^2</td>
+      <td></td>
+      <td>5</td>
+      <td>2004-07-17</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>St. John_250_1</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Percent Cover</td>
+      <td>http://vocab.nerc.ac.uk/collection/P01/current...</td>
+      <td>0</td>
+      <td>Percent/100m^2</td>
+      <td></td>
+      <td>5</td>
+      <td>2004-07-16</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>St. John_356_2</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Percent Cover</td>
+      <td>http://vocab.nerc.ac.uk/collection/P01/current...</td>
+      <td>25</td>
+      <td>Percent/100m^2</td>
+      <td></td>
+      <td>5</td>
+      <td>2004-07-17</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>St. John_250_3</td>
+      <td></td>
+      <td>rugosity</td>
+      <td></td>
+      <td>0.413461</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>2004-07-16</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>St. John_250_3</td>
+      <td>998f7dbf-4239-4853-a068-59428955127b</td>
+      <td>Percent Cover</td>
+      <td>http://vocab.nerc.ac.uk/collection/P01/current...</td>
+      <td>16</td>
+      <td>Percent/100m^2</td>
+      <td></td>
+      <td>5</td>
+      <td>2004-07-16</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>St. John_250_1</td>
+      <td></td>
+      <td>rugosity</td>
+      <td></td>
+      <td>0.295833</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>2004-07-16</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Author:</strong> Mathew Biddle</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content\Code Gallery\Managing Data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="2018-03-01-erddapy.html" title="previous page">erddapy: a python client/URL builder for ERDDAP</a>
+    <a class='right-next' id="next-link" href="../../Video%20Tutorials/IOOS.html" title="next page">IOOS</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

@@ -1,0 +1,1305 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parsing Conventions and standards with Python &#8212; The IOOS Data Demo Center</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Using BagIt to tag oceanographic data" href="2017-11-01-Creating-Archives-Using-Bagit.html" />
+    <link rel="prev" title="Managing Data" href="managing_data.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The IOOS Data Demo Center</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  The IOOS Data Demo Center
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/about.html">
+   About Us
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/ioos_conda.html">
+   Installing the IOOS conda environment
+  </a>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../../IOOS/Others/others.html">
+   Other Resources
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+     Opening netCDF files - hints from AODN
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+     Unidata Ju[yter Notebook Gallery
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="http://iobis.org/tutorial/">
+     Extracting and Enriching OBIS data with R
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference external" href="https://github.com/USGS-R">
+     USGS-R Examples
+     <i class="fas fa-external-link-alt">
+     </i>
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../IOOS/contact.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../R%20Code/R_code.html">
+   R Code
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R%20Code/2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R%20Code/2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Matlab%20Code/Matlab_code.html">
+   Matlab Code
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Matlab%20Code/2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Finding%20Data/finding_data.html">
+   Finding Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-11-30-rerddap.html">
+     Calling R libraries from Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2017-12-15-finding_HFRadar_currents.html">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files Part 1
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Finding%20Data/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../Using%20Data/using_data.html">
+   Using Data
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-02-27-pocean-timeSeries-demo.html">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Using%20Data/2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="managing_data.html">
+   Managing Data
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-11-01-Creating-Archives-Using-Bagit.html">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/IOOS.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/NOOS.html">
+   NANOOS Visualization System
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/GLOS.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/OOI.html">
+   OOI
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/PYTHON.html">
+   Python
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/Managing Data/2016-11-16-CF-UGRID-SGRID-conventions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/Managing Data/2016-11-16-CF-UGRID-SGRID-conventions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/Managing Data/2016-11-16-CF-UGRID-SGRID-conventions.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cf-1-6-with-iris">
+   CF-1.6 with iris
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ugrid-1-0-with-pyugrid">
+   UGRID-1.0 with pyugrid
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sgrid-0-3-with-pysgrid">
+   SGRID-0.3 with
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     pysgrid
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="parsing-conventions-and-standards-with-python">
+<h1>Parsing Conventions and standards with Python<a class="headerlink" href="#parsing-conventions-and-standards-with-python" title="Permalink to this headline">¶</a></h1>
+<p>Metadata conventions, like the Climate and Forecast (CF) conventions,
+can be cumbersome to adhere to but it will be very handy when you or other users manipulate the data later in time.</p>
+<p>In this notebook we will explore three Python modules that parse <a class="reference external" href="http://cfconventions.org/cf-conventions/v1.6.0/cf-conventions.html"><code class="docutils literal notranslate"><span class="pre">CF-1.6</span></code></a>,
+<a class="reference external" href="http://ugrid-conventions.github.io/ugrid-conventions/"><code class="docutils literal notranslate"><span class="pre">UGRID-1.0</span></code></a>,
+and <a class="reference external" href="http://sgrid.github.io/sgrid/"><code class="docutils literal notranslate"><span class="pre">SGRID-0.3</span></code></a></p>
+<div class="section" id="cf-1-6-with-iris">
+<h2>CF-1.6 with iris<a class="headerlink" href="#cf-1-6-with-iris" title="Permalink to this headline">¶</a></h2>
+<p>There are many Python libraries to read and write CF metadata,
+but only <a class="reference external" href="http://scitools.org.uk/iris/"><code class="docutils literal notranslate"><span class="pre">iris</span></code></a> encapsulates CF in an object with an API.
+From iris own docs:</p>
+<p><em>Iris seeks to provide a powerful, easy to use, and community-driven Python library for analysing and visualising meteorological and oceanographic data sets.</em></p>
+<p>With iris you can:</p>
+<ul class="simple">
+<li><p>Use a single API to work on your data, irrespective of its original format.</p></li>
+<li><p>Read and write (CF-)netCDF, GRIB, and PP files.</p></li>
+<li><p>Easily produce graphs and maps via integration with matplotlib and cartopy.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">iris</span>
+
+<span class="n">iris</span><span class="o">.</span><span class="n">FUTURE</span><span class="o">.</span><span class="n">netcdf_promote</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://tds.marine.rutgers.edu/thredds/dodsC/roms/espresso/2013_da/his/ESPRESSO_Real-Time_v2_History_fmrc.ncd&quot;</span>
+
+<span class="n">cubes</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/iris/__init__.py:237: IrisDeprecation: setting the &#39;Future&#39; property &#39;netcdf_promote&#39; is deprecated and will be removed in a future release. Please remove code that sets this property.
+  warn_deprecated(msg.format(name))
+/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/iris/fileformats/cf.py:1069: UserWarning: Ignoring formula terms variable &#39;zeta&#39; referenced by data variable &#39;u&#39; via variable &#39;s_rho&#39;: Dimensions (&#39;run&#39;, &#39;time&#39;, &#39;eta_rho&#39;, &#39;xi_rho&#39;) do not span (&#39;run&#39;, &#39;time&#39;, &#39;s_rho&#39;, &#39;eta_u&#39;, &#39;xi_u&#39;)
+  warnings.warn(msg)
+/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/iris/fileformats/cf.py:1069: UserWarning: Ignoring formula terms variable &#39;h&#39; referenced by data variable &#39;u&#39; via variable &#39;s_rho&#39;: Dimensions (&#39;eta_rho&#39;, &#39;xi_rho&#39;) do not span (&#39;run&#39;, &#39;time&#39;, &#39;s_rho&#39;, &#39;eta_u&#39;, &#39;xi_u&#39;)
+  warnings.warn(msg)
+/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/iris/fileformats/cf.py:1069: UserWarning: Ignoring formula terms variable &#39;zeta&#39; referenced by data variable &#39;v&#39; via variable &#39;s_rho&#39;: Dimensions (&#39;run&#39;, &#39;time&#39;, &#39;eta_rho&#39;, &#39;xi_rho&#39;) do not span (&#39;run&#39;, &#39;time&#39;, &#39;s_rho&#39;, &#39;eta_v&#39;, &#39;xi_v&#39;)
+  warnings.warn(msg)
+/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/iris/fileformats/cf.py:1069: UserWarning: Ignoring formula terms variable &#39;h&#39; referenced by data variable &#39;v&#39; via variable &#39;s_rho&#39;: Dimensions (&#39;eta_rho&#39;, &#39;xi_rho&#39;) do not span (&#39;run&#39;, &#39;time&#39;, &#39;s_rho&#39;, &#39;eta_v&#39;, &#39;xi_v&#39;)
+  warnings.warn(msg)
+/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/iris/fileformats/netcdf.py:599: UserWarning: Unable to find coordinate for variable &#39;zeta&#39;
+  &#39;{!r}&#39;.format(name))
+/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/iris/fileformats/netcdf.py:599: UserWarning: Unable to find coordinate for variable &#39;h&#39;
+  &#39;{!r}&#39;.format(name))
+/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/iris/fileformats/netcdf.py:719: UserWarning: Unable to construct Ocean s-coordinate, generic form 1 factory due to insufficient source coordinates.
+  warnings.warn(&#39;{}&#39;.format(e))
+/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/iris/fileformats/netcdf.py:599: UserWarning: Unable to find coordinate for variable &#39;zeta&#39;
+  &#39;{!r}&#39;.format(name))
+/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/iris/fileformats/netcdf.py:599: UserWarning: Unable to find coordinate for variable &#39;h&#39;
+  &#39;{!r}&#39;.format(name))
+/home/filipe/miniconda3/envs/IOOS/lib/python3.7/site-packages/iris/fileformats/netcdf.py:719: UserWarning: Unable to construct Ocean s-coordinate, generic form 1 factory due to insufficient source coordinates.
+  warnings.warn(&#39;{}&#39;.format(e))
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Aside:</strong> using <code class="docutils literal notranslate"><span class="pre">iris.FUTURE.netcdf_promote</span> <span class="pre">=</span> <span class="pre">True</span></code> we can promote netCDF formula terms,
+like sea surface height, to first class cube objects.
+This behavior will be default in future versions of <code class="docutils literal notranslate"><span class="pre">iris</span></code> and that line will not be needed after the next version of iris is released.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">cubes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0: S-coordinate bottom control parameter / (1) (scalar cube)
+1: surface v-momentum stress / (newton meter-2) (forecast_reference_time: 1929; -- : 157; -- : 81; -- : 130)
+2: number of time-steps between restart records / (1) (scalar cube)
+3: tracers outflow, nudging inverse time scale / (second-1) (-- : 4; -- : 2)
+4: tracers inflow, nudging inverse time scale / (second-1) (-- : 4; -- : 2)
+5: 3D momentum nudging/relaxation inverse time scale / (day-1) (scalar cube)
+6: constant Schmidt number for TKE / (1) (scalar cube)
+7: surface u-momentum stress / (newton meter-2) (forecast_reference_time: 1929; -- : 157; -- : 82; -- : 129)
+8: number of long time-steps / (1)     (scalar cube)
+9: free-surface outflow, nudging inverse time scale / (second-1) (-- : 4)
+10: surface flux from wave dissipation / (1) (scalar cube)
+11: tracer point sources and sink activation switch / (1) (-- : 2)
+12: mask on RHO-points / (1)            (-- : 82; -- : 130)
+13: domain length in the ETA-direction / (meter) (scalar cube)
+14: vertically integrated v-momentum component / (meter second-1) (forecast_reference_time: 1929; -- : 157; -- : 81; -- : 130)
+15: starting time-step for accumulation of time-averaged fields / (1) (scalar cube)
+16: nonlinear model Laplacian mixing coefficient for tracers / (meter2 second-1) (-- : 2)
+17: 2D momentum inflow, nudging inverse time scale / (second-1) (-- : 4)
+18: Coriolis parameter at RHO-points / (second-1) (-- : 82; -- : 130)
+19: mask on psi-points / (1)            (-- : 81; -- : 129)
+20: curvilinear coordinate metric in ETA / (meter-1) (-- : 82; -- : 130)
+21: Power-law shape barotropic filter parameter / (1) (scalar cube)
+22: quadratic drag coefficient / (1)    (scalar cube)
+23: linear drag coefficient / (meter second-1) (scalar cube)
+24: vertical momentum component / (meter second-1) (forecast_reference_time: 1929; -- : 157; ocean_s_coordinate_g1: 37; -- : 82; -- : 130)
+25: number of time-steps between time-averaged records / (1) (scalar cube)
+26: number of time-steps between history records / (1) (scalar cube)
+27: 2D momentum nudging/relaxation inverse time scale / (day-1) (scalar cube)
+28: turbulent length scale exponent / (1) (scalar cube)
+29: number of time-steps between the creation of history files / (1) (scalar cube)
+30: shear production coefficient / (1)  (scalar cube)
+31: surface flux due to Craig and Banner wave breaking / (1) (scalar cube)
+32: background vertical mixing coefficient for turbulent energy / (meter2 second-1) (scalar cube)
+33: S-coordinate surface/bottom layer width / (meter) (scalar cube)
+34: minimum value of specific turbulent kinetic energy / (1) (scalar cube)
+35: 2D momentum outflow, nudging inverse time scale / (second-1) (-- : 4)
+36: number of time-steps between the creation of average files / (1) (scalar cube)
+37: stability coefficient / (1)         (scalar cube)
+38: buoyancy production coefficient (plus) / (1) (scalar cube)
+39: slipperiness parameter / (1)        (scalar cube)
+40: time averaged v-flux for 3D equations coupling / (meter3 second-1) (forecast_reference_time: 1929; -- : 157; -- : 81; -- : 130)
+41: NetCDF-4/HDF5 file format shuffle filer flag / (1) (scalar cube)
+42: mask on U-points / (1)              (-- : 82; -- : 129)
+43: Power-law shape barotropic filter parameter / (1) (scalar cube)
+44: bottom roughness / (meter)          (scalar cube)
+45: surface net heat flux / (watt meter-2) (forecast_reference_time: 1929; -- : 157; -- : 82; -- : 130)
+46: bottom v-momentum stress / (newton meter-2) (forecast_reference_time: 1929; -- : 157; -- : 81; -- : 130)
+47: surface roughness / (meter)         (scalar cube)
+48: NetCDF-4/HDF5 file format deflate filer flag / (1) (scalar cube)
+49: grid / (1)                          (scalar cube)
+50: background vertical mixing coefficient for momentum / (meter2 second-1) (scalar cube)
+51: background vertical mixing coefficient for length scale / (meter2 second-1) (scalar cube)
+52: time averaged u-flux for 2D equations / (meter3 second-1) (forecast_reference_time: 1929; -- : 157; -- : 82; -- : 129)
+53: 3D momentum outflow, nudging inverse time scale / (second-1) (-- : 4)
+54: dissipation coefficient / (1)       (scalar cube)
+55: stability exponent / (1)            (scalar cube)
+56: constant Schmidt number for PSI / (1) (scalar cube)
+57: background vertical mixing coefficient for tracers / (meter2 second-1) (-- : 2)
+58: minimum Value of dissipation / (1)  (scalar cube)
+59: Power-law shape barotropic filter parameter / (1) (scalar cube)
+60: angle between XI-axis and EAST / (radians) (-- : 82; -- : 130)
+61: grid type logical switch / (1)      (scalar cube)
+62: vertical terrain-following transformation equation / (1) (scalar cube)
+63: wave amplitude factor for surface roughness / (1) (scalar cube)
+64: time stamp assigned to model initilization / (days since 2006-01-01 00:00:00) (scalar cube)
+65: bottom u-momentum stress / (newton meter-2) (forecast_reference_time: 1929; -- : 157; -- : 82; -- : 129)
+66: 3D momentum inflow, nudging inverse time scale / (second-1) (-- : 4)
+67: vertically integrated u-momentum component / (meter second-1) (forecast_reference_time: 1929; -- : 157; -- : 82; -- : 129)
+68: S-coordinate surface control parameter / (1) (scalar cube)
+69: Tracers nudging/relaxation inverse time scale / (day-1) (-- : 2)
+70: curvilinear coordinate metric in XI / (meter-1) (-- : 82; -- : 130)
+71: mask on V-points / (1)              (-- : 81; -- : 130)
+72: size of short time-steps / (second) (scalar cube)
+73: time averaged u-flux for 3D equations coupling / (meter3 second-1) (forecast_reference_time: 1929; -- : 157; -- : 82; -- : 129)
+74: nonlinear model Laplacian mixing coefficient for momentum / (meter2 second-1) (scalar cube)
+75: NetCDF-4/HDF5 file format deflate level parameter / (1) (scalar cube)
+76: mean density used in Boussinesq approximation / (kilogram meter-3) (scalar cube)
+77: vertical terrain-following stretching function / (1) (scalar cube)
+78: free-surface inflow, nudging inverse time scale / (second-1) (-- : 4)
+79: turbulent kinetic energy exponent / (1) (scalar cube)
+80: buoyancy production coefficient (minus) / (1) (scalar cube)
+81: number of short time-steps / (1)    (scalar cube)
+82: size of long time-steps / (second)  (scalar cube)
+83: time averaged v-flux for 2D equations / (meter3 second-1) (forecast_reference_time: 1929; -- : 157; -- : 81; -- : 130)
+84: domain length in the XI-direction / (meter) (scalar cube)
+85: free-surface nudging/relaxation inverse time scale / (day-1) (scalar cube)
+86: Charnok factor for surface roughness / (1) (scalar cube)
+87: eastward_sea_water_velocity / (meter second-1) (forecast_reference_time: 1929; -- : 157; ocean_s_coordinate_g1: 36; -- : 82; -- : 129)
+88: northward_sea_water_velocity / (meter second-1) (forecast_reference_time: 1929; -- : 157; ocean_s_coordinate_g1: 36; -- : 81; -- : 130)
+89: sea_floor_depth / (meter)           (-- : 82; -- : 130)
+90: sea_surface_height / (meter)        (forecast_reference_time: 1929; -- : 157; -- : 82; -- : 130)
+91: sea_water_potential_temperature / (Celsius) (forecast_reference_time: 1929; -- : 157; ocean_s_coordinate_g1: 36; -- : 82; -- : 130)
+92: sea_water_salinity / (1)            (forecast_reference_time: 1929; -- : 157; ocean_s_coordinate_g1: 36; -- : 82; -- : 130)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The advantages of the CF data model here are:</p>
+<ul class="simple">
+<li><p>high level variable access via <code class="docutils literal notranslate"><span class="pre">standard_name</span></code> or <code class="docutils literal notranslate"><span class="pre">long_name</span></code>;</p></li>
+<li><p>verbose warnings when there are compliance issues (see the units warnings above);</p></li>
+<li><p>raise errors for non-compliant datasets;</p></li>
+<li><p>separation of each phenomena (<code class="docutils literal notranslate"><span class="pre">variable</span></code>) into its own cube*;</p></li>
+<li><p>each cube is a fully self-described format with all the original metadata;</p></li>
+<li><p>round-trip load-save to netCDF is lossless;</p></li>
+<li><p>free interpretation of the <code class="docutils literal notranslate"><span class="pre">formula_terms</span></code>, <code class="docutils literal notranslate"><span class="pre">cell_methods</span></code>, and <code class="docutils literal notranslate"><span class="pre">axis</span></code> that helps with dimensionless coordinates, climatological variables, and plotting routines respectively.</p></li>
+</ul>
+<p>* Most people miss the concept of a “dataset” when using <code class="docutils literal notranslate"><span class="pre">iris</span></code>,
+but that is a consequence of the CF model.
+Since there is no rule for unique names for the variables the dataset may contain the same phenomena with different coordinates,
+hence iris decides to create an individual cube for each phenomena.</p>
+<p>Aside: note that the <a class="reference external" href="http://xarray.pydata.org/en/stable/">xarray</a> <strong>does</strong> have a dataset concept,
+but it infringes the CF model in many places to do so.
+We recommend <code class="docutils literal notranslate"><span class="pre">xarray</span></code> when CF compliance is not a requirement.</p>
+<p>For more on iris see <a class="reference external" href="http://bit.ly/2geJhGU">this example</a>.</p>
+<p>Moving on, let’s extract a single phenomena from the list of cubes above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cube</span> <span class="o">=</span> <span class="n">cubes</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="s2">&quot;sea_surface_height&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">cube</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sea_surface_height / (meter)        (forecast_reference_time: 1929; -- : 157; -- : 82; -- : 130)
+     Dimension coordinates:
+          forecast_reference_time                           x          -         -        -
+     Auxiliary coordinates:
+          time                                              x          x         -        -
+          latitude                                          -          -         x        x
+          longitude                                         -          -         x        x
+     Attributes:
+          CPP_options: MyCPP, ADD_FSOBC, ADD_M2OBC, ANA_BSFLUX, ANA_BTFLUX, ASSUMED_SHAPE, AVERAGES,...
+          Conventions: CF-1.4, SGRID-0.3
+          DODS_EXTRA.Unlimited_Dimension: ocean_time
+          EXTRA_DIMENSION.N: 36
+          _ChunkSizes: [  1  82 130]
+          _CoordSysBuilder: ucar.nc2.dataset.conv.CF1Convention
+          ana_file: ROMS/Functionals/ana_btflux.h, /home/julia/ROMS/espresso/RealTime/Comp...
+          avg_base: espresso_avg_4638
+          bry_file: ../Data/espresso_bdry_new.nc
+          cdm_data_type: GRID
+          clm_file: ../Data/espresso_clm_new.nc
+          code_dir: /home/julia/ROMS/espresso/svn1409
+          compiler_command: /opt/pgisoft/openmpi/bin/mpif90
+          compiler_flags:  -O3 -Mfree
+          compiler_system: pgi
+          cpu: x86_64
+          featureType: GRID
+          field: free-surface, scalar, series
+          file: espresso_his_4638_0004.nc
+          flt_file: espresso_flt_4638.nc
+          format: netCDF-4/HDF5 file
+          fpos_file: /home/om/cron/glider_floats/data/maracoos_floats.in
+          frc_file_01: /home/om/roms/espresso/Data/espresso_tide_c05_20060101.nc
+          frc_file_02: ../Data/espresso_river.nc
+          frc_file_03: ../Data/rain_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_04: ../Data/swrad_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_05: ../Data/Tair_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_06: ../Data/Pair_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_07: ../Data/Qair_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_08: ../Data/lwrad_down_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_09: ../Data/Uwind_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_10: ../Data/Vwind_ncepnam_3hourly_MAB_and_GoM.nc
+          grd_file: /home/om/roms/espresso/Data/espresso_grid_c05.nc
+          header_dir: /home/julia/ROMS/espresso/RealTime/Compile/fwd
+          header_file: espresso.h
+          his_base: espresso_his_4638
+          history: ROMS/TOMS, Version 3.5, Sunday - September 16, 2018 -  5:16:50 AM ;
+FMRC...
+          ini_file: /home/julia/ROMS/espresso/RealTime/Storage/run04/espresso_ini_4638.nc
+          location: Proto fmrc:espresso_2013_da_his
+          os: Linux
+          rst_file: espresso_rst_4638.nc
+          script_file: nl_ocean_espresso.in
+          summary: Operational nowcast/forecast system version 2 for MARACOOS project (http://maracoos.org)....
+          svn_rev: exported
+          svn_url: https://www.myroms.org/svn/src/trunk
+          tiling: 004x002
+          time: ocean_time
+          title: ROMS ESPRESSO Real-Time Operational IS4DVAR Forecast System Version 2 (NEW)...
+          type: ROMS/TOMS history file
+</pre></div>
+</div>
+</div>
+</div>
+<p>Requesting a vertical profile of temperature to see the <code class="docutils literal notranslate"><span class="pre">formula_terms</span></code> parsing in action.
+(Note that <code class="docutils literal notranslate"><span class="pre">ocean_s_coordinate_g1</span></code> is actually <code class="docutils literal notranslate"><span class="pre">CF-1.7</span></code> but was backported to <code class="docutils literal notranslate"><span class="pre">iris</span></code> because it is widely adopted and the CF conventions document evolves quite slowly.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="n">cubes</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="s2">&quot;sea_water_potential_temperature&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sea_water_potential_temperature / (Celsius) (forecast_reference_time: 1929; -- : 157; ocean_s_coordinate_g1: 36; -- : 82; -- : 130)
+     Dimension coordinates:
+          forecast_reference_time                                   x          -                           -        -        -
+          ocean_s_coordinate_g1                                     -          -                           x        -        -
+     Auxiliary coordinates:
+          time                                                      x          x                           -        -        -
+          sea_surface_height                                        x          x                           -        x        x
+          S-coordinate stretching curves at RHO-points              -          -                           x        -        -
+          latitude                                                  -          -                           -        x        x
+          longitude                                                 -          -                           -        x        x
+          sea_floor_depth                                           -          -                           -        x        x
+     Derived coordinates:
+          sea_surface_height_above_reference_ellipsoid              x          x                           x        x        x
+     Scalar coordinates:
+          S-coordinate parameter, critical depth: 5.0 meter
+     Attributes:
+          CPP_options: MyCPP, ADD_FSOBC, ADD_M2OBC, ANA_BSFLUX, ANA_BTFLUX, ASSUMED_SHAPE, AVERAGES,...
+          Conventions: CF-1.4, SGRID-0.3
+          DODS_EXTRA.Unlimited_Dimension: ocean_time
+          EXTRA_DIMENSION.N: 36
+          _ChunkSizes: [  1  36  82 130]
+          _CoordSysBuilder: ucar.nc2.dataset.conv.CF1Convention
+          ana_file: ROMS/Functionals/ana_btflux.h, /home/julia/ROMS/espresso/RealTime/Comp...
+          avg_base: espresso_avg_4638
+          bry_file: ../Data/espresso_bdry_new.nc
+          cdm_data_type: GRID
+          clm_file: ../Data/espresso_clm_new.nc
+          code_dir: /home/julia/ROMS/espresso/svn1409
+          compiler_command: /opt/pgisoft/openmpi/bin/mpif90
+          compiler_flags:  -O3 -Mfree
+          compiler_system: pgi
+          cpu: x86_64
+          featureType: GRID
+          field: temperature, scalar, series
+          file: espresso_his_4638_0004.nc
+          flt_file: espresso_flt_4638.nc
+          format: netCDF-4/HDF5 file
+          fpos_file: /home/om/cron/glider_floats/data/maracoos_floats.in
+          frc_file_01: /home/om/roms/espresso/Data/espresso_tide_c05_20060101.nc
+          frc_file_02: ../Data/espresso_river.nc
+          frc_file_03: ../Data/rain_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_04: ../Data/swrad_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_05: ../Data/Tair_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_06: ../Data/Pair_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_07: ../Data/Qair_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_08: ../Data/lwrad_down_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_09: ../Data/Uwind_ncepnam_3hourly_MAB_and_GoM.nc
+          frc_file_10: ../Data/Vwind_ncepnam_3hourly_MAB_and_GoM.nc
+          grd_file: /home/om/roms/espresso/Data/espresso_grid_c05.nc
+          header_dir: /home/julia/ROMS/espresso/RealTime/Compile/fwd
+          header_file: espresso.h
+          his_base: espresso_his_4638
+          history: ROMS/TOMS, Version 3.5, Sunday - September 16, 2018 -  5:16:50 AM ;
+FMRC...
+          ini_file: /home/julia/ROMS/espresso/RealTime/Storage/run04/espresso_ini_4638.nc
+          location: Proto fmrc:espresso_2013_da_his
+          os: Linux
+          rst_file: espresso_rst_4638.nc
+          script_file: nl_ocean_espresso.in
+          summary: Operational nowcast/forecast system version 2 for MARACOOS project (http://maracoos.org)....
+          svn_rev: exported
+          svn_url: https://www.myroms.org/svn/src/trunk
+          tiling: 004x002
+          time: ocean_time
+          title: ROMS ESPRESSO Real-Time Operational IS4DVAR Forecast System Version 2 (NEW)...
+          type: ROMS/TOMS history file
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="n">cubes</span><span class="o">.</span><span class="n">extract_strict</span><span class="p">(</span><span class="s2">&quot;sea_water_potential_temperature&quot;</span><span class="p">)</span>
+
+<span class="c1"># Surface at the last time step.</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+
+<span class="c1"># Random profile at the last time step.</span>
+<span class="n">t_profile</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">42</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_profile</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;Z&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[DimCoord(array([-0.98611111, -0.95833333, -0.93055556, -0.90277778, -0.875     ,
+        -0.84722222, -0.81944444, -0.79166667, -0.76388889, -0.73611111,
+        -0.70833333, -0.68055556, -0.65277778, -0.625     , -0.59722222,
+        -0.56944444, -0.54166667, -0.51388889, -0.48611111, -0.45833333,
+        -0.43055556, -0.40277778, -0.375     , -0.34722222, -0.31944444,
+        -0.29166667, -0.26388889, -0.23611111, -0.20833333, -0.18055556,
+        -0.15277778, -0.125     , -0.09722222, -0.06944444, -0.04166667,
+        -0.01388889]), standard_name=&#39;ocean_s_coordinate_g1&#39;, units=Unit(&#39;1&#39;), long_name=&#39;S-coordinate at RHO-points&#39;, var_name=&#39;s_rho&#39;, attributes={&#39;_CoordinateAxes&#39;: &#39;s_rho&#39;, &#39;_CoordinateAxisType&#39;: &#39;GeoZ&#39;, &#39;_CoordinateTransformType&#39;: &#39;Vertical&#39;, &#39;_CoordinateZisPositive&#39;: &#39;up&#39;, &#39;field&#39;: &#39;s_rho, scalar&#39;, &#39;positive&#39;: &#39;up&#39;, &#39;valid_max&#39;: 0.0, &#39;valid_min&#39;: -1.0}),
+ AuxCoord(masked_array(data=[-27.951516510660785, -26.059303069671607,
+                    -24.384124213287187, -22.89464875895186,
+                    -21.562696436100815, -20.362612188354163,
+                    -19.270701231552074, -18.264739397273928,
+                    -17.3235917640554, -16.42699678498326,
+                    -15.555599667979164, -14.691337378046954,
+                    -13.818267733325536, -12.923866612931317,
+                    -12.000663674133458, -11.047856433978302,
+                    -10.072318055672692, -9.088358853495823,
+                    -8.115873334297476, -7.1770917524024735,
+                    -6.292781498350507, -5.479015518919441,
+                    -4.7453534147148115, -4.094654850148295,
+                    -3.5241580967286286, -3.027185090539729,
+                    -2.594890101973965, -2.2176940552106283,
+                    -1.8862775441376283, -1.5921597298211771,
+                    -1.3279593376447076, -1.087444521211529,
+                    -0.8654604836541105, -0.6577980350746284,
+                    -0.46104300943631427, -0.2724290764393475],
+              mask=[False, False, False, False, False, False, False, False,
+                    False, False, False, False, False, False, False, False,
+                    False, False, False, False, False, False, False, False,
+                    False, False, False, False, False, False, False, False,
+                    False, False, False, False],
+        fill_value=1e+20), standard_name=&#39;sea_surface_height_above_reference_ellipsoid&#39;, units=Unit(&#39;meter&#39;), attributes={&#39;positive&#39;: &#39;up&#39;})]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy.ma</span> <span class="k">as</span> <span class="nn">ma</span>
+
+<span class="n">T</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2016-11-16-CF-UGRID-SGRID-conventions_11_0.png" src="../../../_images/2016-11-16-CF-UGRID-SGRID-conventions_11_0.png" />
+</div>
+</div>
+<p>Iris knows about the metadata and can create fully annotated plots.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">iris.plot</span> <span class="k">as</span> <span class="nn">qplt</span>
+
+<span class="n">qplt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_profile</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2016-11-16-CF-UGRID-SGRID-conventions_13_0.png" src="../../../_images/2016-11-16-CF-UGRID-SGRID-conventions_13_0.png" />
+</div>
+</div>
+<p>Be aware that too much automation may lead to some weird plots.</p>
+<p>For example, the z-coord is in the x-direction and the automatic naming of the z to Sea surface height is above the reference ellipsoid in the second plot. Another example is the lack of proper coordinates in the first plot.</p>
+<p>In these cases, manual plotting is more appropriate.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">t_profile</span><span class="o">.</span><span class="n">data</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">t_profile</span><span class="o">.</span><span class="n">coord</span><span class="p">(</span><span class="s2">&quot;sea_surface_height_above_reference_ellipsoid&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">points</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2016-11-16-CF-UGRID-SGRID-conventions_15_0.png" src="../../../_images/2016-11-16-CF-UGRID-SGRID-conventions_15_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="ugrid-1-0-with-pyugrid">
+<h2>UGRID-1.0 with pyugrid<a class="headerlink" href="#ugrid-1-0-with-pyugrid" title="Permalink to this headline">¶</a></h2>
+<p>The Unstructured Grids convention encompasses any type of grid topology,
+and the details of the convention are documented in <a class="reference external" href="http://bit.ly/2gvtmqQ">https://ugrid-conventions.github.io/ugrid-conventions</a>.
+Right now <code class="docutils literal notranslate"><span class="pre">pyugrid</span></code> supports only triangular topologies, more will be added in the near future.</p>
+<p>In a nutshell the <code class="docutils literal notranslate"><span class="pre">pyugrid</span></code> parses and exposes the underlying grid topology in a python object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyugrid</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://www.smast.umassd.edu:8080/thredds/dodsC/FVCOM/NECOFS/Forecasts/NECOFS_GOM3_FORECAST.nc&quot;</span>
+<span class="n">ugrid</span> <span class="o">=</span> <span class="n">pyugrid</span><span class="o">.</span><span class="n">UGrid</span><span class="o">.</span><span class="n">from_ncfile</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Sometimes the topology is incomplete but,
+if the data is <code class="docutils literal notranslate"><span class="pre">UGRID</span></code> compliant,
+<code class="docutils literal notranslate"><span class="pre">pyugrid</span></code> can derive the rest for you.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ugrid</span><span class="o">.</span><span class="n">build_edges</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The topology can be extracted from <code class="docutils literal notranslate"><span class="pre">ugrid</span></code> object and used for plotting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lon</span> <span class="o">=</span> <span class="n">ugrid</span><span class="o">.</span><span class="n">nodes</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">ugrid</span><span class="o">.</span><span class="n">nodes</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">triangles</span> <span class="o">=</span> <span class="n">ugrid</span><span class="o">.</span><span class="n">faces</span><span class="p">[:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">from</span> <span class="nn">cartopy.mpl.gridliner</span> <span class="kn">import</span> <span class="n">LATITUDE_FORMATTER</span><span class="p">,</span> <span class="n">LONGITUDE_FORMATTER</span>
+
+
+<span class="k">def</span> <span class="nf">make_map</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">projection</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="s2">&quot;50m&quot;</span><span class="p">)</span>
+    <span class="n">gl</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">gl</span><span class="o">.</span><span class="n">xlabels_top</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">ylabels_right</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">gl</span><span class="o">.</span><span class="n">xformatter</span> <span class="o">=</span> <span class="n">LONGITUDE_FORMATTER</span>
+    <span class="n">gl</span><span class="o">.</span><span class="n">yformatter</span> <span class="o">=</span> <span class="n">LATITUDE_FORMATTER</span>
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_map</span><span class="p">()</span>
+
+<span class="n">kw</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;marker&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;linestyle&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;darkgray&quot;</span><span class="p">}</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">triplot</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">triangles</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2016-11-16-CF-UGRID-SGRID-conventions_22_0.png" src="../../../_images/2016-11-16-CF-UGRID-SGRID-conventions_22_0.png" />
+</div>
+</div>
+<p>There is some effort in the development community to integrate <code class="docutils literal notranslate"><span class="pre">pyugrid</span></code> into <code class="docutils literal notranslate"><span class="pre">iris</span></code> to augment the cube object to be both CF and UGRID aware.
+It will add convenience plotting and slicing methods.</p>
+<p>Check a longer <code class="docutils literal notranslate"><span class="pre">pyugrid</span></code> example <a class="reference external" href="http://bit.ly/2gaZLCy">here</a>.</p>
+</div>
+<div class="section" id="sgrid-0-3-with-pysgrid">
+<h2>SGRID-0.3 with <code class="docutils literal notranslate"><span class="pre">pysgrid</span></code><a class="headerlink" href="#sgrid-0-3-with-pysgrid" title="Permalink to this headline">¶</a></h2>
+<p>The Staggered Grid conventions help users to interpret grids from models like ROMS and DELFT,
+where the variables are defined in different grids.
+The specs are detailed in <a class="reference external" href="https://sgrid.github.io/sgrid">https://sgrid.github.io/sgrid</a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">pysgrid</span></code> module is similar to <code class="docutils literal notranslate"><span class="pre">pyugrid</span></code>. The grid topology is parsed into a Python object with methods and attributes that translate the SGRID conventions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pysgrid</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://geoport.whoi.edu/thredds/dodsC/coawst_4/use/fmrc/coawst_4_use_best.ncd&quot;</span>
+<span class="n">sgrid</span> <span class="o">=</span> <span class="n">pysgrid</span><span class="o">.</span><span class="n">load_grid</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>All the raw grid information is present, like edges, dimensions, padding, grid center, and slicing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sgrid</span><span class="o">.</span><span class="n">edge1_coordinates</span><span class="p">,</span> <span class="n">sgrid</span><span class="o">.</span><span class="n">edge1_dimensions</span><span class="p">,</span> <span class="n">sgrid</span><span class="o">.</span><span class="n">edge1_padding</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((&#39;lon_u&#39;, &#39;lat_u&#39;),
+ &#39;xi_u: xi_psi eta_u: eta_psi (padding: both)&#39;,
+ [GridPadding(mesh_topology_var=&#39;grid&#39;, face_dim=&#39;eta_u&#39;, node_dim=&#39;eta_psi&#39;, padding=&#39;both&#39;)])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_var</span> <span class="o">=</span> <span class="n">sgrid</span><span class="o">.</span><span class="n">u</span>
+
+<span class="n">u_var</span><span class="o">.</span><span class="n">center_axis</span><span class="p">,</span> <span class="n">u_var</span><span class="o">.</span><span class="n">node_axis</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v_var</span> <span class="o">=</span> <span class="n">sgrid</span><span class="o">.</span><span class="n">v</span>
+<span class="n">v_var</span><span class="o">.</span><span class="n">center_axis</span><span class="p">,</span> <span class="n">v_var</span><span class="o">.</span><span class="n">node_axis</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0, 1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_var</span><span class="o">.</span><span class="n">center_slicing</span><span class="p">,</span> <span class="n">v_var</span><span class="o">.</span><span class="n">center_slicing</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((slice(None, None, None),
+  slice(None, None, None),
+  slice(1, -1, None),
+  slice(None, None, None)),
+ (slice(None, None, None),
+  slice(None, None, None),
+  slice(None, None, None),
+  slice(1, -1, None)))
+</pre></div>
+</div>
+</div>
+</div>
+<p>The API is “raw” but comprehensive.
+There is plenty of room to create convenience methods using the low level access provided by the library.</p>
+<p>See below an example of the API and some simple convenience methods to <code class="docutils literal notranslate"><span class="pre">slice</span></code>, <code class="docutils literal notranslate"><span class="pre">pad</span></code>, <code class="docutils literal notranslate"><span class="pre">average</span></code>, and <code class="docutils literal notranslate"><span class="pre">rotate</span></code> the structure grid for plotting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">netCDF4</span> <span class="kn">import</span> <span class="n">Dataset</span>
+
+<span class="c1"># Compute the speed.</span>
+<span class="c1"># **Rotate the grid.</span>
+<span class="c1"># Average at the center.</span>
+<span class="kn">from</span> <span class="nn">pysgrid.processing_2d</span> <span class="kn">import</span> <span class="n">avg_to_cell_center</span><span class="p">,</span> <span class="n">rotate_vectors</span><span class="p">,</span> <span class="n">vector_sum</span>
+
+<span class="n">nc</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">u_velocity</span> <span class="o">=</span> <span class="n">nc</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">u_var</span><span class="o">.</span><span class="n">variable</span><span class="p">]</span>
+<span class="n">v_velocity</span> <span class="o">=</span> <span class="n">nc</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">v_var</span><span class="o">.</span><span class="n">variable</span><span class="p">]</span>
+
+<span class="n">v_idx</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># surface</span>
+<span class="n">time_idx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># Last time step.</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">u_velocity</span><span class="p">[</span><span class="n">time_idx</span><span class="p">,</span> <span class="n">v_idx</span><span class="p">,</span> <span class="n">u_var</span><span class="o">.</span><span class="n">center_slicing</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">u_var</span><span class="o">.</span><span class="n">center_slicing</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">v_velocity</span><span class="p">[</span><span class="n">time_idx</span><span class="p">,</span> <span class="n">v_idx</span><span class="p">,</span> <span class="n">v_var</span><span class="o">.</span><span class="n">center_slicing</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">v_var</span><span class="o">.</span><span class="n">center_slicing</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">avg_to_cell_center</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">u_var</span><span class="o">.</span><span class="n">center_axis</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">avg_to_cell_center</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v_var</span><span class="o">.</span><span class="n">center_axis</span><span class="p">)</span>
+
+
+<span class="n">angles</span> <span class="o">=</span> <span class="n">nc</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">sgrid</span><span class="o">.</span><span class="n">angle</span><span class="o">.</span><span class="n">variable</span><span class="p">][</span><span class="n">sgrid</span><span class="o">.</span><span class="n">angle</span><span class="o">.</span><span class="n">center_slicing</span><span class="p">]</span>
+<span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">rotate_vectors</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">angles</span><span class="p">)</span>
+
+
+<span class="n">speed</span> <span class="o">=</span> <span class="n">vector_sum</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>** CF convention does describe the angle variable for grids that needs rotation, but there is no action expected. For example, in the formula_terms, pysgrid must be improved to abstract that action when needed via a simpler method.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;entry</span> <span class="na">id=</span><span class="s">&quot;angle_of_rotation_from_east_to_x&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;canonical_units&gt;</span>degree<span class="nt">&lt;/canonical_units&gt;</span>
+    <span class="nt">&lt;grib&gt;&lt;/grib&gt;</span>
+    <span class="nt">&lt;amip&gt;&lt;/amip&gt;</span>
+    <span class="nt">&lt;description&gt;</span>The quantity with standard name angle_of_rotation_from_east_to_x is the angle, anticlockwise reckoned positive, between due East and (dr/di)jk, where r(i,j,k) is the vector 3D position of the point with coordinate indices (i,j,k).  It could be used for rotating vector fields between model space and latitude-longitude space.<span class="nt">&lt;/description&gt;</span>
+<span class="nt">&lt;/entry&gt;</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lon_var_name</span><span class="p">,</span> <span class="n">lat_var_name</span> <span class="o">=</span> <span class="n">sgrid</span><span class="o">.</span><span class="n">face_coordinates</span>
+
+<span class="n">sg_lon</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sgrid</span><span class="p">,</span> <span class="n">lon_var_name</span><span class="p">)</span>
+<span class="n">sg_lat</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sgrid</span><span class="p">,</span> <span class="n">lat_var_name</span><span class="p">)</span>
+
+<span class="n">lon</span> <span class="o">=</span> <span class="n">sgrid</span><span class="o">.</span><span class="n">center_lon</span><span class="p">[</span><span class="n">sg_lon</span><span class="o">.</span><span class="n">center_slicing</span><span class="p">]</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">sgrid</span><span class="o">.</span><span class="n">center_lat</span><span class="p">[</span><span class="n">sg_lat</span><span class="o">.</span><span class="n">center_slicing</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ideally all the steps above could be performed in the background, in a high level object method call, like the <code class="docutils literal notranslate"><span class="pre">iris</span></code> cube plotting methods.</p>
+<p>Let’s subset and center the velocity for better visualization (not a mandatory step but recommended).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_monotonically_increasing</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">is_monotonically_decreasing</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">is_monotonic</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">is_monotonically_increasing</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_monotonically_decreasing</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">extent_bounds</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">bound_position</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_monotonic</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Array </span><span class="si">{!r}</span><span class="s2"> must be monotonic to guess bounds&quot;</span><span class="o">.</span><span class="n">format</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">(</span><span class="n">arr</span><span class="p">))</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">bound_position</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])),</span> <span class="n">x</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span>
+        <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:][</span><span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+        <span class="p">(</span><span class="n">bound_position</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:])),</span>
+        <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:][</span><span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># For plotting reasons we will subsample every 10th point here</span>
+<span class="c1"># 100 times less data!</span>
+<span class="n">sub</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">lon</span> <span class="o">=</span> <span class="n">lon</span><span class="p">[::</span><span class="n">sub</span><span class="p">,</span> <span class="p">::</span><span class="n">sub</span><span class="p">]</span>
+<span class="n">lat</span> <span class="o">=</span> <span class="n">lat</span><span class="p">[::</span><span class="n">sub</span><span class="p">,</span> <span class="p">::</span><span class="n">sub</span><span class="p">]</span>
+<span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">u</span><span class="p">[::</span><span class="n">sub</span><span class="p">,</span> <span class="p">::</span><span class="n">sub</span><span class="p">],</span> <span class="n">v</span><span class="p">[::</span><span class="n">sub</span><span class="p">,</span> <span class="p">::</span><span class="n">sub</span><span class="p">]</span>
+<span class="n">speed</span> <span class="o">=</span> <span class="n">speed</span><span class="p">[::</span><span class="n">sub</span><span class="p">,</span> <span class="p">::</span><span class="n">sub</span><span class="p">]</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">extent_bounds</span><span class="p">(</span><span class="n">lon</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">extent_bounds</span><span class="p">(</span><span class="n">lat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use quiver to plot the velocity components in a single grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_map</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">)):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">projection</span><span class="p">))</span>
+    <span class="n">gl</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">gridlines</span><span class="p">(</span><span class="n">draw_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">gl</span><span class="o">.</span><span class="n">xlabels_top</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">ylabels_right</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">gl</span><span class="o">.</span><span class="n">xformatter</span> <span class="o">=</span> <span class="n">LONGITUDE_FORMATTER</span>
+    <span class="n">gl</span><span class="o">.</span><span class="n">yformatter</span> <span class="o">=</span> <span class="n">LATITUDE_FORMATTER</span>
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scale</span> <span class="o">=</span> <span class="mf">0.06</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_map</span><span class="p">()</span>
+
+<span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">scale</span><span class="p">,</span> <span class="n">pivot</span><span class="o">=</span><span class="s2">&quot;middle&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.003</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">rainbow</span><span class="p">)</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="s2">&quot;10m&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">([</span><span class="o">-</span><span class="mf">73.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">62.5</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">46</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2016-11-16-CF-UGRID-SGRID-conventions_40_0.png" src="../../../_images/2016-11-16-CF-UGRID-SGRID-conventions_40_0.png" />
+</div>
+</div>
+<p>For more examples on <code class="docutils literal notranslate"><span class="pre">pysgrid</span></code> check this <a class="reference external" href="http://bit.ly/2fKVk0x">post</a> out.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content\Code Gallery\Managing Data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="managing_data.html" title="previous page">Managing Data</a>
+    <a class='right-next' id="next-link" href="2017-11-01-Creating-Archives-Using-Bagit.html" title="next page">Using BagIt to tag oceanographic data</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
