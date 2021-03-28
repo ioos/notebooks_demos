@@ -1,6 +1,5 @@
 - file: content/IOOS/index
   title: The IOOS Data Demo Center
-  
 - part: The IOOS Data Demo Center
   chapters:
     - file: content/IOOS/about.md
@@ -17,8 +16,6 @@
         - url: https://github.com/USGS-R
           title: USGS-R Examples
     - file: content/IOOS/contact.md
-
-    
 - part: Code Gallery
   chapters:
     - file: content/Code Gallery/R Code/R_code.md
@@ -61,7 +58,6 @@
         - file: content/Code Gallery/Managing Data/2017-11-01-Creating-Archives-Using-Bagit.ipynb
         - file: content/Code Gallery/Managing Data/2018-03-01-erddapy.ipynb
         - file: content/Code Gallery/Managing Data/2020-12-08-DataToDwC.ipynb
-        
 - part: Video Tutorials
   chapters:
     - file: content/Video Tutorials/IOOS.md
@@ -73,4 +69,4 @@
     - file: content/Video Tutorials/OOI.md
       title: OOI
     - file: content/Video Tutorials/PYTHON.md
-      title: Python    
+      title: Python

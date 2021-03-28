@@ -64,5 +64,4 @@ dependencies:
   - xlrd
   - xmltodict
   - pip:
-    - quantecon
     - jupyter-book

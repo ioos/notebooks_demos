@@ -112,7 +112,6 @@ On all systems, to start the Jupyter notebook, just type:
 jupyter notebook
 ```
 
-
 ## Why we use and recommend Anaconda
 
 Anaconda users can just `conda install`,
