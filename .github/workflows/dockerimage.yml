@@ -9,6 +9,22 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
 
+    # Install Python using another Action
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9
+
+    # Install the book dependencies
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    # Build the book
+    - name: Build the book
+      run: |
+        jupyter-book build ./book_module6
+
     - name: test build
       uses: jupyterhub/repo2docker-action@master
       with:

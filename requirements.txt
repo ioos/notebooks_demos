@@ -1,0 +1,6 @@
+sphinx
+pandas
+matplotlib
+numpy
+jupytext
+jupyter-book
