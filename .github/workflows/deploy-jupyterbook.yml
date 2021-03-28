@@ -1,0 +1,47 @@
+name: deploy-jupyterbook
+on:
+  push:
+   branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  build-image-without-pushing:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout PR
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+
+    # Install Python using another Action
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9
+
+    # Install the book dependencies
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    # Build the book
+    - name: Build the book
+      run: |
+        jupyter-book build ./ioos_book
+
+    - name: Run html proofer
+      uses: chabad360/htmlproofer@master
+      with:
+        directory: "./ioos_book/_build/html"
+        arguments: --assume-extension --disable-external --only_4xx
+      continue-on-error: true
+
+    # Push the book's HTML to github-pages
+    - name: GitHub Pages action
+      if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      uses: peaceiris/actions-gh-pages@v3.6.1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./ioos_book/_build/html
