@@ -23,7 +23,7 @@ jobs:
     # Build the book
     - name: Build the book
       run: |
-        jupyter-book build ./book_module6
+        jupyter-book build ./ioos_book
 
     - name: test build
       uses: jupyterhub/repo2docker-action@master
