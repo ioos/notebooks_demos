@@ -26,7 +26,7 @@
 
     
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -87,14 +87,7 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../intro.html">
-   IOOS Data Demo Center
-  </a>
- </li>
-</ul>
-<p class="caption collapsible-parent">
+    <p class="caption collapsible-parent">
  <span class="caption-text">
   Code Gallery
  </span>
@@ -156,7 +149,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../data_analysis_and_visualization/data_analysis_and_visualization.html">
-   Data Analysis And Visualization Notebooks
+   Data Analysis And Visualization
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -261,6 +254,46 @@
    <li class="toctree-l2">
     <a class="reference internal" href="../data_publication/2017-11-01-Creating-Archives-Using-Bagit.html">
      Using BagIt to tag oceanographic data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../R_Matlab_Notebooks/R_Matlab_Notebooks.html">
+   R Notebooks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-11-30-rerddap.html">
+     Calling R libraries from Python
     </a>
    </li>
   </ul>
@@ -458,7 +491,7 @@ had selected buoy 44011 on George’s Bank:</p>
 <p><img alt="2017-03-27_16-21-08" src="https://cloud.githubusercontent.com/assets/1872600/24376518/213e6c4c-130a-11e7-9744-2f23e9660adf.png" /></p>
 <p>You click the <code class="docutils literal notranslate"><span class="pre">ERDDAP</span></code> link and generate a URL to download the data as <code class="docutils literal notranslate"><span class="pre">CSV</span></code> <img alt="2017-03-27_16-24-35" src="https://cloud.githubusercontent.com/assets/1872600/24376521/2377afc8-130a-11e7-9a3b-c1c46e43d20d.png" />.</p>
 <p>You notice that the URL that is generated</p>
-<p>[<code class="docutils literal notranslate"><span class="pre">https://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&amp;time&gt;=2017-02-27T12:00:00Z&amp;station=&quot;urn:ioos:station:wmo:44011&quot;&amp;parameter=&quot;Significant</span> <span class="pre">Wave</span> <span class="pre">Height&quot;&amp;unit=&quot;m&quot;</span></code>](<a class="reference external" href="http://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&amp;time">http://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&amp;time</a>&gt;=2017-02-27T12:00:00Z&amp;station=“urn:ioos:station:wmo:44011”&amp;parameter=“Significant Wave Height”&amp;unit=“m”)</p>
+<p>[<code class="docutils literal notranslate"><span class="pre">https://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&amp;time&gt;=2017-02-27T12:00:00Z&amp;station=&quot;urn:ioos:station:wmo:44011&quot;&amp;parameter=&quot;Significant</span> <span class="pre">Wave</span> <span class="pre">Height&quot;&amp;unit=&quot;m&quot;</span></code>](<a class="reference external" href="http://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&amp;time">http://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&amp;time</a>&gt;=2017-02-27T12:00:00Z&amp;station=”urn:ioos:station:wmo:44011”&amp;parameter=”Significant Wave Height”&amp;unit=”m”)</p>
 <p>is fairly easy to understand,
 and that a program could construct that URL fairly easily.
 Let’s explore how that could work…</p>
@@ -540,29 +573,7 @@ Let’s explore how that could work…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">HTTPError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">943</span><span class="n">d266f5ccf</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="p">}</span>
-<span class="g g-Whitespace">     </span><span class="mi">30</span> 
-<span class="ne">---&gt; </span><span class="mi">31</span> <span class="n">url</span> <span class="o">=</span> <span class="n">encode_erddap</span><span class="p">(</span><span class="n">urlbase</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">32</span> 
-<span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="nb">print</span><span class="p">(</span><span class="n">unquote</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
-
-<span class="nn">&lt;ipython-input-1-9ee591a73e2b&gt;</span> in <span class="ni">encode_erddap</span><span class="nt">(urlbase, fname, columns, params)</span>
-<span class="g g-Whitespace">     </span><span class="mi">28</span>     <span class="n">url</span> <span class="o">=</span> <span class="n">endpoint</span><span class="p">(</span><span class="n">urlbase</span><span class="o">=</span><span class="n">urlbase</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="n">fname</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">30</span>     <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">31</span>     <span class="k">return</span> <span class="n">url</span>
-
-<span class="nn">~/miniconda3/envs/ioos/lib/python3.6/site-packages/requests/models.py</span> in <span class="ni">raise_for_status</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">941</span> 
-<span class="g g-Whitespace">    </span><span class="mi">942</span>         <span class="k">if</span> <span class="n">http_error_msg</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">943</span>             <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="n">http_error_msg</span><span class="p">,</span> <span class="n">response</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">944</span> 
-<span class="g g-Whitespace">    </span><span class="mi">945</span>     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-<span class="ne">HTTPError</span>: 404 Client Error:  for url: https://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,value,station,longitude,latitude,parameter,unit,depth&amp;time%3E=2017-01-00T00%3A00%3A00Z&amp;station=%22urn%3Aioos%3Astation%3Awmo%3A44011%22&amp;parameter=%22Significant+Wave+Height%22&amp;unit=%22m%22
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>https://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,value,station,longitude,latitude,parameter,unit,depth&amp;time&gt;=2017-01-00T00:00:00Z&amp;station=&quot;urn:ioos:station:wmo:44011&quot;&amp;parameter=&quot;Significant+Wave+Height&quot;&amp;unit=&quot;m&quot;
 </pre></div>
 </div>
 </div>

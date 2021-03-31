@@ -38,13 +38,13 @@
         - file: content/Code Gallery/data_publication/2018-02-27-pocean-timeSeries-demo.ipynb
         - file: content/Code Gallery/data_publication/2017-11-01-Creating-Archives-Using-Bagit.ipynb
     
-    # - file: content/Code Gallery/R_Matlab_Notebooks/R_Matlab_Notebooks.md
-    #   sections:
-    #     - file: content/Code Gallery/R_Matlab_Notebooks/2017-01-23-R-notebook.ipynb
-    #     - file: content/Code Gallery/R_Matlab_Notebooks/2017-03-30-octave_notebook_example.ipynb
-    #     - file: content/Code Gallery/R_Matlab_Notebooks/2017-08-01-xtractoR.ipynb
-    #     - file: content/Code Gallery/R_Matlab_Notebooks/2018-02-20-obis.ipynb
-    #     - file: content/Code Gallery/R_Matlab_Notebooks/2017-11-30-rerddap.ipynb
+    - file: content/Code Gallery/R_Matlab_Notebooks/R_Matlab_Notebooks.md
+      sections:
+        - file: content/Code Gallery/R_Matlab_Notebooks/2017-01-23-R-notebook.ipynb
+        - file: content/Code Gallery/R_Matlab_Notebooks/2017-03-30-octave_notebook_example.ipynb
+        - file: content/Code Gallery/R_Matlab_Notebooks/2017-08-01-xtractoR.ipynb
+        - file: content/Code Gallery/R_Matlab_Notebooks/2018-02-20-obis.ipynb
+        - file: content/Code Gallery/R_Matlab_Notebooks/2017-11-30-rerddap.ipynb
 
 
 - part: Video Tutorials

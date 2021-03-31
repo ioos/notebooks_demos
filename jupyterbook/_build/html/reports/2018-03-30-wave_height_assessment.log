@@ -1,56 +1,92 @@
 Traceback (most recent call last):
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/jupyter_cache/executors/utils.py", line 56, in single_nb_execution
-    record_timing=False,
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 1112, in execute
+  File "/home/lohith/miniconda3/envs/IOOS/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/home/lohith/miniconda3/envs/IOOS/lib/python3.9/site-packages/nbclient/client.py", line 1112, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/util.py", line 74, in wrapped
+  File "/home/lohith/miniconda3/envs/IOOS/lib/python3.9/site-packages/nbclient/util.py", line 74, in wrapped
     return just_run(coro(*args, **kwargs))
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/util.py", line 53, in just_run
+  File "/home/lohith/miniconda3/envs/IOOS/lib/python3.9/site-packages/nbclient/util.py", line 53, in just_run
     return loop.run_until_complete(coro)
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/asyncio/base_events.py", line 488, in run_until_complete
+  File "/home/lohith/miniconda3/envs/IOOS/lib/python3.9/asyncio/base_events.py", line 642, in run_until_complete
     return future.result()
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 554, in async_execute
-    cell, index, execution_count=self.code_cells_executed + 1
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 857, in async_execute_cell
+  File "/home/lohith/miniconda3/envs/IOOS/lib/python3.9/site-packages/nbclient/client.py", line 553, in async_execute
+    await self.async_execute_cell(
+  File "/home/lohith/miniconda3/envs/IOOS/lib/python3.9/site-packages/nbclient/client.py", line 857, in async_execute_cell
     self._check_raise_for_error(cell, exec_reply)
-  File "/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/nbclient/client.py", line 760, in _check_raise_for_error
+  File "/home/lohith/miniconda3/envs/IOOS/lib/python3.9/site-packages/nbclient/client.py", line 760, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import os
-import shutil
-from datetime import datetime
+all_obs = stations_keys(config)
 
-from ioos_tools.ioos import parse_config
+from glob import glob
+from operator import itemgetter
 
-config = parse_config("wave_config.yaml")
+import iris
+from folium.plugins import MarkerCluster
 
-save_dir = os.path.abspath(config["run_name"])
-if os.path.exists(save_dir):
-    shutil.rmtree(save_dir)
-os.makedirs(save_dir)
+iris.FUTURE.netcdf_promote = True
 
-fmt = "{:*^64}".format
-print(fmt("Saving data inside directory {}".format(save_dir)))
-print(fmt(" Run information "))
-print("Run date: {:%Y-%m-%d %H:%M:%S}".format(datetime.utcnow()))
-print("Start: {:%Y-%m-%d %H:%M:%S}".format(config["date"]["start"]))
-print("Stop: {:%Y-%m-%d %H:%M:%S}".format(config["date"]["stop"]))
-print(
-    "Bounding box: {0:3.2f}, {1:3.2f},"
-    "{2:3.2f}, {3:3.2f}".format(*config["region"]["bbox"])
-)
+big_list = []
+for fname in glob(os.path.join(save_dir, "*.nc")):
+    if "OBS_DATA" in fname:
+        continue
+    cube = iris.load_cube(fname)
+    model = os.path.split(fname)[1].split("-")[-1].split(".")[0]
+    lons = cube.coord(axis="X").points
+    lats = cube.coord(axis="Y").points
+    stations = cube.coord("station_code").points
+    models = [model] * lons.size
+    lista = zip(models, lons.tolist(), lats.tolist(), stations.tolist())
+    big_list.extend(lista)
+
+big_list.sort(key=itemgetter(3))
+df = pd.DataFrame(big_list, columns=["name", "lon", "lat", "station"])
+df.set_index("station", drop=True, inplace=True)
+groups = df.groupby(df.index)
+
+
+locations, popups = [], []
+for station, info in groups:
+    sta_name = all_obs[station].replace("'", "")
+    for lat, lon, name in zip(info.lat, info.lon, info.name):
+        locations.append([lat, lon])
+        popups.append("[{}]: {}".format(name, sta_name))
+
+MarkerCluster(locations=locations, popups=popups, name="Cluster").add_to(m)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m<ipython-input-3-d62949891b16>[0m in [0;36m<module>[0;34m[0m
-[1;32m      3[0m [0;32mfrom[0m [0mdatetime[0m [0;32mimport[0m [0mdatetime[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0;34m[0m[0m
-[0;32m----> 5[0;31m [0;32mfrom[0m [0mioos_tools[0m[0;34m.[0m[0mioos[0m [0;32mimport[0m [0mparse_config[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      6[0m [0;34m[0m[0m
-[1;32m      7[0m [0mconfig[0m [0;34m=[0m [0mparse_config[0m[0;34m([0m[0;34m"wave_config.yaml"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mStopIteration[0m                             Traceback (most recent call last)
+[0;32m~/miniconda3/envs/IOOS/lib/python3.9/site-packages/folium/utilities.py[0m in [0;36mvalidate_locations[0;34m(locations)[0m
+[1;32m     84[0m     [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 85[0;31m         [0mnext[0m[0;34m([0m[0miter[0m[0;34m([0m[0mlocations[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     86[0m     [0;32mexcept[0m [0mStopIteration[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mModuleNotFoundError[0m: No module named 'ioos_tools'
-ModuleNotFoundError: No module named 'ioos_tools'
+[0;31mStopIteration[0m: 
+
+During handling of the above exception, another exception occurred:
+
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m<ipython-input-21-549ccda31291>[0m in [0;36m<module>[0;34m[0m
+[1;32m     35[0m         [0mpopups[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0;34m"[{}]: {}"[0m[0;34m.[0m[0mformat[0m[0;34m([0m[0mname[0m[0;34m,[0m [0msta_name[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     36[0m [0;34m[0m[0m
+[0;32m---> 37[0;31m [0mMarkerCluster[0m[0;34m([0m[0mlocations[0m[0;34m=[0m[0mlocations[0m[0;34m,[0m [0mpopups[0m[0;34m=[0m[0mpopups[0m[0;34m,[0m [0mname[0m[0;34m=[0m[0;34m"Cluster"[0m[0;34m)[0m[0;34m.[0m[0madd_to[0m[0;34m([0m[0mm[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m
+[0;32m~/miniconda3/envs/IOOS/lib/python3.9/site-packages/folium/plugins/marker_cluster.py[0m in [0;36m__init__[0;34m(self, locations, popups, icons, name, overlay, control, show, icon_create_function, options, **kwargs)[0m
+[1;32m     81[0m [0;34m[0m[0m
+[1;32m     82[0m         [0;32mif[0m [0mlocations[0m [0;32mis[0m [0;32mnot[0m [0;32mNone[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 83[0;31m             [0mlocations[0m [0;34m=[0m [0mvalidate_locations[0m[0;34m([0m[0mlocations[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     84[0m             [0;32mfor[0m [0mi[0m[0;34m,[0m [0mlocation[0m [0;32min[0m [0menumerate[0m[0;34m([0m[0mlocations[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     85[0m                 self.add_child(Marker(location,
+
+[0;32m~/miniconda3/envs/IOOS/lib/python3.9/site-packages/folium/utilities.py[0m in [0;36mvalidate_locations[0;34m(locations)[0m
+[1;32m     85[0m         [0mnext[0m[0;34m([0m[0miter[0m[0;34m([0m[0mlocations[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     86[0m     [0;32mexcept[0m [0mStopIteration[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 87[0;31m         [0;32mraise[0m [0mValueError[0m[0;34m([0m[0;34m'Locations is empty.'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     88[0m     [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     89[0m         [0mfloat[0m[0;34m([0m[0mnext[0m[0;34m([0m[0miter[0m[0;34m([0m[0mnext[0m[0;34m([0m[0miter[0m[0;34m([0m[0mnext[0m[0;34m([0m[0miter[0m[0;34m([0m[0mlocations[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: Locations is empty.
+ValueError: Locations is empty.
 

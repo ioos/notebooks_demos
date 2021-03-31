@@ -26,7 +26,7 @@
 
     
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -87,14 +87,7 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../intro.html">
-   IOOS Data Demo Center
-  </a>
- </li>
-</ul>
-<p class="caption collapsible-parent">
+    <p class="caption collapsible-parent">
  <span class="caption-text">
   Code Gallery
  </span>
@@ -156,7 +149,7 @@
  </li>
  <li class="toctree-l1 current active collapsible-parent">
   <a class="reference internal" href="data_analysis_and_visualization.html">
-   Data Analysis And Visualization Notebooks
+   Data Analysis And Visualization
   </a>
   <ul class="current collapse-ul">
    <li class="toctree-l2">
@@ -261,6 +254,46 @@
    <li class="toctree-l2">
     <a class="reference internal" href="../data_publication/2017-11-01-Creating-Archives-Using-Bagit.html">
      Using BagIt to tag oceanographic data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../R_Matlab_Notebooks/R_Matlab_Notebooks.html">
+   R Notebooks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-11-30-rerddap.html">
+     Calling R libraries from Python
     </a>
    </li>
   </ul>
@@ -478,41 +511,37 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">RuntimeError</span><span class="g g-Whitespace">                              </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">7</span><span class="n">a10618b751f</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">iris</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> 
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">iris</span><span class="o">.</span><span class="n">FUTURE</span><span class="o">.</span><span class="n">netcdf_promote</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> 
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">glider</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-
-<span class="o">~/</span><span class="n">miniconda3</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">ioos</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">iris</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span>   <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">pypi</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">project</span><span class="o">/</span><span class="n">irisapi</span><span class="o">/</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span>   <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">iris</span><span class="o">.</span><span class="n">claims</span><span class="o">/</span>
-<span class="ne">---&gt; </span><span class="mi">22</span> <span class="s2">&quot;&quot;&quot;)</span>
-
-<span class="ne">RuntimeError</span>: 
-
-<span class="s2">Ambiguous &#39;iris&#39; package.</span>
-<span class="s2">Please use either:</span>
-
-<span class="s2">**illumon-iris** - Python integration for Illumon Iris, a time-series database</span>
-<span class="s2">  - pip install illumon-iris</span>
-<span class="s2">  - https://pypi.python.org/pypi/illumon-iris</span>
-<span class="s2">  - https://deephaven.io/</span>
-
-<span class="s2">**SciTools Iris** - Python library for analysing and visualising meteorological and oceanographic data sets</span>
-<span class="s2">  - http://scitools.org.uk/iris/</span>
-
-<span class="s2">**info.gianlucacosta.iris** - A general-purpose library for Python</span>
-<span class="s2">  - pip install info.gianlucacosta.iris</span>
-<span class="s2">  - https://pypi.python.org/pypi/info.gianlucacosta.iris</span>
-
-<span class="s2">**irisapi** - Iris is a highly configurable and flexible service for paging and messaging</span>
-<span class="s2">  - pip install irisapi</span>
-<span class="s2">  - https://pypi.org/project/irisapi/</span>
-<span class="s2">  - https://iris.claims/</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0: u Variable Quality Flag / (1)       (-- : 1; -- : 542; -- : 483)
+1: precise_lon Variable Quality Flag / (1) (-- : 1; -- : 542; -- : 483)
+2: longitude Variable Quality Flag / (1) (-- : 1; -- : 542; -- : 483)
+3: Profile ID / (1)                    (-- : 1; -- : 542)
+4: Platform Metadata / (1)             (-- : 1; -- : 542; -- : 483)
+5: latitude Variable Quality Flag / (1) (-- : 1; -- : 542; -- : 483)
+6: Trajectory Name / (1)               (-- : 1; -- : 64)
+7: lon_uv Variable Quality Flag / (1)  (-- : 1; -- : 542; -- : 483)
+8: v Variable Quality Flag / (1)       (-- : 1; -- : 542; -- : 483)
+9: lat_uv Variable Quality Flag / (1)  (-- : 1; -- : 542; -- : 483)
+10: precise_lat Variable Quality Flag / (1) (-- : 1; -- : 542; -- : 483)
+11: WMO ID / (1)                        (-- : 1; -- : 64)
+12: precise_time Variable Quality Flag / (1) (-- : 1; -- : 542; -- : 483)
+13: time_uv Variable Quality Flag / (1) (-- : 1; -- : 542; -- : 483)
+14: CTD Metadata / (1)                  (-- : 1; -- : 542; -- : 483)
+15: eastward_sea_water_velocity / (m s-1) (-- : 1; -- : 542)
+16: latitude / (degrees)                (-- : 1; -- : 542; -- : 483)
+17: longitude / (degrees)               (-- : 1; -- : 542; -- : 483)
+18: northward_sea_water_velocity / (m s-1) (-- : 1; -- : 542)
+19: sea_water_density / (kg m-3)        (-- : 1; -- : 542; -- : 483)
+20: sea_water_electrical_conductivity / (S m-1) (-- : 1; -- : 542; -- : 483)
+21: sea_water_pressure / (dbar)         (-- : 1; -- : 542; -- : 483)
+22: sea_water_salinity / (1e-3)         (-- : 1; -- : 542; -- : 483)
+23: sea_water_temperature / (Celsius)   (-- : 1; -- : 542; -- : 483)
+24: time / (seconds since 1970-01-01T00:00:00Z) (-- : 1; -- : 542; -- : 483)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/filipe/miniconda3/envs/IOOS/lib/python3.6/site-packages/iris/fileformats/cf.py:280: UserWarning: Missing CF-netCDF ancillary data variable &#39;lat_qc&#39;, referenced by netCDF variable &#39;precise_lat&#39;
+  warnings.warn(message % (name, nc_var_name))
+/home/filipe/miniconda3/envs/IOOS/lib/python3.6/site-packages/iris/fileformats/cf.py:280: UserWarning: Missing CF-netCDF ancillary data variable &#39;lon_qc&#39;, referenced by netCDF variable &#39;precise_lon&#39;
+  warnings.warn(message % (name, nc_var_name))
 </pre></div>
 </div>
 </div>

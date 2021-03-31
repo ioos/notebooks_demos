@@ -1,0 +1,706 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quick demonstration of R-notebooks using the r-oce library &#8212; The U.S. Integrated Ocean Observing System (IOOS)</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="A Matlab notebook primer" href="2017-03-30-octave_notebook_example.html" />
+    <link rel="prev" title="R Notebooks" href="R_Matlab_Notebooks.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS-logo_little.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The U.S. Integrated Ocean Observing System (IOOS)</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_access/data_access.html">
+   Data Access
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-12-15-finding_HFRadar_currents.html">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_analysis_and_visualization/data_analysis_and_visualization.html">
+   Data Analysis And Visualization
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_publication/data_publication.html">
+   Data Publication
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core - Sampling Event with Measurement or Fact using Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2020-12-08-DataToDwC.html#event-file">
+     Event file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2020-12-08-DataToDwC.html#occurrence-file">
+     Occurrence file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2020-12-08-DataToDwC.html#measurement-or-fact">
+     Measurement Or Fact
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2018-02-27-pocean-timeSeries-demo.html">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2017-11-01-Creating-Archives-Using-Bagit.html">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="R_Matlab_Notebooks.html">
+   R Notebooks
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-11-30-rerddap.html">
+     Calling R libraries from Python
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ioos.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/noos.html">
+   NANOOS Visualization System (NVS)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/glos.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ooi.html">
+   OOI Demonstration Videos
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/python_dem.html">
+   Python Demonstration Videos
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Other Resources
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Other%20Resources/ioos_installation_conda.html">
+   Installing the IOOS Conda Environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+   Opening netCDF files - hints from AODN
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+   Unidata Ju[yter Notebook Gallery
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://iobis.org/tutorial/">
+   Extracting and Enriching OBIS data with R
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/USGS-R">
+   USGS-R Examples
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Contact Us
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../contact_us.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/R_Matlab_Notebooks/2017-01-23-R-notebook.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/R_Matlab_Notebooks/2017-01-23-R-notebook.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/R_Matlab_Notebooks/2017-01-23-R-notebook.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="quick-demonstration-of-r-notebooks-using-the-r-oce-library">
+<h1>Quick demonstration of R-notebooks using the r-oce library<a class="headerlink" href="#quick-demonstration-of-r-notebooks-using-the-r-oce-library" title="Permalink to this headline">¶</a></h1>
+<p>The IOOS notebook
+<a class="reference external" href="https://github.com/ioos/notebooks_demos/blob/229dabe0e7dd207814b9cfb96e024d3138f19abf/environment.yml#L73-L76">environment</a>
+installs the <code class="docutils literal notranslate"><span class="pre">R</span></code> language and the <code class="docutils literal notranslate"><span class="pre">Jupyter</span></code> kernel needed to run <code class="docutils literal notranslate"><span class="pre">R</span></code> notebooks.
+Conda can also install extra <code class="docutils literal notranslate"><span class="pre">R</span></code> packages,
+and those packages that are unavailable in <code class="docutils literal notranslate"><span class="pre">conda</span></code> can be installed directly from CRAN with <code class="docutils literal notranslate"><span class="pre">install.packages(pkg_name)</span></code>.</p>
+<p>You can start <code class="docutils literal notranslate"><span class="pre">jupyter</span></code> from any other environment and change the kernel later using the drop-down menu.
+(Check the <code class="docutils literal notranslate"><span class="pre">R</span></code> logo at the top right to ensure you are in the <code class="docutils literal notranslate"><span class="pre">R</span></code> jupyter kernel.)</p>
+<p>In this simple example we will use two libraries aimed at the oceanography community written in <code class="docutils literal notranslate"><span class="pre">R</span></code>: <a class="reference external" href="https://cran.r-project.org/web/packages/gsw/index.html"><code class="docutils literal notranslate"><span class="pre">r-gsw</span></code></a> and <a class="reference external" href="http://dankelley.github.io/oce/"><code class="docutils literal notranslate"><span class="pre">r-oce</span></code></a>.</p>
+<p>(The original post for the examples below can be found author’s blog: <a class="reference external" href="http://dankelley.github.io/blog/">http://dankelley.github.io/blog/</a>)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">gsw</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">oce</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Example 1: calculating the day length.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">daylength</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">lon</span><span class="o">=</span><span class="m">-38.5</span><span class="p">,</span> <span class="n">lat</span><span class="o">=</span><span class="m">-13</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">t</span> <span class="o">&lt;-</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">alt</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="nf">sunAngle</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span> <span class="n">latitude</span><span class="o">=</span><span class="n">lat</span><span class="p">)</span><span class="o">$</span><span class="n">altitude</span>
+    <span class="n">rise</span> <span class="o">&lt;-</span> <span class="nf">uniroot</span><span class="p">(</span><span class="n">alt</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="n">t</span><span class="m">-86400</span><span class="o">/</span><span class="m">2</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="n">t</span><span class="p">)</span><span class="o">$</span><span class="n">root</span>
+    <span class="n">set</span> <span class="o">&lt;-</span> <span class="nf">uniroot</span><span class="p">(</span><span class="n">alt</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="n">t</span><span class="m">+86400</span><span class="o">/</span><span class="m">2</span><span class="p">)</span><span class="o">$</span><span class="n">root</span>
+    <span class="n">set</span> <span class="o">-</span> <span class="n">rise</span>
+<span class="p">}</span>
+
+<span class="n">t0</span> <span class="o">&lt;-</span> <span class="nf">as.POSIXct</span><span class="p">(</span><span class="s">&quot;2017-01-01 12:00:00&quot;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&quot;UTC&quot;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">&lt;-</span> <span class="nf">seq.POSIXt</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s">&quot;1 day&quot;</span><span class="p">,</span> <span class="n">length.out</span><span class="o">=</span><span class="m">1</span><span class="o">*</span><span class="m">356</span><span class="p">)</span>
+<span class="n">dayLength</span> <span class="o">&lt;-</span> <span class="nf">unlist</span><span class="p">(</span><span class="nf">lapply</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">daylength</span><span class="p">))</span>
+
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">),</span> <span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">mgp</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">0.7</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span>
+
+<span class="nf">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dayLength</span><span class="o">/</span><span class="m">3600</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="n">pch</span><span class="o">=</span><span class="m">20</span><span class="p">,</span>
+     <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Day length (hours)&quot;</span><span class="p">)</span>
+<span class="nf">grid</span><span class="p">()</span>
+<span class="n">solstice</span> <span class="o">&lt;-</span> <span class="nf">as.POSIXct</span><span class="p">(</span><span class="s">&quot;2013-12-21&quot;</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s">&quot;UTC&quot;</span><span class="p">)</span>
+
+<span class="nf">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="m">-1</span><span class="p">],</span> <span class="nf">diff</span><span class="p">(</span><span class="n">dayLength</span><span class="p">),</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;o&#39;</span><span class="p">,</span> <span class="n">pch</span><span class="o">=</span><span class="m">20</span><span class="p">,</span>
+     <span class="n">xlab</span><span class="o">=</span><span class="s">&quot;Day in 2017&quot;</span><span class="p">,</span> <span class="n">ylab</span><span class="o">=</span><span class="s">&quot;Seconds gained per day&quot;</span><span class="p">)</span>
+<span class="nf">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-01-23-R-notebook_3_0.png" src="../../../_images/2017-01-23-R-notebook_3_0.png" />
+</div>
+</div>
+<p>Example 2: least-square fit.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">:</span><span class="m">100</span>
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="m">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">/</span><span class="m">100</span> <span class="o">+</span> <span class="nf">sin</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="m">5</span><span class="p">)</span>
+<span class="n">yn</span> <span class="o">&lt;-</span> <span class="n">y</span> <span class="o">+</span> <span class="nf">rnorm</span><span class="p">(</span><span class="m">100</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="m">0.1</span><span class="p">)</span>
+<span class="n">L</span> <span class="o">&lt;-</span> <span class="m">4</span>
+<span class="n">calc</span> <span class="o">&lt;-</span> <span class="nf">runlm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="n">deriv</span><span class="o">=</span><span class="m">0</span><span class="p">)</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">type</span><span class="o">=</span><span class="s">&#39;l&#39;</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">7</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#39;gray&#39;</span><span class="p">)</span>
+<span class="nf">points</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">yn</span><span class="p">,</span> <span class="n">pch</span><span class="o">=</span><span class="m">20</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#39;blue&#39;</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">calc</span><span class="p">,</span> <span class="n">lwd</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#39;red&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-01-23-R-notebook_5_0.png" src="../../../_images/2017-01-23-R-notebook_5_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">data</span><span class="p">(</span><span class="n">ctd</span><span class="p">)</span>
+<span class="n">rho</span> <span class="o">&lt;-</span> <span class="nf">swRho</span><span class="p">(</span><span class="n">ctd</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">&lt;-</span> <span class="nf">swZ</span><span class="p">(</span><span class="n">ctd</span><span class="p">)</span>
+<span class="n">drhodz</span> <span class="o">&lt;-</span> <span class="nf">runlm</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">deriv</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">&lt;-</span> <span class="m">9.81</span>
+<span class="n">rho0</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">na.rm</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+<span class="n">N2</span> <span class="o">&lt;-</span> <span class="o">-</span><span class="n">g</span> <span class="o">*</span> <span class="n">drhodz</span><span class="o">/</span><span class="n">rho0</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">ctd</span><span class="p">,</span> <span class="n">which</span> <span class="o">=</span> <span class="s">&quot;N2&quot;</span><span class="p">)</span>
+<span class="nf">lines</span><span class="p">(</span><span class="n">N2</span><span class="p">,</span> <span class="o">-</span><span class="n">z</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="s">&quot;blue&quot;</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;bottomright&quot;</span><span class="p">,</span> <span class="n">lwd</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;brown&quot;</span><span class="p">,</span> <span class="s">&quot;blue&quot;</span><span class="p">),</span> <span class="n">legend</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;spline&quot;</span><span class="p">,</span> 
+    <span class="s">&quot;runlm&quot;</span><span class="p">),</span> <span class="n">bg</span> <span class="o">=</span> <span class="s">&quot;white&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-01-23-R-notebook_6_0.png" src="../../../_images/2017-01-23-R-notebook_6_0.png" />
+</div>
+</div>
+<p>Example 3: T-S diagram.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="c1"># Alter next three lines as desired; a and b are watermasses.</span>
+<span class="n">Sa</span> <span class="o">&lt;-</span> <span class="m">30</span>
+<span class="n">Ta</span> <span class="o">&lt;-</span> <span class="m">10</span>
+<span class="n">Sb</span> <span class="o">&lt;-</span> <span class="m">40</span>
+
+<span class="nf">library</span><span class="p">(</span><span class="n">oce</span><span class="p">)</span>
+<span class="c1"># Should not need to edit below this line</span>
+<span class="n">rho0</span> <span class="o">&lt;-</span> <span class="nf">swRho</span><span class="p">(</span><span class="n">Sa</span><span class="p">,</span> <span class="n">Ta</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+<span class="n">Tb</span> <span class="o">&lt;-</span> <span class="nf">uniroot</span><span class="p">(</span><span class="nf">function</span><span class="p">(</span><span class="bp">T</span><span class="p">)</span> <span class="n">rho0</span><span class="o">-</span><span class="nf">swRho</span><span class="p">(</span><span class="n">Sb</span><span class="p">,</span><span class="bp">T</span><span class="p">,</span><span class="m">0</span><span class="p">),</span> <span class="n">lower</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="m">100</span><span class="p">)</span><span class="o">$</span><span class="n">root</span>
+<span class="n">Sc</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">Sa</span> <span class="o">+</span> <span class="n">Sb</span><span class="p">)</span> <span class="o">/</span><span class="m">2</span>
+<span class="n">Tc</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">Ta</span> <span class="o">+</span> <span class="n">Tb</span><span class="p">)</span> <span class="o">/</span><span class="m">2</span>
+<span class="c1">## density change, and equiv temp change</span>
+<span class="n">drho</span> <span class="o">&lt;-</span> <span class="nf">swRho</span><span class="p">(</span><span class="n">Sc</span><span class="p">,</span> <span class="n">Tc</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">rho0</span>
+<span class="n">dT</span> <span class="o">&lt;-</span> <span class="n">drho</span> <span class="o">/</span> <span class="n">rho0</span> <span class="o">/</span> <span class="nf">swAlpha</span><span class="p">(</span><span class="n">Sc</span><span class="p">,</span> <span class="n">Tc</span><span class="p">,</span> <span class="m">0</span><span class="p">)</span>
+
+<span class="nf">plotTS</span><span class="p">(</span><span class="nf">as.ctd</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">Sa</span><span class="p">,</span> <span class="n">Sb</span><span class="p">,</span> <span class="n">Sc</span><span class="p">),</span> <span class="nf">c</span><span class="p">(</span><span class="n">Ta</span><span class="p">,</span> <span class="n">Tb</span><span class="p">,</span> <span class="n">Tc</span><span class="p">),</span> <span class="m">0</span><span class="p">),</span> <span class="n">pch</span><span class="o">=</span><span class="m">20</span><span class="p">,</span> <span class="n">cex</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="nf">drawIsopycnals</span><span class="p">(</span><span class="n">levels</span><span class="o">=</span><span class="n">rho0</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">cex</span><span class="o">=</span><span class="m">0</span><span class="p">)</span>
+<span class="nf">segments</span><span class="p">(</span><span class="n">Sa</span><span class="p">,</span> <span class="n">Ta</span><span class="p">,</span> <span class="n">Sb</span><span class="p">,</span> <span class="n">Tb</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&quot;blue&quot;</span><span class="p">)</span>
+<span class="nf">text</span><span class="p">(</span><span class="n">Sb</span><span class="p">,</span> <span class="n">Tb</span><span class="p">,</span> <span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="m">4</span><span class="p">)</span>
+<span class="nf">text</span><span class="p">(</span><span class="n">Sa</span><span class="p">,</span> <span class="n">Ta</span><span class="p">,</span> <span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="m">4</span><span class="p">)</span>
+<span class="nf">text</span><span class="p">(</span><span class="n">Sc</span><span class="p">,</span> <span class="n">Tc</span><span class="p">,</span> <span class="s">&quot;c&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="m">4</span><span class="p">)</span>
+<span class="nf">legend</span><span class="p">(</span><span class="s">&quot;topleft&quot;</span><span class="p">,</span>
+       <span class="n">legend</span><span class="o">=</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;Sa=%.1f, Ta=%.1f, Sb=%.1f  -&gt;  Tb=%.1f, drho=%.2f, dT=%.2f&quot;</span><span class="p">,</span>
+                      <span class="n">Sa</span><span class="p">,</span> <span class="n">Ta</span><span class="p">,</span> <span class="n">Sb</span><span class="p">,</span> <span class="n">Tb</span><span class="p">,</span> <span class="n">drho</span><span class="p">,</span> <span class="n">dT</span><span class="p">),</span>
+       <span class="n">bg</span><span class="o">=</span><span class="s">&quot;white&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-01-23-R-notebook_8_0.png" src="../../../_images/2017-01-23-R-notebook_8_0.png" />
+</div>
+</div>
+<p>Example 4: find the halocline depth.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">findHalocline</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">ctd</span><span class="p">,</span> <span class="n">deltap</span><span class="o">=</span><span class="m">5</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">S</span> <span class="o">&lt;-</span> <span class="n">ctd</span><span class="p">[[</span><span class="s">&#39;salinity&#39;</span><span class="p">]]</span>
+    <span class="n">p</span> <span class="o">&lt;-</span> <span class="n">ctd</span><span class="p">[[</span><span class="s">&#39;pressure&#39;</span><span class="p">]]</span>
+    <span class="n">n</span> <span class="o">&lt;-</span> <span class="nf">length</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="c1">## trim df to be no larger than n/2 and no smaller than 3.</span>
+    <span class="n">N</span> <span class="o">&lt;-</span> <span class="n">deltap</span> <span class="o">/</span> <span class="nf">median</span><span class="p">(</span><span class="nf">diff</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+    <span class="n">df</span> <span class="o">&lt;-</span> <span class="nf">min</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="m">2</span><span class="p">,</span> <span class="nf">max</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">/</span> <span class="n">N</span><span class="p">))</span>
+    <span class="n">spline</span> <span class="o">&lt;-</span> <span class="nf">smooth.spline</span><span class="p">(</span><span class="n">S</span><span class="o">~</span><span class="n">p</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">SS</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">spline</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">dSSdp</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">spline</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">deriv</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">&lt;-</span> <span class="n">p</span><span class="p">[</span><span class="nf">which.max</span><span class="p">(</span><span class="n">dSSdp</span><span class="o">$</span><span class="n">y</span><span class="p">)]</span>
+    <span class="nf">if </span><span class="p">(</span><span class="n">plot</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span> <span class="n">mgp</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">0.7</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span>
+        <span class="nf">plotProfile</span><span class="p">(</span><span class="n">ctd</span><span class="p">,</span> <span class="n">xtype</span><span class="o">=</span><span class="s">&quot;salinity&quot;</span><span class="p">)</span>
+        <span class="nf">lines</span><span class="p">(</span><span class="n">SS</span><span class="o">$</span><span class="n">y</span><span class="p">,</span> <span class="n">SS</span><span class="o">$</span><span class="n">x</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#39;red&#39;</span><span class="p">)</span>
+        <span class="nf">abline</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="n">H</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#39;blue&#39;</span><span class="p">)</span>
+        <span class="nf">mtext</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot;%.2f m&quot;</span><span class="p">,</span> <span class="n">H</span><span class="p">),</span> <span class="n">side</span><span class="o">=</span><span class="m">4</span><span class="p">,</span> <span class="n">at</span><span class="o">=</span><span class="n">H</span><span class="p">,</span> <span class="n">cex</span><span class="o">=</span><span class="m">3</span><span class="o">/</span><span class="m">4</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">&#39;blue&#39;</span><span class="p">)</span>
+        <span class="nf">mtext</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&quot; deltap: %.0f, N: %.0f, df: %.0f&quot;</span><span class="p">,</span> <span class="n">deltap</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">df</span><span class="p">),</span>
+              <span class="n">side</span><span class="o">=</span><span class="m">1</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="m">-1</span><span class="p">,</span> <span class="n">adj</span><span class="o">=</span><span class="m">0</span><span class="p">,</span> <span class="n">cex</span><span class="o">=</span><span class="m">3</span><span class="o">/</span><span class="m">4</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nf">return</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="p">}</span>
+  
+<span class="c1"># Plot two panels to see influence of deltap.</span>
+<span class="nf">par</span><span class="p">(</span><span class="n">mfrow</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">))</span>
+<span class="nf">data</span><span class="p">(</span><span class="n">ctd</span><span class="p">)</span>
+<span class="nf">findHalocline</span><span class="p">(</span><span class="n">ctd</span><span class="p">)</span>
+<span class="nf">findHalocline</span><span class="p">(</span><span class="n">ctd</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">4.292</div><div class="output text_html">4.721</div><img alt="../../../_images/2017-01-23-R-notebook_10_2.png" src="../../../_images/2017-01-23-R-notebook_10_2.png" />
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "conda-env-IOOS-r"
+        },
+        kernelOptions: {
+            kernelName: "conda-env-IOOS-r",
+            path: "./content/Code Gallery/R_Matlab_Notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'conda-env-IOOS-r'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="R_Matlab_Notebooks.html" title="previous page">R Notebooks</a>
+    <a class='right-next' id="next-link" href="2017-03-30-octave_notebook_example.html" title="next page">A Matlab notebook primer</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

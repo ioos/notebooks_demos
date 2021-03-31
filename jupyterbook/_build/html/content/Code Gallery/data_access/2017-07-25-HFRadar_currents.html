@@ -26,7 +26,7 @@
 
     
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -87,14 +87,7 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../intro.html">
-   IOOS Data Demo Center
-  </a>
- </li>
-</ul>
-<p class="caption collapsible-parent">
+    <p class="caption collapsible-parent">
  <span class="caption-text">
   Code Gallery
  </span>
@@ -156,7 +149,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../data_analysis_and_visualization/data_analysis_and_visualization.html">
-   Data Analysis And Visualization Notebooks
+   Data Analysis And Visualization
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -261,6 +254,46 @@
    <li class="toctree-l2">
     <a class="reference internal" href="../data_publication/2017-11-01-Creating-Archives-Using-Bagit.html">
      Using BagIt to tag oceanographic data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../R_Matlab_Notebooks/R_Matlab_Notebooks.html">
+   R Notebooks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-11-30-rerddap.html">
+     Calling R libraries from Python
     </a>
    </li>
   </ul>
@@ -483,7 +516,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/IPython/core/display.py:717: UserWarning: Consider using IPython.display.IFrame instead
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/filipe/miniconda3/envs/IOOS/lib/python3.6/site-packages/IPython/core/display.py:689: UserWarning: Consider using IPython.display.IFrame instead
   warnings.warn(&quot;Consider using IPython.display.IFrame instead&quot;)
 </pre></div>
 </div>
@@ -507,16 +540,52 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">c9b5182d5891</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> 
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="s2">&quot;http://hfrnet-tds.ucsd.edu/thredds/dodsC/HFR/USEGC/6km/hourly/RTV/&quot;</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="s2">&quot;HFRADAR_US_East_and_Gulf_Coast_6km_Resolution_Hourly_RTV_best.ncd&quot;</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;xarray&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.Dataset&gt;
+Dimensions:       (lat: 460, lon: 701, nProcParam: 7, nSites: 38, time: 60554)
+Coordinates:
+  * lat           (lat) float32 21.73596 21.7899 21.84384 ... 46.44048 46.49442
+  * lon           (lon) float32 -97.88385 -97.825775 ... -57.289284 -57.23121
+  * time          (time) datetime64[ns] 2012-01-01 ... 2018-11-30T10:00:00
+    time_run      (time) datetime64[ns] ...
+Dimensions without coordinates: nProcParam, nSites
+Data variables:
+    site_lat      (nSites) float32 ...
+    site_lon      (nSites) float32 ...
+    site_code     (nSites) |S64 ...
+    site_netCode  (nSites) |S64 ...
+    procParams    (nProcParam) float32 ...
+    time_offset   (time) datetime64[ns] ...
+    u             (time, lat, lon) float32 ...
+    v             (time, lat, lon) float32 ...
+    DOPx          (time, lat, lon) float32 ...
+    DOPy          (time, lat, lon) float32 ...
+Attributes:
+    netcdf_library_version:  4.1.3
+    format_version:          HFRNet_1.0.0
+    product_version:         HFRNet_1.1.05
+    Conventions:             CF-1.4
+    title:                   Near-Real Time Surface Ocean Velocity, U.S. East...
+    institution:             Scripps Institution of Oceanography
+    source:                  Surface Ocean HF-Radar
+    history:                 30-Nov-2018 08:10:47: NetCDF file created\n30-No...
+    references:              Terrill, E. et al., 2006. Data Management and Re...
+    creator_name:            Mark Otero
+    creator_email:           motero@ucsd.edu
+    creator_url:             http://cordc.ucsd.edu/projects/mapping/
+    summary:                 Surface ocean velocities estimated from HF-Radar...
+    geospatial_lat_min:      21.73596
+    geospatial_lat_max:      46.49442
+    geospatial_lon_min:      -97.88385
+    geospatial_lon_max:      -57.23121
+    grid_resolution:         6km
+    grid_projection:         equidistant cylindrical
+    regional_description:    Unites States, East and Gulf Coast
+    _CoordSysBuilder:        ucar.nc2.dataset.conv.CF1Convention
+    cdm_data_type:           GRID
+    featureType:             GRID
+    location:                Proto fmrc:HFRADAR_US_East_and_Gulf_Coast_6km_Re...
+    DODS.strlen:             25
+    DODS.dimName:            nSites_maxStrlen
 </pre></div>
 </div>
 </div>

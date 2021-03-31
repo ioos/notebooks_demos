@@ -1,0 +1,1365 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calling R libraries from Python &#8212; The U.S. Integrated Ocean Observing System (IOOS)</title>
+    
+  <link rel="stylesheet" href="../../../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="IOOS" href="../../Video%20Tutorials/ioos.html" />
+    <link rel="prev" title="Using r-obistools and r-obis to explore the OBIS database" href="2018-02-20-obis.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../../index.html">
+  
+  <img src="../../../_static/IOOS-logo_little.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">The U.S. Integrated Ocean Observing System (IOOS)</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  Code Gallery
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_access/data_access.html">
+   Data Access
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2016-10-12-fetching_data.html">
+     Fetching data from CO-OPS SOS with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-05-14-running_compliance_checker.html">
+     Shore Station Compliance Checker Script
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2016-12-20-searching_glider_deployments.html">
+     Accessing glider data via the Glider DAC API with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-01-18-siphon-explore-thredds.html">
+     Exploring the THREDDS catalog with Unidata’s Siphon
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-03-21-ERDDAP_IOOS_Sensor_Map.html">
+     Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-06-12-NCEI_RA_archive_history.html">
+     Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-07-25-HFRadar_currents.html">
+     Near real-time HF-Radar currents in the proximity of the Deepwater Horizon site
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2017-12-15-finding_HFRadar_currents.html">
+     Fetching data from a CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_access/2018-03-01-erddapy.html">
+     erddapy: a python client/URL builder for ERDDAP
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_analysis_and_visualization/data_analysis_and_visualization.html">
+   Data Analysis And Visualization
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2016-12-22-boston_light_swim.html">
+     The Boston Light Swim temperature analysis with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2020-10-10-GTS.html">
+     IOOS GTS Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html">
+     IOOS QARTOD software (ioos_qc)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2017-09-09-hurricane_irma.html">
+     Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2019-02-26-hurricane_gis_part01.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2019-05-27-hurricane_gis_part02.html">
+     Accessing data from SOS using NHC GIS files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2018-12-04-grids.html">
+     IOOS models
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2019-03-08-grids-temperature.html">
+     IOOS models: Temperature Horizontal Slices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2018-03-15-ssh-skillscore.html">
+     Investigating ocean models skill for sea surface height with IOOS catalog and Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2018-03-30-wave_height_assessment.html">
+     Coastal Ocean Wave Height Assessment
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_analysis_and_visualization/2016-11-15-glider_data_example.html">
+     Plotting Glider data with Python tools
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../data_publication/data_publication.html">
+   Data Publication
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2016-12-19-exploring_csw.html">
+     How to search the IOOS CSW catalog with Python tools
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2016-11-16-CF-UGRID-SGRID-conventions.html">
+     Parsing Conventions and standards with Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2020-12-08-DataToDwC.html">
+     Aligning Data to Darwin Core - Sampling Event with Measurement or Fact using Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2020-12-08-DataToDwC.html#event-file">
+     Event file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2020-12-08-DataToDwC.html#occurrence-file">
+     Occurrence file
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2020-12-08-DataToDwC.html#measurement-or-fact">
+     Measurement Or Fact
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2018-02-27-pocean-timeSeries-demo.html">
+     Creating a CF-1.6 timeSeries using pocean
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../data_publication/2017-11-01-Creating-Archives-Using-Bagit.html">
+     Using BagIt to tag oceanographic data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="R_Matlab_Notebooks.html">
+   R Notebooks
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Calling R libraries from Python
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Video Tutorials
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ioos.html">
+   IOOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/noos.html">
+   NANOOS Visualization System (NVS)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/glos.html">
+   GLOS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/ooi.html">
+   OOI Demonstration Videos
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Video%20Tutorials/python_dem.html">
+   Python Demonstration Videos
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Other Resources
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../Other%20Resources/ioos_installation_conda.html">
+   Installing the IOOS Conda Environment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://help.aodn.org.au/aodn-data-tools/user-code-library/">
+   Opening netCDF files - hints from AODN
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://unidata.github.io/notebook-gallery/">
+   Unidata Ju[yter Notebook Gallery
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="http://iobis.org/tutorial/">
+   Extracting and Enriching OBIS data with R
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference external" href="https://github.com/USGS-R">
+   USGS-R Examples
+   <i class="fas fa-external-link-alt">
+   </i>
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Contact Us
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../contact_us.html">
+   Contact Us
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../../_sources/content/Code Gallery/R_Matlab_Notebooks/2017-11-30-rerddap.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/content/Code Gallery/R_Matlab_Notebooks/2017-11-30-rerddap.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/content/Code Gallery/R_Matlab_Notebooks/2017-11-30-rerddap.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../../../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="calling-r-libraries-from-python">
+<h1>Calling R libraries from Python<a class="headerlink" href="#calling-r-libraries-from-python" title="Permalink to this headline">¶</a></h1>
+<p>In this example we will explore the <strong>Coral Reef Evaluation and Monitoring Project (CREMP)</strong> data available in the <strong>Gulf of Mexico Coastal Ocean Observing System (GCOOS)</strong> ERDDAP server.</p>
+<p>To access the server we will use the <a class="reference external" href="https://github.com/ropensci/rerddap"><code class="docutils literal notranslate"><span class="pre">rerddap</span></code></a> library and export the data to Python for easier plotting.</p>
+<p>The first step is to load the <code class="docutils literal notranslate"><span class="pre">rpy2</span></code> extension that will allow us to use the <code class="docutils literal notranslate"><span class="pre">R</span></code> libraries.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> rpy2.ipython
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first line below has a <code class="docutils literal notranslate"><span class="pre">%%R</span></code> to make it an <code class="docutils literal notranslate"><span class="pre">R</span></code> cell. The code below specify the <code class="docutils literal notranslate"><span class="pre">GCOOS</span></code> server and fetches the data information for the <a class="reference external" href="http://gcoos4.tamu.edu:8080/erddap/tabledap/cremp_fk_v2_1996.html"><code class="docutils literal notranslate"><span class="pre">cremp_fk_v2_1996</span></code></a> dataset.</p>
+<p>For more information on <code class="docutils literal notranslate"><span class="pre">rerddap</span></code> please see <a class="reference external" href="https://rmendels.github.io/Using_rerddap.nb.html">https://rmendels.github.io/Using_rerddap.nb.html</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">R</span>
+
+library(&#39;rerddap&#39;)
+
+url &lt;- &#39;http://gcoos4.tamu.edu:8080/erddap/&#39;
+data_info &lt;- rerddap::info(&#39;cremp_fk_1996_v20&#39;, url=url)
+
+data_info
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ERDDAP info&gt; cremp_fk_1996_v20 
+ Dimensions (range):  
+ Variables:  
+     AverageNumberOfPoints: 
+         Range: 1045, 2625 
+     basisOfRecord: 
+     bottomType: 
+     class: 
+     country: 
+     datasetID: 
+     datasetName: 
+     depth: 
+         Range: 3.0, 54.0 
+         Units: m 
+     dynamicProperties: 
+     eventDate: 
+     eventDateRemarks: 
+     eventDateTimeZone: 
+     family: 
+     firstYear: 
+         Range: 1996, 1996 
+     genus: 
+     geodeticDatum: 
+     habitat: 
+     higherInstitutionCode: 
+     institutionCode: 
+     kingdom: 
+     lastYear: 
+         Range: 2000, 2015 
+     latitude: 
+         Range: 24.4517, 25.2953 
+         Units: degrees_north 
+     locality: 
+     longitude: 
+         Range: -81.9195, -80.2087 
+         Units: degrees_east 
+     materialSampleID: 
+     maximumDepthInMeters: 
+         Range: 3.0, 54.0 
+         Units: m 
+     minimumDepthInMeters: 
+         Range: 3.0, 54.0 
+         Units: m 
+     order: 
+     ownerInstitutionCode: 
+     phylum: 
+     protection: 
+     quantificationMethod: 
+     quantificationName: 
+     quantificationStatus: 
+     quantificationUnit: 
+     quantificationValue: 
+         Range: 0.0, 0.919800885 
+     recordedBy: 
+     region: 
+     sampleAreaInSquareMeters: 
+         Range: 19.0, 26.0 
+         Units: m^2 
+     Samples: 
+         Range: 0, 11679 
+     scientificName: 
+     scientificNameAuthorship: 
+     scientificNameIDITIS: 
+         Range: -999, 914166 
+     scientificNameIDWoRMS: 
+         Range: -999, 828326 
+     specificEpithet: 
+     stateProvince: 
+     stationNumber: 
+         Range: 101, 814 
+     subSampleID: 
+     taxonRank: 
+     time: 
+         Range: 8.204544E8, 8.204544E8 
+         Units: seconds since 1970-01-01T00:00:00Z 
+     timeUncertainty: 
+         Units: sec 
+     underwaterVisibilityInMeters: 
+     vernacularName: 
+     verticalDatum: 
+     waterBody: 
+     waterTemperatureInCelsius: 
+         Units: C 
+</pre></div>
+</div>
+</div>
+</div>
+<p>By inspecting the information above we can find the variables available in the dateset and use  the <code class="docutils literal notranslate"><span class="pre">tabledap</span></code> function to download them.</p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">%%R</span> <span class="pre">-o</span> <span class="pre">rdf</span></code> will export the <code class="docutils literal notranslate"><span class="pre">rdf</span></code> variable back to the Python workspace.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">R</span> -o rdf
+
+fields &lt;- c(
+    &#39;Samples&#39;,
+    &#39;depth&#39;,
+    &#39;time&#39;,
+    &#39;longitude&#39;,
+    &#39;latitude&#39;,
+    &#39;scientificName&#39;,
+    &#39;habitat&#39;,
+    &#39;genus&#39;,
+    &#39;quantificationValue&#39;
+)
+
+rdf &lt;- tabledap(
+    data_info,
+    fields=fields,
+    url=url
+)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we need to export the <code class="docutils literal notranslate"><span class="pre">R</span></code> <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> to a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> objects and ensure that all numeric types are numbers and not strings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="kn">import</span> <span class="n">pandas2ri</span>
+
+<span class="n">pandas2ri</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas2ri</span><span class="o">.</span><span class="n">ri2py_dataframe</span><span class="p">(</span><span class="n">rdf</span><span class="p">)</span>
+
+<span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">,</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="s2">&quot;quantificationValue&quot;</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Samples</th>
+      <th>depth</th>
+      <th>time</th>
+      <th>longitude</th>
+      <th>latitude</th>
+      <th>scientificName</th>
+      <th>habitat</th>
+      <th>genus</th>
+      <th>quantificationValue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>6.0</td>
+      <td>1996-01-01T00:00:00Z</td>
+      <td>-80.3475</td>
+      <td>25.1736</td>
+      <td>Acropora cervicornis</td>
+      <td>Hard Bottom</td>
+      <td>Acropora</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>6.0</td>
+      <td>1996-01-01T00:00:00Z</td>
+      <td>-80.3475</td>
+      <td>25.1736</td>
+      <td>Acropora cervicornis</td>
+      <td>Hard Bottom</td>
+      <td>Acropora</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2</td>
+      <td>6.0</td>
+      <td>1996-01-01T00:00:00Z</td>
+      <td>-80.3475</td>
+      <td>25.1736</td>
+      <td>Acropora cervicornis</td>
+      <td>Hard Bottom</td>
+      <td>Acropora</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3</td>
+      <td>6.0</td>
+      <td>1996-01-01T00:00:00Z</td>
+      <td>-80.3475</td>
+      <td>25.1736</td>
+      <td>Acropora cervicornis</td>
+      <td>Hard Bottom</td>
+      <td>Acropora</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>4</td>
+      <td>9.0</td>
+      <td>1996-01-01T00:00:00Z</td>
+      <td>-80.3782</td>
+      <td>25.1201</td>
+      <td>Acropora cervicornis</td>
+      <td>Hard Bottom</td>
+      <td>Acropora</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can navigate to ERDDAP’s <a class="reference external" href="http://gcoos4.tamu.edu:8080/erddap/info/cremp_fk_v2_1996/index.html">info page</a> to find the variables description. Let’s check what is <code class="docutils literal notranslate"><span class="pre">quantificationValue</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The is value of the derived information product, such as the numerical value for biomass. This term does not include units. Mean number of observed fish per species for 5 Minutes
+</pre></div>
+</div>
+<p>We can see that <code class="docutils literal notranslate"><span class="pre">quantificationValue</span></code> has a lot of zero values,
+let’s remove that first to plot the data positions only where something was found.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter invalid values (-999).</span>
+
+<span class="n">cremp_1996</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;quantificationValue&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">cremp_1996</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Samples</th>
+      <th>depth</th>
+      <th>time</th>
+      <th>longitude</th>
+      <th>latitude</th>
+      <th>scientificName</th>
+      <th>habitat</th>
+      <th>genus</th>
+      <th>quantificationValue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>6.0</td>
+      <td>1996-01-01T00:00:00Z</td>
+      <td>-80.3475</td>
+      <td>25.1736</td>
+      <td>Acropora cervicornis</td>
+      <td>Hard Bottom</td>
+      <td>Acropora</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>6.0</td>
+      <td>1996-01-01T00:00:00Z</td>
+      <td>-80.3475</td>
+      <td>25.1736</td>
+      <td>Acropora cervicornis</td>
+      <td>Hard Bottom</td>
+      <td>Acropora</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2</td>
+      <td>6.0</td>
+      <td>1996-01-01T00:00:00Z</td>
+      <td>-80.3475</td>
+      <td>25.1736</td>
+      <td>Acropora cervicornis</td>
+      <td>Hard Bottom</td>
+      <td>Acropora</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3</td>
+      <td>6.0</td>
+      <td>1996-01-01T00:00:00Z</td>
+      <td>-80.3475</td>
+      <td>25.1736</td>
+      <td>Acropora cervicornis</td>
+      <td>Hard Bottom</td>
+      <td>Acropora</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>4</td>
+      <td>9.0</td>
+      <td>1996-01-01T00:00:00Z</td>
+      <td>-80.3782</td>
+      <td>25.1201</td>
+      <td>Acropora cervicornis</td>
+      <td>Hard Bottom</td>
+      <td>Acropora</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>What is the most common <code class="docutils literal notranslate"><span class="pre">genus</span></code> of Coral observed?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">avg</span> <span class="o">=</span> <span class="n">cremp_1996</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;genus&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">avg</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Samples</th>
+      <th>depth</th>
+      <th>longitude</th>
+      <th>latitude</th>
+      <th>quantificationValue</th>
+    </tr>
+    <tr>
+      <th>genus</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th></th>
+      <td>8010.928571</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.128788</td>
+    </tr>
+    <tr>
+      <th>Acropora</th>
+      <td>159.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.005494</td>
+    </tr>
+    <tr>
+      <th>Agaricia</th>
+      <td>479.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.000003</td>
+    </tr>
+    <tr>
+      <th>Cladocora</th>
+      <td>719.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>Colpophyllia</th>
+      <td>879.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.004462</td>
+    </tr>
+    <tr>
+      <th>Dendrogyra</th>
+      <td>1039.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000977</td>
+    </tr>
+    <tr>
+      <th>Diadema</th>
+      <td>10159.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000007</td>
+    </tr>
+    <tr>
+      <th>Dichocoenia</th>
+      <td>1199.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000509</td>
+    </tr>
+    <tr>
+      <th>Diploria</th>
+      <td>1359.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000999</td>
+    </tr>
+    <tr>
+      <th>Eusmilia</th>
+      <td>1519.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000091</td>
+    </tr>
+    <tr>
+      <th>Favia</th>
+      <td>1679.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000045</td>
+    </tr>
+    <tr>
+      <th>Helioseris</th>
+      <td>1839.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000004</td>
+    </tr>
+    <tr>
+      <th>Isophyllia</th>
+      <td>2079.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.000006</td>
+    </tr>
+    <tr>
+      <th>Madracis</th>
+      <td>2399.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.000040</td>
+    </tr>
+    <tr>
+      <th>Manicina</th>
+      <td>2639.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000007</td>
+    </tr>
+    <tr>
+      <th>Meandrina</th>
+      <td>2799.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000363</td>
+    </tr>
+    <tr>
+      <th>Millepora</th>
+      <td>3039.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.006159</td>
+    </tr>
+    <tr>
+      <th>Montastraea</th>
+      <td>3279.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.013597</td>
+    </tr>
+    <tr>
+      <th>Mussa</th>
+      <td>3439.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000061</td>
+    </tr>
+    <tr>
+      <th>Mycetophyllia</th>
+      <td>3759.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.000144</td>
+    </tr>
+    <tr>
+      <th>Oculina</th>
+      <td>4159.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.000046</td>
+    </tr>
+    <tr>
+      <th>Orbicella</th>
+      <td>4399.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.033860</td>
+    </tr>
+    <tr>
+      <th>Other</th>
+      <td>10319.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000161</td>
+    </tr>
+    <tr>
+      <th>Porites</th>
+      <td>4639.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.003372</td>
+    </tr>
+    <tr>
+      <th>Pseudodiploria</th>
+      <td>4959.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.001024</td>
+    </tr>
+    <tr>
+      <th>Scolymia</th>
+      <td>5359.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000009</td>
+    </tr>
+    <tr>
+      <th>Siderastrea</th>
+      <td>5599.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.004603</td>
+    </tr>
+    <tr>
+      <th>Solenastrea</th>
+      <td>5919.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768957</td>
+      <td>0.000048</td>
+    </tr>
+    <tr>
+      <th>Stephanocoenia</th>
+      <td>6159.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.000263</td>
+    </tr>
+    <tr>
+      <th>Undaria</th>
+      <td>6319.500000</td>
+      <td>23.2375</td>
+      <td>-81.046667</td>
+      <td>24.768958</td>
+      <td>0.001044</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">rerddap</span></code>’s info request does not have enough metadata about the variables to explain the blank, and most abundant, <code class="docutils literal notranslate"><span class="pre">genus</span></code>. <a class="reference external" href="http://gcoos4.tamu.edu:8080/erddap/tabledap/cremp_fk_v2_1996.html">Checking the sever</a> did not help figure that out. We’ll remove that for now to deal with only those that are identified.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cremp_1996</span> <span class="o">=</span> <span class="n">cremp_1996</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cremp_1996</span><span class="p">[</span><span class="s2">&quot;genus&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are also many <code class="docutils literal notranslate"><span class="pre">genus</span></code> with zero biomass count. In this example we’ll choose to do a biased analysis of occurrence and eliminate those where nothing was observed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter zero values (nothing was observed).</span>
+
+<span class="n">cremp_1996</span> <span class="o">=</span> <span class="n">cremp_1996</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cremp_1996</span><span class="p">[</span><span class="s2">&quot;quantificationValue&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can check the <code class="docutils literal notranslate"><span class="pre">quantificationValue</span></code> average by <code class="docutils literal notranslate"><span class="pre">genus</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">avg</span> <span class="o">=</span> <span class="n">cremp_1996</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;genus&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>  <span class="c1"># re-compute the &quot;biased&quot; average.</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">avg</span><span class="p">[</span><span class="s2">&quot;quantificationValue&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-11-30-rerddap_17_0.png" src="../../../_images/2017-11-30-rerddap_17_0.png" />
+</div>
+</div>
+<p>and <code class="docutils literal notranslate"><span class="pre">habitat</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">cremp_1996</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;habitat&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()[</span><span class="s2">&quot;quantificationValue&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-11-30-rerddap_19_0.png" src="../../../_images/2017-11-30-rerddap_19_0.png" />
+</div>
+</div>
+<p>It seems the most of the biomass was found around the <code class="docutils literal notranslate"><span class="pre">Dendrogyra</span></code> genus in Patch Reef habitats.
+But where are those Coral Reefs? How is the distribution of top three species with more biomass around them?
+With a <code class="docutils literal notranslate"><span class="pre">pandas</span></code> <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> it is easy to group the data by location and count the <code class="docutils literal notranslate"><span class="pre">genus</span></code> occurrence based on it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cartopy.crs</span> <span class="k">as</span> <span class="nn">ccrs</span>
+<span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">cartopy.mpl.ticker</span> <span class="kn">import</span> <span class="n">LatitudeFormatter</span><span class="p">,</span> <span class="n">LongitudeFormatter</span>
+
+
+<span class="k">def</span> <span class="nf">make_plot</span><span class="p">():</span>
+    <span class="n">bbox</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">82</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">26</span><span class="p">]</span>
+    <span class="n">projection</span> <span class="o">=</span> <span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="n">subplot_kw</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">projection</span><span class="p">))</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">bbox</span><span class="p">)</span>
+
+    <span class="n">land</span> <span class="o">=</span> <span class="n">cfeature</span><span class="o">.</span><span class="n">NaturalEarthFeature</span><span class="p">(</span>
+        <span class="s2">&quot;physical&quot;</span><span class="p">,</span> <span class="s2">&quot;land&quot;</span><span class="p">,</span> <span class="s2">&quot;10m&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;face&quot;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="p">[</span><span class="mf">0.85</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
+    <span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_feature</span><span class="p">(</span><span class="n">land</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">coastlines</span><span class="p">(</span><span class="s2">&quot;10m&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span> <span class="n">crs</span><span class="o">=</span><span class="n">projection</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span> <span class="n">crs</span><span class="o">=</span><span class="n">projection</span><span class="p">)</span>
+    <span class="n">lon_formatter</span> <span class="o">=</span> <span class="n">LongitudeFormatter</span><span class="p">(</span><span class="n">zero_direction_label</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">lat_formatter</span> <span class="o">=</span> <span class="n">LatitudeFormatter</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">lon_formatter</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">lat_formatter</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cremp_1996</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cremp_1996</span><span class="p">[</span><span class="s2">&quot;genus&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Acropora&quot;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="p">)</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_plot</span><span class="p">()</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">count</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">],</span>
+    <span class="n">count</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">],</span>
+    <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">count</span><span class="p">[</span><span class="s2">&quot;genus&quot;</span><span class="p">],</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;viridis_r&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Genus occurrence count&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Acropora&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-11-30-rerddap_22_0.png" src="../../../_images/2017-11-30-rerddap_22_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cremp_1996</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cremp_1996</span><span class="p">[</span><span class="s2">&quot;genus&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Dendrogyra&quot;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="p">)</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_plot</span><span class="p">()</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">count</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">],</span>
+    <span class="n">count</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">],</span>
+    <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">count</span><span class="p">[</span><span class="s2">&quot;genus&quot;</span><span class="p">],</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;viridis_r&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Genus occurrence count&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Dendrogyra&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-11-30-rerddap_23_0.png" src="../../../_images/2017-11-30-rerddap_23_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">cremp_1996</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cremp_1996</span><span class="p">[</span><span class="s2">&quot;genus&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Orbicella&quot;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;longitude&quot;</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="p">)</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">make_plot</span><span class="p">()</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">count</span><span class="p">[</span><span class="s2">&quot;longitude&quot;</span><span class="p">],</span>
+    <span class="n">count</span><span class="p">[</span><span class="s2">&quot;latitude&quot;</span><span class="p">],</span>
+    <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="n">count</span><span class="p">[</span><span class="s2">&quot;genus&quot;</span><span class="p">],</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s2">&quot;viridis_r&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Genus occurrence count&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Orbicella&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/2017-11-30-rerddap_24_0.png" src="../../../_images/2017-11-30-rerddap_24_0.png" />
+</div>
+</div>
+<p>This demonstration showed the power of mixing <code class="docutils literal notranslate"><span class="pre">Python</span></code> and <code class="docutils literal notranslate"><span class="pre">R</span></code> to reduce developer time and allow the research to focus on the data and not the programming language.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "executablebooks/jupyter-book",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/Code Gallery/R_Matlab_Notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="2018-02-20-obis.html" title="previous page">Using r-obistools and r-obis to explore the OBIS database</a>
+    <a class='right-next' id="next-link" href="../../Video%20Tutorials/ioos.html" title="next page">IOOS</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By IOOS<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

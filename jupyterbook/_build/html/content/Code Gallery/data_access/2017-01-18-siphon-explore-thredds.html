@@ -26,7 +26,7 @@
 
     
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -87,14 +87,7 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../intro.html">
-   IOOS Data Demo Center
-  </a>
- </li>
-</ul>
-<p class="caption collapsible-parent">
+    <p class="caption collapsible-parent">
  <span class="caption-text">
   Code Gallery
  </span>
@@ -156,7 +149,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../data_analysis_and_visualization/data_analysis_and_visualization.html">
-   Data Analysis And Visualization Notebooks
+   Data Analysis And Visualization
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -261,6 +254,46 @@
    <li class="toctree-l2">
     <a class="reference internal" href="../data_publication/2017-11-01-Creating-Archives-Using-Bagit.html">
      Using BagIt to tag oceanographic data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../R_Matlab_Notebooks/R_Matlab_Notebooks.html">
+   R Notebooks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-11-30-rerddap.html">
+     Calling R libraries from Python
     </a>
    </li>
   </ul>
@@ -449,8 +482,8 @@
         
               <div>
                 
-  <div class="section" id="exploring-the-thredds-catalog-with-unidatas-siphon">
-<h1>Exploring the THREDDS catalog with Unidata’s Siphon<a class="headerlink" href="#exploring-the-thredds-catalog-with-unidatas-siphon" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="exploring-the-thredds-catalog-with-unidata-s-siphon">
+<h1>Exploring the THREDDS catalog with Unidata’s Siphon<a class="headerlink" href="#exploring-the-thredds-catalog-with-unidata-s-siphon" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="http://siphon.readthedocs.io/en/latest/">Siphon</a> is a Python module for accessing data hosted on a THREDDS data server.
 Siphon works by parsing the catalog XML and exposing it with higher level functions.</p>
 <p>In this notebook we will explore data available on the Central &amp; Northern California Ocean Observing System (CeNCOOS) THREDDS. The cell below extracts the catalog information</p>
@@ -500,7 +533,6 @@ Metadata: {}
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>all
 allandsos
-allandsosandfile
 wms
 </pre></div>
 </div>
@@ -514,10 +546,8 @@ wms
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AIS Vessel Traffic Data - Continental US - US Coast Guard Terrestrial - Yearly Totals
-AIS Vessel Traffic Data - Continental US - US Coast Guard Satellite - Monthly Totals
-California Coastal Regional Ocean Modeling System (ROMS) 3km Nowcast
-California Coastal Regional Ocean Modeling System (ROMS) 3km Forecast
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>California Coastal Regional Ocean Modeling System (ROMS) Nowcast
+California Coastal Regional Ocean Modeling System (ROMS) Forecast
 Monterey Bay (MB) Regional Ocean Modeling System (ROMS) Nowcast
 Monterey Bay (MB) Regional Ocean Modeling System (ROMS) Forecast
 Southern California Bight (SCB) Regional Ocean Modeling System (ROMS) Nowcast
@@ -543,8 +573,6 @@ Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Wind 10 m (Histori
 Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Ground and Sea Temp (Historical)
 Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Air Temp 2 m (Historical)
 Hybrid Coordinate Ocean Model
-0.25 degree Global Forecast System for the CeNCOOS Region
-3km NCEP High Resolution Rapid Refresh (HRRR)
 Southern California Regional NCOM Model
 Maurer Meteorological Data
 Global 1-km Sea Surface Temperature (G1SST)
@@ -638,7 +666,6 @@ Here are the data from the <em>Global</em> subset.</p>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NCEP Reanalysis Daily Averages Surface Flux
 Global 1-km Sea Surface Temperature (G1SST)
-OSTIA: Operational Sea Surface Temperature and Sea Ice Analysis
 NCEP Global Forecast System Model (GFS)
 Aquarius V 3.0 Scatterometer Daily Aggregate
 Aquarius V 3.0 Scatterometer Seven-Day Aggregate
@@ -689,10 +716,8 @@ forming proper queries as well as parsing the returned data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AIS Vessel Traffic Data - Continental US - US Coast Guard Terrestrial - Yearly Totals
-AIS Vessel Traffic Data - Continental US - US Coast Guard Satellite - Monthly Totals
-California Coastal Regional Ocean Modeling System (ROMS) 3km Nowcast
-California Coastal Regional Ocean Modeling System (ROMS) 3km Forecast
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>California Coastal Regional Ocean Modeling System (ROMS) Nowcast
+California Coastal Regional Ocean Modeling System (ROMS) Forecast
 Monterey Bay (MB) Regional Ocean Modeling System (ROMS) Nowcast
 Monterey Bay (MB) Regional Ocean Modeling System (ROMS) Forecast
 Southern California Bight (SCB) Regional Ocean Modeling System (ROMS) Nowcast
@@ -718,8 +743,6 @@ Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Wind 10 m (Histori
 Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Ground and Sea Temp (Historical)
 Coupled Ocean/Atmosphere Mesoscale Prediction System (COAMPS) Air Temp 2 m (Historical)
 Hybrid Coordinate Ocean Model
-0.25 degree Global Forecast System for the CeNCOOS Region
-3km NCEP High Resolution Rapid Refresh (HRRR)
 Southern California Regional NCOM Model
 Maurer Meteorological Data
 High Resolution Chlorophyll-a concentration from MODIS/Aqua (1 Day Composite)
@@ -733,7 +756,7 @@ Ocean Surface Currents Monthly Averaged - CORDC High-Frequency Radar (US West Co
 </div>
 </div>
 </div>
-<p>All <code class="docutils literal notranslate"><span class="pre">access_urls</span></code> returned empty… Maybe that is just a metadata issue because there is <code class="docutils literal notranslate"><span class="pre">NetcdfSubset</span></code> access when navigating in the webpage.</p>
+<p>All <code class="docutils literal notranslate"><span class="pre">access_urls</span></code> returned empty…. Maybe that is just a metadata issue because there is <code class="docutils literal notranslate"><span class="pre">NetcdfSubset</span></code> access when navigating in the webpage.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
@@ -748,10 +771,6 @@ Ocean Surface Currents Monthly Averaged - CORDC High-Frequency Radar (US West Co
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/lohith/miniconda3/envs/ioos/lib/python3.6/site-packages/IPython/core/display.py:717: UserWarning: Consider using IPython.display.IFrame instead
-  warnings.warn(&quot;Consider using IPython.display.IFrame instead&quot;)
-</pre></div>
-</div>
 <div class="output text_html"><iframe src="https://thredds.cencoos.org/thredds/catalog.html?dataset=G1_SST_US_WEST_COAST" width="800" height="550" style="border:none;"></iframe></div></div>
 </div>
 <p>To finish the post let’s check if there is any WMS service available and overlay the data in a slippy (interactive) map.</p>
@@ -764,7 +783,7 @@ Ocean Surface Currents Monthly Averaged - CORDC High-Frequency Radar (US West Co
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;siphon.catalog.SimpleService at 0x7fc971535d30&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;siphon.catalog.SimpleService at 0x7fd651b720f0&gt;]
 </pre></div>
 </div>
 </div>
@@ -834,19 +853,7 @@ That is to save time because parsing the URL <a class="reference external" href=
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">15</span><span class="o">-</span><span class="n">d712acf9f8d6</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">folium</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> 
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="p">[</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">],</span> <span class="n">zoom_start</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> 
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">folium</span><span class="o">.</span><span class="n">WmsTileLayer</span><span class="p">(</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;folium&#39;
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><iframe src="data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+CjxoZWFkPiAgICAKICAgIDxtZXRhIGh0dHAtZXF1aXY9ImNvbnRlbnQtdHlwZSIgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PVVURi04IiAvPgogICAgPHNjcmlwdD5MX1BSRUZFUl9DQU5WQVMgPSBmYWxzZTsgTF9OT19UT1VDSCA9IGZhbHNlOyBMX0RJU0FCTEVfM0QgPSBmYWxzZTs8L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2xlYWZsZXRAMS4yLjAvZGlzdC9sZWFmbGV0LmpzIj48L3NjcmlwdD4KICAgIDxzY3JpcHQgc3JjPSJodHRwczovL2FqYXguZ29vZ2xlYXBpcy5jb20vYWpheC9saWJzL2pxdWVyeS8xLjExLjEvanF1ZXJ5Lm1pbi5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvMy4yLjAvanMvYm9vdHN0cmFwLm1pbi5qcyI+PC9zY3JpcHQ+CiAgICA8c2NyaXB0IHNyYz0iaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvTGVhZmxldC5hd2Vzb21lLW1hcmtlcnMvMi4wLjIvbGVhZmxldC5hd2Vzb21lLW1hcmtlcnMuanMiPjwvc2NyaXB0PgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2xlYWZsZXRAMS4yLjAvZGlzdC9sZWFmbGV0LmNzcyIgLz4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9tYXhjZG4uYm9vdHN0cmFwY2RuLmNvbS9ib290c3RyYXAvMy4yLjAvY3NzL2Jvb3RzdHJhcC5taW4uY3NzIiAvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL21heGNkbi5ib290c3RyYXBjZG4uY29tL2Jvb3RzdHJhcC8zLjIuMC9jc3MvYm9vdHN0cmFwLXRoZW1lLm1pbi5jc3MiIC8+CiAgICA8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Imh0dHBzOi8vbWF4Y2RuLmJvb3RzdHJhcGNkbi5jb20vZm9udC1hd2Vzb21lLzQuNi4zL2Nzcy9mb250LWF3ZXNvbWUubWluLmNzcyIgLz4KICAgIDxsaW5rIHJlbD0ic3R5bGVzaGVldCIgaHJlZj0iaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvTGVhZmxldC5hd2Vzb21lLW1hcmtlcnMvMi4wLjIvbGVhZmxldC5hd2Vzb21lLW1hcmtlcnMuY3NzIiAvPgogICAgPGxpbmsgcmVsPSJzdHlsZXNoZWV0IiBocmVmPSJodHRwczovL3Jhd2dpdC5jb20vcHl0aG9uLXZpc3VhbGl6YXRpb24vZm9saXVtL21hc3Rlci9mb2xpdW0vdGVtcGxhdGVzL2xlYWZsZXQuYXdlc29tZS5yb3RhdGUuY3NzIiAvPgogICAgPHN0eWxlPmh0bWwsIGJvZHkge3dpZHRoOiAxMDAlO2hlaWdodDogMTAwJTttYXJnaW46IDA7cGFkZGluZzogMDt9PC9zdHlsZT4KICAgIDxzdHlsZT4jbWFwIHtwb3NpdGlvbjphYnNvbHV0ZTt0b3A6MDtib3R0b206MDtyaWdodDowO2xlZnQ6MDt9PC9zdHlsZT4KICAgIAogICAgICAgICAgICA8c3R5bGU+ICNtYXBfMzg5MWU3NDVlY2EyNDM2NzljMzgyODQwMGU0YTBkODkgewogICAgICAgICAgICAgICAgcG9zaXRpb24gOiByZWxhdGl2ZTsKICAgICAgICAgICAgICAgIHdpZHRoIDogMTAwLjAlOwogICAgICAgICAgICAgICAgaGVpZ2h0OiAxMDAuMCU7CiAgICAgICAgICAgICAgICBsZWZ0OiAwLjAlOwogICAgICAgICAgICAgICAgdG9wOiAwLjAlOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICA8L3N0eWxlPgogICAgICAgIAo8L2hlYWQ+Cjxib2R5PiAgICAKICAgIAogICAgICAgICAgICA8ZGl2IGNsYXNzPSJmb2xpdW0tbWFwIiBpZD0ibWFwXzM4OTFlNzQ1ZWNhMjQzNjc5YzM4Mjg0MDBlNGEwZDg5IiA+PC9kaXY+CiAgICAgICAgCjwvYm9keT4KPHNjcmlwdD4gICAgCiAgICAKCiAgICAgICAgICAgIAogICAgICAgICAgICAgICAgdmFyIGJvdW5kcyA9IG51bGw7CiAgICAgICAgICAgIAoKICAgICAgICAgICAgdmFyIG1hcF8zODkxZTc0NWVjYTI0MzY3OWMzODI4NDAwZTRhMGQ4OSA9IEwubWFwKAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJ21hcF8zODkxZTc0NWVjYTI0MzY3OWMzODI4NDAwZTRhMGQ4OScsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB7Y2VudGVyOiBbMzkuNSwtMTIyLjVdLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgem9vbTogNCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIG1heEJvdW5kczogYm91bmRzLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbGF5ZXJzOiBbXSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdvcmxkQ29weUp1bXA6IGZhbHNlLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY3JzOiBMLkNSUy5FUFNHMzg1NwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB9KTsKICAgICAgICAgICAgCiAgICAgICAgCiAgICAKICAgICAgICAgICAgdmFyIHRpbGVfbGF5ZXJfNTRkMmU3YTQ0ODMzNGMxY2FjMjQ2M2UwNjI5MzJlMTMgPSBMLnRpbGVMYXllcigKICAgICAgICAgICAgICAgICdodHRwczovL3tzfS50aWxlLm9wZW5zdHJlZXRtYXAub3JnL3t6fS97eH0ve3l9LnBuZycsCiAgICAgICAgICAgICAgICB7CiAgImF0dHJpYnV0aW9uIjogbnVsbCwKICAiZGV0ZWN0UmV0aW5hIjogZmFsc2UsCiAgIm1heFpvb20iOiAxOCwKICAibWluWm9vbSI6IDEsCiAgIm5vV3JhcCI6IGZhbHNlLAogICJzdWJkb21haW5zIjogImFiYyIKfQogICAgICAgICAgICAgICAgKS5hZGRUbyhtYXBfMzg5MWU3NDVlY2EyNDM2NzljMzgyODQwMGU0YTBkODkpOwogICAgICAgIAogICAgCiAgICAgICAgICAgIHZhciBtYWNyb19lbGVtZW50XzMwYjI1Mzk2NTczNzQ2NzQ4YWFjNGEwYWY0NmUwODI0ID0gTC50aWxlTGF5ZXIud21zKAogICAgICAgICAgICAgICAgJ2h0dHBzOi8vZGF0YS5heGRzLmNvL25jV01TL3dtcycsCiAgICAgICAgICAgICAgICB7CiAgImF0dHJpYnV0aW9uIjogIiIsCiAgImNycyI6IG51bGwsCiAgImZvcm1hdCI6ICJpbWFnZS9wbmciLAogICJsYXllcnMiOiAiRzFfU1NUX1VTX1dFU1RfQ09BU1QvYW5hbHlzZWRfc3N0IiwKICAic3R5bGVzIjogIiIsCiAgInRyYW5zcGFyZW50IjogdHJ1ZSwKICAidXBwZXJjYXNlIjogZmFsc2UsCiAgInZlcnNpb24iOiAiMS4xLjEiCn0KICAgICAgICAgICAgICAgICkuYWRkVG8obWFwXzM4OTFlNzQ1ZWNhMjQzNjc5YzM4Mjg0MDBlNGEwZDg5KTsKCiAgICAgICAgCiAgICAKICAgICAgICAgICAgdmFyIGxheWVyX2NvbnRyb2xfMDFiNWY5MzI5ZDlmNDU4MWIxZGJlMjg0M2E2ZDU4YzIgPSB7CiAgICAgICAgICAgICAgICBiYXNlX2xheWVycyA6IHsgIm9wZW5zdHJlZXRtYXAiIDogdGlsZV9sYXllcl81NGQyZTdhNDQ4MzM0YzFjYWMyNDYzZTA2MjkzMmUxMywgfSwKICAgICAgICAgICAgICAgIG92ZXJsYXlzIDogeyAiU2VhIFN1cmZhY2UgVGVtcGVyYXR1cmUgYXQgdW5kZWZpbmVkIiA6IG1hY3JvX2VsZW1lbnRfMzBiMjUzOTY1NzM3NDY3NDhhYWM0YTBhZjQ2ZTA4MjQsIH0KICAgICAgICAgICAgICAgIH07CiAgICAgICAgICAgIEwuY29udHJvbC5sYXllcnMoCiAgICAgICAgICAgICAgICBsYXllcl9jb250cm9sXzAxYjVmOTMyOWQ5ZjQ1ODFiMWRiZTI4NDNhNmQ1OGMyLmJhc2VfbGF5ZXJzLAogICAgICAgICAgICAgICAgbGF5ZXJfY29udHJvbF8wMWI1ZjkzMjlkOWY0NTgxYjFkYmUyODQzYTZkNThjMi5vdmVybGF5cywKICAgICAgICAgICAgICAgIHtwb3NpdGlvbjogJ3RvcHJpZ2h0JywKICAgICAgICAgICAgICAgICBjb2xsYXBzZWQ6IHRydWUsCiAgICAgICAgICAgICAgICAgYXV0b1pJbmRleDogdHJ1ZQogICAgICAgICAgICAgICAgfSkuYWRkVG8obWFwXzM4OTFlNzQ1ZWNhMjQzNjc5YzM4Mjg0MDBlNGEwZDg5KTsKICAgICAgICAKPC9zY3JpcHQ+" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div></div></div>
 </div>
 <p>Last but not least a static image for the page thumbnail.</p>
 <div class="cell docutils container">

@@ -26,7 +26,7 @@
 
     
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.css" />
@@ -87,14 +87,7 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../intro.html">
-   IOOS Data Demo Center
-  </a>
- </li>
-</ul>
-<p class="caption collapsible-parent">
+    <p class="caption collapsible-parent">
  <span class="caption-text">
   Code Gallery
  </span>
@@ -156,7 +149,7 @@
  </li>
  <li class="toctree-l1 collapsible-parent">
   <a class="reference internal" href="../data_analysis_and_visualization/data_analysis_and_visualization.html">
-   Data Analysis And Visualization Notebooks
+   Data Analysis And Visualization
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
@@ -261,6 +254,46 @@
    <li class="toctree-l2">
     <a class="reference internal" href="2017-11-01-Creating-Archives-Using-Bagit.html">
      Using BagIt to tag oceanographic data
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../R_Matlab_Notebooks/R_Matlab_Notebooks.html">
+   R Notebooks
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-01-23-R-notebook.html">
+     Quick demonstration of R-notebooks using the r-oce library
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-03-30-octave_notebook_example.html">
+     A Matlab notebook primer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-08-01-xtractoR.html">
+     Using the
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       xtractomatic
+      </span>
+     </code>
+     R package to track Pacific Blue Marlin
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2018-02-20-obis.html">
+     Using r-obistools and r-obis to explore the OBIS database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../R_Matlab_Notebooks/2017-11-30-rerddap.html">
+     Calling R libraries from Python
     </a>
    </li>
   </ul>
@@ -616,10 +649,7 @@ The filter used here constraints the search on a certain geographical region (bo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 83 records.
-
-[urn:ioos:station:NOAA.NOS.CO-OPS:9440910 station, Toke Point, WA]
-opendap.co-ops.nos.noaa.gov-urn_ioos_station_NOAA.NOS.CO-OPS_9440910
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 82 records.
 
 [urn:ioos:station:NOAA.NOS.CO-OPS:9441102 station, Westport, WA]
 opendap.co-ops.nos.noaa.gov-urn_ioos_station_NOAA.NOS.CO-OPS_9441102
@@ -646,16 +676,16 @@ ce_319-20170410T2034
 org.oceanobservatories:ce_319-20170410T2034_f070_8f49_1646
 
 [ce_319-20170410T2034-delayed]
-org.oceanobservatories:ce_319-20170410T2034-delayed_f070_8f49_1646
-
-[ce_319-20170410T2034-delayed]
 ce_319-20170410T2034-delayed
 
-[ce_320-20170410T1745]
-ce_320-20170410T1745
+[ce_319-20170410T2034-delayed]
+org.oceanobservatories:ce_319-20170410T2034-delayed_f070_8f49_1646
 
 [ce_320-20170410T1745]
 org.oceanobservatories:ce_320-20170410T1745_f070_8f49_1646
+
+[ce_320-20170410T1745]
+ce_320-20170410T1745
 
 [ce_320-20170410T1745-delayed]
 org.oceanobservatories:ce_320-20170410T1745-delayed_f070_8f49_1646
@@ -676,31 +706,31 @@ org.oceanobservatories:ce_382-20170410T2230_f070_8f49_1646
 ce_382-20170410T2230
 
 [ce_382-20170410T2230-delayed]
-org.oceanobservatories:ce_382-20170410T2230-delayed_f070_8f49_1646
-
-[ce_382-20170410T2230-delayed]
 ce_382-20170410T2230-delayed
 
-[ce_383-20170131T1942]
-ce_383-20170131T1942
+[ce_382-20170410T2230-delayed]
+org.oceanobservatories:ce_382-20170410T2230-delayed_f070_8f49_1646
 
 [ce_383-20170131T1942]
 org.oceanobservatories:ce_383-20170131T1942_f070_8f49_1646
 
-[ce_383-20170131T1942-delayed]
-ce_383-20170131T1942-delayed
+[ce_383-20170131T1942]
+ce_383-20170131T1942
 
-[ce_384-20170420T0137]
-org.oceanobservatories:ce_384-20170420T0137_f070_8f49_1646
+[ce_383-20170131T1942-delayed]
+org.oceanobservatories:ce_383-20170131T1942-delayed_f070_8f49_1646
 
 [ce_384-20170420T0137]
 ce_384-20170420T0137
 
-[ce_384-20170420T0137-delayed]
-org.oceanobservatories:ce_384-20170420T0137-delayed_f070_8f49_1646
+[ce_384-20170420T0137]
+org.oceanobservatories:ce_384-20170420T0137_f070_8f49_1646
 
 [ce_384-20170420T0137-delayed]
 ce_384-20170420T0137-delayed
+
+[ce_384-20170420T0137-delayed]
+org.oceanobservatories:ce_384-20170420T0137-delayed_f070_8f49_1646
 
 [Cha&#39;Ba La Push]
 sdf.ndbc.noaa.gov-urn_ioos_station_wmo_46119
@@ -831,14 +861,11 @@ data.nanoos.org-urn_ioos_station_nanoos_osu_nh10
 [Reedsport, OR (232)]
 sdf.ndbc.noaa.gov-urn_ioos_station_wmo_46261
 
-[ROMS Real Time Nowcasting]
-roms_ncst
-
 [SATURN Estuary Station #03]
 sdf.ndbc.noaa.gov-urn_ioos_station_wmo_seto3
 
-[SATURN Estuary Station #07, Baker Bay, WA]
-sdf.ndbc.noaa.gov-urn_ioos_station_wmo_46116
+[SATURN Estuary Station #04 at Mott Basin]
+sdf.ndbc.noaa.gov-urn_ioos_station_wmo_sefo3
 
 [STONEWALL BANK - 20NM West of Newport, OR]
 sdf.ndbc.noaa.gov-urn_ioos_station_wmo_46050
@@ -866,6 +893,9 @@ opendap.co-ops.nos.noaa.gov-urn_ioos_station_NOAA.NOS.CO-OPS_9437540
 
 [urn:ioos:station:NOAA.NOS.CO-OPS:9439040 station, Astoria, OR]
 opendap.co-ops.nos.noaa.gov-urn_ioos_station_NOAA.NOS.CO-OPS_9439040
+
+[urn:ioos:station:NOAA.NOS.CO-OPS:9440581 station, Cape Disappointment, WA]
+opendap.co-ops.nos.noaa.gov-urn_ioos_station_NOAA.NOS.CO-OPS_9440581
 </pre></div>
 </div>
 </div>
@@ -951,16 +981,16 @@ ce_319-20170410T2034
 org.oceanobservatories:ce_319-20170410T2034_f070_8f49_1646
 
 [ce_319-20170410T2034-delayed]
-org.oceanobservatories:ce_319-20170410T2034-delayed_f070_8f49_1646
-
-[ce_319-20170410T2034-delayed]
 ce_319-20170410T2034-delayed
 
-[ce_320-20170410T1745]
-ce_320-20170410T1745
+[ce_319-20170410T2034-delayed]
+org.oceanobservatories:ce_319-20170410T2034-delayed_f070_8f49_1646
 
 [ce_320-20170410T1745]
 org.oceanobservatories:ce_320-20170410T1745_f070_8f49_1646
+
+[ce_320-20170410T1745]
+ce_320-20170410T1745
 
 [ce_320-20170410T1745-delayed]
 ce_320-20170410T1745-delayed
@@ -969,28 +999,28 @@ ce_320-20170410T1745-delayed
 org.oceanobservatories:ce_320-20170410T1745-delayed_f070_8f49_1646
 
 [ce_382-20160410T2230]
-org.oceanobservatories:ce_382-20160410T2230_f070_8f49_1646
-
-[ce_382-20160410T2230]
 ce_382-20160410T2230
 
-[ce_382-20170410T2230]
-org.oceanobservatories:ce_382-20170410T2230_f070_8f49_1646
+[ce_382-20160410T2230]
+org.oceanobservatories:ce_382-20160410T2230_f070_8f49_1646
 
 [ce_382-20170410T2230]
 ce_382-20170410T2230
 
-[ce_382-20170410T2230-delayed]
-org.oceanobservatories:ce_382-20170410T2230-delayed_f070_8f49_1646
+[ce_382-20170410T2230]
+org.oceanobservatories:ce_382-20170410T2230_f070_8f49_1646
 
 [ce_382-20170410T2230-delayed]
 ce_382-20170410T2230-delayed
 
-[ce_383-20170131T1942]
-ce_383-20170131T1942
+[ce_382-20170410T2230-delayed]
+org.oceanobservatories:ce_382-20170410T2230-delayed_f070_8f49_1646
 
 [ce_383-20170131T1942]
 org.oceanobservatories:ce_383-20170131T1942_f070_8f49_1646
+
+[ce_383-20170131T1942]
+ce_383-20170131T1942
 
 [ce_384-20170420T0137]
 ce_384-20170420T0137
@@ -1237,16 +1267,57 @@ climatologyMeteorologyAtmosphere
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">5</span><span class="n">c02a003aeab</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">geolinks</span> <span class="kn">import</span> <span class="n">sniff_link</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> 
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;geolink: </span><span class="si">{geolink}</span><span class="se">\n</span><span class="s2">scheme: </span><span class="si">{scheme}</span><span class="se">\n</span><span class="s2">URL: </span><span class="si">{url}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">references</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">(</span><span class="n">geolink</span><span class="o">=</span><span class="n">sniff_link</span><span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]),</span> <span class="o">**</span><span class="n">ref</span><span class="p">))</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>geolink: OGC:SOS
+scheme: OGC:SOS:DescribeSensor
+URL: https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?procedure=urn:ioos:station:NOAA.NOS.CO-OPS:9442396&amp;version=1.0.0&amp;service=SOS&amp;outputFormat=text/xml; subtype=&quot;sensorML/1.0.1/profiles/ioos_sos/1.0&quot;&amp;request=DescribeSensor
 
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;geolinks&#39;
+geolink: OGC:SOS
+scheme: WWW:LINK - text/csv
+URL: http://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?observedProperty=http://mmisw.org/ont/cf/parameter/air_pressure&amp;service=SOS&amp;responseFormat=text/csv&amp;request=GetObservation&amp;offering=urn:ioos:station:NOAA.NOS.CO-OPS:9442396&amp;eventTime=2020-07-13T15:13:35/2020-07-13T17:13:35&amp;version=1.0.0
+
+geolink: OGC:SOS
+scheme: WWW:LINK - text/csv
+URL: http://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?observedProperty=http://mmisw.org/ont/cf/parameter/air_temperature&amp;service=SOS&amp;responseFormat=text/csv&amp;request=GetObservation&amp;offering=urn:ioos:station:NOAA.NOS.CO-OPS:9442396&amp;eventTime=2020-07-13T15:13:35/2020-07-13T17:13:35&amp;version=1.0.0
+
+geolink: OGC:SOS
+scheme: WWW:LINK - text/csv
+URL: http://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?observedProperty=http://mmisw.org/ont/cf/parameter/sea_surface_height_amplitude_due_to_equilibrium_ocean_tide&amp;service=SOS&amp;responseFormat=text/csv&amp;request=GetObservation&amp;offering=urn:ioos:station:NOAA.NOS.CO-OPS:9442396&amp;eventTime=2020-07-13T15:13:35/2020-07-13T17:13:35&amp;version=1.0.0
+
+geolink: OGC:SOS
+scheme: WWW:LINK - text/csv
+URL: http://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?observedProperty=http://mmisw.org/ont/cf/parameter/sea_water_temperature&amp;service=SOS&amp;responseFormat=text/csv&amp;request=GetObservation&amp;offering=urn:ioos:station:NOAA.NOS.CO-OPS:9442396&amp;eventTime=2020-07-13T15:13:35/2020-07-13T17:13:35&amp;version=1.0.0
+
+geolink: OGC:SOS
+scheme: WWW:LINK - text/csv
+URL: http://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?observedProperty=http://mmisw.org/ont/cf/parameter/water_surface_height_above_reference_datum&amp;service=SOS&amp;responseFormat=text/csv&amp;request=GetObservation&amp;offering=urn:ioos:station:NOAA.NOS.CO-OPS:9442396&amp;eventTime=2020-07-13T15:13:35/2020-07-13T17:13:35&amp;version=1.0.0
+
+geolink: OGC:SOS
+scheme: WWW:LINK - text/csv
+URL: http://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?observedProperty=http://mmisw.org/ont/cf/parameter/wind_from_direction&amp;service=SOS&amp;responseFormat=text/csv&amp;request=GetObservation&amp;offering=urn:ioos:station:NOAA.NOS.CO-OPS:9442396&amp;eventTime=2020-07-13T15:13:35/2020-07-13T17:13:35&amp;version=1.0.0
+
+geolink: OGC:SOS
+scheme: WWW:LINK - text/csv
+URL: http://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?observedProperty=http://mmisw.org/ont/cf/parameter/wind_speed&amp;service=SOS&amp;responseFormat=text/csv&amp;request=GetObservation&amp;offering=urn:ioos:station:NOAA.NOS.CO-OPS:9442396&amp;eventTime=2020-07-13T15:13:35/2020-07-13T17:13:35&amp;version=1.0.0
+
+geolink: OGC:SOS
+scheme: WWW:LINK - text/csv
+URL: http://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?observedProperty=http://mmisw.org/ont/cf/parameter/wind_speed_of_gust&amp;service=SOS&amp;responseFormat=text/csv&amp;request=GetObservation&amp;offering=urn:ioos:station:NOAA.NOS.CO-OPS:9442396&amp;eventTime=2020-07-13T15:13:35/2020-07-13T17:13:35&amp;version=1.0.0
+
+geolink: OPeNDAP:OPeNDAP
+scheme: WWW:LINK
+URL: https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/images/tide_gauge.jpg
+
+geolink: None
+scheme: WWW:LINK
+URL: https://tidesandcurrents.noaa.gov/publications/NOAA_Technical_Report_NOS_CO-OPS_030_QC_requirements_doc(revised)-11102004.pdf
+
+geolink: None
+scheme: WWW:LINK
+URL: https://tidesandcurrents.noaa.gov/stationhome.html?id=9442396
+
+geolink: OGC:SOS
+scheme: OGC:SOS
+URL: http://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?request=GetCapabilities&amp;service=SOS&amp;acceptVersions=1.0.0
 </pre></div>
 </div>
 </div>
