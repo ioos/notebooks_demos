@@ -1,8 +1,14 @@
-# Plotting Glider data with Python tools
+#!/usr/bin/env python
+# coding: utf-8
 
-In this notebook we demonstrate how to obtain and plot glider data using iris and cartopy. We will explore data from the Rutgers University RU29 [Challenger](http://challenger.marine.rutgers.edu) glider that was launched from Ubatuba, Brazil on June 23, 2015 to travel across the Atlantic Ocean. After 282 days at sea, the Challenger was picked up off the coast of South Africa, on March 31, 2016. For more information on this ground breaking excusion see: [https://marine.rutgers.edu/main/announcements/the-challenger-glider-mission-south-atlantic-mission-complete](https://marine.rutgers.edu/main/announcements/the-challenger-glider-mission-south-atlantic-mission-complete)
+# # Plotting Glider data with Python tools
+# 
+# In this notebook we demonstrate how to obtain and plot glider data using iris and cartopy. We will explore data from the Rutgers University RU29 [Challenger](http://challenger.marine.rutgers.edu) glider that was launched from Ubatuba, Brazil on June 23, 2015 to travel across the Atlantic Ocean. After 282 days at sea, the Challenger was picked up off the coast of South Africa, on March 31, 2016. For more information on this ground breaking excusion see: [https://marine.rutgers.edu/main/announcements/the-challenger-glider-mission-south-atlantic-mission-complete](https://marine.rutgers.edu/main/announcements/the-challenger-glider-mission-south-atlantic-mission-complete)
+# 
+# Data collected from this glider mission are available on the IOOS Glider DAC THREDDS via OPeNDAP.
 
-Data collected from this glider mission are available on the IOOS Glider DAC THREDDS via OPeNDAP.
+# In[1]:
+
 
 # See https://github.com/Unidata/netcdf-c/issues/1299 for the explanation of `#fillmismatch`.
 
@@ -10,6 +16,10 @@ url = (
     "https://data.ioos.us/thredds/dodsC/deployments/rutgers/"
     "ru29-20150623T1046/ru29-20150623T1046.nc3.nc#fillmismatch"
 )
+
+
+# In[2]:
+
 
 import iris
 
@@ -19,14 +29,18 @@ glider = iris.load(url)
 
 print(glider)
 
-`Iris` requires the data to adhere strictly to the `CF-1.6` data model.
-That is why we see all those warnings about `Missing CF-netCDF ancillary data variable`.
- Note that if the data is not CF at all `iris` will refuse to load it!
 
-The other hand, the advantage of following the `CF-1.6` conventions,
-is that the `iris` cube has the proper metadata is attached it.
-We do not need to extract the coordinates or any other information separately .
-All we need to do is to request the phenomena we want, in this case `sea_water_density`, `sea_water_temperature` and `sea_water_salinity`.
+# `Iris` requires the data to adhere strictly to the `CF-1.6` data model.
+# That is why we see all those warnings about `Missing CF-netCDF ancillary data variable`.
+#  Note that if the data is not CF at all `iris` will refuse to load it!
+# 
+# The other hand, the advantage of following the `CF-1.6` conventions,
+# is that the `iris` cube has the proper metadata is attached it.
+# We do not need to extract the coordinates or any other information separately .
+# All we need to do is to request the phenomena we want, in this case `sea_water_density`, `sea_water_temperature` and `sea_water_salinity`.
+
+# In[3]:
+
 
 temp = glider.extract_strict("sea_water_temperature")
 salt = glider.extract_strict("sea_water_salinity")
@@ -34,7 +48,11 @@ dens = glider.extract_strict("sea_water_density")
 
 print(temp)
 
-Glider data is not something trivial to visualize. The very first thing to do is to plot the glider track to check its path.
+
+# Glider data is not something trivial to visualize. The very first thing to do is to plot the glider track to check its path.
+
+# In[4]:
+
 
 import numpy.ma as ma
 
@@ -54,6 +72,10 @@ t = t.units.num2date(t.points.squeeze())
 
 location = y.mean(), x.mean()  # Track center.
 locations = list(zip(y, x))  # Track points.
+
+
+# In[5]:
+
 
 import folium
 
@@ -77,14 +99,22 @@ line = folium.PolyLine(
 
 m
 
-One might be interested in a the individual profiles of each dive. Lets extract the deepest dive and plot it.
+
+# One might be interested in a the individual profiles of each dive. Lets extract the deepest dive and plot it.
+
+# In[6]:
+
 
 import numpy as np
 
 # Find the deepest profile.
 idx = np.nonzero(~T[:, -1].mask)[0][0]
 
-%matplotlib inline
+
+# In[7]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 import matplotlib.pyplot as plt
 
 ncols = 3
@@ -119,7 +149,11 @@ ax2.xaxis.set_label_position("top")
 
 ax0.invert_yaxis()
 
-We can also visualize the whole track as a cross-section.
+
+# We can also visualize the whole track as a cross-section.
+
+# In[8]:
+
 
 import numpy as np
 import seawater as sw
@@ -157,6 +191,10 @@ def plot_glider(
     ax.set_ylabel("Depth (m)")
     return fig, ax, cbar
 
+
+# In[9]:
+
+
 from palettable import cmocean
 
 haline = cmocean.sequential.Haline_20.mpl_colormap
@@ -181,9 +219,10 @@ ax.set_title("Density")
 
 print("Data collected from {} to {}".format(t[0], t[-1]))
 
-Glider cross-section also very be useful but we need to be careful when interpreting those due to the many turns the glider took,
-and the time it took to complete the track.
 
-Note that the `x-axis` can be either time or distance. Note that this particular track took ~281 days to complete!
-
-For those interested into more fancy ways to plot glider data check [@lukecampbell's](https://github.com/lukecampbell) [profile_plots.py](https://github.com/ioos/glider-dac-status/blob/master/status/profile_plots.py) script.
+# Glider cross-section also very be useful but we need to be careful when interpreting those due to the many turns the glider took,
+# and the time it took to complete the track.
+# 
+# Note that the `x-axis` can be either time or distance. Note that this particular track took ~281 days to complete!
+# 
+# For those interested into more fancy ways to plot glider data check [@lukecampbell's](https://github.com/lukecampbell) [profile_plots.py](https://github.com/ioos/glider-dac-status/blob/master/status/profile_plots.py) script.

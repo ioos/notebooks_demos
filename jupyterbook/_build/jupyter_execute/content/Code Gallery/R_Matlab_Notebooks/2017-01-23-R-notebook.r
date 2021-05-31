@@ -1,22 +1,5 @@
-# Quick demonstration of R-notebooks using the r-oce library
-
-The IOOS notebook
-[environment](https://github.com/ioos/notebooks_demos/blob/229dabe0e7dd207814b9cfb96e024d3138f19abf/environment.yml#L73-L76)
-installs the `R` language and the `Jupyter` kernel needed to run `R` notebooks.
-Conda can also install extra `R` packages,
-and those packages that are unavailable in `conda` can be installed directly from CRAN with `install.packages(pkg_name)`.
-
-You can start `jupyter` from any other environment and change the kernel later using the drop-down menu.
-(Check the `R` logo at the top right to ensure you are in the `R` jupyter kernel.)
-
-In this simple example we will use two libraries aimed at the oceanography community written in `R`: [`r-gsw`](https://cran.r-project.org/web/packages/gsw/index.html) and [`r-oce`](http://dankelley.github.io/oce/).
-
-(The original post for the examples below can be found author's blog: [http://dankelley.github.io/blog/](http://dankelley.github.io/blog/))
-
 library(gsw)
 library(oce)
-
-Example 1: calculating the day length.
 
 daylength <- function(t, lon=-38.5, lat=-13)
 {
@@ -43,8 +26,6 @@ plot(t[-1], diff(dayLength), type='o', pch=20,
      xlab="Day in 2017", ylab="Seconds gained per day")
 grid()
 
-Example 2: least-square fit.
-
 x <- 1:100
 y <- 1 + x/100 + sin(x/5)
 yn <- y + rnorm(100, sd=0.1)
@@ -65,8 +46,6 @@ plot(ctd, which = "N2")
 lines(N2, -z, col = "blue")
 legend("bottomright", lwd = 2, col = c("brown", "blue"), legend = c("spline", 
     "runlm"), bg = "white")
-
-Example 3: T-S diagram.
 
 # Alter next three lines as desired; a and b are watermasses.
 Sa <- 30
@@ -93,8 +72,6 @@ legend("topleft",
        legend=sprintf("Sa=%.1f, Ta=%.1f, Sb=%.1f  ->  Tb=%.1f, drho=%.2f, dT=%.2f",
                       Sa, Ta, Sb, Tb, drho, dT),
        bg="white")
-
-Example 4: find the halocline depth.
 
 findHalocline <- function(ctd, deltap=5, plot=TRUE)
 {

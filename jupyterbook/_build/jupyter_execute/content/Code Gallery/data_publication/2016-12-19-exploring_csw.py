@@ -1,10 +1,16 @@
-# How to search the IOOS CSW catalog with Python tools
+#!/usr/bin/env python
+# coding: utf-8
 
+# # How to search the IOOS CSW catalog with Python tools
+# 
+# 
+# This notebook demonstrates a how to query the IOOS Catalog [Catalog Service for the Web (CSW)](https://en.wikipedia.org/wiki/Catalog_Service_for_the_Web), parse resulting records to obtain web data service endpoints, and retrieve data from these service endpoints.
+# 
+# Let's start by creating the search filters.
+# The filter used here constraints the search on a certain geographical region (bounding box), a time span (last week), and some [CF](http://cfconventions.org/Data/cf-standard-names/37/build/cf-standard-name-table.html) variable standard names that represent sea surface temperature.
 
-This notebook demonstrates a how to query the IOOS Catalog [Catalog Service for the Web (CSW)](https://en.wikipedia.org/wiki/Catalog_Service_for_the_Web), parse resulting records to obtain web data service endpoints, and retrieve data from these service endpoints.
+# In[1]:
 
-Let's start by creating the search filters.
-The filter used here constraints the search on a certain geographical region (bounding box), a time span (last week), and some [CF](http://cfconventions.org/Data/cf-standard-names/37/build/cf-standard-name-table.html) variable standard names that represent sea surface temperature.
 
 from datetime import datetime
 
@@ -30,11 +36,15 @@ cf_names = [
     "pseudo_equivalent_potential_temperature",
 ]
 
-With these 3 elements it is possible to assemble a [OGC Filter Encoding (FE)](http://www.opengeospatial.org/standards/filter) using the `owslib.fes`\* module.
 
-\* OWSLib is a Python package for client programming with Open Geospatial Consortium (OGC) web service (hence OWS) interface standards, and their related content models.
+# With these 3 elements it is possible to assemble a [OGC Filter Encoding (FE)](http://www.opengeospatial.org/standards/filter) using the `owslib.fes`\* module.
+# 
+# \* OWSLib is a Python package for client programming with Open Geospatial Consortium (OGC) web service (hence OWS) interface standards, and their related content models.
 
-Although CSW has a built-in feature to find datasets within a specified bounding box, it doesn't have a feature to find datasets within a specified time interval. We therefore create the function `fes_date_filter` below that finds all datasets that have at least part of their data within the specified interval.  So we find all datasets that start before the end of the interval and stop after the beginning of the interval.
+# Although CSW has a built-in feature to find datasets within a specified bounding box, it doesn't have a feature to find datasets within a specified time interval. We therefore create the function `fes_date_filter` below that finds all datasets that have at least part of their data within the specified interval.  So we find all datasets that start before the end of the interval and stop after the beginning of the interval.
+
+# In[2]:
+
 
 from owslib import fes
 
@@ -82,6 +92,10 @@ def fes_date_filter(start, stop, constraint="overlaps"):
         raise NameError("Unrecognized constraint {}".format(constraint))
     return begin, end
 
+
+# In[3]:
+
+
 kw = dict(wildCard="*", escapeChar="\\", singleChar="?", propertyname="apiso:AnyText")
 
 or_filt = fes.Or([fes.PropertyIsLike(literal=("*%s*" % val), **kw) for val in cf_names])
@@ -100,15 +114,23 @@ filter_list = [
     )
 ]
 
+
+# In[4]:
+
+
 from owslib.csw import CatalogueServiceWeb
 
 endpoint = "https://data.ioos.us/csw"
 
 csw = CatalogueServiceWeb(endpoint, timeout=60)
 
-We have created a `csw` object, but nothing has been searched yet.
 
-Below we create a `get_csw_records` function that calls the OSWLib method `getrecords2` iteratively to retrieve all the records matching the search criteria specified by the `filter_list`.
+# We have created a `csw` object, but nothing has been searched yet.
+# 
+# Below we create a `get_csw_records` function that calls the OSWLib method `getrecords2` iteratively to retrieve all the records matching the search criteria specified by the `filter_list`.
+
+# In[5]:
+
 
 def get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000):
     """Iterate `maxrecords`/`pagesize` times until the requested value in
@@ -136,6 +158,10 @@ def get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000):
             break
     csw.records.update(csw_records)
 
+
+# In[6]:
+
+
 get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000)
 
 records = "\n".join(csw.records.keys())
@@ -143,9 +169,13 @@ print("Found {} records.\n".format(len(csw.records.keys())))
 for key, value in list(csw.records.items()):
     print(u"[{}]\n{}\n".format(value.title, key))
 
-That search returned a lot of records!
-What if we are not interested in those model results nor global dataset?
-We can those be excluded  from the search with a `fes.Not` filter.
+
+# That search returned a lot of records!
+# What if we are not interested in those model results nor global dataset?
+# We can those be excluded  from the search with a `fes.Not` filter.
+
+# In[7]:
+
 
 kw = dict(wildCard="*", escapeChar="\\\\", singleChar="?", propertyname="apiso:AnyText")
 
@@ -172,7 +202,11 @@ print("Found {} records.\n".format(len(csw.records.keys())))
 for key, value in list(csw.records.items()):
     print(u"[{}]\n{}\n".format(value.title, key))
 
-Now we got fewer records to deal with. That's better. But if the user is interested in only some specific service, it is better to filter by a string, like [`CO-OPS`](https://tidesandcurrents.noaa.gov/).
+
+# Now we got fewer records to deal with. That's better. But if the user is interested in only some specific service, it is better to filter by a string, like [`CO-OPS`](https://tidesandcurrents.noaa.gov/).
+
+# In[8]:
+
 
 filter_list = [
     fes.And(
@@ -193,8 +227,12 @@ print("Found {} records.\n".format(len(csw.records.keys())))
 for key, value in list(csw.records.items()):
     print("[{}]\n{}\n".format(value.title, key))
 
-The easiest way to get more information is to explorer the individual records.
-Here is the `abstract` and `subjects` from the last station in the list.
+
+# The easiest way to get more information is to explorer the individual records.
+# Here is the `abstract` and `subjects` from the last station in the list.
+
+# In[9]:
+
 
 import textwrap
 
@@ -202,9 +240,17 @@ value = csw.records[key]
 
 print("\n".join(textwrap.wrap(value.abstract)))
 
+
+# In[10]:
+
+
 print("\n".join(value.subjects))
 
-The next step is to inspect the type services/schemes available for downloading the data. The easiest way to accomplish that is with by "sniffing" the URLs with `geolinks`.
+
+# The next step is to inspect the type services/schemes available for downloading the data. The easiest way to accomplish that is with by "sniffing" the URLs with `geolinks`.
+
+# In[11]:
+
 
 from geolinks import sniff_link
 
@@ -212,20 +258,28 @@ msg = "geolink: {geolink}\nscheme: {scheme}\nURL: {url}\n".format
 for ref in value.references:
     print(msg(geolink=sniff_link(ref["url"]), **ref))
 
-There are many direct links to Comma Separated Value (`CSV`) and
-eXtensible Markup Language (`XML`) responses to the various variables available in that station. 
 
-In addition to those links, there are three very interesting links for more information: 1.) the QC document, 2.) the station photo, 3.) the station home page.
+# There are many direct links to Comma Separated Value (`CSV`) and
+# eXtensible Markup Language (`XML`) responses to the various variables available in that station. 
+# 
+# In addition to those links, there are three very interesting links for more information: 1.) the QC document, 2.) the station photo, 3.) the station home page.
+# 
+# 
+# For a detailed description of what those `geolink` results mean check the [lookup](https://github.com/OSGeo/Cat-Interop/blob/master/LinkPropertyLookupTable.csv) table.
 
+# The original search was focused on sea water temperature,
+# so there is the need to extract only the endpoint for that variable.
+# 
+# PS: see also the [pyoos example](http://ioos.github.io/notebooks_demos/notebooks/2016-10-12-fetching_data/) for fetching data from `CO-OPS`.
 
-For a detailed description of what those `geolink` results mean check the [lookup](https://github.com/OSGeo/Cat-Interop/blob/master/LinkPropertyLookupTable.csv) table.
+# In[12]:
 
-The original search was focused on sea water temperature,
-so there is the need to extract only the endpoint for that variable.
-
-PS: see also the [pyoos example](http://ioos.github.io/notebooks_demos/notebooks/2016-10-12-fetching_data/) for fetching data from `CO-OPS`.
 
 start, stop
+
+
+# In[13]:
+
 
 for ref in value.references:
     url = ref["url"]
@@ -233,8 +287,12 @@ for ref in value.references:
         print(msg(geolink=sniff_link(url), **ref))
         break
 
-Note that the URL returned by the service has some hard-coded start/stop dates.
-It is easy to overwrite those with the same dates from the filter.
+
+# Note that the URL returned by the service has some hard-coded start/stop dates.
+# It is easy to overwrite those with the same dates from the filter.
+
+# In[14]:
+
 
 fmt = (
     "https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?"
@@ -248,7 +306,11 @@ fmt = (
 
 url = fmt.format(start, stop)
 
-Finally, it is possible to download the data directly into a data `pandas` data frame and plot it.
+
+# Finally, it is possible to download the data directly into a data `pandas` data frame and plot it.
+
+# In[15]:
+
 
 import io
 
@@ -261,7 +323,11 @@ df = pd.read_csv(
     io.StringIO(r.content.decode("utf-8")), index_col="date_time", parse_dates=True
 )
 
-%matplotlib inline
+
+# In[16]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots(figsize=(11, 2.75))
@@ -269,3 +335,4 @@ ax = df["sea_water_temperature (C)"].plot(ax=ax)
 ax.set_xlabel("")
 ax.set_ylabel(r"Sea water temperature ($^\circ$C)")
 ax.set_title(value.title)
+

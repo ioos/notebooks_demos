@@ -1,23 +1,29 @@
-# IOOS models
+#!/usr/bin/env python
+# coding: utf-8
 
-This is the first post on the series "IOOS Ocean Models IOOS."
+# # IOOS models
+# 
+# This is the first post on the series "IOOS Ocean Models IOOS."
+# 
+# 
+# The IOOS regional associations produces terabytes (petabytes?) of numeric ocean models results.
+# They can be easily found via the catalog, but reading the data is not always trivial.
+# Thanks to standardized metadata and grid specs one read the data and compare different models results.
+# 
+# The first post on this series will deal with model grids.
+# We have many different grid types that conform to known standards,
+# like UGRID and SGRID,
+# and some that may fall into one of those categories but do not have sufficient metadata to be easily identified.
+# 
+# In order to be able to extract them without worrying about the underlying nature of the grids we will use `gridgeo`.
+# [`gridgeo`](https://pyoceans.github.io/gridgeo/) abstracts out the grid parsing to the known standards,
+# and do some heuristics on non-compliant data,
+# to extract a [`GeoJSON`](http://geojson.org/) representation of the grid.
+# 
+# Here is the list of models we will work in this notebook:
 
+# In[1]:
 
-The IOOS regional associations produces terabytes (petabytes?) of numeric ocean models results.
-They can be easily found via the catalog, but reading the data is not always trivial.
-Thanks to standardized metadata and grid specs one read the data and compare different models results.
-
-The first post on this series will deal with model grids.
-We have many different grid types that conform to known standards,
-like UGRID and SGRID,
-and some that may fall into one of those categories but do not have sufficient metadata to be easily identified.
-
-In order to be able to extract them without worrying about the underlying nature of the grids we will use `gridgeo`.
-[`gridgeo`](https://pyoceans.github.io/gridgeo/) abstracts out the grid parsing to the known standards,
-and do some heuristics on non-compliant data,
-to extract a [`GeoJSON`](http://geojson.org/) representation of the grid.
-
-Here is the list of models we will work in this notebook:
 
 models = {
     "DOPPIO": {
@@ -70,13 +76,17 @@ models = {
     },
 }
 
-Some models may have different grids for the different variables.
-According to the Climate and Forecast standards we need to check the grid for a phenomena (variable).
 
-Below we loop over the models URLs, load the `netCDF4-python` object,
-and feed it to `GridGeo` checking the variable associated with temperature.
+# Some models may have different grids for the different variables.
+# According to the Climate and Forecast standards we need to check the grid for a phenomena (variable).
+# 
+# Below we loop over the models URLs, load the `netCDF4-python` object,
+# and feed it to `GridGeo` checking the variable associated with temperature.
+# 
+# This step can take a while because we are fetching a lot of data! 
 
-This step can take a while because we are fetching a lot of data! 
+# In[2]:
+
 
 from gridgeo import GridGeo
 from netCDF4 import Dataset
@@ -91,10 +101,14 @@ for model, value in list(models.items()):
     models[model].update({"nc": nc})
     models[model].update({"grid": GridGeo(nc, **value["var"])})
 
-The cell below is a bit boring (and probably unnecessarily complex).
-However, we need those functions to extract grid statistics and to easily plot them.
 
-%matplotlib inline
+# The cell below is a bit boring (and probably unnecessarily complex).
+# However, we need those functions to extract grid statistics and to easily plot them.
+
+# In[3]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
@@ -201,10 +215,14 @@ def to_html(df):
     classes = "table table-striped table-hover table-condensed table-responsive"
     return df.to_html(classes=classes)
 
-Now we can print the grid stats.
-Note that some of the stats may be missing,
-like vertical levels on surface only models,
-or not represent the whole grid like grid spacing on unstructured models.
+
+# Now we can print the grid stats.
+# Note that some of the stats may be missing,
+# like vertical levels on surface only models,
+# or not represent the whole grid like grid spacing on unstructured models.
+
+# In[4]:
+
 
 dfs = []
 for name, model in models.items():
@@ -213,16 +231,24 @@ for name, model in models.items():
 
 pd.concat(dfs, axis=1)
 
-We can also create static images for the full grid.
+
+# We can also create static images for the full grid.
+
+# In[5]:
+
 
 for name, model in models.items():
     fig, ax = plot_grid(model["grid"])
     ax.set_title(f'{name}: {model["grid"].mesh}')
 
-However, because most grids are created in such a high resolution,
-it is quite complicated to create a meaningful visualization even at lower zoom level.
 
-To avoid that issue while still allowing for a quick domain inspection we can plot only the grid outline using `shapely` `outline` and plotting it as a GeoJSON via the `__geo_interface__`. Note that this step can be quite slow for some models due to the high resolution of the mesh.
+# However, because most grids are created in such a high resolution,
+# it is quite complicated to create a meaningful visualization even at lower zoom level.
+# 
+# To avoid that issue while still allowing for a quick domain inspection we can plot only the grid outline using `shapely` `outline` and plotting it as a GeoJSON via the `__geo_interface__`. Note that this step can be quite slow for some models due to the high resolution of the mesh.
+
+# In[6]:
+
 
 import folium
 
@@ -241,6 +267,10 @@ for name, model in list(models.items()):
 folium.LayerControl().add_to(m)
 m.fit_bounds(m.get_bounds())
 
+
+# In[7]:
+
+
 def embed_map(m):
     from IPython.display import HTML
 
@@ -254,3 +284,4 @@ def embed_map(m):
 
 
 embed_map(m)
+

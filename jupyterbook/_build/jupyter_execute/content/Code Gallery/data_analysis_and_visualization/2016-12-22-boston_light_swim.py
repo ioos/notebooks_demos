@@ -1,58 +1,41 @@
-# The Boston Light Swim temperature analysis with Python
+#!/usr/bin/env python
+# coding: utf-8
 
-In the past we demonstrated how to perform a CSW catalog search with [`OWSLib`](https://ioos.github.io/notebooks_demos//notebooks/2016-12-19-exploring_csw),
-and how to obtain near real-time data with [`pyoos`](https://ioos.github.io/notebooks_demos//notebooks/2016-10-12-fetching_data).
-In this notebook we will use both to find all observations and model data around the Boston Harbor to access the sea water temperature.
+# # The Boston Light Swim temperature analysis with Python
+# 
+# In the past we demonstrated how to perform a CSW catalog search with [`OWSLib`](https://ioos.github.io/notebooks_demos//notebooks/2016-12-19-exploring_csw),
+# and how to obtain near real-time data with [`pyoos`](https://ioos.github.io/notebooks_demos//notebooks/2016-10-12-fetching_data).
+# In this notebook we will use both to find all observations and model data around the Boston Harbor to access the sea water temperature.
+# 
+# 
+# This workflow is part of an example to advise swimmers of the annual [Boston lighthouse swim](http://bostonlightswim.org/) of the Boston Harbor water temperature conditions prior to the race. For more information regarding the workflow presented here see [Signell, Richard P.; Fernandes, Filipe; Wilcox, Kyle.   2016. "Dynamic Reusable Workflows for Ocean Science." *J. Mar. Sci. Eng.* 4, no. 4: 68](http://dx.doi.org/10.3390/jmse4040068).
 
+# In[1]:
 
-This workflow is part of an example to advise swimmers of the annual [Boston lighthouse swim](http://bostonlightswim.org/) of the Boston Harbor water temperature conditions prior to the race. For more information regarding the workflow presented here see [Signell, Richard P.; Fernandes, Filipe; Wilcox, Kyle.   2016. "Dynamic Reusable Workflows for Ocean Science." *J. Mar. Sci. Eng.* 4, no. 4: 68](http://dx.doi.org/10.3390/jmse4040068).
 
 import warnings
 
 # Suppresing warnings for a "pretty output."
 warnings.simplefilter("ignore")
 
-This notebook is quite big and complex,
-so to help us keep things organized we'll define a cell with the most important options and switches.
 
-Below we can define the date,
-bounding box, phenomena `SOS` and `CF` names and units,
-and the catalogs we will search.
+# This notebook is quite big and complex,
+# so to help us keep things organized we'll define a cell with the most important options and switches.
+# 
+# Below we can define the date,
+# bounding box, phenomena `SOS` and `CF` names and units,
+# and the catalogs we will search.
 
-%%writefile config.yaml
+# In[2]:
 
-# Specify a YYYY-MM-DD hh:mm:ss date or integer day offset.
-# If both start and stop are offsets they will be computed relative to datetime.today() at midnight.
-# Use the dates commented below to reproduce the last Boston Light Swim event forecast.
-date:
-    start: -5 # 2016-8-16 00:00:00
-    stop: +4 # 2016-8-29 00:00:00
 
-run_name: 'latest'
+get_ipython().run_cell_magic('writefile', 'config.yaml', "\n# Specify a YYYY-MM-DD hh:mm:ss date or integer day offset.\n# If both start and stop are offsets they will be computed relative to datetime.today() at midnight.\n# Use the dates commented below to reproduce the last Boston Light Swim event forecast.\ndate:\n    start: -5 # 2016-8-16 00:00:00\n    stop: +4 # 2016-8-29 00:00:00\n\nrun_name: 'latest'\n\n# Boston harbor.\nregion:\n    bbox: [-71.3, 42.03, -70.57, 42.63]\n    # Try the bounding box below to see how the notebook will behave for a different region.\n    #bbox: [-74.5, 40, -72., 41.5]\n    crs: 'urn:ogc:def:crs:OGC:1.3:CRS84'\n\nsos_name: 'sea_water_temperature'\n\ncf_names:\n    - sea_water_temperature\n    - sea_surface_temperature\n    - sea_water_potential_temperature\n    - equivalent_potential_temperature\n    - sea_water_conservative_temperature\n    - pseudo_equivalent_potential_temperature\n\nunits: 'celsius'\n\ncatalogs:\n    - https://data.ioos.us/csw")
 
-# Boston harbor.
-region:
-    bbox: [-71.3, 42.03, -70.57, 42.63]
-    # Try the bounding box below to see how the notebook will behave for a different region.
-    #bbox: [-74.5, 40, -72., 41.5]
-    crs: 'urn:ogc:def:crs:OGC:1.3:CRS84'
 
-sos_name: 'sea_water_temperature'
+# We'll print some of the search configuration options along the way to keep track of them.
 
-cf_names:
-    - sea_water_temperature
-    - sea_surface_temperature
-    - sea_water_potential_temperature
-    - equivalent_potential_temperature
-    - sea_water_conservative_temperature
-    - pseudo_equivalent_potential_temperature
+# In[3]:
 
-units: 'celsius'
-
-catalogs:
-    - https://data.ioos.us/csw
-
-We'll print some of the search configuration options along the way to keep track of them.
 
 import os
 import shutil
@@ -79,9 +62,13 @@ print(
     "{2:3.2f}, {3:3.2f}".format(*config["region"]["bbox"])
 )
 
-We already created an `OWSLib.fes` filter [before](https://ioos.github.io/notebooks_demos//notebooks/2016-12-19-exploring_csw).
-The main difference here is that we do not want the atmosphere model data,
-so we are filtering out all the `GRIB-2` data format.
+
+# We already created an `OWSLib.fes` filter [before](https://ioos.github.io/notebooks_demos//notebooks/2016-12-19-exploring_csw).
+# The main difference here is that we do not want the atmosphere model data,
+# so we are filtering out all the `GRIB-2` data format.
+
+# In[4]:
+
 
 def make_filter(config):
     from owslib import fes
@@ -105,7 +92,11 @@ def make_filter(config):
 
 filter_list = make_filter(config)
 
-In the cell below we ask the catalog for all the returns that match the filter and have an OPeNDAP endpoint.
+
+# In the cell below we ask the catalog for all the returns that match the filter and have an OPeNDAP endpoint.
+
+# In[5]:
+
 
 from ioos_tools.ioos import get_csw_records, service_urls
 from owslib.csw import CatalogueServiceWeb
@@ -140,12 +131,16 @@ for endpoint in config["catalogs"]:
 # Get only unique endpoints.
 dap_urls = list(set(dap_urls))
 
-We found some models, and observations from NERACOOS there.
-However, we do know that there are some buoys from NDBC and CO-OPS available too.
-Also, those NERACOOS observations seem to be from a [CTD](http://www.neracoos.org/thredds/dodsC/UMO/DSG/SOS/A01/CTD1m/HistoricRealtime/Agg.ncml.html) mounted at 65 meters below the sea surface. Rendering them useless from our purpose.
 
-So let's use the catalog only for the models by filtering the observations with `is_station` below.
-And we'll rely `CO-OPS` and `NDBC` services for the observations.
+# We found some models, and observations from NERACOOS there.
+# However, we do know that there are some buoys from NDBC and CO-OPS available too.
+# Also, those NERACOOS observations seem to be from a [CTD](http://www.neracoos.org/thredds/dodsC/UMO/DSG/SOS/A01/CTD1m/HistoricRealtime/Agg.ncml.html) mounted at 65 meters below the sea surface. Rendering them useless from our purpose.
+# 
+# So let's use the catalog only for the models by filtering the observations with `is_station` below.
+# And we'll rely `CO-OPS` and `NDBC` services for the observations.
+
+# In[6]:
+
 
 from ioos_tools.ioos import is_station
 from timeout_decorator import TimeoutError
@@ -166,7 +161,11 @@ print(fmt(" Filtered DAP "))
 for url in dap_urls:
     print("{}.html".format(url))
 
-Now we can use `pyoos` collectors for `NdbcSos`,
+
+# Now we can use `pyoos` collectors for `NdbcSos`,
+
+# In[7]:
+
 
 from pyoos.collectors.ndbc.ndbc_sos import NdbcSos
 
@@ -181,6 +180,10 @@ ofrs = collector_ndbc.server.offerings
 title = collector_ndbc.server.identification.title
 print(fmt(" NDBC Collector offerings "))
 print("{}: {} offerings".format(title, len(ofrs)))
+
+
+# In[8]:
+
 
 import pandas as pd
 from ioos_tools.ioos import collector2table
@@ -202,7 +205,11 @@ if ndbc:
 table = pd.DataFrame(data).set_index("station_code")
 table
 
-and `CoopsSos`.
+
+# and `CoopsSos`.
+
+# In[9]:
+
 
 from pyoos.collectors.coops.coops_sos import CoopsSos
 
@@ -217,6 +224,10 @@ ofrs = collector_coops.server.offerings
 title = collector_coops.server.identification.title
 print(fmt(" Collector offerings "))
 print("{}: {} offerings".format(title, len(ofrs)))
+
+
+# In[10]:
+
 
 coops = collector2table(
     collector=collector_coops, config=config, col="sea_water_temperature (C)"
@@ -235,10 +246,14 @@ if coops:
 table = pd.DataFrame(data).set_index("station_code")
 table
 
-We will join all the observations into an uniform series, interpolated to 1-hour interval, for the model-data comparison.
 
-This step is necessary because the observations can be 7 or 10 minutes resolution,
-while the models can be 30 to 60 minutes.
+# We will join all the observations into an uniform series, interpolated to 1-hour interval, for the model-data comparison.
+# 
+# This step is necessary because the observations can be 7 or 10 minutes resolution,
+# while the models can be 30 to 60 minutes.
+
+# In[11]:
+
 
 data = ndbc + coops
 
@@ -258,7 +273,11 @@ for series in data:
     obs._metadata = _metadata
     observations.append(obs)
 
-In this next cell we will save the data for quicker access later.
+
+# In this next cell we will save the data for quicker access later.
+
+# In[12]:
+
 
 import iris
 from ioos_tools.tardis import series2cube
@@ -277,13 +296,21 @@ cubes = iris.cube.CubeList([series2cube(obs, attr=attr) for obs in observations]
 outfile = os.path.join(save_dir, "OBS_DATA.nc")
 iris.save(cubes, outfile)
 
-Taking a quick look at the observations:
 
-%matplotlib inline
+# Taking a quick look at the observations:
+
+# In[13]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 ax = pd.concat(data).plot(figsize=(11, 2.25))
 
-Now it is time to loop the models we found above,
+
+# Now it is time to loop the models we found above,
+
+# In[14]:
+
 
 from ioos_tools.ioos import get_model_name
 from ioos_tools.tardis import get_surface, is_model, proc_cube, quick_load_cubes
@@ -317,7 +344,11 @@ for k, url in enumerate(dap_urls):
     ) as e:
         print("Cannot get cube for: {}\n{}".format(url, e))
 
-Next, we will match them with the nearest observed time-series. The `max_dist=0.08` is in degrees, that is roughly 8 kilometers.
+
+# Next, we will match them with the nearest observed time-series. The `max_dist=0.08` is in degrees, that is roughly 8 kilometers.
+
+# In[15]:
+
 
 import iris
 from ioos_tools.tardis import (
@@ -380,9 +411,13 @@ for mod_name, cube in cubes.items():
         del cube
     print("Finished processing [{}]".format(mod_name))
 
-Now it is possible to compute some simple comparison metrics. First we'll calculate the model mean bias:
 
-$$ \text{MB} = \mathbf{\overline{m}} - \mathbf{\overline{o}}$$
+# Now it is possible to compute some simple comparison metrics. First we'll calculate the model mean bias:
+# 
+# $$ \text{MB} = \mathbf{\overline{m}} - \mathbf{\overline{o}}$$
+
+# In[16]:
+
 
 from ioos_tools.ioos import stations_keys
 
@@ -390,6 +425,10 @@ from ioos_tools.ioos import stations_keys
 def rename_cols(df, config):
     cols = stations_keys(config, key="station_name")
     return df.rename(columns=cols)
+
+
+# In[17]:
+
 
 from ioos_tools.ioos import load_ncs
 from ioos_tools.skill_score import apply_skill, mean_bias
@@ -403,10 +442,14 @@ skill_score = dict(mean_bias=df.to_dict())
 df.dropna(how="all", axis=1, inplace=True)
 df = df.applymap("{:.2f}".format).replace("nan", "--")
 
-And the root mean squared rrror of the deviations from the mean:
-$$ \text{CRMS} = \sqrt{\left(\mathbf{m'} - \mathbf{o'}\right)^2}$$
 
-where: $\mathbf{m'} = \mathbf{m} - \mathbf{\overline{m}}$ and $\mathbf{o'} = \mathbf{o} - \mathbf{\overline{o}}$
+# And the root mean squared rrror of the deviations from the mean:
+# $$ \text{CRMS} = \sqrt{\left(\mathbf{m'} - \mathbf{o'}\right)^2}$$
+# 
+# where: $\mathbf{m'} = \mathbf{m} - \mathbf{\overline{m}}$ and $\mathbf{o'} = \mathbf{o} - \mathbf{\overline{o}}$
+
+# In[18]:
+
 
 from ioos_tools.skill_score import rmse
 
@@ -419,7 +462,11 @@ skill_score["rmse"] = df.to_dict()
 df.dropna(how="all", axis=1, inplace=True)
 df = df.applymap("{:.2f}".format).replace("nan", "--")
 
-The next 2 cells make the scores "pretty" for plotting.
+
+# The next 2 cells make the scores "pretty" for plotting.
+
+# In[19]:
+
 
 import pandas as pd
 
@@ -432,6 +479,10 @@ mean_bias = mean_bias.applymap("{:.2f}".format).replace("nan", "--")
 
 skill_score = pd.DataFrame.from_dict(skill_score["rmse"])
 skill_score = skill_score.applymap("{:.2f}".format).replace("nan", "--")
+
+
+# In[20]:
+
 
 import folium
 from ioos_tools.ioos import get_coordinates
@@ -468,13 +519,21 @@ def make_map(bbox, **kw):
         p.add_to(m)
     return m
 
+
+# In[21]:
+
+
 bbox = config["region"]["bbox"]
 
 m = make_map(bbox, zoom_start=11, line=True, layers=True)
 
-The cells from `[20]` to `[25]` create a [`folium`](https://github.com/python-visualization/folium) map with [`bokeh`](http://bokeh.pydata.org/en/latest/) for the time-series at the observed points.
 
-Note that we did mark the nearest model cell location used in the comparison.
+# The cells from `[20]` to `[25]` create a [`folium`](https://github.com/python-visualization/folium) map with [`bokeh`](http://bokeh.pydata.org/en/latest/) for the time-series at the observed points.
+# 
+# Note that we did mark the nearest model cell location used in the comparison.
+
+# In[22]:
+
 
 all_obs = stations_keys(config)
 
@@ -516,7 +575,11 @@ for station, info in groups:
 
 MarkerCluster(locations=locations, popups=popups, name="Cluster").add_to(m)
 
-Here we use a dictionary with some models we expect to find so we can create a better legend for the plots. If any new models are found, we will use its filename in the legend as a default until we can go back and add a short name to our library.
+
+# Here we use a dictionary with some models we expect to find so we can create a better legend for the plots. If any new models are found, we will use its filename in the legend as a default until we can go back and add a short name to our library.
+
+# In[23]:
+
 
 titles = {
     "coawst_4_use_best": "COAWST_4",
@@ -525,6 +588,10 @@ titles = {
     "NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST": "NECOFS_MassBay",
     "OBS_DATA": "Observations",
 }
+
+
+# In[24]:
+
 
 from itertools import cycle
 
@@ -599,6 +666,10 @@ def make_marker(p, station):
     marker = folium.Marker(location=[lat, lon], popup=popup, icon=icon)
     return marker
 
+
+# In[25]:
+
+
 dfs = load_ncs(config)
 
 for station in dfs:
@@ -614,6 +685,7 @@ folium.LayerControl().add_to(m)
 
 m
 
-Now we can navigate the map and click on the markers to explorer our findings.
 
-The green markers locate the observations locations. They pop-up an interactive plot with the time-series and scores for the models (hover over the lines to se the scores). The blue markers indicate the nearest model grid point found for the comparison.
+# Now we can navigate the map and click on the markers to explorer our findings.
+# 
+# The green markers locate the observations locations. They pop-up an interactive plot with the time-series and scores for the models (hover over the lines to se the scores). The blue markers indicate the nearest model grid point found for the comparison.

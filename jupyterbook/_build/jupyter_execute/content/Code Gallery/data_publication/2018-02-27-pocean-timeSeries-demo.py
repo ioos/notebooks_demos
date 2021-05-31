@@ -1,18 +1,24 @@
-# Creating a CF-1.6 timeSeries using pocean
+#!/usr/bin/env python
+# coding: utf-8
 
+# # Creating a CF-1.6 timeSeries using pocean
+# 
+# 
+# IOOS recommends to data providers that their netCDF files follow the CF-1.6 standard. In this notebook we will create a [CF-1.6 compliant](http://cfconventions.org/latest.html) file that follows file that follows the [Discrete Sampling Geometries](http://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/build/ch09.html) (DSG) of a `timeSeries` from a pandas DataFrame.
+# 
+# The `pocean` module can handle all the DSGs described in the CF-1.6 document: `point`, `timeSeries`, `trajectory`, `profile`, `timeSeriesProfile`, and `trajectoryProfile`. These DSGs array may be represented in the netCDF file as:
+# 
+# - **orthogonal multidimensional**: when the coordinates along the element axis of the features are identical;
+# - **incomplete multidimensional**: when the features within a collection do not all have the same number but space is not an issue and using longest feature to all features is convenient;
+# - **contiguous ragged**: can be used if the size of each feature is known;
+# - **indexed ragged**: stores the features interleaved along the sample dimension in the data variable.
+# 
+# Here we will use the orthogonal multidimensional array to represent time-series data from am hypothetical current meter. We'll use fake data for this example for convenience.
+# 
+# Our fake data represents a current meter located at 10 meters depth collected last week.
 
-IOOS recommends to data providers that their netCDF files follow the CF-1.6 standard. In this notebook we will create a [CF-1.6 compliant](http://cfconventions.org/latest.html) file that follows file that follows the [Discrete Sampling Geometries](http://cfconventions.org/Data/cf-conventions/cf-conventions-1.7/build/ch09.html) (DSG) of a `timeSeries` from a pandas DataFrame.
+# In[1]:
 
-The `pocean` module can handle all the DSGs described in the CF-1.6 document: `point`, `timeSeries`, `trajectory`, `profile`, `timeSeriesProfile`, and `trajectoryProfile`. These DSGs array may be represented in the netCDF file as:
-
-- **orthogonal multidimensional**: when the coordinates along the element axis of the features are identical;
-- **incomplete multidimensional**: when the features within a collection do not all have the same number but space is not an issue and using longest feature to all features is convenient;
-- **contiguous ragged**: can be used if the size of each feature is known;
-- **indexed ragged**: stores the features interleaved along the sample dimension in the data variable.
-
-Here we will use the orthogonal multidimensional array to represent time-series data from am hypothetical current meter. We'll use fake data for this example for convenience.
-
-Our fake data represents a current meter located at 10 meters depth collected last week.
 
 from datetime import datetime, timedelta
 
@@ -37,9 +43,13 @@ df = pd.DataFrame(
 
 df.tail()
 
-Let's take a look at our fake data.
 
-%matplotlib inline
+# Let's take a look at our fake data.
+
+# In[2]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 
 import matplotlib.pyplot as plt
@@ -54,9 +64,13 @@ qk = plt.quiverkey(
 
 plt.xticks(rotation=70)
 
-`pocean.dsg` is relatively simple to use. The user must provide a DataFrame, like the one above, and a dictionary of attributes that maps to the data and adhere to the DSG conventions desired. 
 
-Because we want the file to work seamlessly with ERDDAP we also added some ERDDAP specific attributes like `cdm_timeseries_variables`, and `subsetVariables`.
+# `pocean.dsg` is relatively simple to use. The user must provide a DataFrame, like the one above, and a dictionary of attributes that maps to the data and adhere to the DSG conventions desired. 
+# 
+# Because we want the file to work seamlessly with ERDDAP we also added some ERDDAP specific attributes like `cdm_timeseries_variables`, and `subsetVariables`.
+
+# In[3]:
+
 
 attributes = {
     "global": {
@@ -74,9 +88,17 @@ attributes = {
     "station": {"cf_role": "timeseries_id"},
 }
 
-We also need to map the our data axes to [`pocean`'s defaults](https://github.com/pyoceans/pocean-core/blob/master/pocean/utils.py#L50-L59). This step is not needed if the data axes are already named like the default ones.
+
+# We also need to map the our data axes to [`pocean`'s defaults](https://github.com/pyoceans/pocean-core/blob/master/pocean/utils.py#L50-L59). This step is not needed if the data axes are already named like the default ones.
+
+# In[4]:
+
 
 axes = {"t": "time", "x": "longitude", "y": "latitude", "z": "depth"}
+
+
+# In[5]:
+
 
 from pocean.dsg.timeseries.om import OrthogonalMultidimensionalTimeseries
 from pocean.utils import downcast_dataframe
@@ -86,32 +108,73 @@ dsg = OrthogonalMultidimensionalTimeseries.from_dataframe(
     df, output="fake_buoy.nc", attributes=attributes, axes=axes,
 )
 
-The `OrthogonalMultidimensionalTimeseries` saves the DataFrame into a CF-1.6 TimeSeries DSG.
 
-!ncdump -h fake_buoy.nc
+# The `OrthogonalMultidimensionalTimeseries` saves the DataFrame into a CF-1.6 TimeSeries DSG.
 
- It also outputs the dsg object for inspection. Let us check a few things to see if our objects was created as expected. (Note that some of the metadata was "free" due t the built-in defaults in `pocean`.
+# In[6]:
+
+
+get_ipython().system('ncdump -h fake_buoy.nc')
+
+
+#  It also outputs the dsg object for inspection. Let us check a few things to see if our objects was created as expected. (Note that some of the metadata was "free" due t the built-in defaults in `pocean`.
+
+# In[7]:
+
 
 dsg.getncattr("featureType")
 
+
+# In[8]:
+
+
 type(dsg)
 
-In addition to standard `netCDF4-python` object `.variables` method `pocean`'s DSGs provides an "categorized" version of the variables in the `data_vars`, `ancillary_vars`, and the DSG axes methods.
+
+# In addition to standard `netCDF4-python` object `.variables` method `pocean`'s DSGs provides an "categorized" version of the variables in the `data_vars`, `ancillary_vars`, and the DSG axes methods.
+
+# In[9]:
+
 
 [(v.standard_name) for v in dsg.data_vars()]
 
+
+# In[10]:
+
+
 dsg.axes("T")
+
+
+# In[11]:
+
 
 dsg.axes("Z")
 
+
+# In[12]:
+
+
 dsg.vatts("station")
+
+
+# In[13]:
+
 
 dsg["station"][:]
 
+
+# In[14]:
+
+
 dsg.vatts("u")
 
-We can easily round-trip back to the pandas DataFrame object.
+
+# We can easily round-trip back to the pandas DataFrame object.
+
+# In[15]:
+
 
 dsg.to_dataframe().head()
 
-For more information on `pocean` please check the [API docs](https://pyoceans.github.io/pocean-core/docs/api/pocean.html).
+
+# For more information on `pocean` please check the [API docs](https://pyoceans.github.io/pocean-core/docs/api/pocean.html).

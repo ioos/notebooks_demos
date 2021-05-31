@@ -1,13 +1,19 @@
-# Accessing data from SOS using NHC GIS files
-## Part 2: finding data programmatically with PyOOS
+#!/usr/bin/env python
+# coding: utf-8
 
-This post is the part 2 of 4 of a notebook series on how to obtain IOOS/NOAA data starting from a Hurricane track GIS format.
+# # Accessing data from SOS using NHC GIS files
+# ## Part 2: finding data programmatically with PyOOS
+# 
+# This post is the part 2 of 4 of a notebook series on how to obtain IOOS/NOAA data starting from a Hurricane track GIS format.
+# 
+# We will download Sea Surface Height (SSH) data from the
+# [Sensor Observation Service (SOS)](https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/)
+# along the hurricane track.
+# 
+# For the instructions on how to obtain the GIS data for Hurricane Michael please the the [first notebook in the series](https://ioos.github.io/notebooks_demos/notebooks/2019-02-26-hurricane_gis_part01/). The function below loads and extract the hurricane radii and points.
 
-We will download Sea Surface Height (SSH) data from the
-[Sensor Observation Service (SOS)](https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/)
-along the hurricane track.
+# In[1]:
 
-For the instructions on how to obtain the GIS data for Hurricane Michael please the the [first notebook in the series](https://ioos.github.io/notebooks_demos/notebooks/2019-02-26-hurricane_gis_part01/). The function below loads and extract the hurricane radii and points.
 
 import os
 from pathlib import Path
@@ -42,7 +48,11 @@ def load_best_track(code="al14", year="2018"):
     ).values
     return radii, pts
 
-With this functions we can figure out the geographic bounding box and the start/end dates of the event.
+
+# With this functions we can figure out the geographic bounding box and the start/end dates of the event.
+
+# In[2]:
+
 
 radii, pts = load_best_track(code="al14", year="2018")
 
@@ -50,17 +60,29 @@ start = radii.index[0]
 end = radii.index[-1]
 bbox = tuple(radii["geometry"].total_bounds)
 
+
+# In[3]:
+
+
 strbbox = ", ".join(format(v, ".2f") for v in bbox)
 print(f"bbox: {strbbox}\nstart: {start}\n  end: {end}")
 
-Now that we have a bounding box for the collection of radii, and the start and end dates of the hurricane record, we can create a track-like path with shapely based on the individual points.
+
+# Now that we have a bounding box for the collection of radii, and the start and end dates of the hurricane record, we can create a track-like path with shapely based on the individual points.
+
+# In[4]:
+
 
 import shapely
 
 coords = zip(pts["LON"], pts["LAT"])
 track = shapely.geometry.LineString(coords)
 
-The cell below is the main difference from what we did in [part 1](https://ioos.github.io/notebooks_demos/notebooks/2019-02-26-hurricane_gis_part01/), here we will use the bonding box and event dates with a [PyOOS collector](https://github.com/ioos/pyoos) to fetch all the data available in that scope.
+
+# The cell below is the main difference from what we did in [part 1](https://ioos.github.io/notebooks_demos/notebooks/2019-02-26-hurricane_gis_part01/), here we will use the bonding box and event dates with a [PyOOS collector](https://github.com/ioos/pyoos) to fetch all the data available in that scope.
+
+# In[5]:
+
 
 import cf_units
 from ioos_tools.ioos import collector2table
@@ -103,7 +125,11 @@ def get_coops(start, end, sos_name, units, bbox, verbose=False):
         print(f"{title}: {len(ofrs)} offerings")
     return data, table
 
-We can limit the type of data we want using a `units` and `sos_name` argument. Here are interest in sea level (`water_surface_height_above_reference_datum`) in meters,
+
+# We can limit the type of data we want using a `units` and `sos_name` argument. Here are interest in sea level (`water_surface_height_above_reference_datum`) in meters,
+
+# In[6]:
+
 
 ssh, ssh_table = get_coops(
     start=start,
@@ -115,7 +141,11 @@ ssh, ssh_table = get_coops(
 
 ssh_table.tail()
 
-and wind speed in meters per seconds.
+
+# and wind speed in meters per seconds.
+
+# In[7]:
+
 
 wind_speed, wind_speed_table = get_coops(
     start=start, end=end, sos_name="wind_speed", units=cf_units.Unit("m/s"), bbox=bbox,
@@ -123,7 +153,11 @@ wind_speed, wind_speed_table = get_coops(
 
 wind_speed_table.tail()
 
-We only want the stations were we have both sea level and wind speed, so let's try to find a set where that is true.
+
+# We only want the stations were we have both sea level and wind speed, so let's try to find a set where that is true.
+
+# In[8]:
+
 
 common = set(ssh_table["station_code"]).intersection(wind_speed_table["station_code"])
 
@@ -135,7 +169,11 @@ for station in common:
         [obs for obs in wind_speed if obs._metadata["station_code"] == station]
     )
 
-Finally we can now interpolate all the records to a 15 min. Most of them are original in 6 min, which is too dense for plotting.
+
+# Finally we can now interpolate all the records to a 15 min. Most of them are original in 6 min, which is too dense for plotting.
+
+# In[9]:
+
 
 index = pd.date_range(
     start=start.replace(tzinfo=None), end=end.replace(tzinfo=None), freq="15min"
@@ -159,7 +197,11 @@ for series in win_obs:
     obs.name = _metadata["station_name"]
     winds_observations.append(obs)
 
-Now that we have the data all that is left to do is to create interactive [Bokeh plots](https://bokeh.pydata.org/en/latest/),
+
+# Now that we have the data all that is left to do is to create interactive [Bokeh plots](https://bokeh.pydata.org/en/latest/),
+
+# In[10]:
+
 
 from bokeh.embed import file_html
 from bokeh.models import HoverTool, LinearAxis, Range1d
@@ -170,6 +212,10 @@ from folium import IFrame
 # Plot defaults.
 tools = "pan,box_zoom,reset"
 width, height = 750, 250
+
+
+# In[11]:
+
 
 def make_plot(ssh, wind):
     p = figure(
@@ -216,7 +262,11 @@ def make_plot(ssh, wind):
     )
     return p
 
-add the plots to a [folium map](https://python-visualization.github.io/folium/) marker,
+
+# add the plots to a [folium map](https://python-visualization.github.io/folium/) marker,
+
+# In[12]:
+
 
 def make_marker(p, location, fname):
     html = file_html(p, CDN, fname)
@@ -227,7 +277,11 @@ def make_marker(p, location, fname):
     marker = folium.Marker(location=location, popup=popup, icon=icon)
     return marker
 
-and finally the map itself where we will show all the data we found.
+
+# and finally the map itself where we will show all the data we found.
+
+# In[13]:
+
 
 import folium
 from folium.plugins import Fullscreen, MarkerCluster
@@ -243,7 +297,11 @@ Fullscreen(position="topright", force_separate_button=True).add_to(m)
 marker_cluster0 = MarkerCluster(name="Observations")
 marker_cluster0.add_to(m)
 
-We can color code the hurricane state in the track.
+
+# We can color code the hurricane state in the track.
+
+# In[14]:
+
 
 colors = {
     "LO": "lightyellow",
@@ -272,7 +330,11 @@ for date, row in pts.iterrows():
         location=location, radius=10, fill=True, color=colors[storm_type], popup=popup,
     ).add_to(m)
 
-Add the track and markers.
+
+# Add the track and markers.
+
+# In[15]:
+
 
 for ssh, wind in zip(ssh_observations, winds_observations):
     fname = ssh._metadata["station_code"]
@@ -287,7 +349,11 @@ p = folium.PolyLine(get_coordinates(bbox), color="#009933", weight=1, opacity=0.
 
 p.add_to(m)
 
-And display the final map!
+
+# And display the final map!
+
+# In[16]:
+
 
 def embed_map(m):
     from IPython.display import HTML
@@ -302,3 +368,4 @@ def embed_map(m):
 
 
 embed_map(m)
+

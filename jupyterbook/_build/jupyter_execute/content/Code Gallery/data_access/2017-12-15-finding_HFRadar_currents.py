@@ -1,10 +1,16 @@
-# Fetching data from a CSW catalog with Python tools
+#!/usr/bin/env python
+# coding: utf-8
 
-This notebook shows a typical workflow to query a [Catalog Service for the Web (CSW)](https://en.wikipedia.org/wiki/Catalog_Service_for_the_Web) and create a request for data endpoints that are suitable for download.
+# # Fetching data from a CSW catalog with Python tools
+# 
+# This notebook shows a typical workflow to query a [Catalog Service for the Web (CSW)](https://en.wikipedia.org/wiki/Catalog_Service_for_the_Web) and create a request for data endpoints that are suitable for download.
+# 
+# In this queries multiple catalogs for the near real time HF-Radar current data.
+# 
+# The first step is to create the data filter based on the geographical region bounding box, the time span, and the CF variable standard name.
 
-In this queries multiple catalogs for the near real time HF-Radar current data.
+# In[1]:
 
-The first step is to create the data filter based on the geographical region bounding box, the time span, and the CF variable standard name.
 
 from datetime import datetime, timedelta
 
@@ -43,9 +49,13 @@ print(
     )
 )
 
-Now it is possible to assemble a [OGC Filter Encoding (FE)](http://www.opengeospatial.org/standards/filter) for the search using `owslib.fes`\*. Note that the final result is only a list with all the filtering conditions.
 
-\* OWSLib is a Python package for client programming with Open Geospatial Consortium (OGC) web service (hence OWS) interface standards, and their related content models.
+# Now it is possible to assemble a [OGC Filter Encoding (FE)](http://www.opengeospatial.org/standards/filter) for the search using `owslib.fes`\*. Note that the final result is only a list with all the filtering conditions.
+# 
+# \* OWSLib is a Python package for client programming with Open Geospatial Consortium (OGC) web service (hence OWS) interface standards, and their related content models.
+
+# In[2]:
+
 
 from owslib import fes
 
@@ -71,6 +81,10 @@ def fes_date_filter(start, stop, constraint="overlaps"):
         raise NameError("Unrecognized constraint {}".format(constraint))
     return begin, end
 
+
+# In[3]:
+
+
 kw = dict(wildCard="*", escapeChar="\\", singleChar="?", propertyname="apiso:AnyText")
 
 or_filt = fes.Or([fes.PropertyIsLike(literal=("*%s*" % val), **kw) for val in cf_names])
@@ -82,7 +96,11 @@ begin, end = fes_date_filter(start, stop)
 bbox_crs = fes.BBox(bbox, crs=crs)
 filter_list = [fes.And([bbox_crs, begin, end, or_filt, not_filt])]
 
-It is possible to use the same filter to search multiple catalogs. The cell below loops over 3 catalogs hoping to find which one is more up-to-date and returns the near real time data.
+
+# It is possible to use the same filter to search multiple catalogs. The cell below loops over 3 catalogs hoping to find which one is more up-to-date and returns the near real time data.
+
+# In[4]:
+
 
 def get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000):
     """Iterate `maxrecords`/`pagesize` times until the requested value in
@@ -110,6 +128,10 @@ def get_csw_records(csw, filter_list, pagesize=10, maxrecords=1000):
             break
     csw.records.update(csw_records)
 
+
+# In[5]:
+
+
 from owslib.csw import CatalogueServiceWeb
 
 endpoint = "https://data.ioos.us/csw"
@@ -122,7 +144,11 @@ print("Found {} records.\n".format(len(csw.records.keys())))
 for key, value in list(csw.records.items()):
     print("[{}]: {}".format(value.title, key))
 
-Let us check the 6 km resolution metadata record we found above.
+
+# Let us check the 6 km resolution metadata record we found above.
+
+# In[6]:
+
 
 value = csw.records[
     "HFR/USWC/6km/hourly/RTV/HFRADAR_US_West_Coast_6km_Resolution_Hourly_RTV_best.ncd"
@@ -130,21 +156,41 @@ value = csw.records[
 
 print(value.abstract)
 
+
+# In[7]:
+
+
 attrs = [attr for attr in dir(value) if not attr.startswith("_")]
 nonzero = [attr for attr in attrs if getattr(value, attr)]
 nonzero
 
-The `xml` has the full dataset metadata from the catalog. Let's print a few key ones here:
+
+# The `xml` has the full dataset metadata from the catalog. Let's print a few key ones here:
+
+# In[8]:
+
 
 value.subjects  # What is in there?
 
+
+# In[9]:
+
+
 value.modified  # Is it up-to-date?
+
+
+# In[10]:
+
 
 bbox = value.bbox.minx, value.bbox.miny, value.bbox.maxx, value.bbox.maxy
 bbox  # The actual bounding box of the data.
 
-The next step is to inspect the type services and schemes available for downloading the data.
-The easiest way to accomplish that is with by "sniffing" the URLs with `geolinks`.
+
+# The next step is to inspect the type services and schemes available for downloading the data.
+# The easiest way to accomplish that is with by "sniffing" the URLs with `geolinks`.
+
+# In[11]:
+
 
 from geolinks import sniff_link
 
@@ -154,18 +200,26 @@ for ref in value.references:
         url = ref["url"]
     print(msg(geolink=sniff_link(ref["url"]), **ref))
 
-For a detailed description of what those `geolink` results mean check the [lookup](https://github.com/OSGeo/Cat-Interop/blob/master/LinkPropertyLookupTable.csv) table.
-There are Web Coverage Service (WCS), Web Map Service (WMS),
-direct links, and OPeNDAP services available.
 
-We can use any of those to obtain the data but the easiest one to explore interactively is the open OPeNDAP endpoint.
+# For a detailed description of what those `geolink` results mean check the [lookup](https://github.com/OSGeo/Cat-Interop/blob/master/LinkPropertyLookupTable.csv) table.
+# There are Web Coverage Service (WCS), Web Map Service (WMS),
+# direct links, and OPeNDAP services available.
+# 
+# We can use any of those to obtain the data but the easiest one to explore interactively is the open OPeNDAP endpoint.
+
+# In[12]:
+
 
 import xarray as xr
 
 ds = xr.open_dataset(url)
 ds
 
-Select "yesterday" data.
+
+# Select "yesterday" data.
+
+# In[13]:
+
 
 from datetime import date, timedelta
 
@@ -173,7 +227,11 @@ yesterday = date.today() - timedelta(days=1)
 
 ds = ds.sel(time=yesterday)
 
-Compute the speed while masking invalid values.
+
+# Compute the speed while masking invalid values.
+
+# In[14]:
+
 
 import numpy.ma as ma
 
@@ -187,9 +245,13 @@ time = ds.coords["time"].data
 u = ma.masked_invalid(u)
 v = ma.masked_invalid(v)
 
-This cell is only a trick to show all quiver arrows with the same length,
-for visualization purposes,
-and indicate the vector magnitude with colors instead.
+
+# This cell is only a trick to show all quiver arrows with the same length,
+# for visualization purposes,
+# and indicate the vector magnitude with colors instead.
+
+# In[15]:
+
 
 import numpy as np
 from oceans.ocfis import spdir2uv, uv2spdir
@@ -197,9 +259,13 @@ from oceans.ocfis import spdir2uv, uv2spdir
 angle, speed = uv2spdir(u, v)
 us, vs = spdir2uv(np.ones_like(speed), angle, deg=True)
 
-And now we are ready to create the plot.
 
-%matplotlib inline
+# And now we are ready to create the plot.
+
+# In[16]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
@@ -254,4 +320,5 @@ ax1.plot(
 )
 ax1.set_title("San Francisco Bay area")
 
-And here is yesterday's sea surface currents from the west coast with a zoom in the San Francisco Bay area.
+
+# And here is yesterday's sea surface currents from the west coast with a zoom in the San Francisco Bay area.

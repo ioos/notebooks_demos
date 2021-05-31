@@ -1,10 +1,16 @@
-# Accessing glider data via the Glider DAC API with Python
+#!/usr/bin/env python
+# coding: utf-8
 
-IOOS provides an [`API`](https://en.wikipedia.org/wiki/Application_programming_interface) for getting information on all the glider deployments available in the [Glider DAC](https://gliders.ioos.us/index.html).
+# # Accessing glider data via the Glider DAC API with Python
+# 
+# IOOS provides an [`API`](https://en.wikipedia.org/wiki/Application_programming_interface) for getting information on all the glider deployments available in the [Glider DAC](https://gliders.ioos.us/index.html).
+# 
+# The raw JSON can be accessed at [https://data.ioos.us/gliders/providers/api/deployment](https://data.ioos.us/gliders/providers/api/deployment) and it is quite simple to parse it with Python.
+# 
+# First, lets check how many glider deployments exist in the Glider DAC.
 
-The raw JSON can be accessed at [https://data.ioos.us/gliders/providers/api/deployment](https://data.ioos.us/gliders/providers/api/deployment) and it is quite simple to parse it with Python.
+# In[1]:
 
-First, lets check how many glider deployments exist in the Glider DAC.
 
 import requests
 
@@ -16,7 +22,11 @@ res = response.json()
 
 print("Found {0} deployments!".format(res["num_results"]))
 
-And here is the JSON of the last deployment found in the list.
+
+# And here is the JSON of the last deployment found in the list.
+
+# In[2]:
+
 
 deployments = res["results"]
 
@@ -24,7 +34,11 @@ deployment = deployments[-1]
 
 deployment
 
-The `metadata` is very rich and informative. A quick way to get to the data is to read `dap` endpoint with `iris`.
+
+# The `metadata` is very rich and informative. A quick way to get to the data is to read `dap` endpoint with `iris`.
+
+# In[3]:
+
 
 import iris
 
@@ -41,7 +55,11 @@ cubes = iris.load_raw("".join([url, "#fillmismatch"]))
 
 print(cubes)
 
-In order to plot, for example sea water temperature data, one must clean the data first for missing values
+
+# In order to plot, for example sea water temperature data, one must clean the data first for missing values
+
+# In[4]:
+
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -112,13 +130,17 @@ def plot_glider(cube, cmap=plt.cm.viridis, figsize=(9, 3.75), track_inset=False)
     ax.set_ylabel("Depth (m)")
     return fig, ax, cbar
 
-The functions above apply the `actual_range` metadata to the data, mask the invalid/bad values, and prepare the parameters for plotting.
 
-The figure below shows the temperature slice (left), and glider track (right) with start and end points marked with green and red respectively.
+# The functions above apply the `actual_range` metadata to the data, mask the invalid/bad values, and prepare the parameters for plotting.
+# 
+# The figure below shows the temperature slice (left), and glider track (right) with start and end points marked with green and red respectively.
+# 
+# Note: This glider was deployed off the west of the U.S.
 
-Note: This glider was deployed off the west of the U.S.
+# In[5]:
 
-%matplotlib inline
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 temp = cubes.extract_strict("sea_water_temperature")
 
@@ -126,12 +148,20 @@ fig, ax, cbar = plot_glider(
     temp, cmap=plt.cm.viridis, figsize=(9, 4.25), track_inset=True
 )
 
-There are many things the user can do with the API.
-Here is another example that finds all glider deployments within a boundary box.
+
+# There are many things the user can do with the API.
+# Here is another example that finds all glider deployments within a boundary box.
+
+# In[6]:
+
 
 bbox = [[-125.72, 32.60], [-117.57, 36.93]]
 
-The cell below defines two helper functions to parse the geometry from the JSON and convert the trajectory to a shapely `LineString` to prepare the data for GIS operations later.
+
+# The cell below defines two helper functions to parse the geometry from the JSON and convert the trajectory to a shapely `LineString` to prepare the data for GIS operations later.
+
+# In[7]:
+
 
 from shapely.geometry import LineString
 
@@ -169,10 +199,18 @@ def fetch_trajectory(deployment):
     coords = LineString(geometry["coordinates"])
     return coords
 
-Now it is easy to check which tracks lie inside the box.
+
+# Now it is easy to check which tracks lie inside the box.
+
+# In[8]:
+
 
 res = response.json()["results"]
 len(res[-100:])
+
+
+# In[9]:
+
 
 from shapely.geometry import box
 
@@ -189,7 +227,11 @@ for deployment in response.json()["results"][-10:]:
     if search_box.intersects(coords):
         inside.update({deployment["name"]: coords})
 
-Finally, we can create an interactive map displaying the tracks found in the bounding box.
+
+# Finally, we can create an interactive map displaying the tracks found in the bounding box.
+
+# In[10]:
+
 
 def plot_track(coords, name, color="orange"):
     x, y = coords.xy
@@ -201,6 +243,10 @@ def plot_track(coords, name, color="orange"):
     folium.PolyLine(
         locations=locations, color=color, weight=8, opacity=0.2, popup=name
     ).add_to(m)
+
+
+# In[11]:
+
 
 import folium
 
@@ -219,3 +265,4 @@ for name, coords in inside.items():
 
 
 m
+

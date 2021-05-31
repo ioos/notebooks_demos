@@ -1,57 +1,46 @@
-# Investigating ocean models skill for sea surface height with IOOS catalog and Python
+#!/usr/bin/env python
+# coding: utf-8
 
+# # Investigating ocean models skill for sea surface height with IOOS catalog and Python
+# 
+# 
+# The IOOS [catalog](https://ioos.noaa.gov/data/catalog) offers access to hundreds of datasets and data access services provided by the 11 regional associations.
+# In the past we demonstrate how to tap into those datasets to obtain sea [surface temperature data from observations](http://ioos.github.io/notebooks_demos/notebooks/2016-12-19-exploring_csw),
+# [coastal velocity from high frequency radar data](http://ioos.github.io/notebooks_demos/notebooks/2017-12-15-finding_HFRadar_currents),
+# and a simple model vs observation visualization of temperatures for the [Boston Light Swim competition](http://ioos.github.io/notebooks_demos/notebooks/2016-12-22-boston_light_swim).
+# 
+# In this notebook we'll demonstrate a step-by-step workflow on how ask the catalog for a specific variable, extract only the model data, and match the nearest model grid point to an observation. The goal is to create an automated skill score for quick assessment of ocean numerical models.
+# 
+# 
+# The first cell is only to reduce iris' noisy output,
+# the notebook start on cell [2] with the definition of the parameters:
+# - start and end dates for the search;
+# - experiment name;
+# - a bounding of the region of interest;
+# - SOS variable name for the observations;
+# - Climate and Forecast standard names;
+# - the units we want conform the variables into;
+# - catalogs we want to search.
 
-The IOOS [catalog](https://ioos.noaa.gov/data/catalog) offers access to hundreds of datasets and data access services provided by the 11 regional associations.
-In the past we demonstrate how to tap into those datasets to obtain sea [surface temperature data from observations](http://ioos.github.io/notebooks_demos/notebooks/2016-12-19-exploring_csw),
-[coastal velocity from high frequency radar data](http://ioos.github.io/notebooks_demos/notebooks/2017-12-15-finding_HFRadar_currents),
-and a simple model vs observation visualization of temperatures for the [Boston Light Swim competition](http://ioos.github.io/notebooks_demos/notebooks/2016-12-22-boston_light_swim).
+# In[1]:
 
-In this notebook we'll demonstrate a step-by-step workflow on how ask the catalog for a specific variable, extract only the model data, and match the nearest model grid point to an observation. The goal is to create an automated skill score for quick assessment of ocean numerical models.
-
-
-The first cell is only to reduce iris' noisy output,
-the notebook start on cell [2] with the definition of the parameters:
-- start and end dates for the search;
-- experiment name;
-- a bounding of the region of interest;
-- SOS variable name for the observations;
-- Climate and Forecast standard names;
-- the units we want conform the variables into;
-- catalogs we want to search.
 
 import warnings
 
 # Suppresing warnings for a "pretty output."
 warnings.simplefilter("ignore")
 
-%%writefile config.yaml
 
-date:
-    start: 2018-2-28 00:00:00
-    stop: 2018-3-5 00:00:00
+# In[2]:
 
-run_name: 'latest'
 
-region:
-    bbox: [-71.20, 41.40, -69.20, 43.74]
-    crs: 'urn:ogc:def:crs:OGC:1.3:CRS84'
+get_ipython().run_cell_magic('writefile', 'config.yaml', "\ndate:\n    start: 2018-2-28 00:00:00\n    stop: 2018-3-5 00:00:00\n\nrun_name: 'latest'\n\nregion:\n    bbox: [-71.20, 41.40, -69.20, 43.74]\n    crs: 'urn:ogc:def:crs:OGC:1.3:CRS84'\n\nsos_name: 'water_surface_height_above_reference_datum'\n\ncf_names:\n    - sea_surface_height\n    - sea_surface_elevation\n    - sea_surface_height_above_geoid\n    - sea_surface_height_above_sea_level\n    - water_surface_height_above_reference_datum\n    - sea_surface_height_above_reference_ellipsoid\n\nunits: 'm'\n\ncatalogs:\n    - https://data.ioos.us/csw")
 
-sos_name: 'water_surface_height_above_reference_datum'
 
-cf_names:
-    - sea_surface_height
-    - sea_surface_elevation
-    - sea_surface_height_above_geoid
-    - sea_surface_height_above_sea_level
-    - water_surface_height_above_reference_datum
-    - sea_surface_height_above_reference_ellipsoid
+# To keep track of the information we'll setup a `config` variable and output them on the screen for bookkeeping.
 
-units: 'm'
+# In[3]:
 
-catalogs:
-    - https://data.ioos.us/csw
-
-To keep track of the information we'll setup a `config` variable and output them on the screen for bookkeeping.
 
 import os
 import shutil
@@ -78,12 +67,16 @@ print(
     "{2:3.2f}, {3:3.2f}".format(*config["region"]["bbox"])
 )
 
-To interface with the IOOS catalog we will use the [Catalogue Service for the Web (CSW)](https://live.osgeo.org/en/standards/csw_overview.html) endpoint and [python's OWSLib library](https://geopython.github.io/OWSLib).
 
-The cell below creates the [Filter Encoding Specification (FES)](http://www.opengeospatial.org/standards/filter) with configuration we specified in cell [2]. The filter is composed of:
-- `or` to catch any of the standard names;
-- `not` some names we do not want to show up in the results;
-- `date range` and `bounding box` for the time-space domain of the search.
+# To interface with the IOOS catalog we will use the [Catalogue Service for the Web (CSW)](https://live.osgeo.org/en/standards/csw_overview.html) endpoint and [python's OWSLib library](https://geopython.github.io/OWSLib).
+# 
+# The cell below creates the [Filter Encoding Specification (FES)](http://www.opengeospatial.org/standards/filter) with configuration we specified in cell [2]. The filter is composed of:
+# - `or` to catch any of the standard names;
+# - `not` some names we do not want to show up in the results;
+# - `date range` and `bounding box` for the time-space domain of the search.
+
+# In[4]:
+
 
 def make_filter(config):
     from owslib import fes
@@ -109,10 +102,14 @@ def make_filter(config):
 
 filter_list = make_filter(config)
 
-We need to wrap `OWSlib.csw.CatalogueServiceWeb` object with a custom function,
-` get_csw_records`, to be able to paginate over the results.
 
-In the cell below we loop over all the catalogs returns and extract the OPeNDAP endpoints.
+# We need to wrap `OWSlib.csw.CatalogueServiceWeb` object with a custom function,
+# ` get_csw_records`, to be able to paginate over the results.
+# 
+# In the cell below we loop over all the catalogs returns and extract the OPeNDAP endpoints.
+
+# In[5]:
+
 
 from ioos_tools.ioos import get_csw_records, service_urls
 from owslib.csw import CatalogueServiceWeb
@@ -147,12 +144,16 @@ for endpoint in config["catalogs"]:
 # Get only unique endpoints.
 dap_urls = list(set(dap_urls))
 
-We found 10 dataset endpoints but only 9 of them have the proper metadata for us to identify the OPeNDAP endpoint,
-those that contain either `OPeNDAP:OPeNDAP` or `urn:x-esri:specification:ServiceType:odp:url` scheme.
-Unfortunately we lost the `COAWST` model in the process.
 
-The next step is to ensure there are no observations in the list of endpoints.
-We want only the models for now.
+# We found 10 dataset endpoints but only 9 of them have the proper metadata for us to identify the OPeNDAP endpoint,
+# those that contain either `OPeNDAP:OPeNDAP` or `urn:x-esri:specification:ServiceType:odp:url` scheme.
+# Unfortunately we lost the `COAWST` model in the process.
+# 
+# The next step is to ensure there are no observations in the list of endpoints.
+# We want only the models for now.
+
+# In[6]:
+
 
 from ioos_tools.ioos import is_station
 from timeout_decorator import TimeoutError
@@ -172,9 +173,13 @@ print(fmt(" Filtered DAP "))
 for url in dap_urls:
     print("{}.html".format(url))
 
-Now we have a nice list of all the models available in the catalog for the domain we specified.
-We still need to find the observations for the same domain.
-To accomplish that we will use the `pyoos` library and search the [SOS CO-OPS](https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/) services using the virtually the same configuration options from the catalog search.
+
+# Now we have a nice list of all the models available in the catalog for the domain we specified.
+# We still need to find the observations for the same domain.
+# To accomplish that we will use the `pyoos` library and search the [SOS CO-OPS](https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/) services using the virtually the same configuration options from the catalog search.
+
+# In[7]:
+
 
 from pyoos.collectors.coops.coops_sos import CoopsSos
 
@@ -190,7 +195,11 @@ title = collector_coops.server.identification.title
 print(fmt(" Collector offerings "))
 print("{}: {} offerings".format(title, len(ofrs)))
 
-To make it easier to work with the data we extract the time-series as pandas tables and interpolate them to a common 1-hour interval index.
+
+# To make it easier to work with the data we extract the time-series as pandas tables and interpolate them to a common 1-hour interval index.
+
+# In[8]:
+
 
 import pandas as pd
 from ioos_tools.ioos import collector2table
@@ -212,6 +221,10 @@ df = dict(
 
 pd.DataFrame(df).set_index("station_code")
 
+
+# In[9]:
+
+
 index = pd.date_range(
     start=config["date"]["start"].replace(tzinfo=None),
     end=config["date"]["stop"].replace(tzinfo=None),
@@ -227,8 +240,12 @@ for series in data:
     obs._metadata = _metadata
     observations.append(obs)
 
-The next cell saves those time-series as CF-compliant netCDF files on disk,
-to make it easier to access them later.
+
+# The next cell saves those time-series as CF-compliant netCDF files on disk,
+# to make it easier to access them later.
+
+# In[10]:
+
 
 import iris
 from ioos_tools.tardis import series2cube
@@ -247,11 +264,15 @@ cubes = iris.cube.CubeList([series2cube(obs, attr=attr) for obs in observations]
 outfile = os.path.join(save_dir, "OBS_DATA.nc")
 iris.save(cubes, outfile)
 
-We still need to read the model data from the list of endpoints we found.
 
-The next cell takes care of that.
-We use `iris`, and a set of custom functions from the `ioos_tools` library,
-that downloads only the data in the domain we requested.
+# We still need to read the model data from the list of endpoints we found.
+# 
+# The next cell takes care of that.
+# We use `iris`, and a set of custom functions from the `ioos_tools` library,
+# that downloads only the data in the domain we requested.
+
+# In[11]:
+
 
 from ioos_tools.ioos import get_model_name
 from ioos_tools.tardis import is_model, proc_cube, quick_load_cubes
@@ -284,10 +305,14 @@ for k, url in enumerate(dap_urls):
     ) as e:
         print("Cannot get cube for: {}\n{}".format(url, e))
 
-Now we can match each observation time-series with its closest grid point (0.08 of a degree) on each model.
-This is a complex and laborious task! If you are running this interactively grab a coffee and sit comfortably :-)
 
-Note that we are also saving the model time-series to files that align with the observations we saved before.
+# Now we can match each observation time-series with its closest grid point (0.08 of a degree) on each model.
+# This is a complex and laborious task! If you are running this interactively grab a coffee and sit comfortably :-)
+# 
+# Note that we are also saving the model time-series to files that align with the observations we saved before.
+
+# In[12]:
+
 
 import iris
 from ioos_tools.tardis import (
@@ -348,7 +373,11 @@ for mod_name, cube in cubes.items():
         del cube
     print("Finished processing [{}]".format(mod_name))
 
-With the matched set of models and observations time-series it is relatively easy to compute skill score metrics on them. In cells [13] to [16] we apply both mean bias and root mean square errors to the time-series.
+
+# With the matched set of models and observations time-series it is relatively easy to compute skill score metrics on them. In cells [13] to [16] we apply both mean bias and root mean square errors to the time-series.
+
+# In[13]:
+
 
 from ioos_tools.ioos import stations_keys
 
@@ -356,6 +385,10 @@ from ioos_tools.ioos import stations_keys
 def rename_cols(df, config):
     cols = stations_keys(config, key="station_name")
     return df.rename(columns=cols)
+
+
+# In[14]:
+
 
 from ioos_tools.ioos import load_ncs
 from ioos_tools.skill_score import apply_skill, mean_bias
@@ -369,6 +402,10 @@ skill_score = dict(mean_bias=df.to_dict())
 df.dropna(how="all", axis=1, inplace=True)
 df = df.applymap("{:.2f}".format).replace("nan", "--")
 
+
+# In[15]:
+
+
 from ioos_tools.skill_score import rmse
 
 dfs = load_ncs(config)
@@ -379,6 +416,10 @@ skill_score["rmse"] = df.to_dict()
 # Filter out stations with no valid comparison.
 df.dropna(how="all", axis=1, inplace=True)
 df = df.applymap("{:.2f}".format).replace("nan", "--")
+
+
+# In[16]:
+
 
 import pandas as pd
 
@@ -392,9 +433,13 @@ mean_bias = mean_bias.applymap("{:.2f}".format).replace("nan", "--")
 skill_score = pd.DataFrame.from_dict(skill_score["rmse"])
 skill_score = skill_score.applymap("{:.2f}".format).replace("nan", "--")
 
-Last but not least we can assemble a GIS map, cells [17-23],
-with the time-series plot for the observations and models,
-and the corresponding skill scores.
+
+# Last but not least we can assemble a GIS map, cells [17-23],
+# with the time-series plot for the observations and models,
+# and the corresponding skill scores.
+
+# In[17]:
+
 
 import folium
 from ioos_tools.ioos import get_coordinates
@@ -417,9 +462,17 @@ def make_map(bbox, **kw):
         p.add_to(m)
     return m
 
+
+# In[18]:
+
+
 bbox = config["region"]["bbox"]
 
 m = make_map(bbox, zoom_start=8, line=True, layers=True)
+
+
+# In[19]:
+
 
 all_obs = stations_keys(config)
 
@@ -459,6 +512,10 @@ for station, info in groups:
 
 MarkerCluster(locations=locations, popups=popups, name="Cluster").add_to(m)
 
+
+# In[20]:
+
+
 titles = {
     "coawst_4_use_best": "COAWST_4",
     "pacioos_hycom-global": "HYCOM",
@@ -470,6 +527,10 @@ titles = {
     "roms_2013_da-ESPRESSO_Real-Time_v2_History_Best": "ESPRESSO Hist",
     "OBS_DATA": "Observations",
 }
+
+
+# In[21]:
+
 
 from itertools import cycle
 
@@ -548,6 +609,10 @@ def make_marker(p, station):
     marker = folium.Marker(location=[lat, lon], popup=popup, icon=icon)
     return marker
 
+
+# In[22]:
+
+
 dfs = load_ncs(config)
 
 for station in dfs:
@@ -560,6 +625,10 @@ for station in dfs:
     marker.add_to(m)
 
 folium.LayerControl().add_to(m)
+
+
+# In[23]:
+
 
 def embed_map(m):
     from IPython.display import HTML
@@ -574,3 +643,4 @@ def embed_map(m):
 
 
 embed_map(m)
+

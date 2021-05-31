@@ -1,24 +1,30 @@
-# Accessing data from SOS using NHC GIS files
+#!/usr/bin/env python
+# coding: utf-8
 
-This post is the part 1 of 4 of a notebook series on how to obtain IOOS/NOAA data
-starting from a Hurricane track GIS format.
+# # Accessing data from SOS using NHC GIS files
+# 
+# This post is the part 1 of 4 of a notebook series on how to obtain IOOS/NOAA data
+# starting from a Hurricane track GIS format.
+# 
+# We will download Sea Surface Height (SSH) data from the
+# [Sensor Observation Service (SOS)](https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/)
+# closest to where Hurricane Michael made landfall.
+# 
+# The first step is to obtain Hurricane Michael's GIS data from the 
+# [National Hurricane Center (NHC)](https://www.nhc.noaa.gov/gis/).
+# 
+# The function below downloads the "best track"
+# and load all the information we will use into two
+# [GeoPandas dataframes](http://geopandas.org), one for the radii shape and another one for the track points.
+# 
+# The inputs for the function based on the NHC storms code:
+# 
+# - 2 char for region `al` &rarr; Atlantic
+# - 2 char for number `14` is Michael
+# - and 4 char for year, `2018`
 
-We will download Sea Surface Height (SSH) data from the
-[Sensor Observation Service (SOS)](https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/)
-closest to where Hurricane Michael made landfall.
+# In[1]:
 
-The first step is to obtain Hurricane Michael's GIS data from the 
-[National Hurricane Center (NHC)](https://www.nhc.noaa.gov/gis/).
-
-The function below downloads the "best track"
-and load all the information we will use into two
-[GeoPandas dataframes](http://geopandas.org), one for the radii shape and another one for the track points.
-
-The inputs for the function based on the NHC storms code:
-
-- 2 char for region `al` &rarr; Atlantic
-- 2 char for number `14` is Michael
-- and 4 char for year, `2018`
 
 import os
 from pathlib import Path
@@ -53,7 +59,11 @@ def load_best_track(code="al14", year="2018"):
     ).values
     return radii, pts
 
-Now we can easily load track data and obtain the information we need to start querying the SOS service.
+
+# Now we can easily load track data and obtain the information we need to start querying the SOS service.
+
+# In[2]:
+
 
 radii, pts = load_best_track(code="al14", year="2018")
 
@@ -61,17 +71,25 @@ start = radii.index[0]
 stop = radii.index[-1]
 bbox = radii["geometry"].total_bounds
 
-The only two pieces of information that will not come from the GIS file are
-the variable of interest and the buoy.
-The former is user defined and the latter could be auto-discovered.
-We will cover that in a future notebook.
+
+# The only two pieces of information that will not come from the GIS file are
+# the variable of interest and the buoy.
+# The former is user defined and the latter could be auto-discovered.
+# We will cover that in a future notebook.
+
+# In[3]:
+
 
 variable = "water_surface_height_above_reference_datum"
 
 buoy = "8728690"
 
-For the sake of better understanding the SOS service we will create the data endpoint "by hand."
-In the cell below we "fill" the URL with the information we got above.
+
+# For the sake of better understanding the SOS service we will create the data endpoint "by hand."
+# In the cell below we "fill" the URL with the information we got above.
+
+# In[4]:
+
 
 url = (
     "https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/SOS?"
@@ -88,22 +106,34 @@ url = (
 
 print(url)
 
-Now we can easily load the SSH data as a pandas `DataFrame`.
+
+# Now we can easily load the SSH data as a pandas `DataFrame`.
+
+# In[5]:
+
 
 df = pd.read_csv(url, index_col="date_time", parse_dates=True)
 
 df.head()
 
-To make it easy to navigate the DataFrame let's create a helper function that
-extracts the metadata from the columns.
-(Pandas DataFrames are table formats so the metadata are columns with value
-repeated over the data length.)
+
+# To make it easy to navigate the DataFrame let's create a helper function that
+# extracts the metadata from the columns.
+# (Pandas DataFrames are table formats so the metadata are columns with value
+# repeated over the data length.)
+
+# In[6]:
+
 
 def extract_metadata(col):
     value = col.unique()
     if len(value) > 1:
         raise ValueError(f"Expected a single value but got {len(value)}")
     return value.squeeze().tolist()
+
+
+# In[7]:
+
 
 import hvplot.pandas  # noqa
 
@@ -114,12 +144,20 @@ df[col].hvplot.line(
     figsize=(9, 2.75), legend=False, grid=True, title=sensor_id,
 )
 
-We can use the dataframe to filter the GIS data near the highest water level and create an interactive map highlight the radii of the hurricane during the SSH time-series period.
+
+# We can use the dataframe to filter the GIS data near the highest water level and create an interactive map highlight the radii of the hurricane during the SSH time-series period.
+
+# In[8]:
+
 
 idxmax = df[col].idxmax().squeeze()
 
 dedup = radii.loc[~radii.index.duplicated(keep="first")]
 overlap = dedup.iloc[dedup.index.get_loc(idxmax, method="nearest")]
+
+
+# In[9]:
+
 
 import folium
 from folium.plugins import Fullscreen
@@ -145,20 +183,21 @@ folium.GeoJson(
 
 m
 
-Here we constructed the SOS data endpoint manually but
-IOOS maintains a Python library,
-[pyoos](https://github.com/ioos/pyoos),
-for collecting Met/Ocean observations from the SOS service and more:
 
-- IOOS SWE SOS 1.0 Services
-- NERRS Observations - SOAP
-- NDBC Observations - SOS
-- CO-OPS Observations - SOS
-- STORET Water Quality - WqxOutbound via REST 
-- USGS NWIS Water Quality - WqxOutbound via REST
-- USGS Instantaneous Values - WaterML via REST
-- NWS AWC Observations - XML via REST
-- HADS
-
-In the next notebooks in this series we will demostrante how to use `pyoos`
-to find the data endpoint automatically.
+# Here we constructed the SOS data endpoint manually but
+# IOOS maintains a Python library,
+# [pyoos](https://github.com/ioos/pyoos),
+# for collecting Met/Ocean observations from the SOS service and more:
+# 
+# - IOOS SWE SOS 1.0 Services
+# - NERRS Observations - SOAP
+# - NDBC Observations - SOS
+# - CO-OPS Observations - SOS
+# - STORET Water Quality - WqxOutbound via REST 
+# - USGS NWIS Water Quality - WqxOutbound via REST
+# - USGS Instantaneous Values - WaterML via REST
+# - NWS AWC Observations - XML via REST
+# - HADS
+# 
+# In the next notebooks in this series we will demostrante how to use `pyoos`
+# to find the data endpoint automatically.

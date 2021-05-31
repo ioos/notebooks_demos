@@ -1,31 +1,37 @@
-# erddapy: a python client/URL builder for ERDDAP
+#!/usr/bin/env python
+# coding: utf-8
 
-ERDDAP has RESTful API that is very convenient for creating web apps, data portals, etc. However, writing those URLs manually can be tedious and error prone
+# # erddapy: a python client/URL builder for ERDDAP
 
-This notebook walks through an easy to set up ERDDAP RESTful URL by using the python client, `erddapy`.
+# ERDDAP has RESTful API that is very convenient for creating web apps, data portals, etc. However, writing those URLs manually can be tedious and error prone
+# 
+# This notebook walks through an easy to set up ERDDAP RESTful URL by using the python client, `erddapy`.
+# 
+# A typical ERDDAP RESTful URL looks like:
+# 
+# [https://data.ioos.us/gliders/erddap/tabledap/whoi_406-20160902T1700.mat?depth,latitude,longitude,salinity,temperature,time&time>=2016-07-10T00:00:00Z&time<=2017-02-10T00:00:00Z &latitude>=38.0&latitude<=41.0&longitude>=-72.0&longitude<=-69.0](https://data.ioos.us/gliders/erddap/tabledap/whoi_406-20160902T1700.mat?depth,latitude,longitude,salinity,temperature,time&time>=2016-07-10T00:00:00Z&time<=2017-02-10T00:00:00Z&latitude>=38.0&latitude<=41.0&longitude>=-72.0&longitude<=-69.0)
+# 
+# Let's break it down to smaller parts:
+# 
+# - **server**: https://data.ioos.us/gliders/erddap/
+# - **protocol**: tabledap
+# - **dataset_id**: whoi_406-20160902T1700
+# - **response**: .mat
+# - **variables**: depth,latitude,longitude,temperature,time
+# - **constraints**:
+#     - time>=2016-07-10T00:00:00Z
+#     - time<=2017-02-10T00:00:00Z
+#     - latitude>=38.0
+#     - latitude<=41.0
+#     - longitude>=-72.0
+#     - longitude<=-69.0
+# 
+# We can represent that easily in Python like in the cell below.
 
-A typical ERDDAP RESTful URL looks like:
+# Feeding these variables in the `erddapy.ERDDAP` class we will create the URL builder object.
 
-[https://data.ioos.us/gliders/erddap/tabledap/whoi_406-20160902T1700.mat?depth,latitude,longitude,salinity,temperature,time&time>=2016-07-10T00:00:00Z&time<=2017-02-10T00:00:00Z &latitude>=38.0&latitude<=41.0&longitude>=-72.0&longitude<=-69.0](https://data.ioos.us/gliders/erddap/tabledap/whoi_406-20160902T1700.mat?depth,latitude,longitude,salinity,temperature,time&time>=2016-07-10T00:00:00Z&time<=2017-02-10T00:00:00Z&latitude>=38.0&latitude<=41.0&longitude>=-72.0&longitude<=-69.0)
+# In[1]:
 
-Let's break it down to smaller parts:
-
-- **server**: https://data.ioos.us/gliders/erddap/
-- **protocol**: tabledap
-- **dataset_id**: whoi_406-20160902T1700
-- **response**: .mat
-- **variables**: depth,latitude,longitude,temperature,time
-- **constraints**:
-    - time>=2016-07-10T00:00:00Z
-    - time<=2017-02-10T00:00:00Z
-    - latitude>=38.0
-    - latitude<=41.0
-    - longitude>=-72.0
-    - longitude<=-69.0
-
-We can represent that easily in Python like in the cell below.
-
-Feeding these variables in the `erddapy.ERDDAP` class we will create the URL builder object.
 
 server = "https://data.ioos.us/gliders/erddap"
 
@@ -53,6 +59,10 @@ constraints = {
     "longitude<=": -69.0,
 }
 
+
+# In[2]:
+
+
 from erddapy import ERDDAP
 
 e = ERDDAP(server=server, protocol=protocol,)
@@ -64,7 +74,11 @@ e.constraints = constraints
 
 print(e.get_download_url())
 
-If we change the response to `html` we can visualize the page.
+
+# If we change the response to `html` we can visualize the page.
+
+# In[3]:
+
 
 def show_iframe(src):
     from IPython.display import HTML
@@ -75,26 +89,46 @@ def show_iframe(src):
 
 show_iframe(e.get_download_url(response="html"))
 
-Additionally, the object has `.get_info_url()` and `.get_search_url()` that can be used to obtain the info and search URLs respectively
+
+# Additionally, the object has `.get_info_url()` and `.get_search_url()` that can be used to obtain the info and search URLs respectively
+
+# In[4]:
+
 
 show_iframe(e.get_info_url(response="html"))
 
+
+# In[5]:
+
+
 show_iframe(e.get_search_url(response="html"))
 
-`erddapy` also brings some simple methods to download the data in some common data formats, like `pandas.DataFrame` and `xarray.Dataset`.
+
+# `erddapy` also brings some simple methods to download the data in some common data formats, like `pandas.DataFrame` and `xarray.Dataset`.
+
+# In[6]:
+
 
 df = e.to_pandas(index_col="time (UTC)", parse_dates=True,).dropna()
 
 
 df.head()
 
+
+# In[7]:
+
+
 ds = e.to_xarray(decode_times=False)
 
 ds["temperature"]
 
-Here is a simple plot using the data from `xarray`.
 
-%matplotlib inline
+# Here is a simple plot using the data from `xarray`.
+
+# In[8]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
@@ -112,9 +146,13 @@ cbar = fig.colorbar(cs, orientation="vertical", extend="both")
 cbar.ax.set_ylabel(r"Temperature ($^\circ$C)")
 ax.set_ylabel("Depth (m)")
 
-One can build the proper variables programmatically, feed them in erddapy, and then build a service like [this notebook](https://mybinder.org/v2/gh/ioos/BioData-Training-Workshop/master?filepath=notebooks/ERDDAP_timeseries_explorer-IOOS.ipynb). However, erddapy is also designed for interactive work. One can explore interactively the ERDDAP server from Python.
 
-PS: Note that in this example below we did not feed any variables other than the server URL
+# One can build the proper variables programmatically, feed them in erddapy, and then build a service like [this notebook](https://mybinder.org/v2/gh/ioos/BioData-Training-Workshop/master?filepath=notebooks/ERDDAP_timeseries_explorer-IOOS.ipynb). However, erddapy is also designed for interactive work. One can explore interactively the ERDDAP server from Python.
+# 
+# PS: Note that in this example below we did not feed any variables other than the server URL
+
+# In[9]:
+
 
 import pandas as pd
 from erddapy import ERDDAP
@@ -123,13 +161,21 @@ e = ERDDAP(server="https://data.ioos.us/gliders/erddap")
 
 df = pd.read_csv(e.get_search_url(response="csv", search_for="all"))
 
+
+# In[10]:
+
+
 "We have {} tabledap, {} griddap, and {} wms endpoints.".format(
     len(set(df["tabledap"].dropna())),
     len(set(df["griddap"].dropna())),
     len(set(df["wms"].dropna())),
 )
 
-We can refine our search by adding some constraints.
+
+# We can refine our search by adding some constraints.
+
+# In[11]:
+
 
 kw = {
     "standard_name": "sea_water_temperature",
@@ -142,6 +188,10 @@ kw = {
     "cdm_data_type": "trajectoryprofile",
 }
 
+
+# In[12]:
+
+
 search_url = e.get_search_url(response="csv", **kw)
 search = pd.read_csv(search_url)
 gliders = search["Dataset ID"].values
@@ -149,14 +199,22 @@ gliders = search["Dataset ID"].values
 msg = "Found {} Glider Datasets:\n\n{}".format
 print(msg(len(gliders), "\n".join(gliders)))
 
-Last but not least we can inspect a specific `dataset_id`.
+
+# Last but not least we can inspect a specific `dataset_id`.
+
+# In[13]:
+
 
 info_url = e.get_info_url(dataset_id=gliders[0], response="csv")
 info = pd.read_csv(info_url)
 
 info.head()
 
-With the info URL we can filter the data using attributes.
+
+# With the info URL we can filter the data using attributes.
+
+# In[14]:
+
 
 cdm_profile_variables = info.loc[
     info["Attribute Name"] == "cdm_profile_variables", "Variable Name"
@@ -164,22 +222,38 @@ cdm_profile_variables = info.loc[
 
 print("".join(cdm_profile_variables))
 
-In fact, that is such a common operation that `erddapy` brings its own method for filtering data by attributes. In the next three cells we request the variables names that has a `cdm_profile_variables`, a `standard_name` of `sea_water_temperature`, and an axis respectively.
+
+# In fact, that is such a common operation that `erddapy` brings its own method for filtering data by attributes. In the next three cells we request the variables names that has a `cdm_profile_variables`, a `standard_name` of `sea_water_temperature`, and an axis respectively.
+
+# In[15]:
+
 
 e.get_var_by_attr(
     dataset_id=gliders[0], cdm_profile_variables=lambda v: v is not None,
 )
 
+
+# In[16]:
+
+
 e.get_var_by_attr(
     dataset_id="whoi_406-20160902T1700", standard_name="sea_water_temperature",
 )
+
+
+# In[17]:
+
 
 axis = e.get_var_by_attr(
     dataset_id="whoi_406-20160902T1700", axis=lambda v: v in ["X", "Y", "Z", "T"],
 )
 axis
 
-With this method one can, for example, request data from multiple datasets using the standard_name.
+
+# With this method one can, for example, request data from multiple datasets using the standard_name.
+
+# In[18]:
+
 
 def get_cf_vars(
     e,
@@ -204,6 +278,10 @@ def get_cf_vars(
         )
     variables.extend(var)
     return variables
+
+
+# In[19]:
+
 
 from requests.exceptions import HTTPError
 
@@ -231,7 +309,11 @@ for glider in gliders:
         continue
     dfs.update({glider: download_csv(download_url)})
 
-To close this notebook, let's plot the tracks and a TS diagram for all the gliders found in that search.
+
+# To close this notebook, let's plot the tracks and a TS diagram for all the gliders found in that search.
+
+# In[20]:
+
 
 k = 0
 tiles = (
@@ -253,6 +335,10 @@ def plot_track(df, name, color="orange"):
         popup=name,
     ).add_to(m)
 
+
+# In[21]:
+
+
 from palettable import cubehelix
 
 colors = cubehelix.Cubehelix.make(
@@ -266,6 +352,10 @@ colors = cubehelix.Cubehelix.make(
     gamma=0.9,
 ).hex_colors
 
+
+# In[22]:
+
+
 import folium
 
 m = folium.Map(location=(40.3052, -70.8833), zoom_start=7, tiles=tiles, attr="ESRI")
@@ -275,6 +365,10 @@ for name, df in list(dfs.items()):
     k += 1
 
 m
+
+
+# In[23]:
+
 
 def glider_scatter(df, ax, glider):
     ax.scatter(df["temperature"], df["salinity"], s=10, alpha=0.5, label=glider)
@@ -291,3 +385,4 @@ ax.set_ylim(20, 41)
 ax.set_xlim(2.5, 26)
 
 ax.legend(bbox_to_anchor=(1.5, 0.5), loc="right")
+

@@ -1,10 +1,16 @@
-# Using BagIt to tag oceanographic data
+#!/usr/bin/env python
+# coding: utf-8
 
+# # Using BagIt to tag oceanographic data
+# 
+# 
+# [`BagIt`](https://en.wikipedia.org/wiki/BagIt) is a packaging format that supports storage of arbitrary digital content. The "bag" consists of arbitrary content and "tags," the metadata files. `BagIt` packages can be used to facilitate data sharing with federal archive centers - thus ensuring digital preservation of oceanographic datasets within IOOS and its regional associations. NOAA NCEI supports reading from a Web Accessible Folder (WAF) containing bagit archives. For an example please see: http://ncei.axiomdatascience.com/cencoos/
+# 
+# 
+# On this notebook we will use the [python interface](http://libraryofcongress.github.io/bagit-python) for `BagIt` to create a "bag" of a time-series profile data. First let us load our data from a comma separated values file (`CSV`).
 
-[`BagIt`](https://en.wikipedia.org/wiki/BagIt) is a packaging format that supports storage of arbitrary digital content. The "bag" consists of arbitrary content and "tags," the metadata files. `BagIt` packages can be used to facilitate data sharing with federal archive centers - thus ensuring digital preservation of oceanographic datasets within IOOS and its regional associations. NOAA NCEI supports reading from a Web Accessible Folder (WAF) containing bagit archives. For an example please see: http://ncei.axiomdatascience.com/cencoos/
+# In[1]:
 
-
-On this notebook we will use the [python interface](http://libraryofcongress.github.io/bagit-python) for `BagIt` to create a "bag" of a time-series profile data. First let us load our data from a comma separated values file (`CSV`).
 
 import os
 
@@ -15,13 +21,21 @@ fname = os.path.join("data", "dsg", "timeseriesProfile.csv")
 df = pd.read_csv(fname, parse_dates=["time"])
 df.head()
 
-Instead of "bagging" the `CSV` file we will use this create a metadata rich netCDF file.
 
-We can convert the table to a `DSG`, Discrete Sampling Geometry, using `pocean.dsg`. The first thing we need to do is to create a mapping from the data column names to the netCDF `axes`.
+# Instead of "bagging" the `CSV` file we will use this create a metadata rich netCDF file.
+# 
+# We can convert the table to a `DSG`, Discrete Sampling Geometry, using `pocean.dsg`. The first thing we need to do is to create a mapping from the data column names to the netCDF `axes`.
+
+# In[2]:
+
 
 axes = {"t": "time", "x": "lon", "y": "lat", "z": "depth"}
 
-Now we can create a [Orthogonal Multidimensional Timeseries Profile](http://cfconventions.org/cf-conventions/v1.6.0/cf-conventions.html#_orthogonal_multidimensional_array_representation_of_time_series) object...
+
+# Now we can create a [Orthogonal Multidimensional Timeseries Profile](http://cfconventions.org/cf-conventions/v1.6.0/cf-conventions.html#_orthogonal_multidimensional_array_representation_of_time_series) object...
+
+# In[3]:
+
 
 import os
 import tempfile
@@ -33,7 +47,11 @@ os.close(output_fp)
 
 ncd = omtsp.from_dataframe(df.reset_index(), output=output, axes=axes, mode="a")
 
-... And add some extra metadata before we close the file.
+
+# ... And add some extra metadata before we close the file.
+
+# In[4]:
+
 
 naming_authority = "ioos"
 st_id = "Station1"
@@ -43,12 +61,20 @@ ncd.id = st_id
 print(ncd)
 ncd.close()
 
-Time to create the archive for the file with `BagIt`. We have to create a folder for the bag.
+
+# Time to create the archive for the file with `BagIt`. We have to create a folder for the bag.
+
+# In[5]:
+
 
 temp_bagit_folder = tempfile.mkdtemp()
 temp_data_folder = os.path.join(temp_bagit_folder, "data")
 
-Now we can create the bag and copy the netCDF file to a `data` sub-folder.
+
+# Now we can create the bag and copy the netCDF file to a `data` sub-folder.
+
+# In[6]:
+
 
 import shutil
 
@@ -58,7 +84,11 @@ bag = bagit.make_bag(temp_bagit_folder, checksum=["sha256"])
 
 shutil.copy2(output, temp_data_folder + "/parameter1.nc")
 
-Last, but not least, we have to set bag metadata and update the existing bag with it.
+
+# Last, but not least, we have to set bag metadata and update the existing bag with it.
+
+# In[7]:
+
 
 urn = "urn:ioos:station:{naming_authority}:{st_id}".format(
     naming_authority=naming_authority, st_id=st_id
@@ -82,16 +112,24 @@ bag_meta = {
 bag.info.update(bag_meta)
 bag.save(manifests=True, processes=4)
 
-That is it! Simple and efficient!!
 
-The cell below illustrates the bag directory tree.
+# That is it! Simple and efficient!!
+# 
+# The cell below illustrates the bag directory tree.
+# 
+# (Note that the commands below will not work on Windows and some \*nix systems may require the installation of the command `tree`, however, they are only need for this demonstration.)
 
-(Note that the commands below will not work on Windows and some \*nix systems may require the installation of the command `tree`, however, they are only need for this demonstration.)
+# In[8]:
 
-!tree $temp_bagit_folder
-!cat $temp_bagit_folder/manifest-sha256.txt
 
-We can add more files to the bag as needed.
+get_ipython().system('tree $temp_bagit_folder')
+get_ipython().system('cat $temp_bagit_folder/manifest-sha256.txt')
+
+
+# We can add more files to the bag as needed.
+
+# In[9]:
+
 
 shutil.copy2(output, temp_data_folder + "/parameter2.nc")
 shutil.copy2(output, temp_data_folder + "/parameter3.nc")
@@ -99,5 +137,10 @@ shutil.copy2(output, temp_data_folder + "/parameter4.nc")
 
 bag.save(manifests=True, processes=4)
 
-!tree $temp_bagit_folder
-!cat $temp_bagit_folder/manifest-sha256.txt
+
+# In[10]:
+
+
+get_ipython().system('tree $temp_bagit_folder')
+get_ipython().system('cat $temp_bagit_folder/manifest-sha256.txt')
+

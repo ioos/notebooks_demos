@@ -1,22 +1,28 @@
-# Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+#!/usr/bin/env python
+# coding: utf-8
 
-Web Map Services are a great way to find data you may be looking for in a particular geographic area.
+# # Read realtime data from IOOS Sensor Map via ERDDAP tabledap
+# 
+# Web Map Services are a great way to find data you may be looking for in a particular geographic area.
+# 
+# Suppose you were exploring the [IOOS Sensor Map](https://via.hypothes.is/https://sensors.ioos.us/#map),
+# and after selecting Significant Wave Height,
+# had selected buoy 44011 on George's Bank:
+# 
+# ![2017-03-27_16-21-08](https://cloud.githubusercontent.com/assets/1872600/24376518/213e6c4c-130a-11e7-9744-2f23e9660adf.png)
+# 
+# You click the `ERDDAP` link and generate a URL to download the data as `CSV` ![2017-03-27_16-24-35](https://cloud.githubusercontent.com/assets/1872600/24376521/2377afc8-130a-11e7-9a3b-c1c46e43d20d.png).
+# 
+# You notice that the URL that is generated
+# 
+# [`https://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&time>=2017-02-27T12:00:00Z&station="urn:ioos:station:wmo:44011"&parameter="Significant Wave Height"&unit="m"`](http://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&time>=2017-02-27T12:00:00Z&station="urn:ioos:station:wmo:44011"&parameter="Significant Wave Height"&unit="m")
+# 
+# is fairly easy to understand,
+# and that a program could construct that URL fairly easily.
+# Let's explore how that could work...
 
-Suppose you were exploring the [IOOS Sensor Map](https://via.hypothes.is/https://sensors.ioos.us/#map),
-and after selecting Significant Wave Height,
-had selected buoy 44011 on George's Bank:
+# In[1]:
 
-![2017-03-27_16-21-08](https://cloud.githubusercontent.com/assets/1872600/24376518/213e6c4c-130a-11e7-9744-2f23e9660adf.png)
-
-You click the `ERDDAP` link and generate a URL to download the data as `CSV` ![2017-03-27_16-24-35](https://cloud.githubusercontent.com/assets/1872600/24376521/2377afc8-130a-11e7-9a3b-c1c46e43d20d.png).
-
-You notice that the URL that is generated
-
-[`https://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&time>=2017-02-27T12:00:00Z&station="urn:ioos:station:wmo:44011"&parameter="Significant Wave Height"&unit="m"`](http://erddap.axiomdatascience.com/erddap/tabledap/sensor_service.csvp?time,depth,station,parameter,unit,value&time>=2017-02-27T12:00:00Z&station="urn:ioos:station:wmo:44011"&parameter="Significant Wave Height"&unit="m")
-
-is fairly easy to understand,
-and that a program could construct that URL fairly easily.
-Let's explore how that could work...
 
 import requests
 
@@ -50,9 +56,13 @@ def encode_erddap(urlbase, fname, columns, params):
     r.raise_for_status()
     return url
 
-Using the function we defined above, we can now bypass the forms and get the data by generating the URL "by hand". Below we have a query for `Significant Wave Height` from buoy `44011`, a buoy on George's Bank off the coast of Cape Cod, MA, starting at the beginning of the year 2017.
 
-\* For more information on how to use tabledap, please check the [NOAA ERDDAP documentation](https://via.hypothes.is/http://coastwatch.pfeg.noaa.gov/erddap/tabledap/documentation.html) for more information on the various parameters and responses of ERDDAP.
+# Using the function we defined above, we can now bypass the forms and get the data by generating the URL "by hand". Below we have a query for `Significant Wave Height` from buoy `44011`, a buoy on George's Bank off the coast of Cape Cod, MA, starting at the beginning of the year 2017.
+# 
+# \* For more information on how to use tabledap, please check the [NOAA ERDDAP documentation](https://via.hypothes.is/http://coastwatch.pfeg.noaa.gov/erddap/tabledap/documentation.html) for more information on the various parameters and responses of ERDDAP.
+
+# In[2]:
+
 
 try:
     from urllib.parse import unquote
@@ -88,7 +98,11 @@ url = encode_erddap(urlbase, fname, columns, params)
 
 print(unquote(url))
 
-Here is a cool part about ERDDAP `tabledap` - The data `tabledap` `csvp` response can be easily read by Python's pandas `read_csv` function.
+
+# Here is a cool part about ERDDAP `tabledap` - The data `tabledap` `csvp` response can be easily read by Python's pandas `read_csv` function.
+
+# In[3]:
+
 
 from pandas import read_csv
 
@@ -99,17 +113,25 @@ df["station"] = df.station.str.split(":").str.join("_")
 
 df.head()
 
-With the `DataFrame` we can easily plot the data.
 
-%matplotlib inline
+# With the `DataFrame` we can easily plot the data.
+
+# In[4]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 ax = df["value"].plot(figsize=(11, 2.75), title=df["parameter"][0])
 
-You may notice that slicing the time dimension on the sever side is very fast when compared with an OPeNDAP request. The downloading of the time dimension data, slice, and subsequent downloading of the actual data are all much faster.
 
-ERDDAP also allows for filtering of the variable's values. For example, let's get Wave Heights that are bigger than 6 meters starting from 2016.
+# You may notice that slicing the time dimension on the sever side is very fast when compared with an OPeNDAP request. The downloading of the time dimension data, slice, and subsequent downloading of the actual data are all much faster.
+# 
+# ERDDAP also allows for filtering of the variable's values. For example, let's get Wave Heights that are bigger than 6 meters starting from 2016.
+# 
+# \*\* Note how we can lazily build on top of the previous query using Python's dictionaries.
 
-\*\* Note how we can lazily build on top of the previous query using Python's dictionaries.
+# In[5]:
+
 
 params.update(
     {"value>": 6, "time>": "2016-01-00T00:00:00Z",}
@@ -124,7 +146,11 @@ df["station"] = df.station.str.split(":").str.join("_")
 
 df.head()
 
-And now we can visualize the frequency of `Significant Wave Height` greater than 6 meters by month.
+
+# And now we can visualize the frequency of `Significant Wave Height` greater than 6 meters by month.
+
+# In[6]:
+
 
 def key(x):
     return x.month
@@ -138,9 +164,13 @@ m = ax.set_xticklabels(
     ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dec"]
 )
 
-Wow! Wintertime is pretty rough out on George's Bank!
 
-There is also a built-in relative time functionality so you can specify a specific time frame you look at. Here we demonstrate this part of the tool by getting the last 2 hours and displaying that with the `HTML` response in an `IFrame`.
+# Wow! Wintertime is pretty rough out on George's Bank!
+# 
+# There is also a built-in relative time functionality so you can specify a specific time frame you look at. Here we demonstrate this part of the tool by getting the last 2 hours and displaying that with the `HTML` response in an `IFrame`.
+
+# In[7]:
+
 
 from IPython.display import HTML
 
@@ -159,8 +189,12 @@ url = encode_erddap(urlbase, fname, columns, params)
 iframe = '<iframe src="{src}" width="650" height="370"></iframe>'.format
 HTML(iframe(src=url))
 
-`ERDDAP` responses are very rich. There are even multiple image formats in the automate graph responses.
-Here is how to get a `.png` file for the temperature time-series. While you can specify the width and height, we chose just an arbitrary size.
+
+# `ERDDAP` responses are very rich. There are even multiple image formats in the automate graph responses.
+# Here is how to get a `.png` file for the temperature time-series. While you can specify the width and height, we chose just an arbitrary size.
+
+# In[8]:
+
 
 fname = "sensor_service.png"
 
@@ -180,6 +214,7 @@ url = encode_erddap(urlbase, fname, columns, params)
 iframe = '<iframe src="{src}" width="{width}" height="{height}"></iframe>'.format
 HTML(iframe(src=url, width=width + 5, height=height + 5))
 
-This example tells us it is rough and cold out on George's Bank!
 
-To explore more datasets, use the IOOS sensor map [website](https://sensors.ioos.us/#map)!
+# This example tells us it is rough and cold out on George's Bank!
+# 
+# To explore more datasets, use the IOOS sensor map [website](https://sensors.ioos.us/#map)!

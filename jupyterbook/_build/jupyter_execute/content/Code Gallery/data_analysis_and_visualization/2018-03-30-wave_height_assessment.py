@@ -1,40 +1,32 @@
-# Coastal Ocean Wave Height Assessment
+#!/usr/bin/env python
+# coding: utf-8
 
+# # Coastal Ocean Wave Height Assessment
+# 
+# 
+# This notebook is a follow-up from the [Sea Surface Height notebook](http://ioos.github.io/notebooks_demos/notebooks/2018-03-15-ssh-skillscore), here we use the same workflow to compare observations and models for sea waves height.
+# 
+# We start with virtually the same configuration from before, except that now we changed the variable names to "waves" and the corresponding `standard_names` for waves.
+# 
+# For more information regarding the workflow presented here see [SSH notebook](http://ioos.github.io/notebooks_demos/notebooks/2018-03-15-ssh-skillscore) and [Signell, Richard P.; Fernandes, Filipe; Wilcox, Kyle.   2016. "Dynamic Reusable Workflows for Ocean Science." *J. Mar. Sci. Eng.* 4, no. 4: 68](http://dx.doi.org/10.3390/jmse4040068).
 
-This notebook is a follow-up from the [Sea Surface Height notebook](http://ioos.github.io/notebooks_demos/notebooks/2018-03-15-ssh-skillscore), here we use the same workflow to compare observations and models for sea waves height.
+# In[1]:
 
-We start with virtually the same configuration from before, except that now we changed the variable names to "waves" and the corresponding `standard_names` for waves.
-
-For more information regarding the workflow presented here see [SSH notebook](http://ioos.github.io/notebooks_demos/notebooks/2018-03-15-ssh-skillscore) and [Signell, Richard P.; Fernandes, Filipe; Wilcox, Kyle.   2016. "Dynamic Reusable Workflows for Ocean Science." *J. Mar. Sci. Eng.* 4, no. 4: 68](http://dx.doi.org/10.3390/jmse4040068).
 
 import warnings
 
 # Suppresing warnings for a "pretty output."
 warnings.simplefilter("ignore")
 
-%%writefile wave_config.yaml
 
-date:
-    start: 2018-2-28 00:00:00
-    stop:  2018-3-10 00:00:00
+# In[2]:
 
-run_name: 'latest'
 
-region:
-    bbox: [-71.20, 41.40, -69.20, 43.74]
-    crs: 'urn:ogc:def:crs:OGC:1.3:CRS84'
+get_ipython().run_cell_magic('writefile', 'wave_config.yaml', "\ndate:\n    start: 2018-2-28 00:00:00\n    stop:  2018-3-10 00:00:00\n\nrun_name: 'latest'\n\nregion:\n    bbox: [-71.20, 41.40, -69.20, 43.74]\n    crs: 'urn:ogc:def:crs:OGC:1.3:CRS84'\n\n# try: sea_surface_wave_significant_height\nsos_name: 'waves'\n\ncf_names:\n    - sea_surface_wave_significant_height\n    - sea_surface_wind_wave_significant_height\n\nunits: 'm'\n\ncatalogs:\n    - https://data.ioos.us/csw")
 
-# try: sea_surface_wave_significant_height
-sos_name: 'waves'
 
-cf_names:
-    - sea_surface_wave_significant_height
-    - sea_surface_wind_wave_significant_height
+# In[3]:
 
-units: 'm'
-
-catalogs:
-    - https://data.ioos.us/csw
 
 import os
 import shutil
@@ -59,6 +51,10 @@ print(
     "Bounding box: {0:3.2f}, {1:3.2f},"
     "{2:3.2f}, {3:3.2f}".format(*config["region"]["bbox"])
 )
+
+
+# In[4]:
+
 
 def make_filter(config):
     from owslib import fes
@@ -87,6 +83,10 @@ def make_filter(config):
 
 
 filter_list = make_filter(config)
+
+
+# In[5]:
+
 
 from ioos_tools.ioos import get_csw_records, service_urls
 from owslib.csw import CatalogueServiceWeb
@@ -121,6 +121,10 @@ for endpoint in config["catalogs"]:
 # Get only unique endpoints.
 dap_urls = list(set(dap_urls))
 
+
+# In[6]:
+
+
 from ioos_tools.ioos import is_station
 
 non_stations = []
@@ -137,6 +141,10 @@ print(fmt(" Filtered DAP "))
 for url in dap_urls:
     print("{}.html".format(url))
 
+
+# In[7]:
+
+
 from pyoos.collectors.ndbc.ndbc_sos import NdbcSos
 
 collector_ndbc = NdbcSos()
@@ -150,6 +158,10 @@ ofrs = collector_ndbc.server.offerings
 title = collector_ndbc.server.identification.title
 print(fmt(" NDBC Collector offerings "))
 print("{}: {} offerings".format(title, len(ofrs)))
+
+
+# In[8]:
+
 
 import pandas as pd
 from ioos_tools.ioos import collector2table
@@ -173,6 +185,10 @@ if ndbc:
 table = pd.DataFrame(data).set_index("station_code")
 table
 
+
+# In[9]:
+
+
 data = ndbc
 
 index = pd.date_range(
@@ -192,7 +208,11 @@ for series in data:
 
     observations.append(obs)
 
-%matplotlib inline
+
+# In[10]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 import matplotlib.pyplot as plt
 
@@ -203,6 +223,10 @@ for series in data:
     ax.grid(True)
     ax.set_ylabel("Wave height (m)")
     ax.set_xlabel("")
+
+
+# In[11]:
+
 
 import iris
 from ioos_tools.tardis import series2cube
@@ -221,6 +245,10 @@ cubes = iris.cube.CubeList([series2cube(obs, attr=attr) for obs in observations]
 outfile = os.path.join(save_dir, "OBS_DATA.nc")
 iris.save(cubes, outfile)
 
+
+# In[12]:
+
+
 def check_standard_name(url, standard_names):
     from netCDF4 import Dataset
 
@@ -232,6 +260,10 @@ def check_standard_name(url, standard_names):
         return True
     else:
         return False
+
+
+# In[13]:
+
 
 from ioos_tools.ioos import get_model_name
 from ioos_tools.tardis import is_model, proc_cube, quick_load_cubes
@@ -266,6 +298,10 @@ for k, url in enumerate(dap_urls):
         IndexError,
     ) as e:
         print("Cannot get cube for: {}\n{}".format(url, e))
+
+
+# In[14]:
+
 
 import iris
 from ioos_tools.tardis import (
@@ -326,12 +362,20 @@ for mod_name, cube in cubes.items():
         del cube
     print("Finished processing [{}]".format(mod_name))
 
+
+# In[15]:
+
+
 from ioos_tools.ioos import stations_keys
 
 
 def rename_cols(df, config):
     cols = stations_keys(config, key="station_name")
     return df.rename(columns=cols)
+
+
+# In[16]:
+
 
 from ioos_tools.ioos import load_ncs
 from ioos_tools.skill_score import apply_skill, mean_bias
@@ -345,6 +389,10 @@ skill_score = dict(mean_bias=df.to_dict())
 df.dropna(how="all", axis=1, inplace=True)
 df = df.applymap("{:.2f}".format).replace("nan", "--")
 
+
+# In[17]:
+
+
 from ioos_tools.skill_score import rmse
 
 dfs = load_ncs(config)
@@ -355,6 +403,10 @@ skill_score["rmse"] = df.to_dict()
 # Filter out stations with no valid comparison.
 df.dropna(how="all", axis=1, inplace=True)
 df = df.applymap("{:.2f}".format).replace("nan", "--")
+
+
+# In[18]:
+
 
 import pandas as pd
 
@@ -367,6 +419,10 @@ mean_bias = mean_bias.applymap("{:.2f}".format).replace("nan", "--")
 
 skill_score = pd.DataFrame.from_dict(skill_score["rmse"])
 skill_score = skill_score.applymap("{:.2f}".format).replace("nan", "--")
+
+
+# In[19]:
+
 
 import folium
 from ioos_tools.ioos import get_coordinates
@@ -404,9 +460,17 @@ def make_map(bbox, **kw):
         p.add_to(m)
     return m
 
+
+# In[20]:
+
+
 bbox = config["region"]["bbox"]
 
 m = make_map(bbox, zoom_start=9, line=True, layers=True)
+
+
+# In[21]:
+
 
 all_obs = stations_keys(config)
 
@@ -446,6 +510,10 @@ for station, info in groups:
 
 MarkerCluster(locations=locations, popups=popups, name="Cluster").add_to(m)
 
+
+# In[22]:
+
+
 # Some known models names. Unknown models will use the title metadata or the URL.
 titles = {
     "coawst_4_use_best": "COAWST_4",
@@ -454,6 +522,10 @@ titles = {
     "NECOFS_FVCOM_OCEAN_MASSBAY_FORECAST": "NECOFS_MassBay",
     "OBS_DATA": "Observations",
 }
+
+
+# In[23]:
+
 
 from itertools import cycle
 
@@ -532,6 +604,10 @@ def make_marker(p, station):
     marker = folium.Marker(location=[lat, lon], popup=popup, icon=icon)
     return marker
 
+
+# In[24]:
+
+
 dfs = load_ncs(config)
 
 for station in dfs:
@@ -547,4 +623,5 @@ folium.LayerControl().add_to(m)
 
 m
 
-We can observe a noteworthy increase in the significant wave height starting February 2nd and peaking around March 3rd and followed but a second smaller peak after March 8th.
+
+# We can observe a noteworthy increase in the significant wave height starting February 2nd and peaking around March 3rd and followed but a second smaller peak after March 8th.

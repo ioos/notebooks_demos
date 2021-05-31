@@ -1,18 +1,24 @@
-# IOOS GTS Statistics
+#!/usr/bin/env python
+# coding: utf-8
 
-The Global Telecommunication System (GTS) is a coordinated effort for rapid distribution of observations.
-The GTS monthly reports show the number of messages released to GTS for each station.
-The reports contain the following fields:
+# # IOOS GTS Statistics
+# 
+# The Global Telecommunication System (GTS) is a coordinated effort for rapid distribution of observations.
+# The GTS monthly reports show the number of messages released to GTS for each station.
+# The reports contain the following fields:
+# 
+# - location ID: Identifier that station messages are released under to the GTS;
+# - region: Designated IOOS Regional Association (only for IOOS regional report);
+# - sponsor: Organization that owns and maintains the station;
+# - Met: Total number of met messages released to the GTS
+# - Wave: Total number of wave messages released to the GTS
+# 
+# In this notebook we will explore the statistics of the messages IOOS is releasing to GTS.
+# 
+# The first step is to download the data. We will use an ERDDAP server that [hosts the CSV files](https://ferret.pmel.noaa.gov/generic/erddap/files/ioos_obs_counts/) with the ingest data.
 
-- location ID: Identifier that station messages are released under to the GTS;
-- region: Designated IOOS Regional Association (only for IOOS regional report);
-- sponsor: Organization that owns and maintains the station;
-- Met: Total number of met messages released to the GTS
-- Wave: Total number of wave messages released to the GTS
+# In[1]:
 
-In this notebook we will explore the statistics of the messages IOOS is releasing to GTS.
-
-The first step is to download the data. We will use an ERDDAP server that [hosts the CSV files](https://ferret.pmel.noaa.gov/generic/erddap/files/ioos_obs_counts/) with the ingest data.
 
 from datetime import date
 
@@ -28,13 +34,21 @@ e.constraints = {
     "time<": "2020-11",
 }
 
+
+# In[2]:
+
+
 df = e.to_pandas(parse_dates=True)
 
 df["locationID"] = df["locationID"].str.lower()
 
 df.tail()
 
-The table has all the ingest data from 2019-01-01 to 2020-06-01. We can now explore it grouping the data by IOOS Regional Association (RA).
+
+# The table has all the ingest data from 2019-01-01 to 2020-06-01. We can now explore it grouping the data by IOOS Regional Association (RA).
+
+# In[3]:
+
 
 groups = df.groupby("region")
 
@@ -42,7 +56,11 @@ ax = groups.sum().plot(kind="bar", figsize=(11, 3.75))
 ax.yaxis.get_major_formatter().set_scientific(False)
 ax.set_ylabel("# observations");
 
-Let us check the monthly sum of data released both for individuak met and wave and the totdals.
+
+# Let us check the monthly sum of data released both for individuak met and wave and the totdals.
+
+# In[4]:
+
 
 import pandas as pd
 
@@ -52,7 +70,11 @@ df["time (UTC)"] = df["time (UTC)"].dt.tz_localize(None)
 
 groups = df.groupby(pd.Grouper(key="time (UTC)", freq="M"))
 
-We can create a table of observations per month,
+
+# We can create a table of observations per month,
+
+# In[5]:
+
 
 s = groups.sum()
 totals = s.assign(total=s["met"] + s["wave"])
@@ -60,9 +82,13 @@ totals.index = totals.index.to_period("M")
 
 totals
 
-and visualize it in a bar plot.
 
-%matplotlib inline
+# and visualize it in a bar plot.
+
+# In[6]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 
@@ -78,9 +104,13 @@ ax.set_xticklabels(
 ax.yaxis.get_major_formatter().set_scientific(False)
 ax.set_ylabel("# observations")
 
-Those plots are interesting to understand the RAs role in the GTS ingest and how much data is being released over time. It would be nice to see those per buoy on a map.
 
-For that we need to get the position of the NDBC buoys. Let's get a table of all the buoys and match with what we have in the GTS data.
+# Those plots are interesting to understand the RAs role in the GTS ingest and how much data is being released over time. It would be nice to see those per buoy on a map.
+# 
+# For that we need to get the position of the NDBC buoys. Let's get a table of all the buoys and match with what we have in the GTS data.
+
+# In[7]:
+
 
 import xml.etree.ElementTree as et
 
@@ -103,10 +133,18 @@ buoys["lat"] = buoys["lat"].astype(float)
 
 buoys.head()
 
-For simplificty we will plot the total of observations per buoys.
+
+# For simplificty we will plot the total of observations per buoys.
+
+# In[8]:
+
 
 groups = df.groupby("locationID")
 location_sum = groups.sum()
+
+
+# In[9]:
+
 
 buoys = buoys.T
 
@@ -116,7 +154,11 @@ extra_cols = extra_cols[["lat", "lon", "type", "pgm", "name"]]
 map_df = pd.concat([location_sum, extra_cols], axis=1)
 map_df = map_df.loc[map_df["met"] + map_df["wave"] > 0]
 
-And now we can overlay an HTML table with the buoy information and ingest data totals.
+
+# And now we can overlay an HTML table with the buoy information and ingest data totals.
+
+# In[10]:
+
 
 from ipyleaflet import AwesomeIcon, Marker, Map, LegendControl, FullScreenControl, Popup
 from ipywidgets import HTML
@@ -162,3 +204,4 @@ for k, row in map_df.iterrows():
         marker.popup = msg
         m.add_layer(marker)
 m
+

@@ -1,13 +1,19 @@
-# IOOS models: Temperature Horizontal Slices
+#!/usr/bin/env python
+# coding: utf-8
 
-This is the second post on the series “IOOS Ocean Models IOOS.”
+# # IOOS models: Temperature Horizontal Slices
+# 
+# This is the second post on the series “IOOS Ocean Models IOOS.”
+# 
+# Thanks to standardized metadata and grid specs one read the data and compare different
+# models results.
+# In this post we will demostrante how to leverage Python's libraries to plot
+# horizontal temperature slices from a variety of ocean models with minimum specific code.
+# 
+# Be sure to check the [first post on the series](http://ioos.github.io/notebooks_demos/notebooks/2018-12-04-grids/).
 
-Thanks to standardized metadata and grid specs one read the data and compare different
-models results.
-In this post we will demostrante how to leverage Python's libraries to plot
-horizontal temperature slices from a variety of ocean models with minimum specific code.
+# In[1]:
 
-Be sure to check the [first post on the series](http://ioos.github.io/notebooks_demos/notebooks/2018-12-04-grids/).
 
 models = {
     "DOPPIO": {
@@ -60,7 +66,11 @@ models = {
     },
 }
 
-We need loop over the models dictionary and load the grid and the variable of interest.
+
+# We need loop over the models dictionary and load the grid and the variable of interest.
+
+# In[2]:
+
 
 from gridgeo import GridGeo
 from gridgeo.cfvariable import CFVariable
@@ -79,10 +89,14 @@ for name in list(models):
         print(f"Could not get data from {name}\n{e}")
         models.pop(name)
 
-The main challenge is to figure out what layer is the surface in all
-those models using only the metadata available with little "manual inspection."
-The function `get_surface_idx` below uses the variable mesh information to figure that
-out automatically for us.
+
+# The main challenge is to figure out what layer is the surface in all
+# those models using only the metadata available with little "manual inspection."
+# The function `get_surface_idx` below uses the variable mesh information to figure that
+# out automatically for us.
+
+# In[3]:
+
 
 def get_surface_idx(var, mesh):
     # Short-circuit if data does not have a z-axis.
@@ -108,8 +122,12 @@ def get_surface_idx(var, mesh):
         raise ValueError(f'Cannot find property "positive" in {z}')
     return idx
 
-Now that we know what is the surface layer we can get the data and its
-bounding box for the figure.
+
+# Now that we know what is the surface layer we can get the data and its
+# bounding box for the figure.
+
+# In[4]:
+
 
 def get_layer(var, mesh, layer, time_step=-1):
     if layer is None:
@@ -128,13 +146,17 @@ def get_bbox(var, delta=0.1):
     y = var.y_axis()[:]
     return [np.min(x) - delta, np.max(x) + delta, np.min(y) - delta, np.max(y) + delta]
 
-Last but not least we have `plot_surface_cfvar` that checks if we have a UGRID,
-1-D or 2-D kind of mesh for the plotting.
-We do have one special case, `NYHOPS`,
-where the coordinates associated with the variable are not
-the coordinates we need for plotting, so we need to add an exception code for that model.
 
-%matplotlib inline
+# Last but not least we have `plot_surface_cfvar` that checks if we have a UGRID,
+# 1-D or 2-D kind of mesh for the plotting.
+# We do have one special case, `NYHOPS`,
+# where the coordinates associated with the variable are not
+# the coordinates we need for plotting, so we need to add an exception code for that model.
+
+# In[5]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
@@ -206,7 +228,11 @@ def plot_surface_cfvar(var, grid, name, vlevel=None, time_step=-1):
     ax.set_title(f"{name}")
     return fig, ax
 
-Finally we can loop over the models plot them all:
+
+# Finally we can loop over the models plot them all:
+
+# In[6]:
+
 
 for name in models.keys():
     model = models[name]
@@ -215,6 +241,7 @@ for name in models.keys():
     vlevel = get_surface_idx(var, grid.mesh)
     fig, ax = plot_surface_cfvar(var, grid, name, vlevel=vlevel, time_step=-1)
 
-It is relatively easy to change to any other variable like salinity for example.
-In the next post we will demonstrate how to plot vertical sections,
-those can be challenging due to the heterogeneity of vertical coordinates in the models.
+
+# It is relatively easy to change to any other variable like salinity for example.
+# In the next post we will demonstrate how to plot vertical sections,
+# those can be challenging due to the heterogeneity of vertical coordinates in the models.

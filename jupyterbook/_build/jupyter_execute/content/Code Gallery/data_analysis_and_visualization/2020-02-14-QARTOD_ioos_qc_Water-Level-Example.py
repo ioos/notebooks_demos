@@ -1,18 +1,28 @@
-# IOOS QARTOD software (ioos_qc)
+#!/usr/bin/env python
+# coding: utf-8
 
-This post will demonstrate how to [run ``ioos_qc``](https://github.com/ioos/ioos_qc) on a time-series dataset. ``ioos_qc`` implements the [Quality Assurance / Quality Control of Real Time Oceanographic Data (QARTOD)](https://ioos.noaa.gov/project/qartod/).
+# # IOOS QARTOD software (ioos_qc)
+# 
+# This post will demonstrate how to [run ``ioos_qc``](https://github.com/ioos/ioos_qc) on a time-series dataset. ``ioos_qc`` implements the [Quality Assurance / Quality Control of Real Time Oceanographic Data (QARTOD)](https://ioos.noaa.gov/project/qartod/).
+# 
+# We will [use `bokeh`](https://docs.bokeh.org/en/latest/) for interactive plots, so let's start by loading the interactive notebook output.
 
-We will [use `bokeh`](https://docs.bokeh.org/en/latest/) for interactive plots, so let's start by loading the interactive notebook output.
+# In[1]:
+
 
 from bokeh.plotting import output_notebook
 output_notebook()
 
-We will be using the water level data from a [fixed station in Kotzebue, AK](https://www.google.com/maps?q=66.895035,-162.566752).
 
-Below we create a simple Quality Assurance/Quality Control (QA/QC) configuration that will be used as input for ``ioos_qc``. All the interval values are in the same units as the data.
+# We will be using the water level data from a [fixed station in Kotzebue, AK](https://www.google.com/maps?q=66.895035,-162.566752).
+# 
+# Below we create a simple Quality Assurance/Quality Control (QA/QC) configuration that will be used as input for ``ioos_qc``. All the interval values are in the same units as the data.
+# 
+# For more information on the tests and recommended values for QA/QC check the documentation of each test and its inputs: 
+# https://ioos.github.io/ioos_qc/api/ioos_qc.html#module-ioos_qc.qartod
 
-For more information on the tests and recommended values for QA/QC check the documentation of each test and its inputs: 
-https://ioos.github.io/ioos_qc/api/ioos_qc.html#module-ioos_qc.qartod
+# In[2]:
+
 
 variable_name = "sea_surface_height_above_sea_level_geoid_mhhw"
 
@@ -35,9 +45,13 @@ qc_config = {
     }
 }
 
-Now we are ready to load the data, run tests and plot results!
 
-We will get the data from the [AOOS ERDDAP server](http://erddap.aoos.org/erddap/). Note that the data may change in the future. For reproducibility's sake we will save the data downloaded into a CSV file.
+# Now we are ready to load the data, run tests and plot results!
+# 
+# We will get the data from the [AOOS ERDDAP server](http://erddap.aoos.org/erddap/). Note that the data may change in the future. For reproducibility's sake we will save the data downloaded into a CSV file.
+
+# In[3]:
+
 
 from pathlib import Path
 import pandas as pd
@@ -73,6 +87,10 @@ else:
 
 data.head()
 
+
+# In[4]:
+
+
 from ioos_qc.config import QcConfig
 
 
@@ -87,16 +105,20 @@ qc_results =  qc.run(
 
 qc_results
 
-The results are returned in a dictionary format, similar to the input configuration, with a mask for each test. While the mask **is** a masked array it should not be applied as such. The results range from 1 to 4 meaning:
 
-1. data passed the QA/QC
-2. did not run on this data point
-3. flag as suspect
-4. flag as failed
+# The results are returned in a dictionary format, similar to the input configuration, with a mask for each test. While the mask **is** a masked array it should not be applied as such. The results range from 1 to 4 meaning:
+# 
+# 1. data passed the QA/QC
+# 2. did not run on this data point
+# 3. flag as suspect
+# 4. flag as failed
+# 
+# Now we can write a plotting function that will read these results and flag the data.
 
-Now we can write a plotting function that will read these results and flag the data.
+# In[5]:
 
-%matplotlib inline
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 from datetime import datetime
 
@@ -132,7 +154,11 @@ def plot_results(data, var_name, results, title, test_name):
 
 title = "Water Level [MHHW] [m] : Kotzebue, AK"
 
-The gross range test test should fail data outside the $\pm$ 10 range and suspect data below -2, and greater than 3. As one can easily see all the major spikes are flagged as expected.
+
+# The gross range test test should fail data outside the $\pm$ 10 range and suspect data below -2, and greater than 3. As one can easily see all the major spikes are flagged as expected.
+
+# In[6]:
+
 
 plot_results(
     data,
@@ -142,7 +168,11 @@ plot_results(
     "gross_range_test"
 )
 
-An actual spike test, based on a data increase threshold, flags similar spikes to the gross range test but also indetifies other suspect unusual increases in the series.
+
+# An actual spike test, based on a data increase threshold, flags similar spikes to the gross range test but also indetifies other suspect unusual increases in the series.
+
+# In[7]:
+
 
 plot_results(
     data,
@@ -152,9 +182,13 @@ plot_results(
     "spike_test"
 )
 
-The flat line test identifies issues with the data where values are "stuck."
 
-`ioos_qc` succefully identified a huge portion of the data where that happens and flagged a smaller one as suspect. (Zoom in the red point to the left to see this one.)
+# The flat line test identifies issues with the data where values are "stuck."
+# 
+# `ioos_qc` succefully identified a huge portion of the data where that happens and flagged a smaller one as suspect. (Zoom in the red point to the left to see this one.)
+
+# In[8]:
+
 
 plot_results(
     data,
@@ -164,4 +198,5 @@ plot_results(
     "flat_line_test"
 )
 
-This notebook was adapt from Jessica Austin and Kyle Wilcox's [original ioos_qc examples](https://github.com/ioos/ioos_qc/blob/b34b3762d659362fb3af11f52d8905d18cd6ec7b/docs/source/examples/QartodTestExample_WaterLevel.ipynb). Please [see the ``ioos_qc`` documentation](https://ioos.github.io/ioos_qc/) for more examples.
+
+# This notebook was adapt from Jessica Austin and Kyle Wilcox's [original ioos_qc examples](https://github.com/ioos/ioos_qc/blob/b34b3762d659362fb3af11f52d8905d18cd6ec7b/docs/source/examples/QartodTestExample_WaterLevel.ipynb). Please [see the ``ioos_qc`` documentation](https://ioos.github.io/ioos_qc/) for more examples.

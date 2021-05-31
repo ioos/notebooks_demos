@@ -1,14 +1,20 @@
-# Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+#!/usr/bin/env python
+# coding: utf-8
 
-by Mathew Biddle, Faculty Specialist, UMD/ESSIC/CICS at the NOAA National Centers for Environmental Information (NCEI)
+# # Using NCEI geoportal REST API to collect information about IOOS Regional Association archived data
+# 
+# by Mathew Biddle, Faculty Specialist, UMD/ESSIC/CICS at the NOAA National Centers for Environmental Information (NCEI)
+# 
+# ### IOOS regional associations archive their non-federal observational data with NOAA's National Center for Environmental Information (NCEI). In this notebook we will use the [RESTful](https://github.com/Esri/geoportal-server/wiki/REST-API-Syntax) services of the [NCEI geoportal](https://www.nodc.noaa.gov/archivesearch/catalog/search/search.page) to collect metadata from the Archival Information Packages found in the NCEI archives. The metadata information are stored in [ISO 19115-2](https://wiki.earthdata.nasa.gov/display/NASAISO/ISO+19115-2) xml files which the NCEI geoportal uses for discovery of Archival Information Packages (AIPs). This example uses the ISO metadata records to display publication information as well as plot the time coverage of each AIP at NCEI which meets the search criteria.
+# 
+# First we import the owslib and numpy package. This allows us to parse the ISO xml records and process the information we gather.
+# 
+# Initialize a counter for plotting and a list to collect the NCEI Accession identifiers (we use this in the plotting routine). Also, update the namespaces dictionary from owslib to include the appropriate namespace reference for gmi and gml. 
+# 
+# For more information on ISO Namespaces see:  https://geo-ide.noaa.gov/wiki/index.php?title=ISO_Namespaces
 
-### IOOS regional associations archive their non-federal observational data with NOAA's National Center for Environmental Information (NCEI). In this notebook we will use the [RESTful](https://github.com/Esri/geoportal-server/wiki/REST-API-Syntax) services of the [NCEI geoportal](https://www.nodc.noaa.gov/archivesearch/catalog/search/search.page) to collect metadata from the Archival Information Packages found in the NCEI archives. The metadata information are stored in [ISO 19115-2](https://wiki.earthdata.nasa.gov/display/NASAISO/ISO+19115-2) xml files which the NCEI geoportal uses for discovery of Archival Information Packages (AIPs). This example uses the ISO metadata records to display publication information as well as plot the time coverage of each AIP at NCEI which meets the search criteria.
+# In[1]:
 
-First we import the owslib and numpy package. This allows us to parse the ISO xml records and process the information we gather.
-
-Initialize a counter for plotting and a list to collect the NCEI Accession identifiers (we use this in the plotting routine). Also, update the namespaces dictionary from owslib to include the appropriate namespace reference for gmi and gml. 
-
-For more information on ISO Namespaces see:  https://geo-ide.noaa.gov/wiki/index.php?title=ISO_Namespaces
 
 from owslib.iso import namespaces
 
@@ -16,8 +22,12 @@ from owslib.iso import namespaces
 namespaces.update({"gmi": "http://www.isotc211.org/2005/gmi"})
 namespaces.update({"gml": "http://www.opengis.net/gml/3.2"})
 
-### Now we select a Regional Association 
-This is where the user identifies the Regional Association they are interested in. Simply uncomment the line that identifies the region of interest. The user can also omit the Regional Association to collect metadata information about all IOOS non-Federal observation data archived through the NCEI-IOOS pipeline.
+
+# ### Now we select a Regional Association 
+# This is where the user identifies the Regional Association they are interested in. Simply uncomment the line that identifies the region of interest. The user can also omit the Regional Association to collect metadata information about all IOOS non-Federal observation data archived through the NCEI-IOOS pipeline.
+
+# In[2]:
+
 
 # Select RA
 
@@ -31,10 +41,14 @@ RAs = {
 
 ra = RAs["SCCOOS"]
 
-### Next we generate a geoportal query and georss feed
-To find more information about how to compile a geoportal query, have a look at [REST API Syntax](https://github.com/Esri/geoportal-server/wiki/REST-API-Syntax) and the [NCEI Search Tips](https://www.nodc.noaa.gov/search/granule/catalog/searchtips/searchtips.page) for the [NCEI geoportal](https://data.nodc.noaa.gov/geoportal/catalog/search/search.page). The example provided is specific to the NCEI-IOOS data pipeline project and only searches for non-federal timeseries data collected by each Regional Association. 
 
-The query developed here can be updated to search for any Archival Information Packages at NCEI, therefore the user should develop the appropriate query using the [NCEI Geoportal](https://data.nodc.noaa.gov/geoportal/catalog/search/search.page) and update this portion of the code to identify the REST API of interest.
+# ### Next we generate a geoportal query and georss feed
+# To find more information about how to compile a geoportal query, have a look at [REST API Syntax](https://github.com/Esri/geoportal-server/wiki/REST-API-Syntax) and the [NCEI Search Tips](https://www.nodc.noaa.gov/search/granule/catalog/searchtips/searchtips.page) for the [NCEI geoportal](https://data.nodc.noaa.gov/geoportal/catalog/search/search.page). The example provided is specific to the NCEI-IOOS data pipeline project and only searches for non-federal timeseries data collected by each Regional Association. 
+# 
+# The query developed here can be updated to search for any Archival Information Packages at NCEI, therefore the user should develop the appropriate query using the [NCEI Geoportal](https://data.nodc.noaa.gov/geoportal/catalog/search/search.page) and update this portion of the code to identify the REST API of interest.
+
+# In[3]:
+
 
 try:
     from urllib.parse import quote
@@ -73,8 +87,12 @@ print(
     "\nSearch page response:\n{}".format(url.replace(response_format, "&f=searchPage"))
 )
 
-### Time to query the portal and parse out the georrs response
-Here we are opening the specified REST API and parsing it into a string. Then, since we identified it as a georss xml format above, we parse it using the etree package. We then pull out all the ISO metadata record links and print them out so the user can browse to the metadata record and look for what items they might be interested in.
+
+# ### Time to query the portal and parse out the georrs response
+# Here we are opening the specified REST API and parsing it into a string. Then, since we identified it as a georss xml format above, we parse it using the etree package. We then pull out all the ISO metadata record links and print them out so the user can browse to the metadata record and look for what items they might be interested in.
+
+# In[4]:
+
 
 # Query the NCEI Geoportal and parse the georss response.
 
@@ -96,25 +114,29 @@ print("Found %i records" % len(iso_record))
 for item in iso_record:
     print(item.text)  # URL to ISO19115-2 record.
 
-### Lets plot up what we have found
-Now that we have all the ISO metadata records we are interested in, it's time to do something fun with them. In this example we want to generate a timeseries plot of the data coverage for the "Southern California Coastal Ocean Observing System" stations we have archived at NCEI.
 
-First we set up the figure and import some modules to facilitate plotting and string parsing.
+# ### Lets plot up what we have found
+# Now that we have all the ISO metadata records we are interested in, it's time to do something fun with them. In this example we want to generate a timeseries plot of the data coverage for the "Southern California Coastal Ocean Observing System" stations we have archived at NCEI.
+# 
+# First we set up the figure and import some modules to facilitate plotting and string parsing.
+# 
+# Next, we loop through each iso record to collect metadata information about each package. The example here shows how to collect the following items:
+#    1. NCEI Archival Information Package (AIP) Accession ID (7-digit Accession Number) 
+#    2. The first date the archive package was published.
+#    3. The platform code identified from the provider.
+#    4. The version number and date it was published.
+#    5. The current AIP size, in MB.
+#    6. The bounding time, for each AIP found.
+# 
+# There are plenty of other metadata elements to collect from the ISO records, so we recommend browsing to one of the records and having a look at the items of interest to your community.
+# 
+# Then, the process plots each AIP as a timeseries showing the time coverage. 
 
-Next, we loop through each iso record to collect metadata information about each package. The example here shows how to collect the following items:
-   1. NCEI Archival Information Package (AIP) Accession ID (7-digit Accession Number) 
-   2. The first date the archive package was published.
-   3. The platform code identified from the provider.
-   4. The version number and date it was published.
-   5. The current AIP size, in MB.
-   6. The bounding time, for each AIP found.
+# In[5]:
 
-There are plenty of other metadata elements to collect from the ISO records, so we recommend browsing to one of the records and having a look at the items of interest to your community.
-
-Then, the process plots each AIP as a timeseries showing the time coverage. 
 
 # Process each iso record.
-%matplotlib inline
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 import re
 from datetime import datetime
@@ -257,4 +279,6 @@ ax.set_yticklabels(accenos)
 plt.ylabel("NCEI Accession Number")
 title = ax.set_title("%s Data Archived at NCEI" % ra)
 
-This procedure has been developed as an example of how to use NCEI's geoportal REST API's to collect information about packages that have been archived at NCEI. The intention is to provide some guidance and ways to collect this information without having to request it directly from NCEI. There are a significant amount of metadata elements which NCEI makes available through their ISO metadata records. Therefore, anyone interested in collecting other information from the records at NCEI should have a look at the ISO metadata records and determine which items are of interest to their community. Then, update the example code provided to collect that information.
+
+# This procedure has been developed as an example of how to use NCEI's geoportal REST API's to collect information about packages that have been archived at NCEI. The intention is to provide some guidance and ways to collect this information without having to request it directly from NCEI. There are a significant amount of metadata elements which NCEI makes available through their ISO metadata records. Therefore, anyone interested in collecting other information from the records at NCEI should have a look at the ISO metadata records and determine which items are of interest to their community. Then, update the example code provided to collect that information.
+# 

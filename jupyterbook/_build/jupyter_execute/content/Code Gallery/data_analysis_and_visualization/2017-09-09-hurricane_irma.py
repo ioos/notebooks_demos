@@ -1,26 +1,36 @@
-# Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+#!/usr/bin/env python
+# coding: utf-8
 
+# # Exploring the NHC Advisories and Sea Surface Height during Hurricane Irma
+# 
+# 
+# This notebook aims to demonstrate how to create a simple interactive GIS map with the National Hurricane Center predictions [1] and the observed sea surface height from CO-OPS [2].
+# 
+# 
+# See https://tidesandcurrents.noaa.gov/quicklook/view.html?name=IRMA for the latest information on Irma.
+# 
+# 1. http://www.nhc.noaa.gov/gis/
+# 2. https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/
+# 
+# 
+# First we have to download the National Hurricane Center (NHC) GIS 5 day predictions data for Irma.
+# 
+# NHC codes storms are coded with 8 letter names:
+# - 2 char for region `al` &rarr; Atlantic
+# - 2 char for number `11` is Irma
+# - and 4 char for year, `2017`
+# 
+# Browse http://www.nhc.noaa.gov/gis/archive_wsurge.php?year=2017 to find other hurricanes code.
 
-This notebook aims to demonstrate how to create a simple interactive GIS map with the National Hurricane Center predictions [1] and the observed sea surface height from CO-OPS [2].
+# In[1]:
 
-
-See https://tidesandcurrents.noaa.gov/quicklook/view.html?name=IRMA for the latest information on Irma.
-
-1. http://www.nhc.noaa.gov/gis/
-2. https://opendap.co-ops.nos.noaa.gov/ioos-dif-sos/
-
-
-First we have to download the National Hurricane Center (NHC) GIS 5 day predictions data for Irma.
-
-NHC codes storms are coded with 8 letter names:
-- 2 char for region `al` &rarr; Atlantic
-- 2 char for number `11` is Irma
-- and 4 char for year, `2017`
-
-Browse http://www.nhc.noaa.gov/gis/archive_wsurge.php?year=2017 to find other hurricanes code.
 
 code = "al112017"
 hurricane = "{}_5day".format(code)
+
+
+# In[2]:
+
 
 import os
 import sys
@@ -70,6 +80,10 @@ def progress_hook(out):
 
     return it
 
+
+# In[3]:
+
+
 nhc = "http://www.nhc.noaa.gov/gis/forecast/archive/"
 
 # We don't need the latest file b/c that is redundant to the latest number.
@@ -78,6 +92,10 @@ fnames = [
     for fname in url_lister(nhc)
     if fname.startswith(hurricane) and "latest" not in fname
 ]
+
+
+# In[4]:
+
 
 base = os.path.abspath(os.path.join(os.path.curdir, "data", hurricane))
 
@@ -89,12 +107,20 @@ for fname in fnames:
     path = os.path.join(base, fname)
     download(url, path)
 
-In the cells below we use `geopandas` to load the data we just downloaded. We will use only the prediction cone (`png`) and the track points (`pts`), but feel free to explore this data further, there is plenty more there.
+
+# In the cells below we use `geopandas` to load the data we just downloaded. We will use only the prediction cone (`png`) and the track points (`pts`), but feel free to explore this data further, there is plenty more there.
+
+# In[5]:
+
 
 import os
 
 os.environ["CPL_ZIP_ENCODING"] = "UTF-8"
 os.environ["TZ"] = "GMT0"
+
+
+# In[6]:
+
 
 from glob import glob
 
@@ -114,7 +140,11 @@ for fname in sorted(glob(os.path.join(base, "{}_*.zip".format(hurricane)))):
     # Only the first "obsevartion."
     points.append(pts.iloc[0])
 
-Let's create a color code for the point track.
+
+# Let's create a color code for the point track.
+
+# In[7]:
+
 
 colors = {
     "Subtropical Depression": "yellow",
@@ -125,7 +155,11 @@ colors = {
     "Major Hurricane": "crimson",
 }
 
-Now we can get all the information we need from those GIS files. Let's start with the event dates.
+
+# Now we can get all the information we need from those GIS files. Let's start with the event dates.
+
+# In[8]:
+
 
 import dateutil
 
@@ -135,7 +169,11 @@ end = points[-1]["FLDATELBL"].strip(" EDT")
 start = dateutil.parser.parse(start)
 end = dateutil.parser.parse(end)
 
-And the bounding box to search the data.
+
+# And the bounding box to search the data.
+
+# In[9]:
+
 
 from shapely.geometry import LineString
 from shapely.ops import cascaded_union
@@ -148,17 +186,25 @@ polygon = cascaded_union([last_cone, track])
 # Add a buffer to find the stations along the track.
 bbox = polygon.buffer(2).bounds
 
-Note that the bounding box is derived from the track and the latest prediction cone.
+
+# Note that the bounding box is derived from the track and the latest prediction cone.
+
+# In[10]:
+
 
 strbbox = ", ".join(format(v, ".2f") for v in bbox)
 print("bbox: {}\nstart: {}\n  end: {}".format(strbbox, start, end))
 
-Now we need to build a filter with those parameters to find the observations along the Hurricane path. We still need to specify:
 
-- the units for the observations;
-- and the SOS name for the variables of interest.
+# Now we need to build a filter with those parameters to find the observations along the Hurricane path. We still need to specify:
+# 
+# - the units for the observations;
+# - and the SOS name for the variables of interest.
+# 
+# Next, we can use `pyoos` to assemble a collector to download the data into a pandas `DataFrame`.
 
-Next, we can use `pyoos` to assemble a collector to download the data into a pandas `DataFrame`.
+# In[11]:
+
 
 import cf_units
 import pandas as pd
@@ -202,6 +248,10 @@ def get_coops(start, end, sos_name, units, bbox, verbose=False):
         print("{}: {} offerings".format(title, len(ofrs)))
     return data, table
 
+
+# In[12]:
+
+
 ssh, ssh_table = get_coops(
     start=start,
     end=end,
@@ -212,15 +262,27 @@ ssh, ssh_table = get_coops(
 
 ssh_table
 
+
+# In[13]:
+
+
 wind_speed, wind_speed_table = get_coops(
     start=start, end=end, sos_name="wind_speed", units=cf_units.Unit("m/s"), bbox=bbox,
 )
 
 wind_speed_table
 
-For simplicity we will use only the stations that have both wind speed and sea surface height and reject those that have only one or the other.
+
+# For simplicity we will use only the stations that have both wind speed and sea surface height and reject those that have only one or the other.
+
+# In[14]:
+
 
 common = set(ssh_table["station_code"]).intersection(wind_speed_table["station_code"])
+
+
+# In[15]:
+
 
 ssh_obs, win_obs = [], []
 for station in common:
@@ -228,6 +290,10 @@ for station in common:
     win_obs.extend(
         [obs for obs in wind_speed if obs._metadata["station_code"] == station]
     )
+
+
+# In[16]:
+
 
 index = pd.date_range(start=start, end=end, freq="15min")
 
@@ -250,9 +316,13 @@ for series in win_obs:
     obs.name = _metadata["station_name"]
     winds_observations.append(obs)
 
-Let's take a look at some stations to see if the data is OK. Below we have a station in Naples, FL along the Gulf of Mexico.
 
-%matplotlib inline
+# Let's take a look at some stations to see if the data is OK. Below we have a station in Naples, FL along the Gulf of Mexico.
+
+# In[17]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
 import matplotlib.pyplot as plt
 
 try:
@@ -289,10 +359,14 @@ try:
 except Exception:
     print("Cannot find station {}".format(station))
 
-We can observe the sea level retreating around 10-Sep 9:00 and then a significant surge after 19:00.
-The lower winds at beginning of the surge is probably the eye of the hurricane.
 
-For our interactive map we will use [`bokeh`](https://bokeh.pydata.org/en/latest) HTML plots instead of the usual raster [`matplotlib`](https://matplotlib.org) ones to enhance the user experience when exploring the graphs.
+# We can observe the sea level retreating around 10-Sep 9:00 and then a significant surge after 19:00.
+# The lower winds at beginning of the surge is probably the eye of the hurricane.
+# 
+# For our interactive map we will use [`bokeh`](https://bokeh.pydata.org/en/latest) HTML plots instead of the usual raster [`matplotlib`](https://matplotlib.org) ones to enhance the user experience when exploring the graphs.
+
+# In[18]:
+
 
 from bokeh.embed import file_html
 from bokeh.models import HoverTool, LinearAxis, Range1d
@@ -363,7 +437,11 @@ def make_marker(p, location, fname):
     marker = folium.Marker(location=location, popup=popup, icon=icon)
     return marker
 
-Here is the final result. Explore the map by clicking on the map features plotted!
+
+# Here is the final result. Explore the map by clicking on the map features plotted!
+
+# In[19]:
+
 
 import folium
 from folium.plugins import Fullscreen, MarkerCluster
@@ -467,6 +545,10 @@ p = folium.PolyLine(get_coordinates(bbox), color="#009933", weight=1, opacity=0.
 
 p.add_to(m)
 
+
+# In[20]:
+
+
 def embed_map(m):
     from IPython.display import HTML
 
@@ -480,3 +562,4 @@ def embed_map(m):
 
 
 embed_map(m)
+
