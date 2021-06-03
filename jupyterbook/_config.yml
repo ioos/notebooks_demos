@@ -23,7 +23,7 @@ html:
   home_page_in_navbar         : false
 
 # #######################################################################################
-# Interact link settings
+# Interact link settings #
 notebook_interface            : "notebook"
 
 #######################################################################################
