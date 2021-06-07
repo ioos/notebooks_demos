@@ -1,31 +1,25 @@
 
-# Specify a YYYY-MM-DD hh:mm:ss date or integer day offset.
-# If both start and stop are offsets they will be computed relative to datetime.today() at midnight.
-# Use the dates commented below to reproduce the last Boston Light Swim event forecast.
 date:
-    start: -5 # 2016-8-16 00:00:00
-    stop: +4 # 2016-8-29 00:00:00
+    start: 2018-2-28 00:00:00
+    stop: 2018-3-5 00:00:00
 
 run_name: 'latest'
 
-# Boston harbor.
 region:
-    bbox: [-71.3, 42.03, -70.57, 42.63]
-    # Try the bounding box below to see how the notebook will behave for a different region.
-    #bbox: [-74.5, 40, -72., 41.5]
+    bbox: [-71.20, 41.40, -69.20, 43.74]
     crs: 'urn:ogc:def:crs:OGC:1.3:CRS84'
 
-sos_name: 'sea_water_temperature'
+sos_name: 'water_surface_height_above_reference_datum'
 
 cf_names:
-    - sea_water_temperature
-    - sea_surface_temperature
-    - sea_water_potential_temperature
-    - equivalent_potential_temperature
-    - sea_water_conservative_temperature
-    - pseudo_equivalent_potential_temperature
+    - sea_surface_height
+    - sea_surface_elevation
+    - sea_surface_height_above_geoid
+    - sea_surface_height_above_sea_level
+    - water_surface_height_above_reference_datum
+    - sea_surface_height_above_reference_ellipsoid
 
-units: 'celsius'
+units: 'm'
 
 catalogs:
     - https://data.ioos.us/csw
