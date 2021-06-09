@@ -3,7 +3,8 @@ author: IOOS
 copyright: "2021"
 logo: images/IOOS-logo_little.png
 
-
+#only build files that are there in the table of contents. else defaults to building all files 
+only_build_toc_files: true
 
 launch_buttons:
   notebook_interface: "classic" # The interface interactive links will activate ["classic", "jupyterlab"]
@@ -21,6 +22,7 @@ execute:
 # HTML-specific settings
 html:
   home_page_in_navbar         : false
+
 
 # #######################################################################################
 # Interact link settings #
