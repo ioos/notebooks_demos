@@ -1,68 +1,64 @@
-- file: content/intro
+- file: content/intro.md
   title: The IOOS Data Demo Center
 
 - part: Code Gallery
   chapters:
 
-    - file: content/Code Gallery/data_access/data_access.md
+    - file: content/Code Gallery/data_access.md
       sections:
-          - file: content/Code Gallery/data_access/2016-10-12-fetching_data.ipynb
-          - file: content/Code Gallery/data_access/2017-05-14-running_compliance_checker.ipynb
-          - file: content/Code Gallery/data_access/2016-12-20-searching_glider_deployments.ipynb
-          - file: content/Code Gallery/data_access/2017-01-18-siphon-explore-thredds.ipynb
-          - file: content/Code Gallery/data_access/2017-03-21-ERDDAP_IOOS_Sensor_Map.ipynb
-          - file: content/Code Gallery/data_access/2017-06-12-NCEI_RA_archive_history.ipynb
-          - file: content/Code Gallery/data_access/2017-07-25-HFRadar_currents.ipynb
-          - file: content/Code Gallery/data_access/2017-12-15-finding_HFRadar_currents.ipynb
-          - file: content/Code Gallery/data_access/2018-03-01-erddapy.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2016-10-12-fetching_data.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2016-11-15-glider_data_example.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2016-12-19-exploring_csw.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2016-12-20-searching_glider_deployments.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2016-12-22-boston_light_swim.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2017-01-18-siphon-explore-thredds.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2017-03-21-ERDDAP_IOOS_Sensor_Map.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2017-06-12-NCEI_RA_archive_history.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2017-07-25-HFRadar_currents.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2017-08-01-xtractoR.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2017-09-09-hurricane_irma.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2017-11-30-rerddap.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2017-12-15-finding_HFRadar_currents.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2018-03-01-erddapy.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2019-02-26-hurricane_gis_part01.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2019-03-08-grids-temperature.ipynb
+          - file: content/Code Gallery/data_access_notebooks/2019-05-27-hurricane_gis_part02.ipynb
 
-    - file: content/Code Gallery/data_analysis_and_visualization/data_analysis_and_visualization.md
+    - file: content/Code Gallery/data_analysis_and_visualization.md
       sections:
-          - file: content/Code Gallery/data_analysis_and_visualization/2016-12-22-boston_light_swim.ipynb
-          - file: content/Code Gallery/data_analysis_and_visualization/2020-10-10-GTS.ipynb
-          - file: content/Code Gallery/data_analysis_and_visualization/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.ipynb
-          - file: content/Code Gallery/data_analysis_and_visualization/2017-09-09-hurricane_irma.ipynb
-          - file: content/Code Gallery/data_analysis_and_visualization/2019-02-26-hurricane_gis_part01.ipynb
-          - file: content/Code Gallery/data_analysis_and_visualization/2019-05-27-hurricane_gis_part02.ipynb
-          - file: content/Code Gallery/data_analysis_and_visualization/2018-12-04-grids.ipynb
-          - file: content/Code Gallery/data_analysis_and_visualization/2019-03-08-grids-temperature.ipynb
-          - file: content/Code Gallery/data_analysis_and_visualization/2018-03-15-ssh-skillscore.ipynb
-          - file: content/Code Gallery/data_analysis_and_visualization/2018-03-30-wave_height_assessment.ipynb
-          - file: content/Code Gallery/data_analysis_and_visualization/2016-11-15-glider_data_example.ipynb
+          - file: content/Code Gallery/data_analysis_and_visualization_notebooks/2016-11-16-CF-UGRID-SGRID-conventions.ipynb
+          - file: content/Code Gallery/data_analysis_and_visualization_notebooks/2017-01-23-R-notebook.ipynb
+          - file: content/Code Gallery/data_analysis_and_visualization_notebooks/2017-03-30-octave_notebook_example.ipynb
+          - file: content/Code Gallery/data_analysis_and_visualization_notebooks/2018-03-15-ssh-skillscore.ipynb
+          - file: content/Code Gallery/data_analysis_and_visualization_notebooks/2018-03-30-wave_height_assessment.ipynb
+          - file: content/Code Gallery/data_analysis_and_visualization_notebooks/2018-12-04-grids.ipynb
+          - file: content/Code Gallery/data_analysis_and_visualization_notebooks/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.ipynb
 
-    - file: content/Code Gallery/data_publication/data_publication.md
+    - file: content/Code Gallery/data_management.md
       sections:
-        - file: content/Code Gallery/data_publication/2016-12-19-exploring_csw.ipynb
-        - file: content/Code Gallery/data_publication/2016-11-16-CF-UGRID-SGRID-conventions.ipynb
-        - file: content/Code Gallery/data_publication/2020-12-08-DataToDwC.ipynb
-        - file: content/Code Gallery/data_publication/2018-02-27-pocean-timeSeries-demo.ipynb
-        - file: content/Code Gallery/data_publication/2017-11-01-Creating-Archives-Using-Bagit.ipynb
-    
-    - file: content/Code Gallery/R_Matlab_Notebooks/R_Matlab_Notebooks.md
-      sections:
-        - file: content/Code Gallery/R_Matlab_Notebooks/2017-01-23-R-notebook.ipynb
-        - file: content/Code Gallery/R_Matlab_Notebooks/2017-03-30-octave_notebook_example.ipynb
-        - file: content/Code Gallery/R_Matlab_Notebooks/2017-08-01-xtractoR.ipynb
-        - file: content/Code Gallery/R_Matlab_Notebooks/2018-02-20-obis.ipynb
-        - file: content/Code Gallery/R_Matlab_Notebooks/2017-11-30-rerddap.ipynb
-
-
+        - file: content/Code Gallery/data_management_notebooks/2017-05-14-running_compliance_checker.ipynb
+        - file: content/Code Gallery/data_management_notebooks/2017-11-01-Creating-Archives-Using-Bagit.ipynb
+        - file: content/Code Gallery/data_management_notebooks/2018-02-20-obis.ipynb
+        - file: content/Code Gallery/data_management_notebooks/2018-02-27-pocean-timeSeries-demo.ipynb
+        - file: content/Code Gallery/data_management_notebooks/2020-10-10-GTS.ipynb
+        - file: content/Code Gallery/data_management_notebooks/2020-12-08-DataToDwC.ipynb
+        
 - part: Video Tutorials
   chapters:
-    - file: content/Video Tutorials/ioos.md
+    - file: content/Video_Demo_Markdown/ioos.md
       title: IOOS
-    - file: content/Video Tutorials/noos.md
+    - file: content/Video_Demo_Markdown/noos.md
       title: NANOOS Visualization System (NVS)
-    - file: content/Video Tutorials/glos.md
+    - file: content/Video_Demo_Markdown/glos.md
       title: GLOS
-    - file: content/Video Tutorials/ooi.md
+    - file: content/Video_Demo_Markdown/ooi.md
       title: OOI Demonstration Videos
-    - file: content/Video Tutorials/python_dem.md
+    - file: content/Video_Demo_Markdown/python_dem.md
       title: Python Demonstration Videos
 
 - part: Other Resources   
   chapters:
-    - file: content/Other Resources/ioos_installation_conda.md
+    - file: content/ioos_installation_conda.md
       title: Installing the IOOS Conda Environment
     - url: https://help.aodn.org.au/aodn-data-tools/user-code-library/
       title: Opening netCDF files - hints from AODN
