@@ -23,6 +23,15 @@ parts:
 - caption: Other Resources
   chapters:
   - file: content/ioos_installation_conda.md
+    title: Installing the IOOS Conda Environment
+  - url: https://help.aodn.org.au/aodn-data-tools/user-code-library/
+    title: Opening netCDF files - hints from AODN
+  - url: http://unidata.github.io/notebook-gallery/
+    title: Unidata Jupyter Notebook Gallery
+  - url: http://iobis.org/tutorial/
+    title: Extracting and Enriching OBIS data with R
+  - url: https://github.com/USGS-R
+    title: USGS-R Examples
     
 - caption: Contact Us
   chapters:
