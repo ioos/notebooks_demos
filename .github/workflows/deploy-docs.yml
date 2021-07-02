@@ -23,6 +23,8 @@ jobs:
          conda create --name IOOS --file .binder/conda-linux-64.lock
          source activate IOOS
          conda install doctr
+      ## Adding install jupyter{book} command 
+         conda install -c conda-forge jupyter-book 
 
     - name: Build documentation
       shell: bash -l {0}
@@ -31,6 +33,8 @@ jobs:
         source activate IOOS
         pushd webpage && python make_index.py && popd
         find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --template-file jupyter-jekyll.tpl --config nbconvert_config.py
+      ## Adding jupyter{book} build command 
+        jupyter-book build jupyterbook
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@3.7.1
@@ -38,4 +42,14 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: webpage
+        CLEAN: false
+
+
+    ## Adding a GH-Pages deploy option for jupyter{book}
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@3.7.1
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: jupyterbook_webpage_hosting_test
+        FOLDER: jupyterbook/_build/html
         CLEAN: false
