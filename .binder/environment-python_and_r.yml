@@ -3,6 +3,7 @@ channels:
   - conda-forge
 dependencies:
   - python=3.9
+  - argopy
   - bagit
   - bokeh
   - cartopy
@@ -10,6 +11,7 @@ dependencies:
   - cc-plugin-ncei
   - cftime
   - compliance-checker
+  - conda-lock
   - cython
   - descartes
   - easyargs
