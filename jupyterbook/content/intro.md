@@ -1,7 +1,7 @@
-# IOOS Data Demo Center
+# IOOS CodeLab
 
 ```{image} ../images/Data_Demo_Center_middlepic_size770.png
-:alt: Data Demo Center
+:alt: IOOS CodeLab
 :class: bg-primary mb-1
 :width: 770px
 ```
