@@ -1,4 +1,4 @@
-# NOOS 
+# NANOOS 
 
 
 ```{image} ../../images/NANOOS.png
