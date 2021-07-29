@@ -1,8 +1,7 @@
 # IOOS CodeLab
 
-```{image} ../images/Data_Demo_Center_middlepic_size770.png
+```{image} ../images/ioos_CodeLab_image_multi_hex.png
 :alt: IOOS CodeLab
-:class: bg-primary mb-1
 :width: 770px
 ```
 
