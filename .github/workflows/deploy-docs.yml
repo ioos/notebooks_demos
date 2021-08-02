@@ -28,14 +28,12 @@ jobs:
       run: |
         set -e
         source activate IOOS
-        # pushd webpage && python make_index.py && popd
-        # find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --template-file jupyter-jekyll.tpl --config nbconvert_config.py
         jupyter-book build jupyterbook
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: jupyterbook_webpage_hosting_test
+        BRANCH: gh-pages
         FOLDER: jupyterbook/_build/html
         CLEAN: false
