@@ -22,20 +22,13 @@ jobs:
       run: |
          conda create --name IOOS --file .binder/conda-linux-64.lock
          source activate IOOS
-         conda install doctr
-      ## Adding install jupyter{book} command 
-         conda install -c conda-forge jupyter-book 
 
     - name: Build documentation
       shell: bash -l {0}
       run: |
         set -e
         source activate IOOS
-        pushd webpage && python make_index.py && popd
-        find notebooks/ -maxdepth 1 -name \*.ipynb -print0 | xargs -0 -n1 jupyter nbconvert --template-file jupyter-jekyll.tpl --config nbconvert_config.py
-      ## Adding jupyter{book} build command 
         jupyter-book build jupyterbook
-
 
     ## Adding a GH-Pages deploy option for jupyter{book}
     - name: GitHub Pages action
