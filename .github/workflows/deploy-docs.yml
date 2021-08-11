@@ -30,7 +30,6 @@ jobs:
         source activate IOOS
         jupyter-book build jupyterbook
 
-    ## Adding a GH-Pages deploy option for jupyter{book}
     - name: GitHub Pages action
       uses: peaceiris/actions-gh-pages@v3.6.1
       with:
