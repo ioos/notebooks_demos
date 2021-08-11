@@ -32,7 +32,7 @@ parts:
     title: Extracting and Enriching OBIS data with R
   - url: https://github.com/USGS-R
     title: USGS-R Examples
-    
+
 - caption: Contact Us
   chapters:
   - file: content/contact_us.md
