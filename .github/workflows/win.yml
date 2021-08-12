@@ -1,4 +1,4 @@
-name: Build Env on Linux and Test Notebooks
+name: Build Env on Windows
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   run-tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -21,12 +21,6 @@ jobs:
     - name: Build environment
       shell: bash -l {0}
       run: |
-         conda create --name IOOS --file .binder/conda-linux-64.lock
+         conda create --name IOOS --file .binder/conda-win-64.lock
          source activate IOOS
          python -c 'import osgeo.gdal; print(dir(osgeo.gdal))'
-
-    - name: Notebook tests
-      shell: bash -l {0}
-      run: |
-        source activate IOOS
-        pytest --nbval --nbval-lax notebooks/
