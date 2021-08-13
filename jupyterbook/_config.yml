@@ -1,7 +1,6 @@
 # Book settings
 title            : The U.S. Integrated Ocean Observing System (IOOS)  # The title of the book. Will be placed in the left navbar.
 author           : IOOS   # The author of the book
-copyright        : "2021"   # Copyright year to be placed in the footer
 logo             : images/IOOS_logo.png  # A path to the book logo
 
 # Patterns to skip when building the book. Can be glob-style (e.g. "*skip.ipynb")
@@ -84,4 +83,5 @@ repository:
 sphinx:
   extra_extensions          :   # A list of extra extensions to load by Sphinx (added to those already used by JB).
   local_extensions          :   # A list of local extensions to load by sphinx specified by "name: path" items
-  config                    :   # key-value pairs to directly over-ride the Sphinx configuration
+  config:
+    html_show_copyright: false
