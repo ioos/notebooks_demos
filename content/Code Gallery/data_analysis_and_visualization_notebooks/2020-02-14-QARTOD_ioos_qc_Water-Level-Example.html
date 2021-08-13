@@ -425,9 +425,7 @@
             href="https://github.com/ioos/notebooks_demos/issues/new?title=Issue%20on%20page%20%2Fcontent/Code Gallery/data_analysis_and_visualization_notebooks/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/ioos/notebooks_demos/edit/master/jupyterbook/content/Code Gallery/data_analysis_and_visualization_notebooks/2020-02-14-QARTOD_ioos_qc_Water-Level-Example.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+        
     </div>
 </div>
 
@@ -490,7 +488,7 @@
 <div class="output text_html">
 <div class="bk-root">
     <a href="https://bokeh.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
-    <span id="1001">Loading BokehJS ...</span>
+    <span id="1002">Loading BokehJS ...</span>
 </div></div><script type="application/javascript">
 (function(root) {
   function now() {
@@ -559,7 +557,7 @@
     var output = handle.output;
 
     // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
-    if ((output.output_type != "display_data") || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) {
+    if ((output.output_type != "display_data") || (!Object.prototype.hasOwnProperty.call(output.data, EXEC_MIME_TYPE))) {
       return
     }
 
@@ -651,7 +649,7 @@
      "</div>"}};
 
   function display_loaded() {
-    var el = document.getElementById("1001");
+    var el = document.getElementById("1002");
     if (el != null) {
       el.textContent = "BokehJS is loading...";
     }
@@ -701,15 +699,15 @@
       }
     }
 
-    function on_error() {
+    function on_error(url) {
       console.error("failed to load " + url);
     }
 
-    for (var i = 0; i < css_urls.length; i++) {
-      var url = css_urls[i];
+    for (let i = 0; i < css_urls.length; i++) {
+      const url = css_urls[i];
       const element = document.createElement("link");
       element.onload = on_load;
-      element.onerror = on_error;
+      element.onerror = on_error.bind(null, url);
       element.rel = "stylesheet";
       element.type = "text/css";
       element.href = url;
@@ -717,22 +715,23 @@
       document.body.appendChild(element);
     }
 
-    for (var i = 0; i < js_urls.length; i++) {
-      var url = js_urls[i];
-      var element = document.createElement('script');
+    const hashes = {"https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js": "dM3QQsP+wXdHg42wTqW85BjZQdLNNIXqlPw/BgKoExPmTG7ZLML4EGqLMfqHT6ON", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.js": "8x57I4YuIfu8XyZfFo0XVr2WAT8EK4rh/uDe3wF7YuW2FNUSNEpJbsPaB1nJ2fz2", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.js": "3QTqdz9LyAm2i0sG5XTePsHec3UHWwVsrOL68SYRoAXsafvfAyqtQ+h440+qIBhS"};
+
+    for (let i = 0; i < js_urls.length; i++) {
+      const url = js_urls[i];
+      const element = document.createElement('script');
       element.onload = on_load;
-      element.onerror = on_error;
+      element.onerror = on_error.bind(null, url);
       element.async = false;
       element.src = url;
-      
+      if (url in hashes) {
+        element.crossOrigin = "anonymous";
+        element.integrity = "sha384-" + hashes[url];
+      }
       console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
       document.head.appendChild(element);
     }
-  };var element = document.getElementById("1001");
-  if (element == null) {
-    console.error("Bokeh: ERROR: autoload.js configured with elementid '1001' but no matching script tag was found. ")
-    return false;
-  }
+  };
 
   function inject_raw_css(css) {
     const element = document.createElement("style");
@@ -741,7 +740,7 @@
   }
 
   
-  var js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.0.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.0.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.0.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.0.0.min.js"];
+  var js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.3.min.js"];
   var css_urls = [];
   
 
@@ -770,7 +769,7 @@
       console.log("Bokeh: BokehJS failed to load within specified timeout.");
       root._bokeh_failed_load = true;
     } else if (force !== true) {
-      var cell = $(document.getElementById("1001")).parents('.cell').data().cell;
+      var cell = $(document.getElementById("1002")).parents('.cell').data().cell;
       cell.output_area.append_execute_result(NB_LOAD_WARNING)
     }
 
@@ -933,7 +932,6 @@
     <span class="n">inp</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;sea_surface_height_above_sea_level_geoid_mhhw (m)&quot;</span><span class="p">],</span>
     <span class="n">tinp</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">],</span>
     <span class="n">zinp</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;z (m)&quot;</span><span class="p">],</span>
-    <span class="n">gen_agg</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 
 <span class="n">qc_results</span>
@@ -941,18 +939,13 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OrderedDict([(&#39;qartod&#39;,
-              OrderedDict([(&#39;gross_range_test&#39;,
-                            masked_array(data=[1, 1, 1, ..., 1, 1, 1],
-                                         mask=False,
-                                   fill_value=999999,
-                                        dtype=uint8)),
-                           (&#39;flat_line_test&#39;, array([1, 1, 1, ..., 1, 1, 1])),
-                           (&#39;spike_test&#39;,
-                            masked_array(data=[1, 1, 1, ..., 1, 1, 1],
-                                         mask=False,
-                                   fill_value=999999,
-                                        dtype=uint8))]))])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>defaultdict(collections.OrderedDict,
+            {&#39;qartod&#39;: OrderedDict([(&#39;gross_range_test&#39;,
+                           array([1, 1, 1, ..., 1, 1, 1], dtype=uint8)),
+                          (&#39;flat_line_test&#39;,
+                           array([1, 1, 1, ..., 1, 1, 1], dtype=uint8)),
+                          (&#39;spike_test&#39;,
+                           array([2, 1, 1, ..., 1, 1, 2], dtype=uint8))])})
 </pre></div>
 </div>
 </div>
@@ -1115,12 +1108,5 @@
   <script src="../../../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
   
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-W7S16LPGS7"></script>
-<script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){ dataLayer.push(arguments); }
-                    gtag('config', 'G-W7S16LPGS7');
-                </script>
-
   </body>
 </html>

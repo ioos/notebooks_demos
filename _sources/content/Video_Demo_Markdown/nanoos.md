@@ -1,4 +1,4 @@
-# NANOOS 
+# NANOOS
 
 
 ```{image} ../../images/NANOOS.png
@@ -9,4 +9,3 @@
 
    * [NANOOS Visualization System](https://www.youtube.com/watch?v=MEVz0jOsqmI)
    * [NANOOS Data Explorer](https://www.youtube.com/playlist?list=PLBvrtRArn5ffsBARjKsczvfxyYX1wGtFP)
-
