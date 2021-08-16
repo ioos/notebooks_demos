@@ -1,9 +1,0 @@
-#!/bin/bash -l
-
-# ==== ONLY EDIT WITHIN THIS BLOCK =====
-
-mkdir -p ${HOME}/my-conda-envs/
-cp /tmp/.condarc ${HOME}/.condarc
-
-# ==== ONLY EDIT WITHIN THIS BLOCK =====
-exec "$@"
